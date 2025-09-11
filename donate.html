@@ -1,1 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Finedata Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Donate Sections */
+        .donate-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        /* Impact Section */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .impact-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .impact-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .impact-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Telebirr Section */
+        .telebirr-guide {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .telebirr-steps {
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .telebirr-steps li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .telebirr-image {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .telebirr-image img {
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .phone-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange.html">Exchange Rates</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="active">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h2>Support Our Mission</h2>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Donate</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Why Donate Section -->
+        <section class="donate-section">
+            <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Why Support Finedata Ethiopia?</h3>
+            
+            <p>Finedata Ethiopia is committed to providing <strong>free access</strong> to comprehensive economic, demographic, and agricultural data for everyone. Unlike many data providers, we believe that information should be accessible to all - students, researchers, businesses, and policymakers alike.</p>
+            
+            <p>Your donation helps us maintain and expand our services, ensuring that:</p>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <i class="fas fa-database"></i>
+                    <h4>Data Remains Free</h4>
+                    <p>We keep all our current data and resources completely free of charge</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Regular Updates</h4>
+                    <p>We continuously update our databases with the latest information</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>New Data Sources</h4>
+                    <p>We expand our collection to include more valuable datasets</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-tools"></i>
+                    <h4>Improved Tools</h4>
+                    <p>We develop better visualization and analysis tools</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p><strong>We believe knowledge should be accessible to all, regardless of their ability to pay.</strong></p>
+                <p>Your support makes this possible. Donate any amount you're comfortable with - every contribution helps!</p>
+            </div>
+        </section>
+
+        <!-- Telebirr Donation Section -->
+        <section class="donate-section">
+            <h3 class="section-title"><i class="fas fa-mobile-alt"></i> Donate via Telebirr</h3>
+            
+            <p>To support our mission, please use the Telebirr app to send your donation directly to us. You can donate any amount you wish - every contribution helps us maintain and improve our free services.</p>
+            
+            <div class="telebirr-guide">
+                <h4>How to Donate Using Telebirr</h4>
+                
+                <ol class="telebirr-steps">
+                    <li>Open your Telebirr app on your phone</li>
+                    <li>Select "Send Money" from the main menu</li>
+                    <li>Enter our phone number: <span class="phone-number">+251 991 168 917</span></li>
+                    <li>Enter the amount you wish to donate (any amount is appreciated)</li>
+                    <li>Add a note: "Finedata Donation" so we can identify your contribution</li>
+                    <li>Confirm the transaction details</li>
+                    <li>Complete the transaction using your PIN</li>
+                </ol>
+                
+                <p><strong>Thank you for your support!</strong> Your donation helps us keep valuable data accessible to everyone in Ethiopia.</p>
+                
+                <div class="telebirr-image">
+                    <img src="https://capitalethiopia.com/wp-content/uploads/2021/06/Telebirr.jpg" alt="Telebirr">
+                    <p>The Telebirr app makes donating quick and easy</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p>After making your donation, you can <a href="support.html">contact us</a> if you need a receipt for your records.</p>
+            </div>
+        </section>
+
+        <!-- Transparency Section -->
+        <section class="donate-section">
+            <h3 class="section-title"><i class="fas fa-eye"></i> Our Commitment to Transparency</h3>
+            
+            <p>We believe donors deserve to know how their contributions are being used. Here's how we allocate donations:</p>
+            
+            <div style="display: flex; align-items: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <ul style="line-height: 1.8;">
+                        <li><strong>70%</strong> - Data acquisition and maintenance (securing new data sources, updating existing databases)</li>
+                        <li><strong>15%</strong> - Platform development and hosting (server costs, website improvements)</li>
+                        <li><strong>10%</strong> - Outreach and education (helping more people access and use our data)</li>
+                        <li><strong>5%</strong> - Administrative costs (payment processing fees, legal compliance)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p>We're committed to keeping our overhead costs low to ensure your donation has the maximum possible impact on making data accessible to everyone in Ethiopia.</p>
+        </section>
+
+        <!-- Alternative Support Section -->
+        <section class="donate-section">
+            <h3 class="section-title"><i class="fas fa-hands-helping"></i> Other Ways to Support Us</h3>
+            
+            <p>If you're unable to make a financial contribution at this time, there are other valuable ways to support our mission:</p>
+            
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <i class="fas fa-share-alt"></i>
+                    <h4>Spread the Word</h4>
+                    <p>Tell others about Finedata Ethiopia and our free resources</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-bug"></i>
+                    <h4>Report Issues</h4>
+                    <p>Help us improve by reporting errors or suggesting enhancements</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h4>Provide Feedback</h4>
+                    <p>Tell us what data or features would be most valuable to you</p>
+                </div>
+                
+                <div class="impact-card">
+                    <i class="fas fa-handshake"></i>
+                    <h4>Partnership Opportunities</h4>
+                    <p>If you represent an organization, explore partnership possibilities</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="support.html" class="btn">Contact Us to Explore Partnerships</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Fine data</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="exchange.html">Exchange Rates</a>
+                    <a href="news.html">News</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +251 991 168 917</p>
+                    <p><i class="fas fa-phone"></i> +251 701 327 86</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fine data. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
