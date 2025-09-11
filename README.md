@@ -24,6 +24,3 @@ We focus on bringing **clarity through numbers**. Here’s what you’ll find on
 
 ---
 
-## 📂 Project Structure
-The project is organized as follows:
-
