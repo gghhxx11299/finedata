@@ -1,1 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Data - Finedata Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1569511163066-4686d38ce9d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Economic Sections */
+        .economic-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .data-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-card h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-detail {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .source-note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-placeholder {
+            background-color: var(--light-bg);
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            color: #718096;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html" class="active">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h2>Economic Data</h2>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Economic Data</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Infrastructure Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-road"></i> Infrastructure</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-road"></i> Road Network</h4>
+                    <div class="stat-value">~165,000 km</div>
+                    <div class="stat-detail">Ethiopia's road network has expanded rapidly from 127,000 km in 2019</div>
+                    <p class="stat-detail">The government has built thousands of km of new paved roads in recent years, including major corridors connecting interior regions.</p>
+                    <p class="stat-detail"><strong>Note:</strong> Many rural areas still lack all-weather roads.</p>
+                    <p class="source-note">Source: Ministry of Transport, 2022</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-tower-cell"></i> Telecommunications</h4>
+                    <div class="stat-value">~100%</div>
+                    <div class="stat-detail">Mobile population coverage by Ethio telecom and new private entrants</div>
+                    
+                    <div class="stat-value">16.7%</div>
+                    <div class="stat-detail">Internet usage as of early 2023, though rapidly rising</div>
+                    
+                    <p class="stat-detail">Mobile subscriptions now exceed the population (several SIMs per person), but data penetration remains low. Fixed-line broadband is rare.</p>
+                    <p class="source-note">Source: Ethio Telecom, 2023</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Poverty and Living Standards Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Poverty and Living Standards</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-house-circle-exclamation"></i> Poverty Rates</h4>
+                    <div class="stat-value">30-40%</div>
+                    <div class="stat-detail">Below $3.20/day (2011 PPP) according to World Bank estimates</div>
+                    
+                    <div class="stat-value"><5%</div>
+                    <div class="stat-detail">Extreme poverty (below $1.90/day)</div>
+                    
+                    <p class="stat-detail">Rural poverty is much higher than urban. No recent official survey is available post-2015.</p>
+                    <p class="source-note">Source: World Bank, recent estimates</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-line"></i> Income Inequality</h4>
+                    <div class="stat-value">31.1</div>
+                    <div class="stat-detail">Gini coefficient (2021), indicating moderate inequality</div>
+                    
+                    <p class="stat-detail">Income inequality has risen only modestly; it remains lower than many African peers.</p>
+                    <p class="source-note">Source: World Factbook, 2021</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-globe"></i> Human Development Index</h4>
+                    <div class="stat-value">0.488</div>
+                    <div class="stat-detail">Placing Ethiopia in the Low HDI category (UNDP 2021)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Life expectancy:</strong> ~68 years for men, ~70 for women (2022)<br>
+                        <strong>Education:</strong> Mean schooling around 3-4 years<br>
+                        <strong>GNI per capita:</strong> ~$2,600 (nominal) or ~$5,000 (PPP)
+                    </div>
+                    <p class="source-note">Source: UNDP, 2021</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-handshake"></i> Access to Services</h4>
+                    <div class="stat-value">50%</div>
+                    <div class="stat-detail">Access to basic drinking water supply</div>
+                    
+                    <div class="stat-value">9%</div>
+                    <div class="stat-detail">Access to basic sanitation facilities</div>
+                    
+                    <div class="stat-value">22%</div>
+                    <div class="stat-detail">Open defecation nationwide (mostly rural)</div>
+                    
+                    <div class="stat-detail">
+                        Only ~44% of rural health clinics have reliable electricity, and health worker density is low (≈1 per 2,000 people).
+                    </div>
+                    <p class="source-note">Source: UNICEF, World Bank</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business and Entrepreneurship Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-business-time"></i> Business and Entrepreneurship</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-building"></i> Enterprise Formation</h4>
+                    <p class="stat-detail">Precise figures on new business registrations are not readily published. Pre-reform data suggest very few new firms are formally registered each year relative to the growing population.</p>
+                    <p class="stat-detail">Informal micro-enterprises (especially in trade and services) dominate.</p>
+                    <p class="source-note">Source: Central Statistical Agency</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-bar"></i> Ease of Doing Business</h4>
+                    <div class="stat-value">159/190</div>
+                    <div class="stat-detail">Ethiopia's ranking in the 2019 Doing Business report</div>
+                    
+                    <p class="stat-detail">Reflects lengthy procedures and high costs (e.g. many licenses, delays in getting construction permits, limited credit access).</p>
+                    <p class="stat-detail">Reform efforts are ongoing but impact has been limited so far.</p>
+                    <p class="source-note">Source: World Bank, 2019</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-university"></i> Financial Inclusion</h4>
+                    <div class="stat-value">45%</div>
+                    <div class="stat-detail">Adults with a formal bank account</div>
+                    
+                    <p class="stat-detail">Leaving a large informal sector. MFIs are active in rural areas, but credit remains scarce for small entrepreneurs.</p>
+                    <p class="stat-detail">Mobile money services began in 2022 (by new operators) and may soon expand access.</p>
+                    <p class="source-note">Source: National Bank of Ethiopia</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-store-slash"></i> Informal Economy</h4>
+                    <div class="stat-value">60-80%</div>
+                    <div class="stat-detail">Estimated share of non-agricultural employment</div>
+                    
+                    <p class="stat-detail">Especially in urban areas – though no official data is available.</p>
+                    <p class="stat-detail">The government cites a large "ghost workers" problem, and many micro-businesses operate outside formal regulation.</p>
+                    <p class="source-note">Source: Industry reports and estimates</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
+            <p>Our economic data is compiled from the following official and multilateral sources:</p>
+            <ul style="margin: 1rem 0 1rem 2rem; line-height: 1.8;">
+                <li>Ethiopia's Central Statistical Agency</li>
+                <li>Ministry of Finance</li>
+                <li>National Bank of Ethiopia and its publications</li>
+                <li>IMF and World Bank estimates and forecasts</li>
+                <li>UN agencies (UNICEF) and bilateral sources</li>
+                <li>Industry reports (World Bank, African Union, Addis Standard)</li>
+            </ul>
+            <p>We strive to provide the most accurate and up-to-date information available.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedata</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="news.html">News</a>
+                    <a href="exchange.html">Exchange rates</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@finedata.com</p>
+                    <p><i class="fas fa-phone"></i> +251 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Finedata. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
