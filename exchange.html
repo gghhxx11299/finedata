@@ -1,1 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rates - Finedata Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1604594849809-dfedbc827105?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Exchange Rate Sections */
+        .exchange-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .data-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-card h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-detail {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .source-note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Currency trend indicators */
+        .trend-up {
+            color: #38a169;
+        }
+
+        .trend-down {
+            color: #e53e3e;
+        }
+
+        .trend-neutral {
+            color: #718096;
+        }
+
+        /* Filter controls */
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-controls select, .filter-controls input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange-rates.html" class="active">Exchange Rates</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h2>Exchange Rates</h2>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Exchange Rates</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Current Rates Section -->
+        <section class="exchange-section">
+            <h3 class="section-title"><i class="fas fa-chart-line"></i> Current Exchange Rates (ETB)</h3>
+            <p>Latest exchange rates for Ethiopian Birr against major world currencies. Values represent how much foreign currency 1 ETB can buy.</p>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-pound-sign"></i> British Pound (GBP)</h4>
+                    <div class="stat-value">0.005194</div>
+                    <div class="stat-detail"><span class="trend-down"><i class="fas fa-arrow-down"></i> -0.44%</span> from yesterday</div>
+                    <div class="stat-detail">1 GBP ≈ 192.53 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-dollar-sign"></i> US Dollar (USD)</h4>
+                    <div class="stat-value">0.007036</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.59%</span> from yesterday</div>
+                    <div class="stat-detail">1 USD ≈ 142.12 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-dollar-sign"></i> Australian Dollar (AUD)</h4>
+                    <div class="stat-value">0.01057</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.09%</span> from yesterday</div>
+                    <div class="stat-detail">1 AUD ≈ 94.61 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-yen-sign"></i> Japanese Yen (JPY)</h4>
+                    <div class="stat-value">1.030</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.29%</span> from yesterday</div>
+                    <div class="stat-detail">1 JPY ≈ 0.97 ETB</div>
+                </div>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-yuan-sign"></i> Chinese Yuan (CNY)</h4>
+                    <div class="stat-value">0.05228</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.21%</span> from yesterday</div>
+                    <div class="stat-detail">1 CNY ≈ 19.13 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-dollar-sign"></i> Hong Kong Dollar (HKD)</h4>
+                    <div class="stat-value">0.05478</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.22%</span> from yesterday</div>
+                    <div class="stat-detail">1 HKD ≈ 18.25 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-lira-sign"></i> Turkish Lira (TRY)</h4>
+                    <div class="stat-value">0.2905</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.14%</span> from yesterday</div>
+                    <div class="stat-detail">1 TRY ≈ 3.44 ETB</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-rand"></i> South African Rand (ZAR)</h4>
+                    <div class="stat-value">0.1230</div>
+                    <div class="stat-detail"><span class="trend-up"><i class="fas fa-arrow-up"></i> +0.33%</span> from yesterday</div>
+                    <div class="stat-detail">1 ZAR ≈ 8.13 ETB</div>
+                </div>
+            </div>
+            
+            <p class="source-note">Last updated: September 11, 2025. Source: National Bank of Ethiopia</p>
+        </section>
+
+        <!-- Historical Data Section -->
+        <section class="exchange-section">
+            <h3 class="section-title"><i class="fas fa-history"></i> Historical Exchange Rates</h3>
+            <p>Historical exchange rate data for Ethiopian Birr against major currencies (2020-2025).</p>
+            
+            <div class="filter-controls">
+                <div>
+                    <label for="currency-select">Select Currency:</label>
+                    <select id="currency-select">
+                        <option value="all">All Currencies</option>
+                        <option value="GBP">British Pound (GBP)</option>
+                        <option value="USD">US Dollar (USD)</option>
+                        <option value="AUD">Australian Dollar (AUD)</option>
+                        <option value="JPY">Japanese Yen (JPY)</option>
+                        <option value="CNY">Chinese Yuan (CNY)</option>
+                        <option value="HKD">Hong Kong Dollar (HKD)</option>
+                        <option value="TRY">Turkish Lira (TRY)</option>
+                        <option value="ZAR">South African Rand (ZAR)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date-from">From:</label>
+                    <input type="date" id="date-from" value="2020-09-01">
+                </div>
+                <div>
+                    <label for="date-to">To:</label>
+                    <input type="date" id="date-to" value="2025-09-11">
+                </div>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>GBP</th>
+                            <th>USD</th>
+                            <th>AUD</th>
+                            <th>JPY</th>
+                            <th>CNY</th>
+                            <th>HKD</th>
+                            <th>TRY</th>
+                            <th>ZAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2020-09-01</td>
+                            <td>0.005435</td>
+                            <td>0.019354</td>
+                            <td>0.011475</td>
+                            <td>2.7921</td>
+                            <td>0.1064</td>
+                            <td>0.1217</td>
+                            <td>0.5730</td>
+                            <td>0.3319</td>
+                        </tr>
+                        <tr>
+                            <td>2020-09-02</td>
+                            <td>0.005420</td>
+                            <td>0.019285</td>
+                            <td>0.011438</td>
+                            <td>2.7820</td>
+                            <td>0.1062</td>
+                            <td>0.1211</td>
+                            <td>0.5708</td>
+                            <td>0.3305</td>
+                        </tr>
+                        <tr>
+                            <td>2020-09-03</td>
+                            <td>0.005410</td>
+                            <td>0.019260</td>
+                            <td>0.011420</td>
+                            <td>2.7755</td>
+                            <td>0.1060</td>
+                            <td>0.1209</td>
+                            <td>0.5697</td>
+                            <td>0.3300</td>
+                        </tr>
+                        <tr>
+                            <td>2024-12-15</td>
+                            <td>0.005320</td>
+                            <td>0.007120</td>
+                            <td>0.01045</td>
+                            <td>1.015</td>
+                            <td>0.05180</td>
+                            <td>0.05420</td>
+                            <td>0.2850</td>
+                            <td>0.1200</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-09</td>
+                            <td>0.005210</td>
+                            <td>0.006980</td>
+                            <td>0.01055</td>
+                            <td>1.026</td>
+                            <td>0.05215</td>
+                            <td>0.05460</td>
+                            <td>0.2899</td>
+                            <td>0.1225</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-10</td>
+                            <td>0.005217</td>
+                            <td>0.006995</td>
+                            <td>0.01056</td>
+                            <td>1.027</td>
+                            <td>0.05217</td>
+                            <td>0.05466</td>
+                            <td>0.2901</td>
+                            <td>0.1226</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-11</td>
+                            <td>0.005194</td>
+                            <td>0.007036</td>
+                            <td>0.01057</td>
+                            <td>1.030</td>
+                            <td>0.05228</td>
+                            <td>0.05478</td>
+                            <td>0.2905</td>
+                            <td>0.1230</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p class="source-note">Source: National Bank of Ethiopia, IMF Data</p>
+        </section>
+
+        <!-- Exchange Rate Trends Section -->
+        <section class="exchange-section">
+            <h3 class="section-title"><i class="fas fa-chart-area"></i> Exchange Rate Trends</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-line"></i> ETB Performance (5 Years)</h4>
+                    <div class="stat-detail">The Ethiopian Birr has seen fluctuations against major currencies over the past 5 years:</div>
+                    <div class="stat-detail"><span class="trend-down"><i class="fas fa-arrow-down"></i> GBP: -4.4%</span> since 2020</div>
+                    <div class="stat-detail"><span class="trend-down"><i class="fas fa-arrow-down"></i> USD: -63.6%</span> since 2020</div>
+                    <div class="stat-detail"><span class="trend-down"><i class="fas fa-arrow-down"></i> JPY: -63.1%</span> since 2020</div>
+                    <div class="stat-detail"><span class="trend-down"><i class="fas fa-arrow-down"></i> CNY: -50.9%</span> since 2020</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-info-circle"></i> Key Factors</h4>
+                    <div class="stat-detail">Exchange rates are influenced by:</div>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Inflation differentials</li>
+                        <li>Interest rate changes</li>
+                        <li>Economic growth rates</li>
+                        <li>Political stability</li>
+                        <li>Trade balances</li>
+                        <li>Foreign investment flows</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section class="exchange-section">
+            <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
+            <p>Our exchange rate data is compiled from the following official sources:</p>
+            <ul style="margin: 1rem 0 1rem 2rem; line-height: 1.8;">
+                <li>National Bank of Ethiopia</li>
+                <li>International Monetary Fund (IMF)</li>
+                <li>World Bank databases</li>
+                <li>Central banks of respective countries</li>
+            </ul>
+            <p>We strive to provide the most accurate and up-to-date information available.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedata</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="exchange-rates.html">Exchange Rates</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@finedata.com</p>
+                    <p><i class="fas fa-phone"></i> +251 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Finedata. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Simple filtering functionality for demonstration
+        document.getElementById('currency-select').addEventListener('change', function() {
+            alert('Filtering by: ' + this.value + '\nIn a real application, this would filter the table data.');
+        });
+    </script>
+</body>
+</html>
