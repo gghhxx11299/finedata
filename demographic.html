@@ -1,1 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demographic Data - Finedata Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1571835782488-179d2c6eecb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Demographic Sections */
+        .demographic-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .data-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-card h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-detail {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .source-note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html" class="active">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h2>Demographic Data</h2>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Demographic Data</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Population Growth Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-users"></i> Population Growth (2020-2025)</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-line"></i> Total Population</h4>
+                    <div class="stat-value">132.06M</div>
+                    <div class="stat-detail">2024 population (mid-year estimate)</div>
+                    <p class="stat-detail">Ethiopia's population rose from about 118.92 million in 2020 to ~132.06 million in 2024, an 11% increase over 5 years.</p>
+                    <p class="source-note">Source: World Bank/UN estimates via FRED</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-running"></i> Annual Growth Rate</h4>
+                    <div class="stat-value">2.58%</div>
+                    <div class="stat-detail">2024 growth rate (gradually slowing)</div>
+                    <p class="stat-detail">The growth rate has slowed from 2.71% in 2020 to 2.58% in 2024, showing a modest deceleration.</p>
+                    <p class="source-note">Source: World Bank/UN estimates</p>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.5rem 0 1rem;">Population Trends (2020-2024)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Population (million)</th>
+                        <th>Annual Growth (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>118.918</td>
+                        <td>2.71</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>122.139</td>
+                        <td>2.67</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>125.384</td>
+                        <td>2.62</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>128.692</td>
+                        <td>2.60</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>132.060</td>
+                        <td>2.58</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Urban vs Rural Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-city"></i> Urban vs Rural Population</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-building"></i> Urban Population</h4>
+                    <div class="stat-value">22.1%</div>
+                    <div class="stat-detail">2024 urban population share</div>
+                    <p class="stat-detail">Projected to reach 22.5% by 2025, up from 20.6% in 2020.</p>
+                    <p class="stat-detail">Urban population grows at about 4-5% per year.</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-tree"></i> Rural Population</h4>
+                    <div class="stat-value">77.9%</div>
+                    <div class="stat-detail">2024 rural population share</div>
+                    <p class="stat-detail">Projected to decline to 77.5% by 2025, down from 79.4% in 2020.</p>
+                    <p class="stat-detail">Rural population grows at about 2% per year.</p>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.5rem 0 1rem;">Urban-Rural Distribution (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Urban Population (%)</th>
+                        <th>Rural Population (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>20.6</td>
+                        <td>79.4</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>22.2</td>
+                        <td>77.8</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>21.3</td>
+                        <td>78.7</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>21.7</td>
+                        <td>78.3</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>22.1</td>
+                        <td>77.9</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>22.5</td>
+                        <td>77.5</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: UN Population Division, CIA World Factbook</p>
+        </section>
+
+        <!-- Age and Sex Structure Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-user-friends"></i> Age and Sex Structure</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-birthday-cake"></i> Median Age</h4>
+                    <div class="stat-value">19.1 years</div>
+                    <div class="stat-detail">2025 projected median age</div>
+                    <p class="stat-detail">Rising from 18.1 years in 2020, reflecting continued high fertility.</p>
+                    <p class="stat-detail">Ethiopia has a very young population compared to the worldwide median age of 30+ years.</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-venus-mars"></i> Sex Ratio</h4>
+                    <div class="stat-value">1.00:1</div>
+                    <div class="stat-detail">Males per female</div>
+                    <p class="stat-detail">Population is nearly evenly split by sex (approx. 50.3% male, 49.7% female).</p>
+                    <p class="stat-detail">The slight male advantage at birth (~1.03:1) evens out in adulthood.</p>
+                </div>
+            </div>
+            <p class="source-note">Source: Worldometer/UN data, CIA World Factbook</p>
+        </section>
+
+        <!-- Literacy and Education Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-book-open"></i> Literacy and Education</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-book"></i> Adult Literacy</h4>
+                    <div class="stat-value">52%</div>
+                    <div class="stat-detail">Age 15+ literacy rate (both sexes)</div>
+                    <p class="stat-detail">Improved from ~47% in 2016 to ~52% by 2017.</p>
+                    <p class="stat-detail">Female literacy significantly lags behind male literacy.</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-graduation-cap"></i> Youth Literacy</h4>
+                    <div class="stat-value">52%</div>
+                    <div class="stat-detail">Ages 15-24 literacy rate</div>
+                    <p class="stat-detail">About 59% for young men vs. 44% for young women.</p>
+                    <p class="stat-detail">Shows significant gender disparity in education.</p>
+                </div>
+            </div>
+            <p class="source-note">Source: UNESCO/World Bank data</p>
+        </section>
+
+        <!-- Labor Force Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force and Employment</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-user-tie"></i> Labor Force Participation</h4>
+                    <div class="stat-value">50%</div>
+                    <div class="stat-detail">Of people aged 15+ are active in labor force</div>
+                    <p class="stat-detail">Men: ~70% participation rate</p>
+                    <p class="stat-detail">Women: ~30-35% participation rate</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-tractor"></i> Employment by Sector</h4>
+                    <div class="stat-detail">Agriculture: 60-63%</div>
+                    <div class="stat-detail">Services: 27-30%</div>
+                    <div class="stat-detail">Industry: ~10%</div>
+                    <p class="stat-detail">Economy remains heavily agrarian with gradual shift toward services.</p>
+                </div>
+            </div>
+            <p class="source-note">Source: ILO/World Bank estimates, Ethiopian Labour Survey (ESS)</p>
+        </section>
+
+        <!-- Ethnic and Linguistic Composition Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-globe-africa"></i> Ethnic and Linguistic Composition</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-users"></i> Ethnic Groups</h4>
+                    <div class="stat-detail">Oromo: ~35.8%</div>
+                    <div class="stat-detail">Amhara: ~24.1%</div>
+                    <div class="stat-detail">Somali: ~7.2%</div>
+                    <div class="stat-detail">Tigray: ~5.7%</div>
+                    <div class="stat-detail">Sidama: ~4.1%</div>
+                    <div class="stat-detail">Other: ~13.5%</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-language"></i> Languages</h4>
+                    <div class="stat-detail">Oromo: ~33.8%</div>
+                    <div class="stat-detail">Amharic: ~29.3%</div>
+                    <div class="stat-detail">Somali: ~6.2%</div>
+                    <div class="stat-detail">Tigrigna: ~5.9%</div>
+                    <div class="stat-detail">Sidamo: ~4.0%</div>
+                    <div class="stat-detail">Other: ~20.8%</div>
+                </div>
+            </div>
+            <p class="source-note">Source: CIA World Factbook (2007 census and later estimates)</p>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
+            <p>Our demographic data is compiled from the following official and international sources:</p>
+            <ul style="margin: 1rem 0 1rem 2rem; line-height: 1.8;">
+                <li>World Bank/UN Population Division</li>
+                <li>FRED Economic Data</li>
+                <li>CIA World Factbook</li>
+                <li>UNESCO/World Bank literacy statistics</li>
+                <li>ILO/World Bank labor estimates</li>
+                <li>Ethiopian Labour Survey (ESS)</li>
+                <li>Central Statistical Agency of Ethiopia</li>
+            </ul>
+            <p>We strive to provide the most accurate and up-to-date information available.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedata</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="news.html">News</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@finedata.com</p>
+                    <p><i class="fas fa-phone"></i> +251 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Finedata. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
