@@ -9,7 +9,7 @@ Our mission is to make data **accessible, visual, and easy to understand** for r
 
 ## 🌐 Live Website
 Check out the live site here:  
-👉 https://gghhxx11299.github.io/finedata/index.html
+👉 https://gghhxx11299.github.io/finedata
 
 ---
 
