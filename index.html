@@ -1,1 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finedata Ethiopia - Reliable Data & Statistics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* What We Offer Section */
+        .offer-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .offer-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .offer-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Why Choose Us Section */
+        .why-section {
+            background-color: var(--white);
+            padding: 3rem 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Data Sources Section */
+        .sources-section {
+            padding: 3rem 0;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .source-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .source-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Quick Links Section */
+        .links-section {
+            background-color: var(--white);
+            padding: 3rem 0;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-card {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .link-card:hover {
+            background-color: var(--light-bg);
+            border-color: var(--secondary-color);
+        }
+
+        .link-card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .link-card a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange-rates.html">Exchange Rates</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Ethiopia's Premier Data Hub</h2>
+            <p>We provide reliable, up-to-date statistics and insights to help you understand Ethiopia's trends in population, economy, agriculture, and more.</p>
+            <a href="#what-we-offer" class="btn">Explore Our Data</a>
+        </div>
+    </section>
+
+    <!-- What We Offer Section -->
+    <section id="what-we-offer" class="offer-section">
+        <div class="container">
+            <h2 class="section-title">What We Offer</h2>
+            
+            <div class="offer-grid">
+                <div class="offer-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>National Statistics</h3>
+                    <p>Official data on demographics, economy, and development from trusted Ethiopian and international sources.</p>
+                </div>
+                
+                <div class="offer-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Data Visualization</h3>
+                    <p>Interactive charts and dashboards to make complex data easy to understand and analyze.</p>
+                </div>
+                
+                <div class="offer-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Research Reports</h3>
+                    <p>In-depth reports and summaries based on trusted data sources for informed decision-making.</p>
+                </div>
+                
+                <div class="offer-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Custom Insights</h3>
+                    <p>Tailored statistics for businesses, NGOs, researchers, and students with specific data needs.</p>
+                </div>
+                
+                <div class="offer-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Open Access Data</h3>
+                    <p>Free access to datasets for analysis and learning to promote data-driven understanding of Ethiopia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Finedata</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Reliable Data</h3>
+                    <p>We source information only from trusted, verified sources to ensure accuracy.</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Easy-to-Use Dashboards</h3>
+                    <p>Our visual interfaces make complex data accessible to everyone.</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Regularly Updated</h3>
+                    <p>We continuously update our databases with the latest available information.</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-globe-africa"></i>
+                    <h3>Focused on Ethiopia</h3>
+                    <p>Specialized in Ethiopian data with global context for comparison.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources Section -->
+    <section class="sources-section">
+        <div class="container">
+            <h2 class="section-title">Our Data Sources</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">We compile data from reputable national and international organizations to ensure accuracy and reliability.</p>
+            
+            <div class="sources-grid">
+                <div class="source-card">
+                    <h4>International Monetary Fund (IMF)</h4>
+                    <p>Economic indicators, fiscal policies, and financial stability data</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>World Bank</h4>
+                    <p>Development indicators, poverty statistics, and economic trends</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>Ethiopian Statistical Service</h4>
+                    <p>Official national statistics on population, economy, and social indicators</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>National Bank of Ethiopia</h4>
+                    <p>Financial data, monetary policy, and exchange rate information</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>Trading Economics</h4>
+                    <p>Economic indicators, forecasts, and historical data</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>Food and Agriculture Organization (FAO)</h4>
+                    <p>Agricultural production, food security, and rural development data</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>United Nations Development Programme (UNDP)</h4>
+                    <p>Human development indicators and sustainable development goals</p>
+                </div>
+                
+                <div class="source-card">
+                    <h4>Ministry of Agriculture</h4>
+                    <p>Agricultural statistics, crop production, and rural development data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="links-section">
+        <div class="container">
+            <h2 class="section-title">Quick Access</h2>
+            
+            <div class="links-grid">
+                <div class="link-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <a href="economic.html">Economic Data</a>
+                </div>
+                
+                <div class="link-card">
+                    <i class="fas fa-users"></i>
+                    <a href="demographic.html">Demographic Data</a>
+                </div>
+                
+                <div class="link-card">
+                    <i class="fas fa-tractor"></i>
+                    <a href="agricultural.html">Agricultural Data</a>
+                </div>
+                
+                <div class="link-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <a href="exchange-rates.html">Exchange Rates</a>
+                </div>
+                
+                <div class="link-card">
+                    <i class="fas fa-newspaper"></i>
+                    <a href="news.html">News & Updates</a>
+                </div>
+                
+                <div class="link-card">
+                    <i class="fas fa-hands-helping"></i>
+                    <a href="support.html">Support Center</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h3>Start Exploring Ethiopia's Data Today</h3>
+            <p>Access reliable statistics, create visualizations, and gain insights to support your research, business, or studies.</p>
+            
+            <div class="cta-buttons">
+                <a href="economic.html" class="btn">Browse Data</a>
+                <a href="support.html" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedata</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="exchange.html">Exchange Rates</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@finedata.com</p>
+                    <p><i class="fas fa-phone"></i> +251 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Finedata. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
