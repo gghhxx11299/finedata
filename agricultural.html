@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agricultural Data - Finedata Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1625246335526-871829f7968b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Agricultural Sections */
+        .agricultural-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .data-card {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .data-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-card h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 0.5rem 0;
+        }
+
+        .stat-detail {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .source-note {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: #cbd5e0;
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-header h2 {
+                font-size: 2rem;
+            }
+            
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/2c5282/ffffff?text=FD" alt="Finedata Logo">
+                    <h1>Finedata</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html" class="active">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h2>Agricultural Data</h2>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Agricultural Data</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Major Crops Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-seedling"></i> Major Crops Production</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-bread-slice"></i> Teff Production</h4>
+                    <div class="stat-value">5.6M tons</div>
+                    <div class="stat-detail">2021 main (Meher) season production</div>
+                    <div class="stat-detail">Grown on ~2.93 million hectares by 6.65 million smallholders</div>
+                    <div class="stat-detail">Average yield: ~1.9 t/ha</div>
+                    <p class="stat-detail">Teff occupies ~30% of Ethiopia's cereal area and ~20% of grain output.</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-corn"></i> Maize Production</h4>
+                    <div class="stat-value">10.75M tons</div>
+                    <div class="stat-detail">2021/22 production (Ethiopia's top grain)</div>
+                    <div class="stat-detail">Grown on ~2.56 million hectares</div>
+                    <div class="stat-detail">Average yield: ~4.19 t/ha</div>
+                    <p class="stat-detail">Oromia and Amhara are the leading maize-producing regions.</p>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.5rem 0 1rem;">Crop Production Statistics (2020-2023)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Crop</th>
+                        <th>Season (MY)</th>
+                        <th>Area Harvested</th>
+                        <th>Production</th>
+                        <th>Yield</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Teff</td>
+                        <td>2020/21</td>
+                        <td>~2.93M ha</td>
+                        <td>~5.6M t</td>
+                        <td>~1.9 t/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Maize</td>
+                        <td>2020/21</td>
+                        <td>2.36M ha</td>
+                        <td>10.02M t</td>
+                        <td>4.24 t/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Maize</td>
+                        <td>2021/22</td>
+                        <td>2.56M ha</td>
+                        <td>10.75M t</td>
+                        <td>4.19 t/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Maize</td>
+                        <td>2022/23</td>
+                        <td>2.55M ha</td>
+                        <td>10.20M t</td>
+                        <td>4.00 t/ha</td>
+                    </tr>
+                    <tr>
+                        <td>Maize</td>
+                        <td>2023/24</td>
+                        <td>2.50M ha</td>
+                        <td>10.00M t</td>
+                        <td>4.00 t/ha</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: USDA Foreign Agricultural Service</p>
+        </section>
+
+        <!-- Other Major Crops Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-wheat-alt"></i> Other Major Crops</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-wheat"></i> Wheat</h4>
+                    <div class="stat-value">5.8-6.4M tons/year</div>
+                    <div class="stat-detail">Production (2020-2025)</div>
+                    <div class="stat-detail">Area: ~2.0-2.2M ha</div>
+                    <div class="stat-detail">Yield: ~3.0-3.2 t/ha</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-leaf"></i> Sorghum</h4>
+                    <div class="stat-value">4.1-4.4M tons/year</div>
+                    <div class="stat-detail">Production (2020-2025)</div>
+                    <div class="stat-detail">Area: ~1.5-1.7M ha</div>
+                    <div class="stat-detail">Yield: ~2.6-2.8 t/ha</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-seedling"></i> Barley</h4>
+                    <div class="stat-value">2.3-2.5M tons/year</div>
+                    <div class="stat-detail">Production (2020-2025)</div>
+                    <div class="stat-detail">Area: ~0.9-1.0M ha</div>
+                    <div class="stat-detail">Yield: ~2.5 t/ha</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-grain"></i> Millet</h4>
+                    <div class="stat-value">1.1M tons/year</div>
+                    <div class="stat-detail">Production (2020-2025)</div>
+                    <div class="stat-detail">Area: ~0.4M ha</div>
+                </div>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-mug-hot"></i> Coffee</h4>
+                    <div class="stat-value">5.63M bags</div>
+                    <div class="stat-detail">2023/24 production (60-kg bags)</div>
+                    <div class="stat-detail">Exports reached record value of over $1.7 billion</div>
+                    <div class="stat-detail">Oromia accounts for ~59% of coffee output</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-seedling"></i> Pulses & Oilseeds</h4>
+                    <div class="stat-detail">Ethiopia is a top global exporter of pulses and seeds</div>
+                    <div class="stat-detail">Sesame seed exports: ~107.7M kg worth $183M in 2022</div>
+                </div>
+            </div>
+            <p class="source-note">Source: USDA data, Ethiopian Central Statistical Agency</p>
+        </section>
+
+        <!-- Livestock Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-cow"></i> Livestock Population</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-cow"></i> Cattle</h4>
+                    <div class="stat-value">61.5M</div>
+                    <div class="stat-detail">Africa's largest livestock herd</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-sheep"></i> Sheep</h4>
+                    <div class="stat-value">33.0M</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-goat"></i> Goats</h4>
+                    <div class="stat-value">38.9M</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-camel"></i> Camels</h4>
+                    <div class="stat-value">1.8M</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-kiwi-bird"></i> Poultry</h4>
+                    <div class="stat-value">59.0M</div>
+                </div>
+            </div>
+            
+            <p class="stat-detail">80% of these are indigenous breeds. The sector employs ~60-70% of rural households.</p>
+            <p class="source-note">Source: Central Statistical Agency of Ethiopia</p>
+        </section>
+
+        <!-- Land Use and Farm Size Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-tractor"></i> Land Use and Farm Size</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-border-all"></i> Cultivated Area</h4>
+                    <div class="stat-value">15-16M ha</div>
+                    <div class="stat-detail">Private peasant holdings cropland (2019/20)</div>
+                    <div class="stat-detail">~12-13M ha annually cultivated</div>
+                    <div class="stat-detail">Irrigation remains very limited (few percent of total)</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-home"></i> Farm Size</h4>
+                    <div class="stat-value">0.84 ha</div>
+                    <div class="stat-detail">Average holding per household (2020/21)</div>
+                    <div class="stat-detail">Over 40% of rural farm households have <0.5 ha</div>
+                    <div class="stat-detail"><1% exceed 5 ha</div>
+                </div>
+            </div>
+            <p class="source-note">Source: Ethiopian Central Statistical Agency surveys</p>
+        </section>
+
+        <!-- Agricultural Inputs Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-tools"></i> Agricultural Inputs and Challenges</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-vial"></i> Fertilizer Use</h4>
+                    <div class="stat-value">50-80 kg/ha</div>
+                    <div class="stat-detail">Average use on cultivated land</div>
+                    <div class="stat-detail">Government heavily subsidizes fertilizers (DAP, urea)</div>
+                    <div class="stat-detail">About half of smallholders report using any fertilizer</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-cog"></i> Mechanization</h4>
+                    <div class="stat-value">2-3 tractors</div>
+                    <div class="stat-detail">Per 10,000 ha of arable land</div>
+                    <div class="stat-detail">Most farmers use animal traction or hand tools</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-seedling"></i> Improved Seeds</h4>
+                    <div class="stat-detail">>50% of wheat area uses certified seed</div>
+                    <div class="stat-detail"><20% for teff uses certified seed</div>
+                    <div class="stat-detail">Informal (farm-saved) seeds remain common</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.5rem 0 1rem;">Sustainability Challenges</h4>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-erosion"></i> Soil Degradation</h4>
+                    <div class="stat-value">>10 t/ha/yr</div>
+                    <div class="stat-detail">Average soil loss in highlands without terraces</div>
+                    <div class="stat-detail">~70% of Ethiopia's land area is classified as degraded</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-tint"></i> Water Scarcity</h4>
+                    <div class="stat-detail">Agriculture is 95% rainfed</div>
+                    <div class="stat-detail">Only ~3% of cropland irrigated</div>
+                    <div class="stat-detail">Recurring droughts severely impact production</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-skull"></i> Crop Losses</h4>
+                    <div class="stat-value">10-15%</div>
+                    <div class="stat-detail">Post-harvest losses of grain output</div>
+                    <div class="stat-detail">Due to poor storage/transport and pest outbreaks</div>
+                </div>
+            </div>
+            <p class="source-note">Source: Various studies, FAO/UN databases</p>
+        </section>
+
+        <!-- Crop Prices Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-money-bill-wave"></i> Crop Prices (2024-2025)</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-bread-slice"></i> Teff</h4>
+                    <div class="stat-value">$900-1,000/MT</div>
+                    <div class="stat-detail">One of Ethiopia's most expensive staples</div>
+                    <div class="stat-detail">Roughly double local wheat prices</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-corn"></i> Maize</h4>
+                    <div class="stat-value">$340-350/MT</div>
+                    <div class="stat-detail">Historically much cheaper than teff</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-leaf"></i> Sorghum</h4>
+                    <div class="stat-value">$280-350/MT</div>
+                    <div class="stat-detail">Similar to or slightly above maize prices</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-wheat"></i> Wheat Flour</h4>
+                    <div class="stat-value">$500-600/MT</div>
+                    <div class="stat-detail">Lower than teff prices</div>
+                </div>
+            </div>
+            <p class="source-note">Source: Market price data</p>
+        </section>
+
+        <!-- Agricultural Economy Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-chart-pie"></i> Agricultural Economy</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-users"></i> Employment</h4>
+                    <div class="stat-value">70%</div>
+                    <div class="stat-detail">Of workforce employed in agriculture</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-industry"></i> GDP Contribution</h4>
+                    <div class="stat-value">30-35%</div>
+                    <div class="stat-detail">Agriculture's share of GDP (2020-24)</div>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-coins"></i> Agricultural Exports</h4>
+                    <div class="stat-value">$3.3B</div>
+                    <div class="stat-detail">Total agri-exports in 2022</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.5rem 0 1rem;">Top Agricultural Exports (2022)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Commodity</th>
+                        <th>Value</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Coffee</td>
+                        <td>$1.5-1.7B</td>
+                        <td>Top agricultural export (~30-33% of export earnings)</td>
+                    </tr>
+                    <tr>
+                        <td>Cut flowers</td>
+                        <td>$0.59B</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Fresh vegetables</td>
+                        <td>$0.25B</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Sesame seed</td>
+                        <td>$0.18B</td>
+                        <td>107.7M kg exported in 2022</td>
+                    </tr>
+                    <tr>
+                        <td>Pulses</td>
+                        <td>$0.14B</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: World Bank, U.S. trade data</p>
+        </section>
+
+        <!-- Data Sources Section -->
+        <section class="agricultural-section">
+            <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
+            <p>Our agricultural data is compiled from the following official and international sources:</p>
+            <ul style="margin: 1rem 0 1rem 2rem; line-height: 1.8;">
+                <li>Ethiopian Central Statistical Agency (CSA) surveys and bulletins</li>
+                <li>USDA Foreign Agricultural Service reports</li>
+                <li>World Bank and trade data</li>
+                <li>FAO/UN databases</li>
+                <li>Academic studies and research</li>
+            </ul>
+            <p>We strive to provide the most accurate and up-to-date information available.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedata</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="news.html">News</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@finedata.com</p>
+                    <p><i class="fas fa-phone"></i> +251 11 234 5678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Finedata. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
