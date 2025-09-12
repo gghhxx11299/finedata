@@ -5,29 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News - Finedats Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
         /* Global Styles */
         :root {
-            --primary-color: #2c5282;
-            --secondary-color: #3182ce;
-            --accent-color: #e53e3e;
-            --text-color: #2d3748;
-            --light-bg: #f7fafc;
-            --white: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --background-color: #0D1117;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--light-bg);
+            background-color: var(--background-color);
             color: var(--text-color);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
         }
 
@@ -40,11 +39,12 @@
 
         /* Header Styles */
         header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid var(--primary-accent);
         }
 
         nav {
@@ -66,8 +66,9 @@
         }
 
         .logo h1 {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             font-size: 1.8rem;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .nav-links {
@@ -84,7 +85,7 @@
         }
 
         .nav-links a:hover, .nav-links a.active {
-            color: var(--primary-color);
+            color: var(--primary-accent);
         }
 
         /* News Section */
@@ -95,8 +96,9 @@
         .section-title {
             text-align: center;
             margin-bottom: 30px;
-            color: var(--primary-color);
+            color: var(--primary-accent);
             font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .news-grid {
@@ -106,15 +108,17 @@
         }
 
         .news-card {
-            background-color: var(--white);
-            border-radius: 8px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             transition: transform 0.3s;
+            border: 1px solid var(--primary-accent);
         }
 
         .news-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .news-image {
@@ -130,7 +134,8 @@
         .news-title {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: var(--primary-color);
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
         }
 
         .news-excerpt {
@@ -144,22 +149,24 @@
             justify-content: space-between;
             margin-bottom: 15px;
             font-size: 0.85rem;
-            color: #718096;
+            color: #8b949e;
         }
 
         .read-more {
             display: inline-block;
             padding: 8px 15px;
-            background-color: var(--primary-color);
-            color: var(--white);
+            background-color: var(--primary-accent);
+            color: var(--background-color);
             text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: background-color 0.3s;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .read-more:hover {
-            background-color: var(--secondary-color);
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
         }
 
         .pdf-link {
@@ -167,16 +174,18 @@
             align-items: center;
             gap: 5px;
             padding: 8px 15px;
-            background-color: #e53e3e;
-            color: var(--white);
+            background-color: var(--secondary-accent);
+            color: var(--background-color);
             text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: background-color 0.3s;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .pdf-link:hover {
-            background-color: #c53030;
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
         }
 
         /* PDF Viewer Modal */
@@ -189,45 +198,48 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.9);
         }
 
         .modal-content {
             position: relative;
-            background-color: #fefefe;
+            background-color: var(--card-bg);
             margin: 2% auto;
             padding: 20px;
             width: 90%;
             max-width: 1000px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid var(--primary-accent);
         }
 
         .close {
-            color: #aaa;
+            color: var(--text-color);
             float: right;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s;
         }
 
         .close:hover {
-            color: #000;
+            color: var(--primary-accent);
         }
 
         .pdf-viewer {
             width: 100%;
             height: 80vh;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
         }
 
         /* Footer */
         footer {
-            background-color: var(--primary-color);
-            color: var(--white);
+            background-color: var(--card-bg);
+            color: var(--text-color);
             padding: 30px 0;
             margin-top: 50px;
+            border-top: 1px solid var(--primary-accent);
         }
 
         .footer-content {
@@ -245,17 +257,19 @@
         .footer-section h3 {
             margin-bottom: 15px;
             font-size: 1.3rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
         }
 
         .footer-section p, .footer-section a {
             margin-bottom: 10px;
-            color: #e2e8f0;
+            color: var(--text-color);
             text-decoration: none;
             display: block;
         }
 
         .footer-section a:hover {
-            text-decoration: underline;
+            color: var(--primary-accent);
         }
 
         .social-links {
@@ -266,13 +280,19 @@
 
         .social-links a {
             font-size: 1.2rem;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-accent);
         }
 
         .copyright {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--border-color);
         }
 
         /* Responsive Design */
@@ -280,10 +300,16 @@
             .nav-links {
                 gap: 15px;
                 font-size: 0.9rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .news-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
             }
         }
     </style>
