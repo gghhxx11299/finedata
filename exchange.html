@@ -160,6 +160,85 @@
             text-align: left;
         }
 
+        /* Currency Converter Styles */
+        .currency-converter {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .currency-converter h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .converter-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .swap-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .swap-button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .calculate-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .calculate-button:hover {
+            background-color: #c53030;
+        }
+
+        .result-box {
+            background-color: #ebf8ff;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 15px;
+            display: none;
+        }
+
         /* Charts Section */
         .charts-section {
             display: grid;
@@ -280,6 +359,10 @@
             .logo h1 {
                 font-size: 20px;
             }
+            
+            .converter-form {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -315,6 +398,61 @@
 
     <!-- Main Content -->
     <div class="container">
+        <!-- Currency Converter -->
+        <section class="currency-converter">
+            <h3>Currency Converter</h3>
+            <div class="converter-form">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fromCurrency">From</label>
+                    <select id="fromCurrency">
+                        <option value="ETB">ETB - Ethiopian Birr</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="AED">AED - UAE Dirham</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="KWD">KWD - Kuwaiti Dinar</option>
+                        <option value="SAR">SAR - Saudi Riyal</option>
+                    </select>
+                </div>
+                
+                <button class="swap-button" id="swapButton">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                
+                <div class="form-group">
+                    <label for="toCurrency">To</label>
+                    <select id="toCurrency">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="ETB" selected>ETB - Ethiopian Birr</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="AED">AED - UAE Dirham</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="KWD">KWD - Kuwaiti Dinar</option>
+                        <option value="SAR">SAR - Saudi Riyal</option>
+                    </select>
+                </div>
+                
+                <button class="calculate-button" id="calculateButton">Calculate</button>
+            </div>
+            
+            <div class="result-box" id="resultBox">
+                <span id="resultText"></span>
+            </div>
+        </section>
+
         <!-- Exchange Rates Table -->
         <section class="exchange-rates">
             <div class="date-info">
@@ -517,6 +655,58 @@
         </div>
     </footer>
     <script>
+        // Exchange rate data (using mid-rates from the table)
+        const exchangeRates = {
+            "ETB": 1,
+            "USD": 143.6171,
+            "EUR": 168.8721,
+            "GBP": 195.372,
+            "JPY": 0.9788,
+            "CNY": 20.2661,
+            "AED": 39.293,
+            "CAD": 104.1454,
+            "CHF": 180.9164,
+            "KWD": 472.4087,
+            "SAR": 38.4709
+        };
+
+        // DOM Elements
+        const amountInput = document.getElementById('amount');
+        const fromCurrencySelect = document.getElementById('fromCurrency');
+        const toCurrencySelect = document.getElementById('toCurrency');
+        const swapButton = document.getElementById('swapButton');
+        const calculateButton = document.getElementById('calculateButton');
+        const resultBox = document.getElementById('resultBox');
+        const resultText = document.getElementById('resultText');
+
+        // Swap currencies
+        swapButton.addEventListener('click', () => {
+            const temp = fromCurrencySelect.value;
+            fromCurrencySelect.value = toCurrencySelect.value;
+            toCurrencySelect.value = temp;
+        });
+
+        // Calculate conversion
+        calculateButton.addEventListener('click', () => {
+            const amount = parseFloat(amountInput.value);
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            const fromCurrency = fromCurrencySelect.value;
+            const toCurrency = toCurrencySelect.value;
+            
+            // Convert to ETB first, then to target currency
+            const amountInETB = amount * exchangeRates[fromCurrency];
+            const convertedAmount = amountInETB / exchangeRates[toCurrency];
+            
+            // Display result
+            resultText.textContent = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(4)} ${toCurrency}`;
+            resultBox.style.display = 'block';
+        });
+
         // Major Currencies Chart
         const majorCurrenciesCtx = document.getElementById('majorCurrenciesChart').getContext('2d');
         const majorCurrenciesChart = new Chart(majorCurrenciesCtx, {
