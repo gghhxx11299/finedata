@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support - Finesdatas Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
         /* Global Styles */
         :root {
-            --primary-color: #2c5282;
-            --secondary-color: #3182ce;
-            --accent-color: #e53e3e;
-            --text-color: #2d3748;
-            --light-bg: #f7fafc;
-            --white: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --background-color: #0D1117;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
         }
 
         * {
@@ -25,10 +24,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background-color: var(--light-bg);
+            background-color: var(--background-color);
         }
 
         .container {
@@ -40,11 +39,12 @@
 
         /* Header Styles */
         header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid var(--primary-accent);
         }
 
         nav {
@@ -65,8 +65,9 @@
         }
 
         .logo h1 {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .nav-links {
@@ -86,7 +87,12 @@
         }
 
         .nav-links a:hover {
-            color: var(--secondary-color);
+            color: var(--primary-accent);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-accent);
+            font-weight: 600;
         }
 
         .mobile-menu-btn {
@@ -95,21 +101,24 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--primary-color);
+            color: var(--primary-accent);
         }
 
         /* Page Header */
         .page-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            color: var(--white);
+            background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.8)), url('https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--text-color);
             padding: 3rem 0;
             text-align: center;
             margin-bottom: 2rem;
+            border-bottom: 1px solid var(--primary-accent);
         }
 
         .page-header h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
         }
 
         .breadcrumb {
@@ -120,38 +129,49 @@
 
         .breadcrumb li {
             margin: 0 0.5rem;
+            color: var(--text-color);
         }
 
         .breadcrumb li:not(:last-child)::after {
             content: ">";
             margin-left: 1rem;
+            color: var(--primary-accent);
         }
 
         .breadcrumb a {
-            color: var(--white);
+            color: var(--text-color);
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         .breadcrumb a:hover {
-            text-decoration: underline;
+            color: var(--primary-accent);
         }
 
         /* Support Sections */
         .support-section {
-            background-color: var(--white);
-            border-radius: 8px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            border: 1px solid var(--primary-accent);
+            transition: transform 0.2s;
+        }
+
+        .support-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .section-title {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .section-title i {
@@ -167,27 +187,30 @@
         }
 
         .contact-card {
-            background-color: var(--light-bg);
-            border-radius: 8px;
+            background-color: var(--background-color);
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             text-align: center;
             transition: transform 0.3s;
+            border: 1px solid var(--primary-accent);
         }
 
         .contact-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .contact-card i {
             font-size: 2.5rem;
-            color: var(--secondary-color);
+            color: var(--primary-accent);
             margin-bottom: 1rem;
         }
 
         .contact-card h4 {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .contact-info {
@@ -197,13 +220,14 @@
 
         .contact-link {
             display: inline-block;
-            color: var(--secondary-color);
+            color: var(--primary-accent);
             font-weight: 600;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         .contact-link:hover {
-            text-decoration: underline;
+            color: var(--secondary-accent);
         }
 
         /* FAQ Section */
@@ -214,13 +238,14 @@
         }
 
         .faq-question {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             margin-bottom: 0.5rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .faq-answer {
@@ -237,6 +262,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
+            color: var(--text-color);
         }
 
         .form-group input,
@@ -244,8 +270,10 @@
         .form-group select {
             width: 100%;
             padding: 0.8rem;
+            background-color: var(--background-color);
+            color: var(--text-color);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 8px;
             font-family: inherit;
         }
 
@@ -256,27 +284,30 @@
 
         .btn {
             display: inline-block;
-            background-color: var(--secondary-color);
-            color: white;
+            background-color: var(--primary-accent);
+            color: var(--background-color);
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            background-color: var(--primary-color);
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
         }
 
         /* Footer */
         footer {
-            background-color: var(--primary-color);
-            color: var(--white);
+            background-color: var(--card-bg);
+            color: var(--text-color);
             padding: 3rem 0 1.5rem;
             margin-top: 3rem;
+            border-top: 1px solid var(--primary-accent);
         }
 
         .footer-content {
@@ -289,20 +320,23 @@
         .footer-section h3 {
             margin-bottom: 1rem;
             font-size: 1.2rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
         }
 
         .footer-section p, .footer-section a {
             margin-bottom: 0.5rem;
-            color: #cbd5e0;
+            color: var(--text-color);
         }
 
         .footer-section a {
             display: block;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
         .footer-section a:hover {
-            color: var(--white);
+            color: var(--primary-accent);
         }
 
         .social-links {
@@ -313,24 +347,25 @@
 
         .social-links a {
             display: inline-block;
-            color: var(--white);
-            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            background-color: var(--background-color);
             width: 40px;
             height: 40px;
             border-radius: 50%;
             text-align: center;
             line-height: 40px;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--primary-accent);
+            box-shadow: 0 0 10px var(--primary-accent);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--border-color);
         }
 
         /* Responsive Design */
@@ -342,9 +377,11 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: var(--white);
-                box-shadow: var(--shadow);
+                background-color: var(--card-bg);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
                 padding: 1rem 0;
+                border-top: 1px solid var(--primary-accent);
+                border-bottom: 1px solid var(--primary-accent);
             }
             
             .nav-links.active {
@@ -432,8 +469,6 @@
                 </div>
             </div>
         </section>
-
-    
 
         <!-- FAQ Section -->
         <section class="support-section">
@@ -571,11 +606,13 @@
 
         // Form submission (prevent default for demo)
         const form = document.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for your message! In a real application, this would send your message to our support team.');
-            form.reset();
-        });
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for your message! In a real application, this would send your message to our support team.');
+                form.reset();
+            });
+        }
     </script>
 </body>
 </html>
