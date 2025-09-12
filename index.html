@@ -198,6 +198,119 @@
             margin-bottom: 1rem;
         }
 
+        /* Data Scarcity Section */
+        .scarcity-section {
+            padding: 3rem 0;
+            background-color: var(--light-bg);
+        }
+
+        .scarcity-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .scarcity-points {
+            margin-top: 2rem;
+        }
+
+        .scarcity-point {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .scarcity-point i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .scarcity-point h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .scarcity-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .data-availability-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 200px;
+            width: 100%;
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .chart-bar {
+            width: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .chart-bar span {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .chart-caption {
+            font-style: italic;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .free-access-message {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .free-access-message > i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .free-access-message h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .free-access-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .access-point {
+            padding: 1rem;
+        }
+
+        .access-point h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
         /* Data Sources Section */
         .sources-section {
             padding: 3rem 0;
@@ -386,6 +499,22 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .scarcity-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-availability-chart {
+                height: 150px;
+            }
+            
+            .chart-bar {
+                width: 40px;
+            }
+            
+            .chart-bar span {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
@@ -492,6 +621,96 @@
                     <h3>Focused on Ethiopia</h3>
                     <p>Specialized in Ethiopian data with global context for comparison.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Scarcity Section -->
+    <section class="scarcity-section">
+        <div class="container">
+            <h2 class="section-title">Our Approach to Data Scarcity</h2>
+            
+            <div class="scarcity-content">
+                <div class="scarcity-text">
+                    <p>In regions with data scarcity challenges, Finedatas employs innovative approaches to provide valuable insights:</p>
+                    
+                    <div class="scarcity-points">
+                        <div class="scarcity-point">
+                            <i class="fas fa-search-plus"></i>
+                            <div>
+                                <h3>Strategic Data Collection</h3>
+                                <p>We focus on collecting the most impactful data points that provide maximum insight with minimal resources.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="scarcity-point">
+                            <i class="fas fa-calculator"></i>
+                            <div>
+                                <h3>Statistical Modeling</h3>
+                                <p>Where complete datasets aren't available, we use proven statistical methods to extrapolate insights from limited samples.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="scarcity-point">
+                            <i class="fas fa-project-diagram"></i>
+                            <div>
+                                <h3>Multi-Source Integration</h3>
+                                <p>We combine fragmented data from various verified sources to create more complete pictures of trends and patterns.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="scarcity-point">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <h3>Transparent Limitations</h3>
+                                <p>We clearly indicate data limitations and confidence levels so users can make informed decisions about our findings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scarcity-visual">
+                    <div class="data-availability-chart">
+                        <div class="chart-bar" style="height: 80%;">
+                            <span>Economic Data</span>
+                        </div>
+                        <div class="chart-bar" style="height: 65%;">
+                            <span>Demographic Data</span>
+                        </div>
+                        <div class="chart-bar" style="height: 70%;">
+                            <span>Agricultural Data</span>
+                        </div>
+                        <div class="chart-bar" style="height: 60%;">
+                            <span>Regional Data</span>
+                        </div>
+                    </div>
+                    <p class="chart-caption">Our data completeness index across categories</p>
+                </div>
+            </div>
+            
+            <div class="free-access-message">
+                <i class="fas fa-unlock-alt"></i>
+                <h3>Free Access Despite Challenges</h3>
+                <p>Despite the higher costs associated with collecting complete data in scarcity environments, we remain committed to providing free access to our resources through:</p>
+                
+                <div class="free-access-points">
+                    <div class="access-point">
+                        <h4>Efficient Operations</h4>
+                        <p>Streamlined data collection and processing to minimize costs</p>
+                    </div>
+                    
+                    <div class="access-point">
+                        <h4>Community Support</h4>
+                        <p>Generous contributions from users who value our mission</p>
+                    </div>
+                    
+                    <div class="access-point">
+                        <h4>Strategic Partnerships</h4>
+                        <p>Collaborations with organizations that share our vision for data accessibility</p>
+                    </div>
+                </div>
+                
+                <a href="donate.html" class="btn">Support Our Mission</a>
             </div>
         </div>
     </section>
