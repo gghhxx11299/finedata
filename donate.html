@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate - Finedatas Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
         /* Global Styles */
         :root {
-            --primary-color: #2c5282;
-            --secondary-color: #3182ce;
-            --accent-color: #e53e3e;
-            --text-color: #2d3748;
-            --light-bg: #f7fafc;
-            --white: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --background-color: #0D1117;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
         }
 
         * {
@@ -25,10 +24,15 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Roboto', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background-color: var(--light-bg);
+            background-color: var(--background-color);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
         }
 
         .container {
@@ -40,11 +44,12 @@
 
         /* Header Styles */
         header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid var(--primary-accent);
         }
 
         nav {
@@ -65,7 +70,7 @@
         }
 
         .logo h1 {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             font-size: 1.5rem;
         }
 
@@ -86,7 +91,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--secondary-color);
+            color: var(--primary-accent);
         }
 
         .mobile-menu-btn {
@@ -95,21 +100,23 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--primary-color);
+            color: var(--primary-accent);
         }
 
         /* Page Header */
         .page-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            color: var(--white);
+            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--text-color);
             padding: 3rem 0;
             text-align: center;
             margin-bottom: 2rem;
+            border-bottom: 1px solid var(--primary-accent);
         }
 
         .page-header h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            color: var(--primary-accent);
         }
 
         .breadcrumb {
@@ -125,28 +132,37 @@
         .breadcrumb li:not(:last-child)::after {
             content: ">";
             margin-left: 1rem;
+            color: var(--secondary-accent);
         }
 
         .breadcrumb a {
-            color: var(--white);
+            color: var(--primary-accent);
             text-decoration: none;
         }
 
         .breadcrumb a:hover {
+            color: var(--secondary-accent);
             text-decoration: underline;
         }
 
         /* Donate Sections */
         .donate-section {
-            background-color: var(--white);
-            border-radius: 8px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-accent);
+            border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+
+        .donate-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .section-title {
-            color: var(--primary-color);
+            color: var(--primary-accent);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
@@ -156,6 +172,7 @@
 
         .section-title i {
             margin-right: 0.5rem;
+            color: var(--secondary-accent);
         }
 
         /* Impact Section */
@@ -167,21 +184,28 @@
         }
 
         .impact-card {
-            background-color: var(--light-bg);
-            border-radius: 8px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-accent);
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
         }
 
         .impact-card i {
             font-size: 2.5rem;
-            color: var(--secondary-color);
+            color: var(--primary-accent);
             margin-bottom: 1rem;
         }
 
         .impact-card h4 {
-            color: var(--primary-color);
+            color: var(--secondary-accent);
             margin-bottom: 1rem;
         }
 
@@ -189,9 +213,9 @@
         .telebirr-guide {
             margin-top: 2rem;
             padding: 2rem;
-            background-color: #f0f7ff;
+            background-color: rgba(88, 166, 255, 0.1);
             border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--primary-accent);
         }
 
         .telebirr-steps {
@@ -213,13 +237,14 @@
         .telebirr-image img {
             max-width: 300px;
             border-radius: 8px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            border: 1px solid var(--primary-accent);
         }
 
         .phone-number {
             display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--primary-accent);
+            color: var(--background-color);
             padding: 0.5rem 1rem;
             border-radius: 4px;
             font-weight: bold;
@@ -229,27 +254,30 @@
         /* Button Styles */
         .btn {
             display: inline-block;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-accent);
+            color: var(--background-color);
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            background-color: var(--primary-color);
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
         }
 
         /* Footer */
         footer {
-            background-color: var(--primary-color);
-            color: var(--white);
+            background-color: var(--card-bg);
+            color: var(--text-color);
             padding: 3rem 0 1.5rem;
             margin-top: 3rem;
+            border-top: 1px solid var(--primary-accent);
         }
 
         .footer-content {
@@ -262,20 +290,22 @@
         .footer-section h3 {
             margin-bottom: 1rem;
             font-size: 1.2rem;
+            color: var(--primary-accent);
         }
 
         .footer-section p, .footer-section a {
             margin-bottom: 0.5rem;
-            color: #cbd5e0;
+            color: var(--text-color);
         }
 
         .footer-section a {
             display: block;
             text-decoration: none;
+            color: var(--primary-accent);
         }
 
         .footer-section a:hover {
-            color: var(--white);
+            color: var(--secondary-accent);
         }
 
         .social-links {
@@ -286,24 +316,26 @@
 
         .social-links a {
             display: inline-block;
-            color: var(--white);
+            color: var(--text-color);
             background-color: rgba(255, 255, 255, 0.1);
             width: 40px;
             height: 40px;
             border-radius: 50%;
             text-align: center;
             line-height: 40px;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--primary-accent);
+            color: var(--background-color);
+            box-shadow: 0 0 10px var(--primary-accent);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--border-color);
         }
 
         /* Responsive Design */
@@ -315,9 +347,11 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: var(--white);
-                box-shadow: var(--shadow);
+                background-color: var(--card-bg);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
                 padding: 1rem 0;
+                border: 1px solid var(--primary-accent);
+                border-top: none;
             }
             
             .nav-links.active {
