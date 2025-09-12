@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News - Fine data Ethiopia</title>
+    <title>News - Finedats Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -22,20 +22,20 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
             background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
         .container {
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px;
         }
 
         /* Header Styles */
@@ -51,31 +51,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 15px 0;
         }
 
         .logo {
             display: flex;
             align-items: center;
+            gap: 10px;
         }
 
         .logo img {
             height: 40px;
-            margin-right: 10px;
+            width: auto;
         }
 
         .logo h1 {
             color: var(--primary-color);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 1.5rem;
+            gap: 25px;
         }
 
         .nav-links a {
@@ -85,195 +83,142 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .nav-links a:hover, .nav-links a.active {
             color: var(--primary-color);
         }
 
-        /* Page Header */
-        .page-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            color: var(--white);
-            padding: 3rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .page-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .breadcrumb {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-
-        .breadcrumb li {
-            margin: 0 0.5rem;
-        }
-
-        .breadcrumb li:not(:last-child)::after {
-            content: ">";
-            margin-left: 1rem;
-        }
-
-        .breadcrumb a {
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-        /* News Sections */
+        /* News Section */
         .news-section {
-            background-color: var(--white);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            padding: 40px 0;
         }
 
         .section-title {
+            text-align: center;
+            margin-bottom: 30px;
             color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
+            font-size: 2rem;
         }
 
-        .section-title i {
-            margin-right: 0.5rem;
-        }
-
-        /* News Articles */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .news-card {
-            background-color: var(--light-bg);
+            background-color: var(--white);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s;
-            display: block;
-            text-decoration: none;
-            color: inherit;
         }
 
         .news-card:hover {
             transform: translateY(-5px);
         }
 
-        .news-img {
-            height: 180px;
-            overflow: hidden;
-        }
-
-        .news-img img {
+        .news-image {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .news-card:hover .news-img img {
-            transform: scale(1.05);
         }
 
         .news-content {
-            padding: 1.5rem;
-        }
-
-        .news-date {
-            color: #718096;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+            padding: 20px;
         }
 
         .news-title {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
             font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
         }
 
         .news-excerpt {
-            margin-bottom: 1rem;
-            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
         }
 
-        .news-link {
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .read-more {
             display: inline-block;
-            color: var(--secondary-color);
-            font-weight: 600;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
             text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
         }
 
-        /* Report Section */
-        .report-card {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            display: flex;
+        .read-more:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .pdf-link {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            gap: 5px;
+            padding: 8px 15px;
+            background-color: #e53e3e;
+            color: var(--white);
             text-decoration: none;
-            color: inherit;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
         }
 
-        .report-card:hover {
-            transform: translateY(-3px);
-            transition: transform 0.3s;
+        .pdf-link:hover {
+            background-color: #c53030;
         }
 
-        .report-icon {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-right: 1.5rem;
+        /* PDF Viewer Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
         }
 
-        .report-content {
-            flex: 1;
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 2% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .report-title {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        .report-desc {
-            margin-bottom: 1rem;
-            line-height: 1.6;
+        .close:hover {
+            color: #000;
         }
 
-        /* Filter controls */
-        .filter-controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-controls select, .filter-controls input {
-            padding: 0.5rem;
-            border: 1px solid var(--border-color);
+        .pdf-viewer {
+            width: 100%;
+            height: 80vh;
+            border: none;
             border-radius: 4px;
         }
 
@@ -281,106 +226,64 @@
         footer {
             background-color: var(--primary-color);
             color: var(--white);
-            padding: 3rem 0 1.5rem;
-            margin-top: 3rem;
+            padding: 30px 0;
+            margin-top: 50px;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
         }
 
         .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
         }
 
         .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
-            color: #cbd5e0;
-        }
-
-        .footer-section a {
-            display: block;
+            margin-bottom: 10px;
+            color: #e2e8f0;
             text-decoration: none;
+            display: block;
         }
 
         .footer-section a:hover {
-            color: var(--white);
+            text-decoration: underline;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 15px;
+            margin-top: 15px;
         }
 
         .social-links a {
-            display: inline-block;
-            color: var(--white);
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            transition: background-color 0.3s;
+            font-size: 1.2rem;
         }
 
-        .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .footer-bottom {
+        .copyright {
             text-align: center;
-            padding-top: 1.5rem;
+            margin-top: 30px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                box-shadow: var(--shadow);
-                padding: 1rem 0;
+                gap: 15px;
+                font-size: 0.9rem;
             }
             
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 1.5rem;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .page-header h2 {
-                font-size: 2rem;
-            }
-            
-            .filter-controls {
-                flex-direction: column;
-            }
-            
-            .report-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .report-icon {
-                margin-right: 0;
-                margin-bottom: 1rem;
+            .news-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -392,7 +295,7 @@
             <nav>
                 <div class="logo">
                     <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
-                    <h1>Finedata</h1>
+                    <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
@@ -402,131 +305,115 @@
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="news.html" class="active">News</a></li>
                     <li><a href="support.html">Support</a></li>
-                    
-                    <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
             </nav>
         </div>
     </header>
 
-    <!-- Page Header -->
-    <div class="page-header">
+    <!-- News Section -->
+    <section class="news-section">
         <div class="container">
-            <h2>News & Updates</h2>
-            <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li>News</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="container">
-        <!-- Latest News Section -->
-        <section class="news-section">
-            <h3 class="section-title"><i class="fas fa-newspaper"></i> Latest News</h3>
-            
-            <div class="filter-controls">
-                <div>
-                    <label for="category-select">Filter by Category:</label>
-                    <select id="category-select">
-                        <option value="all">All Categories</option>
-                        <option value="economy">Economy</option>
-                        <option value="development">Development</option>
-                        <option value="population">Population</option>
-                        <option value="energy">Energy</option>
-                        <option value="policy">Policy</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="date-select">Sort by Date:</label>
-                    <select id="date-select">
-                        <option value="newest">Newest First</option>
-                        <option value="oldest">Oldest First</option>
-                    </select>
-                </div>
-            </div>
+            <h2 class="section-title">Latest News</h2>
             
             <div class="news-grid">
-                <a href="https://www.economist.com/middle-east-and-africa/2025/09/08/the-promise-and-peril-of-ethiopias-new-mega-dam" class="news-card" target="_blank">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1580554530778-ca36943938b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ethiopian Dam">
-                    </div>
+                <!-- News Item 1 -->
+                <div class="news-card">
+                    <img src="https://www.africanlawbusiness.com/wp-content/uploads/2024/12/Finance_coins_iStock_resized.jpg" alt="Business News" class="news-image">
                     <div class="news-content">
-                        <div class="news-date">September 8, 2025</div>
-                        <h4 class="news-title">The Promise and Peril of Ethiopia's New Mega Dam</h4>
-                        <p class="news-excerpt">Ethiopia's Grand Ethiopian Renaissance Dam (GERD) continues to be a source of both opportunity and tension in the region as it nears completion.</p>
-                        <div class="news-link">Read More →</div>
+                        <h3 class="news-title">Ethiopia Invites Investment Directive Feedback</h3>
+                        <p class="news-excerpt">Ethiopia is seeking feedback on its new investment directive to improve the business environment and attract more foreign investment.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> May 15, 2025</span>
+                            <span><i class="far fa-newspaper"></i> African Law Business</span>
+                        </div>
+                        <a href="https://www.africanlawbusiness.com/news/ethiopia-invites-investment-directive-feedback/" class="read-more">Read More</a>
                     </div>
-                </a>
+                </div>
                 
-                <a href="https://www.thereporterethiopia.com/45374/" class="news-card" target="_blank">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1612170153539-6cb4e48f7af7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Economic Growth">
-                    </div>
+                <!-- News Item 2 -->
+                <div class="news-card">
+                    <img src="https://www.ena.et/o/adaptive-media/image/7316049/Preview-1000x0/545987448_1236871721817773_2451767937985470306_n.jpg?t=1757589972518" alt="Economic Development" class="news-image">
                     <div class="news-content">
-                        <div class="news-date">September 5, 2025</div>
-                        <h4 class="news-title">Ethiopia's Economy Shows Resilience with 6.5% Growth in FY2024/25</h4>
-                        <p class="news-excerpt">Despite global economic challenges, Ethiopia's economy has demonstrated remarkable resilience, recording a 6.5% growth in the just-ended fiscal year.</p>
-                        <div class="news-link">Read More →</div>
+                        <h3 class="news-title">Ethiopia's Development Progress</h3>
+                        <p class="news-excerpt">Latest updates on Ethiopia's development projects and economic progress as reported by the Ethiopian News Agency.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> April 28, 2025</span>
+                            <span><i class="far fa-newspaper"></i> ENA</span>
+                        </div>
+                        <a href="https://www.ena.et/web/eng/w/eng_7316062" class="read-more">Read More</a>
                     </div>
-                </a>
+                </div>
                 
-                <a href="https://capitalethiopia.com/2025/07/20/ethiopias-population-hits-135-3-million-as-new-national-population-policy-takes-shape/" class="news-card" target="_blank">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Population">
-                    </div>
+                <!-- News Item 3 -->
+                <div class="news-card">
+                    <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Economic Report" class="news-image">
                     <div class="news-content">
-                        <div class="news-date">July 20, 2025</div>
-                        <h4 class="news-title">Ethiopia's Population Hits 135.3 Million as New National Population Policy Takes Shape</h4>
-                        <p class="news-excerpt">Ethiopia's population has reached 135.3 million according to the latest projections, as the government implements a new national population policy.</p>
-                        <div class="news-link">Read More →</div>
+                        <h3 class="news-title">Ethiopia Quarterly Economic Profile - April 2025</h3>
+                        <p class="news-excerpt">UNDP's comprehensive report on Ethiopia's economic performance, challenges, and outlook for the coming months.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> April 20, 2025</span>
+                            <span><i class="far fa-newspaper"></i> UNDP</span>
+                        </div>
+                        <a href="#" class="pdf-link" onclick="openPdf('https://www.undp.org/sites/g/files/zskgke326/files/2025-04/ethiopia_quarterly_economic_profile_april_2025.pdf')">
+                            <i class="far fa-file-pdf"></i> View PDF
+                        </a>
                     </div>
-                </a>
+                </div>
                 
-                <a href="https://www.ena.et/web/eng/w/eng_7293536" class="news-card" target="_blank">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Manufacturing">
-                    </div>
+                <!-- News Item 4 -->
+                <div class="news-card">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Education Report" class="news-image">
                     <div class="news-content">
-                        <div class="news-date">August 15, 2025</div>
-                        <h4 class="news-title">Ethiopia's Manufacturing Export Revenue Grows by 18.3 Percent</h4>
-                        <p class="news-excerpt">Ethiopia has registered an 18.3 percent growth in manufacturing export revenue during the just concluded fiscal year, exceeding government targets.</p>
-                        <div class="news-link">Read More →</div>
+                        <h3 class="news-title">National Study on Out-of-School Children in Ethiopia</h3>
+                        <p class="news-excerpt">Comprehensive study analyzing the magnitude and reasons behind out-of-school children in Ethiopia with recommendations.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> February 10, 2022</span>
+                            <span><i class="far fa-newspaper"></i> Luminos Fund</span>
+                        </div>
+                        <a href="#" class="pdf-link" onclick="openPdf('https://luminosfund.org/wp-content/uploads/2022/02/National-Study-on-the-Magnitude-of-Out-of-School-Children-in-Ethiopia_2020-Report-Synthesis.pdf')">
+                            <i class="far fa-file-pdf"></i> View PDF
+                        </a>
                     </div>
-                </a>
-                
-                <a href="https://www.imf.org/en/News/Articles/2025/05/28/cf-ethiopias-central-bank-leading-transformative-reform" class="news-card" target="_blank">
-                    <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Banking">
-                    </div>
-                    <div class="news-content">
-                        <div class="news-date">May 28, 2025</div>
-                        <h4 class="news-title">Ethiopia's Central Bank Leading Transformative Reform</h4>
-                        <p class="news-excerpt">The National Bank of Ethiopia is at the forefront of transformative financial sector reforms aimed at modernizing the country's banking system.</p>
-                        <div class="news-link">Read More →</div>
-                    </div>
-                </a>
-            </div>
-        </section>
+                </div>
 
-        <!-- Reports Section -->
-        <section class="news-section">
-            <h3 class="section-title"><i class="fas fa-file-pdf"></i> Official Reports</h3>
-            
-            <a href="https://nbe.gov.et/wp-content/uploads/2025/03/National-Bank-of-Ethiopia-Proclamation-13592025.pdf" class="report-card" target="_blank">
-                <div class="report-icon">
-                    <i class="fas fa-file-pdf"></i>
+                <!-- Previous News Items -->
+                <!-- News Item 5 -->
+                <div class="news-card">
+                    <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Agriculture News" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia's Agricultural Growth Exceeds Expectations</h3>
+                        <p class="news-excerpt">Ethiopia's agricultural sector shows remarkable growth with a 7.2% increase in production compared to last year.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> March 22, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Agriculture Today</span>
+                        </div>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
                 </div>
-                <div class="report-content">
-                    <h4 class="report-title">National Bank of Ethiopia Proclamation No. 1359/2025</h4>
-                    <p class="report-desc">The new proclamation that governs the operations of the National Bank of Ethiopia, introducing significant reforms to the country's financial sector.</p>
-                    <div class="news-link">Download PDF Report →</div>
+
+                <!-- News Item 6 -->
+                <div class="news-card">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Finance News" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">National Bank Announces New Monetary Policy</h3>
+                        <p class="news-excerpt">The National Bank of Ethiopia introduces new measures to control inflation and stabilize the economy.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> February 15, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Financial Times</span>
+                        </div>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
                 </div>
-            </a>
-        </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePdf()">&times;</span>
+            <iframe id="pdfViewer" class="pdf-viewer" src=""></iframe>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -534,55 +421,51 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Fine data</h3>
-                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <h3>About Finedatas</h3>
+                    <p>Providing accurate and comprehensive data on Ethiopia's economy, demographics, agriculture, and more.</p>
                 </div>
+                
                 <div class="footer-section">
                     <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
-                    <a href="agricultural.html">Agricultural Data</a>
-                    <a href="exchange-rates.html">Exchange Rates</a>
-                    <a href="news.html">News</a>
+                    <a href="news.html">Latest News</a>
                 </div>
+                
                 <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +251991168917</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <p>Email: gabrielmulugeta1@gmail.com</p>
+                    <p>Phone: +251 991168917</p>
                     
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fine data. All rights reserved.</p>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Finedatas Ethiopia. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
+        // PDF Viewer functionality
+        function openPdf(pdfUrl) {
+            document.getElementById('pdfViewer').src = pdfUrl;
+            document.getElementById('pdfModal').style.display = 'block';
+        }
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        function closePdf() {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdfViewer').src = '';
+        }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
-                navLinks.classList.remove('active');
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target == modal) {
+                closePdf();
             }
-        });
-
-        // Simple filtering functionality for demonstration
-        document.getElementById('category-select').addEventListener('change', function() {
-            alert('Filtering by category: ' + this.value + '\nIn a real application, this would filter the news articles.');
-        });
-
-        document.getElementById('date-select').addEventListener('change', function() {
-            alert('Sorting by: ' + this.value + '\nIn a real application, this would sort the news articles.');
-        });
+        }
     </script>
 </body>
 </html>
