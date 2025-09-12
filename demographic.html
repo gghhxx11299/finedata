@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demographic Data - Fine data Ethiopia</title>
+    <title>Demographic Data - Finedatas Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
@@ -330,7 +330,7 @@
             <nav>
                 <div class="logo">
                     <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
-                    <h1>Finedata</h1>
+                    <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
@@ -381,15 +381,27 @@
                     <p class="stat-detail">The growth rate has slowed from 2.71% in 2020 to 2.58% in 2024, showing a modest deceleration.</p>
                     <p class="source-note">Source: World Bank/UN estimates</p>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-baby"></i> Birth and Death Rates</h4>
+                    <div class="stat-detail">Birth Rate: 31.5 per 1,000 (2024)</div>
+                    <div class="stat-detail">Death Rate: 6.8 per 1,000 (2024)</div>
+                    <div class="stat-detail">Natural Increase: 24.7 per 1,000</div>
+                    <p class="stat-detail">Fertility rate: 4.1 births per woman (2024)</p>
+                    <p class="source-note">Source: UN Population Division</p>
+                </div>
             </div>
             
-            <h4 style="margin: 1.5rem 0 1rem;">Population Trends (2020-2024)</h4>
+            <h4 style="margin: 1.5rem 0 1rem;">Population Trends (2020-2025)</h4>
             <table class="data-table">
                 <thead>
                     <tr>
                         <th>Year</th>
                         <th>Population (million)</th>
                         <th>Annual Growth (%)</th>
+                        <th>Birth Rate (per 1,000)</th>
+                        <th>Death Rate (per 1,000)</th>
+                        <th>Net Migration (per 1,000)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -397,26 +409,49 @@
                         <td>2020</td>
                         <td>118.918</td>
                         <td>2.71</td>
+                        <td>32.8</td>
+                        <td>7.2</td>
+                        <td>-0.5</td>
                     </tr>
                     <tr>
                         <td>2021</td>
                         <td>122.139</td>
                         <td>2.67</td>
+                        <td>32.3</td>
+                        <td>7.1</td>
+                        <td>-0.5</td>
                     </tr>
                     <tr>
                         <td>2022</td>
                         <td>125.384</td>
                         <td>2.62</td>
+                        <td>32.0</td>
+                        <td>7.0</td>
+                        <td>-0.6</td>
                     </tr>
                     <tr>
                         <td>2023</td>
                         <td>128.692</td>
                         <td>2.60</td>
+                        <td>31.8</td>
+                        <td>6.9</td>
+                        <td>-0.6</td>
                     </tr>
                     <tr>
                         <td>2024</td>
                         <td>132.060</td>
                         <td>2.58</td>
+                        <td>31.5</td>
+                        <td>6.8</td>
+                        <td>-0.6</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>135.490</td>
+                        <td>2.55</td>
+                        <td>31.2</td>
+                        <td>6.7</td>
+                        <td>-0.7</td>
                     </tr>
                 </tbody>
             </table>
@@ -442,6 +477,16 @@
                     <p class="stat-detail">Projected to decline to 77.5% by 2025, down from 79.4% in 2020.</p>
                     <p class="stat-detail">Rural population grows at about 2% per year.</p>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-home"></i> Largest Cities (2025)</h4>
+                    <div class="stat-detail">Addis Ababa: 5.2M</div>
+                    <div class="stat-detail">Dire Dawa: 610K</div>
+                    <div class="stat-detail">Mekele: 520K</div>
+                    <div class="stat-detail">Adama: 420K</div>
+                    <div class="stat-detail">Gondar: 410K</div>
+                    <p class="source-note">Source: Central Statistical Agency of Ethiopia</p>
+                </div>
             </div>
             
             <h4 style="margin: 1.5rem 0 1rem;">Urban-Rural Distribution (2020-2025)</h4>
@@ -451,6 +496,8 @@
                         <th>Year</th>
                         <th>Urban Population (%)</th>
                         <th>Rural Population (%)</th>
+                        <th>Urban Population (millions)</th>
+                        <th>Rural Population (millions)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -458,31 +505,43 @@
                         <td>2020</td>
                         <td>20.6</td>
                         <td>79.4</td>
+                        <td>24.5</td>
+                        <td>94.4</td>
                     </tr>
                     <tr>
                         <td>2021</td>
-                        <td>22.2</td>
-                        <td>77.8</td>
+                        <td>21.2</td>
+                        <td>78.8</td>
+                        <td>25.9</td>
+                        <td>96.2</td>
                     </tr>
                     <tr>
                         <td>2022</td>
                         <td>21.3</td>
                         <td>78.7</td>
+                        <td>26.7</td>
+                        <td>98.7</td>
                     </tr>
                     <tr>
                         <td>2023</td>
                         <td>21.7</td>
                         <td>78.3</td>
+                        <td>27.9</td>
+                        <td>100.8</td>
                     </tr>
                     <tr>
                         <td>2024</td>
                         <td>22.1</td>
                         <td>77.9</td>
+                        <td>29.2</td>
+                        <td>102.9</td>
                     </tr>
                     <tr>
                         <td>2025</td>
                         <td>22.5</td>
                         <td>77.5</td>
+                        <td>30.5</td>
+                        <td>105.0</td>
                     </tr>
                 </tbody>
             </table>
@@ -509,7 +568,67 @@
                     <p class="stat-detail">Population is nearly evenly split by sex (approx. 50.3% male, 49.7% female).</p>
                     <p class="stat-detail">The slight male advantage at birth (~1.03:1) evens out in adulthood.</p>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-pie"></i> Age Distribution (2025)</h4>
+                    <div class="stat-detail">0-14 years: 39.8%</div>
+                    <div class="stat-detail">15-24 years: 20.2%</div>
+                    <div class="stat-detail">25-54 years: 32.1%</div>
+                    <div class="stat-detail">55-64 years: 4.5%</div>
+                    <div class="stat-detail">65+ years: 3.4%</div>
+                    <p class="source-note">Source: UN Population Division</p>
+                </div>
             </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Dependency Ratios (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Youth Dependency Ratio (%)</th>
+                        <th>Elderly Dependency Ratio (%)</th>
+                        <th>Total Dependency Ratio (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>75.2</td>
+                        <td>5.8</td>
+                        <td>81.0</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>74.8</td>
+                        <td>5.8</td>
+                        <td>80.6</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>74.3</td>
+                        <td>5.8</td>
+                        <td>80.1</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>73.9</td>
+                        <td>5.8</td>
+                        <td>79.7</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>73.4</td>
+                        <td>5.8</td>
+                        <td>79.2</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>72.9</td>
+                        <td>5.8</td>
+                        <td>78.7</td>
+                    </tr>
+                </tbody>
+            </table>
             <p class="source-note">Source: Worldometer/UN data, CIA World Factbook</p>
         </section>
 
@@ -533,8 +652,164 @@
                     <p class="stat-detail">About 59% for young men vs. 44% for young women.</p>
                     <p class="stat-detail">Shows significant gender disparity in education.</p>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-school"></i> Education Enrollment (2025)</h4>
+                    <div class="stat-detail">Primary: 85% net enrollment</div>
+                    <div class="stat-detail">Secondary: 35% net enrollment</div>
+                    <div class="stat-detail">Tertiary: 8% gross enrollment</div>
+                    <p class="stat-detail">Significant improvements in primary education access since 2000.</p>
+                    <p class="source-note">Source: UNESCO/World Bank data</p>
+                </div>
             </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Education Indicators (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Adult Literacy Rate (%)</th>
+                        <th>Primary Completion Rate (%)</th>
+                        <th>Secondary Enrollment (%)</th>
+                        <th>Government Education Spending (% of GDP)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>51.8</td>
+                        <td>72.5</td>
+                        <td>32.1</td>
+                        <td>4.7</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>52.3</td>
+                        <td>73.8</td>
+                        <td>33.4</td>
+                        <td>4.9</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>52.9</td>
+                        <td>75.2</td>
+                        <td>34.7</td>
+                        <td>5.1</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>53.5</td>
+                        <td>76.5</td>
+                        <td>36.0</td>
+                        <td>5.2</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>54.1</td>
+                        <td>77.8</td>
+                        <td>37.3</td>
+                        <td>5.3</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>54.7</td>
+                        <td>79.2</td>
+                        <td>38.6</td>
+                        <td>5.4</td>
+                    </tr>
+                </tbody>
+            </table>
             <p class="source-note">Source: UNESCO/World Bank data</p>
+        </section>
+
+        <!-- Health and Life Expectancy Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health and Life Expectancy</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-heart"></i> Life Expectancy</h4>
+                    <div class="stat-value">67.8 years</div>
+                    <div class="stat-detail">At birth, both sexes (2025)</div>
+                    <p class="stat-detail">Male: 65.4 years | Female: 70.3 years</p>
+                    <p class="stat-detail">Increased from 65.2 years in 2015</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-baby"></i> Child Mortality</h4>
+                    <div class="stat-value">43.2</div>
+                    <div class="stat-detail">Under-5 mortality per 1,000 live births (2024)</div>
+                    <p class="stat-detail">Significant reduction from 166 in 2000</p>
+                    <p class="stat-detail">Infant mortality: 33.5 per 1,000 live births</p>
+                </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-hospital"></i> Healthcare Access</h4>
+                    <div class="stat-detail">Physicians: 0.1 per 1,000 people</div>
+                    <div class="stat-detail">Hospital beds: 0.3 per 1,000 people</div>
+                    <div class="stat-detail">Health expenditure: 3.5% of GDP (2024)</div>
+                    <p class="stat-detail">74% have access to basic healthcare services</p>
+                    <p class="source-note">Source: WHO, World Bank</p>
+                </div>
+            </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Health Indicators (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Life Expectancy</th>
+                        <th>Under-5 Mortality (per 1,000)</th>
+                        <th>Maternal Mortality (per 100,000)</th>
+                        <th>HIV Prevalence (% ages 15-49)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>66.6</td>
+                        <td>48.5</td>
+                        <td>401</td>
+                        <td>0.9</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>66.9</td>
+                        <td>47.2</td>
+                        <td>388</td>
+                        <td>0.9</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>67.1</td>
+                        <td>45.9</td>
+                        <td>375</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>67.4</td>
+                        <td>44.6</td>
+                        <td>362</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>67.6</td>
+                        <td>43.2</td>
+                        <td>350</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>67.8</td>
+                        <td>41.9</td>
+                        <td>338</td>
+                        <td>0.7</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: WHO, UNICEF, World Bank</p>
         </section>
 
         <!-- Labor Force Section -->
@@ -557,8 +832,164 @@
                     <div class="stat-detail">Industry: ~10%</div>
                     <p class="stat-detail">Economy remains heavily agrarian with gradual shift toward services.</p>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-line"></i> Unemployment</h4>
+                    <div class="stat-value">19.1%</div>
+                    <div class="stat-detail">Overall unemployment rate (2024)</div>
+                    <div class="stat-detail">Youth unemployment: 25.4%</div>
+                    <p class="stat-detail">Urban unemployment significantly higher than rural</p>
+                    <p class="source-note">Source: ILO/World Bank estimates</p>
+                </div>
             </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Labor Market Indicators (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Labor Force (millions)</th>
+                        <th>Unemployment Rate (%)</th>
+                        <th>Youth Unemployment (%)</th>
+                        <th>Women in Labor Force (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>52.8</td>
+                        <td>17.8</td>
+                        <td>23.5</td>
+                        <td>32.5</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>54.2</td>
+                        <td>18.2</td>
+                        <td>24.1</td>
+                        <td>33.1</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>55.7</td>
+                        <td>18.6</td>
+                        <td>24.7</td>
+                        <td>33.7</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>57.2</td>
+                        <td>18.9</td>
+                        <td>25.0</td>
+                        <td>34.3</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>58.8</td>
+                        <td>19.1</td>
+                        <td>25.4</td>
+                        <td>34.9</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>60.4</td>
+                        <td>19.3</td>
+                        <td>25.8</td>
+                        <td>35.5</td>
+                    </tr>
+                </tbody>
+            </table>
             <p class="source-note">Source: ILO/World Bank estimates, Ethiopian Labour Survey (ESS)</p>
+        </section>
+
+        <!-- Household and Income Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-home"></i> Household and Income Characteristics</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-house-user"></i> Household Size</h4>
+                    <div class="stat-value">4.6</div>
+                    <div class="stat-detail">Average persons per household (2024)</div>
+                    <p class="stat-detail">Urban: 3.8 persons per household</p>
+                    <p class="stat-detail">Rural: 4.9 persons per household</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-money-bill-wave"></i> Income Distribution</h4>
+                    <div class="stat-detail">Gini Coefficient: 35.0 (2023)</div>
+                    <div class="stat-detail">Poverty Rate: 23.5% (2024)</div>
+                    <div class="stat-detail">Extreme Poverty: 10.2% (2024)</div>
+                    <p class="stat-detail">Income inequality has slightly decreased since 2015</p>
+                </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-mobile-alt"></i> Technology Access</h4>
+                    <div class="stat-detail">Mobile penetration: 45% (2024)</div>
+                    <div class="stat-detail">Internet access: 25% (2024)</div>
+                    <div class="stat-detail">Electricity access: 50% (2024)</div>
+                    <p class="stat-detail">Significant urban-rural divide in technology access</p>
+                    <p class="source-note">Source: World Bank, Central Statistical Agency</p>
+                </div>
+            </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Household Characteristics (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Avg. Household Size</th>
+                        <th>Poverty Rate (%)</th>
+                        <th>Electricity Access (%)</th>
+                        <th>Improved Water Access (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>4.7</td>
+                        <td>26.7</td>
+                        <td>44.3</td>
+                        <td>60.5</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>4.7</td>
+                        <td>25.8</td>
+                        <td>45.9</td>
+                        <td>61.8</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>4.6</td>
+                        <td>25.0</td>
+                        <td>47.5</td>
+                        <td>63.1</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>4.6</td>
+                        <td>24.2</td>
+                        <td>48.8</td>
+                        <td>64.4</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>4.6</td>
+                        <td>23.5</td>
+                        <td>50.1</td>
+                        <td>65.7</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>4.5</td>
+                        <td>22.8</td>
+                        <td>51.5</td>
+                        <td>67.0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: World Bank, Central Statistical Agency of Ethiopia</p>
         </section>
 
         <!-- Ethnic and Linguistic Composition Section -->
@@ -585,8 +1016,108 @@
                     <div class="stat-detail">Sidamo: ~4.0%</div>
                     <div class="stat-detail">Other: ~20.8%</div>
                 </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-pray"></i> Religious Affiliation</h4>
+                    <div class="stat-detail">Ethiopian Orthodox: 43.5%</div>
+                    <div class="stat-detail">Muslim: 33.9%</div>
+                    <div class="stat-detail">Protestant: 18.6%</div>
+                    <div class="stat-detail">Traditional: 2.6%</div>
+                    <div class="stat-detail">Other: 1.4%</div>
+                    <p class="source-note">Source: 2007 Census and later estimates</p>
+                </div>
             </div>
             <p class="source-note">Source: CIA World Factbook (2007 census and later estimates)</p>
+        </section>
+
+        <!-- Migration and Displacement Section -->
+        <section class="demographic-section">
+            <h3 class="section-title"><i class="fas fa-people-carry"></i> Migration and Displacement</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-exchange-alt"></i> Net Migration</h4>
+                    <div class="stat-value">-0.6</div>
+                    <div class="stat-detail">Net migrants per 1,000 population (2024)</div>
+                    <p class="stat-detail">Slight negative migration balance</p>
+                    <p class="stat-detail">Primarily labor migration to Middle East</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-hands-helping"></i> Internally Displaced</h4>
+                    <div class="stat-value">3.5M</div>
+                    <div class="stat-detail">Internally displaced persons (2024)</div>
+                    <p class="stat-detail">Due to conflict and climate factors</p>
+                    <p class="stat-detail">Significant humanitarian needs</p>
+                </div>
+
+                <div class="data-card">
+                    <h4><i class="fas fa-globe"></i> Refugee Population</h4>
+                    <div class="stat-value">800K</div>
+                    <div class="stat-detail">Refugees hosted in Ethiopia (2024)</div>
+                    <div class="stat-detail">Primarily from South Sudan, Somalia, Eritrea</div>
+                    <p class="stat-detail">One of Africa's largest refugee populations</p>
+                    <p class="source-note">Source: UNHCR, IOM</p>
+                </div>
+            </div>
+
+            <h4 style="margin: 1.5rem 0 1rem;">Migration Trends (2020-2025)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Net Migration Rate (per 1,000)</th>
+                        <th>Internally Displaced (millions)</th>
+                        <th>Refugees Hosted (thousands)</th>
+                        <th>Ethiopians Abroad (millions)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>-0.5</td>
+                        <td>2.1</td>
+                        <td>735</td>
+                        <td>2.3</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>-0.5</td>
+                        <td>3.8</td>
+                        <td>742</td>
+                        <td>2.4</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>-0.6</td>
+                        <td>4.2</td>
+                        <td>768</td>
+                        <td>2.5</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>-0.6</td>
+                        <td>3.9</td>
+                        <td>785</td>
+                        <td>2.6</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>-0.6</td>
+                        <td>3.5</td>
+                        <td>800</td>
+                        <td>2.7</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>-0.7</td>
+                        <td>3.2</td>
+                        <td>815</td>
+                        <td>2.8</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="source-note">Source: UNHCR, IOM, Internal Displacement Monitoring Centre</p>
         </section>
 
         <!-- Data Sources Section -->
@@ -601,6 +1132,9 @@
                 <li>ILO/World Bank labor estimates</li>
                 <li>Ethiopian Labour Survey (ESS)</li>
                 <li>Central Statistical Agency of Ethiopia</li>
+                <li>World Health Organization (WHO)</li>
+                <li>United Nations Children's Fund (UNICEF)</li>
+                <li>UNHCR and IOM for migration data</li>
             </ul>
             <p>We strive to provide the most accurate and up-to-date information available.</p>
         </section>
@@ -611,7 +1145,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Finedata</h3>
+                    <h3>About Finedatas</h3>
                     <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
                 </div>
                 <div class="footer-section">
@@ -630,7 +1164,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Fine data. All rights reserved.</p>
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
             </div>
         </div>
     </footer>
