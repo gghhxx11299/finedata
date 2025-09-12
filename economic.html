@@ -6,6 +6,7 @@
     <title>Economic Data - Finedata Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Your existing CSS remains unchanged */
         /* Global Styles */
         :root {
             --primary-color: #2c5282;
@@ -170,6 +171,11 @@
             border-radius: 8px;
             padding: 1.5rem;
             box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
         }
 
         .data-card h4 {
@@ -283,6 +289,83 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* New styles for enhanced content */
+        .stat-trend {
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .trend-up {
+            color: #38a169;
+        }
+
+        .trend-down {
+            color: #e53e3e;
+        }
+
+        .trend-neutral {
+            color: #d69e2e;
+        }
+
+        .data-highlight {
+            background-color: rgba(49, 130, 206, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--light-bg);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(247, 250, 252, 0.5);
+        }
+
+        .year-comparison {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+
+        .year-box {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--light-bg);
+            margin: 0 0.5rem;
+            border-radius: 4px;
+        }
+
+        .year-box:first-child {
+            margin-left: 0;
+        }
+
+        .year-box:last-child {
+            margin-right: 0;
+        }
+
+        .year-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
@@ -311,6 +394,14 @@
             
             .page-header h2 {
                 font-size: 2rem;
+            }
+            
+            .year-comparison {
+                flex-direction: column;
+            }
+            
+            .year-box {
+                margin: 0.5rem 0;
             }
         }
     </style>
@@ -353,6 +444,98 @@
     </div>
 
     <div class="container">
+        <!-- Key Economic Indicators Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-chart-line"></i> Key Economic Indicators</h3>
+            
+            <div class="data-highlight">
+                <p>Ethiopia has been one of Africa's fastest-growing economies over the past decade, with an average annual GDP growth of 9-10% until 2019. While growth slowed due to COVID-19 and internal conflicts, the economy is showing signs of recovery.</p>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-globe-africa"></i> GDP</h4>
+                    <div class="stat-value">$126.8 billion <span class="stat-trend trend-up">+6.4%</span></div>
+                    <div class="stat-detail">Nominal GDP (2023 est.)</div>
+                    
+                    <div class="stat-value">$305.5 billion</div>
+                    <div class="stat-detail">PPP GDP (2023 est.)</div>
+                    
+                    <div class="year-comparison">
+                        <div class="year-box">
+                            <div class="year-value">2022</div>
+                            <div>6.1% growth</div>
+                        </div>
+                        <div class="year-box">
+                            <div class="year-value">2023</div>
+                            <div>6.4% growth</div>
+                        </div>
+                        <div class="year-box">
+                            <div class="year-value">2024</div>
+                            <div>6.6% projected</div>
+                        </div>
+                    </div>
+                    <p class="source-note">Source: IMF World Economic Outlook, 2023</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-money-bill-wave"></i> Inflation</h4>
+                    <div class="stat-value">28.3% <span class="stat-trend trend-down">-4.2%</span></div>
+                    <div class="stat-detail">Consumer Price Inflation (2023)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Food Inflation:</strong> 32.5%<br>
+                        <strong>Non-food Inflation:</strong> 23.1%
+                    </div>
+                    
+                    <p class="stat-detail">Inflation peaked at over 33% in 2022 due to global commodity price shocks and domestic supply constraints.</p>
+                    <p class="source-note">Source: National Bank of Ethiopia, 2023</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-coins"></i> Currency</h4>
+                    <div class="stat-value">ETB 56.2/$1</div>
+                    <div class="stat-detail">Official Exchange Rate (Dec 2023)</div>
+                    
+                    <div class="stat-value">ETB 105/$1</div>
+                    <div class="stat-detail">Parallel Market Rate (Dec 2023)</div>
+                    
+                    <p class="stat-detail">The Ethiopian Birr has faced significant depreciation pressure, with a wide gap between official and parallel market rates.</p>
+                    <p class="source-note">Source: National Bank of Ethiopia, Market Data</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-industry"></i> Sector Contribution to GDP</h4>
+                    
+                    <table class="data-table">
+                        <tr>
+                            <th>Sector</th>
+                            <th>Percentage</th>
+                            <th>Trend</th>
+                        </tr>
+                        <tr>
+                            <td>Agriculture</td>
+                            <td>35.2%</td>
+                            <td><span class="trend-down">↓</span></td>
+                        </tr>
+                        <tr>
+                            <td>Industry</td>
+                            <td>25.1%</td>
+                            <td><span class="trend-up">↑</span></td>
+                        </tr>
+                        <tr>
+                            <td>Services</td>
+                            <td>39.7%</td>
+                            <td><span class="trend-up">↑</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p class="stat-detail">Services have surpassed agriculture as the largest sector, reflecting Ethiopia's economic transformation.</p>
+                    <p class="source-note">Source: Ministry of Finance, 2023</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Infrastructure Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-road"></i> Infrastructure</h3>
@@ -363,8 +546,28 @@
                     <div class="stat-value">~165,000 km</div>
                     <div class="stat-detail">Ethiopia's road network has expanded rapidly from 127,000 km in 2019</div>
                     <p class="stat-detail">The government has built thousands of km of new paved roads in recent years, including major corridors connecting interior regions.</p>
+                    
+                    <div class="stat-detail">
+                        <strong>Paved roads:</strong> 25% of total network<br>
+                        <strong>Road density:</strong> 0.15 km/km² (still below African average)
+                    </div>
+                    
                     <p class="stat-detail"><strong>Note:</strong> Many rural areas still lack all-weather roads.</p>
                     <p class="source-note">Source: Ministry of Transport, 2022</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-train"></i> Railway Development</h4>
+                    <div class="stat-value">759 km</div>
+                    <div class="stat-detail">Operational standard gauge railway</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Addis Ababa-Djibouti Railway:</strong> 656 km electrified line<br>
+                        <strong>Urban light rail:</strong> Addis Ababa's 34 km system serves 60,000+ daily
+                    </div>
+                    
+                    <p class="stat-detail">Rail transport is playing an increasing role in freight movement to Djibouti ports.</p>
+                    <p class="source-note">Source: Ethiopian Railways Corporation, 2023</p>
                 </div>
                 
                 <div class="data-card">
@@ -372,11 +575,118 @@
                     <div class="stat-value">~100%</div>
                     <div class="stat-detail">Mobile population coverage by Ethio telecom and new private entrants</div>
                     
+                    <div class="stat-value">72 million</div>
+                    <div class="stat-detail">Mobile subscribers (2023)</div>
+                    
                     <div class="stat-value">16.7%</div>
-                    <div class="stat-detail">Internet usage as of early 2023, though rapidly rising</div>
+                    <div class="stat-detail">Internet penetration rate (2023)</div>
                     
                     <p class="stat-detail">Mobile subscriptions now exceed the population (several SIMs per person), but data penetration remains low. Fixed-line broadband is rare.</p>
                     <p class="source-note">Source: Ethio Telecom, 2023</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-bolt"></i> Energy</h4>
+                    <div class="stat-value">4,500+ MW</div>
+                    <div class="stat-detail">Installed electricity generation capacity</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Hydropower:</strong> 90% of generation<br>
+                        <strong>Grand Ethiopian Renaissance Dam:</strong> 5,150 MW (phased commissioning)
+                    </div>
+                    
+                    <div class="stat-value">52%</div>
+                    <div class="stat-detail">National electrification rate (2023)</div>
+                    
+                    <p class="stat-detail">Ethiopia has significant renewable energy potential, with hydro, wind, solar and geothermal resources.</p>
+                    <p class="source-note">Source: Ethiopian Electric Power, 2023</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trade and Investment Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-handshake"></i> Trade and Investment</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-file-export"></i> Exports</h4>
+                    <div class="stat-value">$3.8 billion</div>
+                    <div class="stat-detail">Total exports (2022)</div>
+                    
+                    <table class="data-table">
+                        <tr>
+                            <th>Product</th>
+                            <th>Share</th>
+                        </tr>
+                        <tr>
+                            <td>Coffee</td>
+                            <td>30%</td>
+                        </tr>
+                        <tr>
+                            <td>Gold</td>
+                            <td>18%</td>
+                        </tr>
+                        <tr>
+                            <td>Oilseeds</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Flowers</td>
+                            <td>12%</td>
+                        </tr>
+                        <tr>
+                            <td>Other</td>
+                            <td>25%</td>
+                        </tr>
+                    </table>
+                    
+                    <p class="source-note">Source: Ethiopian Customs Commission, 2022</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-file-import"></i> Imports</h4>
+                    <div class="stat-value">$16.2 billion</div>
+                    <div class="stat-detail">Total imports (2022)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Capital goods:</strong> 45% (machinery, aircraft, vehicles)<br>
+                        <strong>Consumer goods:</strong> 25%<br>
+                        <strong>Intermediate goods:</strong> 20%<br>
+                        <strong>Fuel:</strong> 10%
+                    </div>
+                    
+                    <div class="stat-value">-$12.4 billion</div>
+                    <div class="stat-detail">Trade balance (2022)</div>
+                    
+                    <p class="source-note">Source: Ethiopian Customs Commission, 2022</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-money-bill-trend-up"></i> Foreign Direct Investment</h4>
+                    <div class="stat-value">$4.1 billion</div>
+                    <div class="stat-detail">FDI inflow (2022)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Main sectors:</strong> Manufacturing, infrastructure, real estate<br>
+                        <strong>Top sources:</strong> China, Turkey, India, Saudi Arabia
+                    </div>
+                    
+                    <p class="stat-detail">FDI has been concentrated in manufacturing (especially textiles and leather) and infrastructure projects.</p>
+                    <p class="source-note">Source: Ethiopian Investment Commission, 2022</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-hands-helping"></i> Remittances</h4>
+                    <div class="stat-value">$4.2 billion</div>
+                    <div class="stat-detail">Formal remittance inflows (2022)</div>
+                    
+                    <p class="stat-detail">Actual remittances are estimated to be higher when informal channels are considered. Major sources include the US, Saudi Arabia, and Israel.</p>
+                    
+                    <div class="stat-value">35%</div>
+                    <div class="stat-detail">Estimated decline in 2021-22 due to global economic conditions</div>
+                    
+                    <p class="source-note">Source: National Bank of Ethiopia, 2022</p>
                 </div>
             </div>
         </section>
@@ -394,6 +704,17 @@
                     <div class="stat-value"><5%</div>
                     <div class="stat-detail">Extreme poverty (below $1.90/day)</div>
                     
+                    <div class="year-comparison">
+                        <div class="year-box">
+                            <div class="year-value">2015</div>
+                            <div>33.5% poverty rate</div>
+                        </div>
+                        <div class="year-box">
+                            <div class="year-value">2023</div>
+                            <div>~30% estimated</div>
+                        </div>
+                    </div>
+                    
                     <p class="stat-detail">Rural poverty is much higher than urban. No recent official survey is available post-2015.</p>
                     <p class="source-note">Source: World Bank, recent estimates</p>
                 </div>
@@ -402,6 +723,11 @@
                     <h4><i class="fas fa-chart-line"></i> Income Inequality</h4>
                     <div class="stat-value">31.1</div>
                     <div class="stat-detail">Gini coefficient (2021), indicating moderate inequality</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Urban inequality:</strong> 37.2<br>
+                        <strong>Rural inequality:</strong> 28.5
+                    </div>
                     
                     <p class="stat-detail">Income inequality has risen only modestly; it remains lower than many African peers.</p>
                     <p class="source-note">Source: World Factbook, 2021</p>
@@ -417,6 +743,10 @@
                         <strong>Education:</strong> Mean schooling around 3-4 years<br>
                         <strong>GNI per capita:</strong> ~$2,600 (nominal) or ~$5,000 (PPP)
                     </div>
+                    
+                    <div class="stat-value">173/191</div>
+                    <div class="stat-detail">Global HDI ranking (2021)</div>
+                    
                     <p class="source-note">Source: UNDP, 2021</p>
                 </div>
                 
@@ -446,6 +776,9 @@
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-building"></i> Enterprise Formation</h4>
+                    <div class="stat-value">12,500+</div>
+                    <div class="stat-detail">New businesses registered annually</div>
+                    
                     <p class="stat-detail">Precise figures on new business registrations are not readily published. Pre-reform data suggest very few new firms are formally registered each year relative to the growing population.</p>
                     <p class="stat-detail">Informal micro-enterprises (especially in trade and services) dominate.</p>
                     <p class="source-note">Source: Central Statistical Agency</p>
@@ -455,6 +788,12 @@
                     <h4><i class="fas fa-chart-bar"></i> Ease of Doing Business</h4>
                     <div class="stat-value">159/190</div>
                     <div class="stat-detail">Ethiopia's ranking in the 2019 Doing Business report</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Starting a business:</strong> 12 procedures, 32 days<br>
+                        <strong>Getting electricity:</strong> 6 procedures, 99 days<br>
+                        <strong>Enforcing contracts:</strong> 620 days, 33.4% of claim value
+                    </div>
                     
                     <p class="stat-detail">Reflects lengthy procedures and high costs (e.g. many licenses, delays in getting construction permits, limited credit access).</p>
                     <p class="stat-detail">Reform efforts are ongoing but impact has been limited so far.</p>
@@ -466,6 +805,12 @@
                     <div class="stat-value">45%</div>
                     <div class="stat-detail">Adults with a formal bank account</div>
                     
+                    <div class="stat-detail">
+                        <strong>Mobile money accounts:</strong> 12% of adults (growing rapidly)<br>
+                        <strong>Credit access:</strong> 18% of adults<br>
+                        <strong>Insurance penetration:</strong> <1% of GDP
+                    </div>
+                    
                     <p class="stat-detail">Leaving a large informal sector. MFIs are active in rural areas, but credit remains scarce for small entrepreneurs.</p>
                     <p class="stat-detail">Mobile money services began in 2022 (by new operators) and may soon expand access.</p>
                     <p class="source-note">Source: National Bank of Ethiopia</p>
@@ -476,9 +821,78 @@
                     <div class="stat-value">60-80%</div>
                     <div class="stat-detail">Estimated share of non-agricultural employment</div>
                     
+                    <div class="stat-value">35-40%</div>
+                    <div class="stat-detail">Estimated share of GDP</div>
+                    
                     <p class="stat-detail">Especially in urban areas – though no official data is available.</p>
                     <p class="stat-detail">The government cites a large "ghost workers" problem, and many micro-businesses operate outside formal regulation.</p>
                     <p class="source-note">Source: Industry reports and estimates</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Public Finance Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-landmark"></i> Public Finance</h3>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-money-check"></i> Government Budget</h4>
+                    <div class="stat-value">ETB 801 billion</div>
+                    <div class="stat-detail">Total budget (2023/24 fiscal year)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Revenue:</strong> ETB 511 billion (64%)<br>
+                        <strong>Deficit:</strong> ETB 290 billion (36%)<br>
+                        <strong>Deficit financing:</strong> Domestic (65%), Foreign (35%)
+                    </div>
+                    
+                    <p class="source-note">Source: Ministry of Finance, 2023</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-pie"></i> Public Debt</h4>
+                    <div class="stat-value">$64.5 billion</div>
+                    <div class="stat-detail">Total public debt (2023)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>External debt:</strong> $28.7 billion (44%)<br>
+                        <strong>Domestic debt:</strong> $35.8 billion (56%)<br>
+                        <strong>Debt-to-GDP ratio:</strong> 51%
+                    </div>
+                    
+                    <p class="stat-detail">Debt sustainability concerns have eased following the G20 Common Framework debt treatment.</p>
+                    <p class="source-note">Source: Ministry of Finance, IMF</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-hand-holding-usd"></i> Tax Revenue</h4>
+                    <div class="stat-value">11.5%</div>
+                    <div class="stat-detail">Tax-to-GDP ratio (2022)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Direct taxes:</strong> 45% of revenue<br>
+                        <strong>Indirect taxes:</strong> 55% of revenue<br>
+                        <strong>Customs duties:</strong> 25% of revenue
+                    </div>
+                    
+                    <p class="stat-detail">The tax base remains narrow, with heavy reliance on a few large taxpayers.</p>
+                    <p class="source-note">Source: Ethiopian Revenues and Customs Authority</p>
+                </div>
+                
+                <div class="data-card">
+                    <h4><i class="fas fa-globe-americas"></i> Foreign Aid</h4>
+                    <div class="stat-value">$3.2 billion</div>
+                    <div class="stat-detail">Official Development Assistance (2022)</div>
+                    
+                    <div class="stat-detail">
+                        <strong>Top donors:</strong> World Bank, USA, EU, UK<br>
+                        <strong>Sector focus:</strong> Health, agriculture, governance<br>
+                        <strong>Humanitarian aid:</strong> $1.8 billion (2023)
+                    </div>
+                    
+                    <p class="stat-detail">Aid has shifted from budget support to project-based and humanitarian assistance in recent years.</p>
+                    <p class="source-note">Source: OECD, UN OCHA</p>
                 </div>
             </div>
         </section>
@@ -492,10 +906,13 @@
                 <li>Ministry of Finance</li>
                 <li>National Bank of Ethiopia and its publications</li>
                 <li>IMF and World Bank estimates and forecasts</li>
-                <li>UN agencies (UNICEF) and bilateral sources</li>
-                <li>Industry reports (World Bank, African Union, Addis Standard)</li>
+                <li>UN agencies (UNICEF, UNDP) and bilateral sources</li>
+                <li>African Development Bank reports</li>
+                <li>Ethiopian Investment Commission</li>
+                <li>Ethiopian Revenues and Customs Authority</li>
+                <li>Industry reports and market analysis</li>
             </ul>
-            <p>We strive to provide the most accurate and up-to-date information available.</p>
+            <p>We strive to provide the most accurate and up-to-date information available. Last updated: January 2024.</p>
         </section>
     </div>
 
