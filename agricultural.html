@@ -197,56 +197,6 @@
             color: var(--text-light);
         }
 
-        /* Filters Section */
-        .filters {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            box-shadow: var(--shadow);
-        }
-
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .filter-group select, .filter-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 6px;
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            background-color: rgba(13, 17, 23, 0.7);
-            color: var(--text-light);
-            transition: var(--transition);
-        }
-
-        .filter-group select:focus, .filter-group input:focus {
-            outline: none;
-            border-color: var(--electric-blue);
-            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.3);
-        }
-
-        .filter-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
         /* Data Cards */
         .data-grid {
             display: grid;
@@ -309,63 +259,6 @@
             color: var(--coral-red);
         }
 
-        /* Charts Section */
-        .charts-section {
-            margin: 3rem 0;
-        }
-
-        .chart-container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            box-shadow: var(--shadow);
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .chart-title {
-            font-size: 1.3rem;
-            margin: 0;
-        }
-
-        .chart-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chart-btn {
-            background: rgba(88, 166, 255, 0.1);
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            color: var(--electric-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .chart-btn:hover {
-            background: var(--electric-blue);
-            color: var(--dark-bg);
-        }
-
-        .chart-placeholder {
-            height: 300px;
-            background: linear-gradient(45deg, rgba(88, 166, 255, 0.1), rgba(255, 123, 114, 0.1));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
         /* Table Section */
         .table-section {
             margin: 3rem 0;
@@ -409,6 +302,7 @@
             margin-top: 3rem;
             border-top: 1px solid var(--border-color);
         }
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -433,9 +327,9 @@
         }
 
         .footer-bottom {
-           text-align: center;
-           padding-top: 1.5rem;
-           border-top: 1px solid rgba(88, 166, 255, 0.2);
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(88, 166, 255, 0.2);
         }
 
         /* Responsive Design */
@@ -471,10 +365,6 @@
         }
 
         @media (max-width: 600px) {
-            .filter-row {
-                flex-direction: column;
-            }
-            
             .data-grid {
                 grid-template-columns: 1fr;
             }
@@ -482,7 +372,54 @@
             .card-value {
                 font-size: 1.7rem;
             }
-          
+        }
+
+        /* Simple Data Section */
+        .simple-data-section {
+            margin: 2rem 0;
+        }
+
+        .data-highlight {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .data-highlight h3 {
+            color: var(--electric-blue);
+            border-bottom: 1px solid rgba(88, 166, 255, 0.3);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(88, 166, 255, 0.1);
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 500;
+        }
+
+        .data-value {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .positive-change {
+            color: #4ade80;
+        }
+
+        .negative-change {
+            color: var(--coral-red);
         }
     </style>
 </head>
@@ -522,51 +459,9 @@
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Filters Section -->
-        <section class="filters">
-            <h3>Filter Data</h3>
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label for="region">Region</label>
-                    <select id="region">
-                        <option value="">All Regions</option>
-                        <option value="addis">Addis Ababa</option>
-                        <option value="oromia">Oromia</option>
-                        <option value="amhara">Amhara</option>
-                        <option value="tigray">Tigray</option>
-                        <option value="snnpr">SNNPR</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="crop-type">Crop Type</label>
-                    <select id="crop-type">
-                        <option value="">All Crops</option>
-                        <option value="teff">Teff</option>
-                        <option value="wheat">Wheat</option>
-                        <option value="maize">Maize</option>
-                        <option value="barley">Barley</option>
-                        <option value="sorghum">Sorghum</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="year">Year</label>
-                    <select id="year">
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                    </select>
-                </div>
-            </div>
-            <div class="filter-buttons">
-                <button class="btn">Apply Filters</button>
-                <button class="chart-btn">Reset</button>
-            </div>
-        </section>
-
-        <!-- Data Cards -->
+        <!-- Key Metrics Section -->
         <section>
-            <h3>Key Agricultural Metrics</h3>
+            <h3>Key Agricultural Metrics (2023)</h3>
             <div class="data-grid">
                 <div class="card">
                     <div class="card-header">
@@ -606,38 +501,74 @@
             </div>
         </section>
 
-        <!-- Charts Section -->
-        <section class="charts-section">
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3 class="chart-title">Crop Production Trends (2018-2023)</h3>
-                    <div class="chart-actions">
-                        <button class="chart-btn">Download</button>
-                        <button class="chart-btn">Share</button>
-                    </div>
+        <!-- Regional Production Data -->
+        <section class="simple-data-section">
+            <h3>Regional Crop Production (2023)</h3>
+            
+            <div class="data-highlight">
+                <h3>Oromia Region</h3>
+                <div class="data-item">
+                    <span class="data-label">Teff Production</span>
+                    <span class="data-value">18.4M tons</span>
                 </div>
-                <div class="chart-placeholder">
-                    <canvas id="trendChart" width="600" height="300"></canvas>
+                <div class="data-item">
+                    <span class="data-label">Maize Production</span>
+                    <span class="data-value">12.7M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Sorghum Production</span>
+                    <span class="data-value">9.7M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Year-over-Year Change</span>
+                    <span class="data-value positive-change">+7.3%</span>
                 </div>
             </div>
             
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3 class="chart-title">Regional Distribution of Agricultural Output</h3>
-                    <div class="chart-actions">
-                        <button class="chart-btn">Download</button>
-                        <button class="chart-btn">Share</button>
-                    </div>
+            <div class="data-highlight">
+                <h3>Amhara Region</h3>
+                <div class="data-item">
+                    <span class="data-label">Teff Production</span>
+                    <span class="data-value">15.2M tons</span>
                 </div>
-                <div class="chart-placeholder">
-                    <canvas id="regionChart" width="600" height="300"></canvas>
+                <div class="data-item">
+                    <span class="data-label">Wheat Production</span>
+                    <span class="data-value">12.7M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Barley Production</span>
+                    <span class="data-value">8.3M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Year-over-Year Change</span>
+                    <span class="data-value positive-change">+10.2%</span>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>SNNPR Region</h3>
+                <div class="data-item">
+                    <span class="data-label">Maize Production</span>
+                    <span class="data-value">15.9M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Coffee Production</span>
+                    <span class="data-value">3.8M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Enset Production</span>
+                    <span class="data-value">6.2M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Year-over-Year Change</span>
+                    <span class="data-value positive-change">+5.8%</span>
                 </div>
             </div>
         </section>
 
         <!-- Table Section -->
         <section class="table-section">
-            <h3>Detailed Crop Production Data</h3>
+            <h3>Detailed Crop Production Data (2023)</h3>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -653,39 +584,98 @@
                         <td>Teff</td>
                         <td>Oromia</td>
                         <td>18,452,189</td>
-                        <td>+7.3%</td>
+                        <td class="positive-change">+7.3%</td>
                         <td>85.50</td>
                     </tr>
                     <tr>
                         <td>Wheat</td>
                         <td>Amhara</td>
                         <td>12,673,422</td>
-                        <td>+10.2%</td>
+                        <td class="positive-change">+10.2%</td>
                         <td>42.75</td>
                     </tr>
                     <tr>
                         <td>Maize</td>
                         <td>SNNPR</td>
                         <td>15,894,367</td>
-                        <td>+5.8%</td>
+                        <td class="positive-change">+5.8%</td>
                         <td>32.20</td>
                     </tr>
                     <tr>
                         <td>Barley</td>
                         <td>Tigray</td>
                         <td>4,562,899</td>
-                        <td>-2.1%</td>
+                        <td class="negative-change">-2.1%</td>
                         <td>38.90</td>
                     </tr>
                     <tr>
                         <td>Sorghum</td>
                         <td>Oromia</td>
                         <td>9,673,245</td>
-                        <td>+8.7%</td>
+                        <td class="positive-change">+8.7%</td>
                         <td>36.45</td>
+                    </tr>
+                    <tr>
+                        <td>Coffee</td>
+                        <td>SNNPR</td>
+                        <td>3,845,231</td>
+                        <td class="negative-change">-3.7%</td>
+                        <td>210.75</td>
+                    </tr>
+                    <tr>
+                        <td>Pulses</td>
+                        <td>Amhara</td>
+                        <td>7,342,567</td>
+                        <td class="positive-change">+6.2%</td>
+                        <td>48.30</td>
                     </tr>
                 </tbody>
             </table>
+        </section>
+
+        <!-- Livestock Data -->
+        <section class="simple-data-section">
+            <h3>Livestock Statistics (2023)</h3>
+            
+            <div class="data-highlight">
+                <h3>National Totals</h3>
+                <div class="data-item">
+                    <span class="data-label">Cattle</span>
+                    <span class="data-value">65.3M</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Sheep</span>
+                    <span class="data-value">31.2M</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Goats</span>
+                    <span class="data-value">32.1M</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Poultry</span>
+                    <span class="data-value">56.8M</span>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Regional Distribution</h3>
+                <div class="data-item">
+                    <span class="data-label">Oromia (Cattle)</span>
+                    <span class="data-value">24.5M (37.5%)</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Amhara (Cattle)</span>
+                    <span class="data-value">18.7M (28.6%)</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">SNNPR (Cattle)</span>
+                    <span class="data-value">12.3M (18.8%)</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Other Regions</span>
+                    <span class="data-value">9.8M (15.1%)</span>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -722,72 +712,6 @@
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
-        });
-
-        // Simple chart implementation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Trend Chart
-            const trendCtx = document.getElementById('trendChart').getContext('2d');
-            
-            // Draw a simple line chart
-            trendCtx.beginPath();
-            trendCtx.moveTo(50, 250);
-            trendCtx.lineTo(150, 180);
-            trendCtx.lineTo(250, 200);
-            trendCtx.lineTo(350, 120);
-            trendCtx.lineTo(450, 160);
-            trendCtx.lineTo(550, 100);
-            trendCtx.strokeStyle = '#58A6FF';
-            trendCtx.lineWidth = 3;
-            trendCtx.stroke();
-            
-            // Add data points
-            const points = [[50, 250], [150, 180], [250, 200], [350, 120], [450, 160], [550, 100]];
-            points.forEach(point => {
-                trendCtx.beginPath();
-                trendCtx.arc(point[0], point[1], 5, 0, Math.PI * 2);
-                trendCtx.fillStyle = '#58A6FF';
-                trendCtx.fill();
-            });
-            
-            // Add labels
-            trendCtx.fillStyle = '#C9D1D9';
-            trendCtx.font = '12px Inter';
-            trendCtx.fillText('2018', 45, 270);
-            trendCtx.fillText('2019', 145, 270);
-            trendCtx.fillText('2020', 245, 270);
-            trendCtx.fillText('2021', 345, 270);
-            trendCtx.fillText('2022', 445, 270);
-            trendCtx.fillText('2023', 545, 270);
-            
-            // Region Chart
-            const regionCtx = document.getElementById('regionChart').getContext('2d');
-            const regions = ['Oromia', 'Amhara', 'SNNPR', 'Tigray', 'Others'];
-            const values = [45, 25, 15, 10, 5];
-            const colors = ['#58A6FF', '#FF7B72', '#4ade80', '#F9E79F', '#9AE3D4'];
-            
-            let startAngle = 0;
-            for (let i = 0; i < values.length; i++) {
-                const sliceAngle = (values[i] / 100) * 2 * Math.PI;
-                
-                regionCtx.beginPath();
-                regionCtx.moveTo(300, 150);
-                regionCtx.arc(300, 150, 100, startAngle, startAngle + sliceAngle);
-                regionCtx.closePath();
-                regionCtx.fillStyle = colors[i];
-                regionCtx.fill();
-                
-                startAngle += sliceAngle;
-            }
-            
-            // Add legend
-            for (let i = 0; i < regions.length; i++) {
-                regionCtx.fillStyle = colors[i];
-                regionCtx.fillRect(500, 100 + i * 25, 15, 15);
-                regionCtx.fillStyle = '#C9D1D9';
-                regionCtx.font = '12px Inter';
-                regionCtx.fillText(regions[i] + ' (' + values[i] + '%)', 520, 112 + i * 25);
-            }
         });
     </script>
 </body>
