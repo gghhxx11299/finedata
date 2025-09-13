@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News - Finedats Ethiopia</title>
+    <title>News - Finedatas Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
@@ -75,6 +75,7 @@
             display: flex;
             list-style: none;
             gap: 25px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -85,6 +86,35 @@
         }
 
         .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-accent);
+        }
+
+        /* Button Styles - ADDED THE MISSING STYLES */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-accent);
+            color: var(--background-color);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
             color: var(--primary-accent);
         }
 
@@ -296,12 +326,32 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .nav-links {
-                gap: 15px;
-                font-size: 0.9rem;
-                flex-wrap: wrap;
-                justify-content: center;
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                padding: 1rem 0;
+                border: 1px solid var(--primary-accent);
+                border-top: none;
+                gap: 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             .news-grid {
@@ -310,6 +360,12 @@
             
             .footer-content {
                 flex-direction: column;
+            }
+        }
+
+        @media (min-width: 969px) {
+            .nav-links {
+                display: flex !important;
             }
         }
     </style>
@@ -324,7 +380,7 @@
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="index.html" >Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
@@ -334,6 +390,9 @@
                     <li><a href="support.html">Support</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
         </div>
     </header>
@@ -461,5 +520,22 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
