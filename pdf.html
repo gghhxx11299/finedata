@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Resources - Finedatas Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --background-color: #0D1117;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
+        }
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--primary-accent);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo h1 {
+            color: var(--primary-accent);
+            font-size: 1.8rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-accent);
+        }
+
+        /* PDF Section */
+        .pdf-section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-accent);
+            font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .pdf-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            border: 1px solid var(--primary-accent);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        }
+
+        .pdf-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 5rem;
+        }
+
+        .pdf-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .pdf-description {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .pdf-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+
+        .pdf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background-color: var(--secondary-accent);
+            color: var(--background-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            justify-content: center;
+        }
+
+        .pdf-link:hover {
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid var(--primary-accent);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-accent);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .pdf-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <h1>Finedatas</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="pdf.html" class="active">PDF Resources</a></li>
+                    <li><a href="exchange.html">Exchange Rates</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PDF Resources Section -->
+    <section class="pdf-section">
+        <div class="container">
+            <h2 class="section-title">PDF Resources</h2>
+            <p class="intro-text">Access our comprehensive collection of economic reports, research studies, and statistical data about Ethiopia. All documents are available for download in PDF format.</p>
+            
+            <div class="pdf-grid">
+                <!-- PDF 1 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Consumer Price Index - August 2025</h3>
+                        <p class="pdf-description">Latest consumer price index data and inflation analysis for Ethiopia, August 2025.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> August 2025</span>
+                            <span><i class="far fa-file"></i> 2.4 MB</span>
+                        </div>
+                        <a href="https://ess.gov.et/download/consumer-price-index-august-2025" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF 2 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Consumer Price Index - June 2025</h3>
+                        <p class="pdf-description">Consumer price index data and inflation analysis for Ethiopia, June 2025.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> June 2025</span>
+                            <span><i class="far fa-file"></i> 2.1 MB</span>
+                        </div>
+                        <a href="https://ess.gov.et/download/consumer-price-index-june-2025-2/" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF 3 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Structural Transformation in Ethiopia</h3>
+                        <p class="pdf-description">Report on the Ethiopian economy: Prospects and challenges of structural transformation.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> March 2023</span>
+                            <span><i class="far fa-file"></i> 3.8 MB</span>
+                        </div>
+                        <a href="https://eea-et.org/wp-content/uploads/2023/03/REPORT-ON-THE-ETHIOPIAN-ECONOMY-2015_Prospects-and-Challenges-of-Structural-Transformation-in-Ethiopia.pdf" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF 4 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Out-of-School Children in Ethiopia</h3>
+                        <p class="pdf-description">National study on the magnitude of out-of-school children in Ethiopia (2020 Report Synthesis).</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> February 2022</span>
+                            <span><i class="far fa-file"></i> 4.2 MB</span>
+                        </div>
+                        <a href="https://luminosfund.org/wp-content/uploads/2022/02/National-Study-on-the-Magnitude-of-Out-of-School-Children-in-Ethiopia_2020-Report-Synthesis.pdf" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PDF 5 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Ethiopia Quarterly Economic Profile</h3>
+                        <p class="pdf-description">UNDP's comprehensive report on Ethiopia's economic performance, challenges, and outlook.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> April 2025</span>
+                            <span><i class="far fa-file"></i> 3.5 MB</span>
+                        </div>
+                        <a href="https://www.undp.org/sites/g/files/zskgke326/files/2025-04/ethiopia_quarterly_economic_profile_april_2025.pdf" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PDF 6 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Ethiopia Economic Analysis</h3>
+                        <p class="pdf-description">Comprehensive economic analysis of Ethiopia with focus on development challenges.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> 2023</span>
+                            <span><i class="far fa-file"></i> 2.9 MB</span>
+                        </div>
+                        <a href="https://odi.org/documents/8031/GIZ_Ethiopia_m7C1Qt8.pdf" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PDF 7 -->
+                <div class="pdf-card">
+                    <div class="pdf-image">
+                        <i class="far fa-file-pdf"></i>
+                    </div>
+                    <div class="pdf-content">
+                        <h3 class="pdf-title">Education Statistics Annual Abstract</h3>
+                        <p class="pdf-description">Education Statistics Annual Abstract for Ethiopia 2022-2023 from Ministry of Education.</p>
+                        <div class="pdf-meta">
+                            <span><i class="far fa-calendar"></i> 2023</span>
+                            <span><i class="far fa-file"></i> 5.1 MB</span>
+                        </div>
+                        <a href="https://moe.gov.et/storage/Books/ESAA%202022-23%20Final.pdf" target="_blank" class="pdf-link">
+                            <i class="far fa-file-pdf"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedatas</h3>
+                    <p>Providing accurate and comprehensive data on Ethiopia's economy, demographics, agriculture, and more.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html">Home</a>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="pdf-resources.html">PDF Resources</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: gabrielmulugeta1@gmail.com</p>
+                    <p>Phone: +251 991168917</p>
+                    
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Finedatas Ethiopia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
