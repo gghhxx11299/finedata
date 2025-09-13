@@ -381,7 +381,7 @@
                             <span><i class="far fa-calendar"></i> April 20, 2025</span>
                             <span><i class="far fa-newspaper"></i> UNDP</span>
                         </div>
-                        <a href="#" class="pdf-link" onclick="openPdf('https://www.undp.org/sites/g/files/zskgke326/files/2025-04/ethiopia_quarterly_economic_profile_april_2025.pdf')">
+                        <a href="https://www.undp.org/sites/g/files/zskgke326/files/2025-04/ethiopia_quarterly_economic_profile_april_2025.pdf" target="_blank" class="pdf-link">
                             <i class="far fa-file-pdf"></i> View PDF
                         </a>
                     </div>
@@ -397,51 +397,42 @@
                             <span><i class="far fa-calendar"></i> February 10, 2022</span>
                             <span><i class="far fa-newspaper"></i> Luminos Fund</span>
                         </div>
-                        <a href="#" class="pdf-link" onclick="openPdf('https://luminosfund.org/wp-content/uploads/2022/02/National-Study-on-the-Magnitude-of-Out-of-School-Children-in-Ethiopia_2020-Report-Synthesis.pdf')">
+                        <a href="https://luminosfund.org/wp-content/uploads/2022/02/National-Study-on-the-Magnitude-of-Out-of-School-Children-in-Ethiopia_2020-Report-Synthesis.pdf" target="_blank" class="pdf-link">
                             <i class="far fa-file-pdf"></i> View PDF
                         </a>
                     </div>
                 </div>
 
-                <!-- Previous News Items -->
-                <!-- News Item 5 -->
+                <!-- New News Item 5 -->
                 <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Agriculture News" class="news-image">
+                    <img src="https://ichef.bbci.co.uk/news/1024/cpsprodpb/bfa9/live/2afc07e0-67bf-11f0-8dbd-f3d32ebd3327.jpg.webp" alt="BBC News" class="news-image">
                     <div class="news-content">
-                        <h3 class="news-title">Ethiopia's Agricultural Growth Exceeds Expectations</h3>
-                        <p class="news-excerpt">Ethiopia's agricultural sector shows remarkable growth with a 7.2% increase in production compared to last year.</p>
+                        <h3 class="news-title">Ethiopia's Economic Reforms Show Promising Results</h3>
+                        <p class="news-excerpt">Latest updates on Ethiopia's economic reforms and their impact on the country's development and international relations.</p>
                         <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> March 22, 2025</span>
-                            <span><i class="far fa-newspaper"></i> Agriculture Today</span>
+                            <span><i class="far fa-calendar"></i> September 5, 2025</span>
+                            <span><i class="far fa-newspaper"></i> BBC News</span>
                         </div>
-                        <a href="#" class="read-more">Read More</a>
+                        <a href="https://www.bbc.com/news/articles/c89e41z388qo" class="read-more">Read More</a>
                     </div>
                 </div>
 
-                <!-- News Item 6 -->
+                <!-- New News Item 6 -->
                 <div class="news-card">
-                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Finance News" class="news-image">
+                    <img src="https://worldbank.scene7.com/is/image/worldbankprod/eth-farming-1?wid=780&hei=439&qlt=85,0&resMode=sharp" alt="World Bank Ethiopia Farming" class="news-image">
                     <div class="news-content">
-                        <h3 class="news-title">National Bank Announces New Monetary Policy</h3>
-                        <p class="news-excerpt">The National Bank of Ethiopia introduces new measures to control inflation and stabilize the economy.</p>
+                        <h3 class="news-title">In Ethiopia, Reviving Soil and Improving Farming Livelihoods</h3>
+                        <p class="news-excerpt">World Bank initiative focuses on sustainable agriculture practices to improve soil health and farmers' livelihoods in Ethiopia.</p>
                         <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> February 15, 2025</span>
-                            <span><i class="far fa-newspaper"></i> Financial Times</span>
+                            <span><i class="far fa-calendar"></i> August 19, 2025</span>
+                            <span><i class="far fa-newspaper"></i> World Bank</span>
                         </div>
-                        <a href="#" class="read-more">Read More</a>
+                        <a href="https://www.worldbank.org/en/news/feature/2025/08/19/in-ethiopia-reviving-soil-and-improving-farming-livelihoods" class="read-more">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- PDF Viewer Modal -->
-    <div id="pdfModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closePdf()">&times;</span>
-            <iframe id="pdfViewer" class="pdf-viewer" src=""></iframe>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -473,26 +464,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // PDF Viewer functionality
-        function openPdf(pdfUrl) {
-            document.getElementById('pdfViewer').src = pdfUrl;
-            document.getElementById('pdfModal').style.display = 'block';
-        }
-
-        function closePdf() {
-            document.getElementById('pdfModal').style.display = 'none';
-            document.getElementById('pdfViewer').src = '';
-        }
-
-        // Close modal when clicking outside of it
-        window.onclick = function(event) {
-            const modal = document.getElementById('pdfModal');
-            if (event.target == modal) {
-                closePdf();
-            }
-        }
-    </script>
 </body>
 </html>
