@@ -76,6 +76,7 @@
             display: flex;
             list-style: none;
             gap: 25px;
+            position: relative;
         }
 
         .nav-links a {
@@ -92,6 +93,26 @@
         .nav-links a.active {
             color: var(--primary-accent);
             font-weight: 700;
+        }
+
+        /* Fix for top right corner positioning */
+        .nav-links li:last-child {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .nav-links li:last-child a {
+            background-color: var(--primary-accent);
+            color: var(--background-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .nav-links li:last-child a:hover {
+            background-color: var(--secondary-accent);
+            color: #FFFFFF;
         }
 
         /* Page Header */
@@ -409,6 +430,12 @@
             .footer-content {
                 flex-direction: column;
             }
+            
+            /* Adjust for mobile view */
+            .nav-links li:last-child {
+                position: static;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -422,12 +449,12 @@
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="index.html" >Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html" class="active">Exchange Rates</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="support.html">Support</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
