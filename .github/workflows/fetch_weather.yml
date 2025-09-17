@@ -1,0 +1,31 @@
+name: Fetch Weather Every 30 Minutes
+
+# When this workflow runs
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # runs every 30 minutes
+  workflow_dispatch:        # also allows manual run
+
+jobs:
+  fetch-weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Get repository files
+      - uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pip install requests
+
+      # Step 4: Run your Python script
+      - name: Run weather script
+        env:
+          API_KEY: ${{ 7add9cf5aa00418a91161932251709 }}
+        run: python fetch_weather.py
