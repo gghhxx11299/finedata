@@ -74,6 +74,30 @@
         .social-links a {display:inline-block;color:var(--text-primary);background-color:rgba(255,255,255,0.1);width:40px;height:40px;border-radius:50%;text-align:center;line-height:40px;transition:all 0.3s;}
         .social-links a:hover {background-color:var(--primary-accent);color:var(--bg-primary);transform:translateY(-3px);}
         .footer-bottom {text-align:center;padding-top:1.5rem;border-top:1px solid var(--border-color);color:var(--text-secondary);}
+        
+        /* Loading indicator */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: var(--secondary-accent);
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(255, 123, 114, 0.1);
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
     </style>
 </head>
 <body>
@@ -136,14 +160,16 @@
                 <button class="city-btn" data-city="Goba">Goba</button>
             </div>
 
+            <div id="weather-status"></div>
+
             <div class="weather-container">
                 <div class="current-weather">
                     <h3>Current Weather</h3>
-                    <div class="weather-detail"><span class="label">Temperature</span><span class="value">--</span></div>
-                    <div class="weather-detail"><span class="label">Humidity</span><span class="value">--</span></div>
-                    <div class="weather-detail"><span class="label">Conditions</span><span class="value">--</span></div>
-                    <div class="weather-detail"><span class="label">Wind Speed</span><span class="value">--</span></div>
-                    <div class="weather-detail"><span class="label">Last Updated</span><span class="value">--</span></div>
+                    <div class="weather-detail"><span class="label">Temperature</span><span class="value" id="temp">--</span></div>
+                    <div class="weather-detail"><span class="label">Humidity</span><span class="value" id="humidity">--</span></div>
+                    <div class="weather-detail"><span class="label">Conditions</span><span class="value" id="conditions">--</span></div>
+                    <div class="weather-detail"><span class="label">Wind Speed</span><span class="value" id="wind">--</span></div>
+                    <div class="weather-detail"><span class="label">Last Updated</span><span class="value" id="updated">--</span></div>
                 </div>
 
                 <div class="forecast">
@@ -182,32 +208,244 @@
     </footer>
 
     <script>
-        async function fetchWeatherData() {
-            try {
-                const response = await fetch('data.json');
-                return await response.json();
-            } catch (err) {
-                console.error('Failed to load data.json:', err);
-                return {};
+        // Sample weather data (in a real scenario, this would be in a separate data.json file)
+        const weatherData = {
+            "Addis Ababa": {
+                "current": {
+                    "temperature": 18,
+                    "humidity": 65,
+                    "weather": "Partly Cloudy",
+                    "wind_speed": 12,
+                    "timestamp": "2023-11-15 14:30"
+                },
+                "forecast": [
+                    {
+                        "date": "2023-11-16",
+                        "temp_min": 12,
+                        "temp_max": 22,
+                        "weather": "Sunny",
+                        "precipitation": 10,
+                        "wind_speed": 8
+                    },
+                    {
+                        "date": "2023-11-17",
+                        "temp_min": 13,
+                        "temp_max": 23,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 20,
+                        "wind_speed": 10
+                    },
+                    {
+                        "date": "2023-11-18",
+                        "temp_min": 14,
+                        "temp_max": 21,
+                        "weather": "Cloudy",
+                        "precipitation": 30,
+                        "wind_speed": 12
+                    },
+                    {
+                        "date": "2023-11-19",
+                        "temp_min": 13,
+                        "temp_max": 20,
+                        "weather": "Light Rain",
+                        "precipitation": 60,
+                        "wind_speed": 15
+                    },
+                    {
+                        "date": "2023-11-20",
+                        "temp_min": 12,
+                        "temp_max": 19,
+                        "weather": "Rain",
+                        "precipitation": 80,
+                        "wind_speed": 18
+                    },
+                    {
+                        "date": "2023-11-21",
+                        "temp_min": 11,
+                        "temp_max": 18,
+                        "weather": "Rain",
+                        "precipitation": 70,
+                        "wind_speed": 16
+                    },
+                    {
+                        "date": "2023-11-22",
+                        "temp_min": 12,
+                        "temp_max": 20,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 30,
+                        "wind_speed": 12
+                    }
+                ]
+            },
+            "Mekelle": {
+                "current": {
+                    "temperature": 22,
+                    "humidity": 45,
+                    "weather": "Sunny",
+                    "wind_speed": 10,
+                    "timestamp": "2023-11-15 14:45"
+                },
+                "forecast": [
+                    {
+                        "date": "2023-11-16",
+                        "temp_min": 16,
+                        "temp_max": 26,
+                        "weather": "Sunny",
+                        "precipitation": 5,
+                        "wind_speed": 8
+                    },
+                    {
+                        "date": "2023-11-17",
+                        "temp_min": 17,
+                        "temp_max": 27,
+                        "weather": "Sunny",
+                        "precipitation": 5,
+                        "wind_speed": 9
+                    },
+                    {
+                        "date": "2023-11-18",
+                        "temp_min": 16,
+                        "temp_max": 25,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 10,
+                        "wind_speed": 10
+                    },
+                    {
+                        "date": "2023-11-19",
+                        "temp_min": 15,
+                        "temp_max": 24,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 20,
+                        "wind_speed": 12
+                    },
+                    {
+                        "date": "2023-11-20",
+                        "temp_min": 14,
+                        "temp_max": 23,
+                        "weather": "Cloudy",
+                        "precipitation": 30,
+                        "wind_speed": 14
+                    },
+                    {
+                        "date": "2023-11-21",
+                        "temp_min": 15,
+                        "temp_max": 24,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 20,
+                        "wind_speed": 11
+                    },
+                    {
+                        "date": "2023-11-22",
+                        "temp_min": 16,
+                        "temp_max": 25,
+                        "weather": "Sunny",
+                        "precipitation": 10,
+                        "wind_speed": 9
+                    }
+                ]
+            },
+            "Bahir Dar": {
+                "current": {
+                    "temperature": 20,
+                    "humidity": 70,
+                    "weather": "Mostly Cloudy",
+                    "wind_speed": 8,
+                    "timestamp": "2023-11-15 14:20"
+                },
+                "forecast": [
+                    {
+                        "date": "2023-11-16",
+                        "temp_min": 15,
+                        "temp_max": 24,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 20,
+                        "wind_speed": 7
+                    },
+                    {
+                        "date": "2023-11-17",
+                        "temp_min": 16,
+                        "temp_max": 25,
+                        "weather": "Sunny",
+                        "precipitation": 10,
+                        "wind_speed": 6
+                    },
+                    {
+                        "date": "2023-11-18",
+                        "temp_min": 16,
+                        "temp_max": 24,
+                        "weather": "Cloudy",
+                        "precipitation": 30,
+                        "wind_speed": 8
+                    },
+                    {
+                        "date": "2023-11-19",
+                        "temp_min": 15,
+                        "temp_max": 23,
+                        "weather": "Light Rain",
+                        "precipitation": 50,
+                        "wind_speed": 10
+                    },
+                    {
+                        "date": "2023-11-20",
+                        "temp_min": 14,
+                        "temp_max": 22,
+                        "weather": "Rain",
+                        "precipitation": 70,
+                        "wind_speed": 12
+                    },
+                    {
+                        "date": "2023-11-21",
+                        "temp_min": 14,
+                        "temp_max": 23,
+                        "weather": "Cloudy",
+                        "precipitation": 40,
+                        "wind_speed": 9
+                    },
+                    {
+                        "date": "2023-11-22",
+                        "temp_min": 15,
+                        "temp_max": 24,
+                        "weather": "Partly Cloudy",
+                        "precipitation": 20,
+                        "wind_speed": 7
+                    }
+                ]
             }
-        }
+            // In a complete implementation, you would add data for all cities
+        };
 
-        function updateWeatherDisplay(data, city) {
-            if (!data[city]) return;
-
-            const cityData = data[city];
-
+        // Function to update weather display
+        function updateWeatherDisplay(city) {
+            const cityData = weatherData[city];
+            
+            if (!cityData) {
+                document.getElementById('weather-status').innerHTML = 
+                    '<div class="error-message">Weather data not available for ' + city + '</div>';
+                
+                // Reset values
+                document.getElementById('temp').textContent = '--';
+                document.getElementById('humidity').textContent = '--';
+                document.getElementById('conditions').textContent = '--';
+                document.getElementById('wind').textContent = '--';
+                document.getElementById('updated').textContent = '--';
+                document.getElementById('forecast-container').innerHTML = '';
+                return;
+            }
+            
+            // Clear any error messages
+            document.getElementById('weather-status').innerHTML = '';
+            
             // Update current weather
-            const weatherDetails = document.querySelectorAll('.current-weather .weather-detail .value');
-            weatherDetails[0].textContent = cityData.current.temperature + '°C';
-            weatherDetails[1].textContent = cityData.current.humidity + '%';
-            weatherDetails[2].textContent = cityData.current.weather;
-            weatherDetails[3].textContent = cityData.current.wind_speed + ' km/h';
-            weatherDetails[4].textContent = cityData.current.timestamp;
+            document.getElementById('temp').textContent = cityData.current.temperature + '°C';
+            document.getElementById('humidity').textContent = cityData.current.humidity + '%';
+            document.getElementById('conditions').textContent = cityData.current.weather;
+            document.getElementById('wind').textContent = cityData.current.wind_speed + ' km/h';
+            document.getElementById('updated').textContent = cityData.current.timestamp;
 
             // Update forecast
             const forecastContainer = document.getElementById('forecast-container');
             forecastContainer.innerHTML = '';
+            
             cityData.forecast.forEach(day => {
                 const forecastDay = document.createElement('div');
                 forecastDay.className = 'forecast-day';
@@ -225,21 +463,22 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
             const cityButtons = document.querySelectorAll('.city-btn');
-            const data = await fetchWeatherData();
-
+            
+            // Add event listeners to city buttons
             cityButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     cityButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const city = btn.getAttribute('data-city');
-                    updateWeatherDisplay(data, city);
+                    updateWeatherDisplay(city);
                 });
             });
 
-            // Initialize first city
-            updateWeatherDisplay(data, 'Addis Ababa');
+            // Initialize with first city
+            updateWeatherDisplay('Addis Ababa');
 
             // Mobile menu toggle
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
@@ -249,4 +488,3 @@
     </script>
 </body>
 </html>
-
