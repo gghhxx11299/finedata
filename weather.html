@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finedatas Ethiopia - Weather Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Modern CSS with Dark Theme */
+        :root {
+            --bg-primary: #0D1117;
+            --bg-secondary: #161B22;
+            --bg-card: #161B22;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-primary: #C9D1D9;
+            --text-secondary: #8B949E;
+            --border-color: #30363D;
+            --success-color: #3FB950;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-secondary);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .logo h1 {
+            color: var(--primary-accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:not(.btn):after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(13, 17, 23, 0.85), rgba(13, 17, 23, 0.95)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            color: var(--text-primary);
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-accent);
+            color: var(--bg-primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-accent);
+            color: var(--text-primary);
+            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px rgba(255, 123, 114, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Weather Section */
+        .weather-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary-accent);
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .city-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .city-btn {
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .city-btn:hover, .city-btn.active {
+            background-color: var(--primary-accent);
+            color: var(--bg-primary);
+        }
+
+        .weather-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .weather-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .current-weather {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .current-weather h3 {
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .weather-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .weather-detail:last-child {
+            border-bottom: none;
+        }
+
+        .weather-detail .label {
+            color: var(--text-secondary);
+        }
+
+        .weather-detail .value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .forecast {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .forecast h3 {
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .forecast-day {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .forecast-day:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-accent);
+        }
+
+        .forecast-date {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-accent);
+        }
+
+        .forecast-temp {
+            display: flex;
+            justify-content: space-around;
+            margin: 0.5rem 0;
+        }
+
+        .temp-min, .temp-max {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .temp-min .label, .temp-max .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .temp-min .value {
+            color: #58A6FF;
+        }
+
+        .temp-max .value {
+            color: #FF7B72;
+        }
+
+        .forecast-weather {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .forecast-precipitation, .forecast-wind {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-accent);
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-secondary);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+                border-top: 1px solid var(--border-color);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .forecast-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <h1>Finedatas</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" >Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="exchange.html">Exchange Rates</a></li>
+                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="weather.html" class="active">For Farmers</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Ethiopia Weather Data</h2>
+            <p>Access real-time weather information and 7-day forecasts for major Ethiopian cities and agricultural regions</p>
+            <a href="#weather-data" class="btn">View Weather Data</a>
+        </div>
+    </section>
+
+    <!-- Weather Data Section -->
+    <section id="weather-data" class="weather-section">
+        <div class="container">
+            <h2 class="section-title">Weather Information</h2>
+            
+            <div class="city-selector">
+                <button class="city-btn active" data-city="Addis Ababa">Addis Ababa</button>
+                <button class="city-btn" data-city="Mekelle">Mekelle</button>
+                <button class="city-btn" data-city="Bahir Dar">Bahir Dar</button>
+                <button class="city-btn" data-city="Hawassa">Hawassa</button>
+                <button class="city-btn" data-city="Dire Dawa">Dire Dawa</button>
+                <button class="city-btn" data-city="Jijiga">Jijiga</button>
+                <button class="city-btn" data-city="Gambela">Gambela</button>
+                <button class="city-btn" data-city="Asosa">Asosa</button>
+                <button class="city-btn" data-city="Semera">Semera</button>
+                <button class="city-btn" data-city="Jimma">Jimma</button>
+                <button class="city-btn" data-city="Nekemte">Nekemte</button>
+                <button class="city-btn" data-city="Bale Robe">Bale Robe</button>
+                <button class="city-btn" data-city="Shashemene">Shashemene</button>
+                <button class="city-btn" data-city="Dilla">Dilla</button>
+                <button class="city-btn" data-city="Bonga">Bonga</button>
+                <button class="city-btn" data-city="Arba Minch">Arba Minch</button>
+                <button class="city-btn" data-city="Hosaena">Hosaena</button>
+                <button class="city-btn" data-city="Debre Markos">Debre Markos</button>
+                <button class="city-btn" data-city="Debre Birhan">Debre Birhan</button>
+                <button class="city-btn" data-city="Metu">Metu</button>
+                <button class="city-btn" data-city="Adigrat">Adigrat</button>
+                <button class="city-btn" data-city="Goba">Goba</button>
+            </div>
+
+            <div class="weather-container">
+                <div class="current-weather">
+                    <h3>Current Weather</h3>
+                    <div class="weather-detail">
+                        <span class="label">Temperature</span>
+                        <span class="value">20.4°C</span>
+                    </div>
+                    <div class="weather-detail">
+                        <span class="label">Humidity</span>
+                        <span class="value">58%</span>
+                    </div>
+                    <div class="weather-detail">
+                        <span class="label">Conditions</span>
+                        <span class="value">Patchy rain nearby</span>
+                    </div>
+                    <div class="weather-detail">
+                        <span class="label">Wind Speed</span>
+                        <span class="value">22.7 km/h</span>
+                    </div>
+                    <div class="weather-detail">
+                        <span class="label">Last Updated</span>
+                        <span class="value">2025-09-17 10:30</span>
+                    </div>
+                </div>
+
+                <div class="forecast">
+                    <h3>7-Day Forecast</h3>
+                    <div class="forecast-grid" id="forecast-container">
+                        <!-- Forecast will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedatas</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a> 
+                    <a href="exchange.html">Exchange Rates</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +251991168917</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Weather data for all cities
+        const weatherData = {
+            "Addis Ababa": {
+                current: {
+                    temperature: 20.4,
+                    humidity: 58,
+                    weather: "Patchy rain nearby",
+                    wind_speed: 22.7,
+                    timestamp: "2025-09-17 10:30"
+                },
+                forecast: [
+                    { date: "2025-09-17", temp_min: 15.5, temp_max: 23.0, weather: "Patchy rain nearby", precipitation: 96, wind_speed: 22.7 },
+                    { date: "2025-09-18", temp_min: 17.1, temp_max: 22.5, weather: "Patchy rain nearby", precipitation: 87, wind_speed: 30.6 },
+                    { date: "2025-09-19", temp_min: 16.6, temp_max: 23.9, weather: "Patchy rain nearby", precipitation: 89, wind_speed: 37.8 },
+                    { date: "2025-09-20", temp_min: 16.4, temp_max: 24.2, weather: "Sunny", precipitation: 0, wind_speed: 31.3 },
+                    { date: "2025-09-21", temp_min: 16.7, temp_max: 27.8, weather: "Patchy rain nearby", precipitation: 85, wind_speed: 18.0 },
+                    { date: "2025-09-22", temp_min: 16.1, temp_max: 23.6, weather: "Patchy rain nearby", precipitation: 69, wind_speed: 19.4 },
+                    { date: "2025-09-23", temp_min: 14.0, temp_max: 22.4, weather: "Patchy rain nearby", precipitation: 89, wind_speed: 14.8 }
+                ]
+            },
+            "Mekelle": {
+                current: {
+                    temperature: 22.1,
+                    humidity: 45,
+                    weather: "Sunny",
+                    wind_speed: 15.2,
+                    timestamp: "2025-09-17 10:30"
+                },
+                forecast: [
+                    { date: "2025-09-17", temp_min: 18.2, temp_max: 25.3, weather: "Sunny", precipitation: 5, wind_speed: 14.5 },
+                    { date: "2025-09-18", temp_min: 17.8, temp_max: 26.1, weather: "Partly cloudy", precipitation: 12, wind_speed: 16.2 },
+                    { date: "2025-09-19", temp_min: 18.5, temp_max: 27.2, weather: "Sunny", precipitation: 3, wind_speed: 13.8 },
+                    { date: "2025-09-20", temp_min: 19.1, temp_max: 28.0, weather: "Patchy rain nearby", precipitation: 87, wind_speed: 25.6 },
+                    { date: "2025-09-21", temp_min: 18.3, temp_max: 29.8, weather: "Patchy rain nearby", precipitation: 86, wind_speed: 21.6 },
+                    { date: "2025-09-22", temp_min: 16.3, temp_max: 28.0, weather: "Moderate rain", precipitation: 81, wind_speed: 18.7 },
+                    { date: "2025-09-23", temp_min: 16.2, temp_max: 27.8, weather: "Patchy rain nearby", precipitation: 89, wind_speed: 23.0 }
+                ]
+            },
+            "Jijiga": {
+                current: {
+                    temperature: 20.4,
+                    humidity: 58,
+                    weather: "Patchy rain nearby",
+                    wind_speed: 22.7,
+                    timestamp: "2025-09-17 10:30"
+                },
+                forecast: [
+                    { date: "2025-09-17", temp_min: 15.5, temp_max: 23.0, weather: "Patchy rain nearby", precipitation: 96, wind_speed: 22.7 },
+                    { date: "2025-09-18", temp_min: 17.1, temp_max: 22.5, weather: "Patchy rain nearby", precipitation: 87, wind_speed: 30.6 },
+                    { date: "2025-09-19", temp_min: 16.6, temp_max: 23.9, weather: "Patchy rain nearby", precipitation: 89, wind_speed: 37.8 },
+                    { date: "2025-09-20", temp_min: 16.4, temp_max: 24.2, weather: "Sunny", precipitation: 0, wind_speed: 31.3 },
+                    { date: "2025-09-21", temp_min: 16.7, temp_max: 27.8, weather: "Patchy rain nearby", precipitation: 85, wind_speed: 18.0 },
+                    { date: "2025-09-22", temp_min: 16.1, temp_max: 23.6, weather: "Patchy rain nearby", precipitation: 69, wind_speed: 19.4 },
+                    { date: "2025-09-23", temp_min: 14.0, temp_max: 22.4, weather: "Patchy rain nearby", precipitation: 89, wind_speed: 14.8 }
+                ]
+            },
+            // Other cities would follow the same pattern with their own data
+            "Bahir Dar": {
+                current: {
+                    temperature: 21.8,
+                    humidity: 65,
+                    weather: "Partly cloudy",
+                    wind_speed: 12.4,
+                    timestamp: "2025-09-17 10:30"
+                },
+                forecast: [
+                    { date: "2025-09-17", temp_min: 17.2, temp_max: 24.5, weather: "Partly cloudy", precipitation: 25, wind_speed: 11.8 },
+                    { date: "2025-09-18", temp_min: 16.8, temp_max: 25.1, weather: "Light rain", precipitation: 65, wind_speed: 13.2 },
+                    { date: "2025-09-19", temp_min: 17.5, temp_max: 26.2, weather: "Patchy rain nearby", precipitation: 45, wind_speed: 12.5 },
+                    { date: "2025-09-20", temp_min: 18.1, temp_max: 27.0, weather: "Sunny", precipitation: 5, wind_speed: 10.3 },
+                    { date: "2025-09-21", temp_min: 18.3, temp_max: 27.8, weather: "Sunny", precipitation: 2, wind_speed: 9.8 },
+                    { date: "2025-09-22", temp_min: 17.3, temp_max: 26.5, weather: "Partly cloudy", precipitation: 15, wind_speed: 11.2 },
+                    { date: "2025-09-23", temp_min: 17.0, temp_max: 25.8, weather: "Light rain", precipitation: 55, wind_speed: 13.7 }
+                ]
+            },
+            "Hawassa": {
+                current: {
+                    temperature: 23.5,
+                    humidity: 70,
+                    weather: "Light rain",
+                    wind_speed: 10.8,
+                    timestamp: "2025-09-17 10:30"
+                },
+                forecast: [
+                    { date: "2025-09-17", temp_min: 18.5, temp_max: 25.2, weather: "Light rain", precipitation: 75, wind_speed: 11.2 },
+                    { date: "2025-09-18", temp_min: 19.1, temp_max: 26.3, weather: "Patchy rain nearby", precipitation: 45, wind_speed: 10.5 },
+                    { date: "2025-09-19", temp_min: 19.8, temp_max: 27.1, weather: "Partly cloudy", precipitation: 20, wind_speed: 9.8 },
+                    { date: "2025-09-20", temp_min: 20.2, temp_max: 28.0, weather: "Sunny", precipitation: 0, wind_speed: 8.7 },
+                    { date: "2025-09-21", temp_min: 20.5, temp_max: 28.5, weather: "Sunny", precipitation: 0, wind_speed: 8.2 },
+                    { date: "2025-09-22", temp_min: 19.8, temp_max: 27.8, weather: "Partly cloudy", precipitation: 15, wind_speed: 9.5 },
+                    { date: "2025-09-23", temp_min: 19.2, temp_max: 26.5, weather: "Patchy rain nearby", precipitation: 40, wind_speed: 11.0 }
+                ]
+            }
+            // Additional cities would be added here with their data
+        };
+
+        // Function to update weather display
+        function updateWeatherDisplay(city) {
+            const data = weatherData[city];
+            if (!data) return;
+            
+            // Update current weather
+            document.querySelector('.current-weather .weather-detail:nth-child(2) .value').textContent = `${data.current.temperature}°C`;
+            document.querySelector('.current-weather .weather-detail:nth-child(3) .value').textContent = `${data.current.humidity}%`;
+            document.querySelector('.current-weather .weather-detail:nth-child(4) .value').textContent = data.current.weather;
+            document.querySelector('.current-weather .weather-detail:nth-child(5) .value').textContent = `${data.current.wind_speed} km/h`;
+            document.querySelector('.current-weather .weather-detail:nth-child(6) .value').textContent = data.current.timestamp;
+            
+            // Update forecast
+            const forecastContainer = document.getElementById('forecast-container');
+            forecastContainer.innerHTML = '';
+            
+            data.forecast.forEach(day => {
+                const forecastDay = document.createElement('div');
+                forecastDay.className = 'forecast-day';
+                forecastDay.innerHTML = `
+                    <div class="forecast-date">${day.date}</div>
+                    <div class="forecast-temp">
+                        <div class="temp-min">
+                            <span class="label">Min</span>
+                            <span class="value">${day.temp_min}°C</span>
+                        </div>
+                        <div class="temp-max">
+                            <span class="label">Max</span>
+                            <span class="value">${day.temp_max}°C</span>
+                        </div>
+                    </div>
+                    <div class="forecast-weather">${day.weather}</div>
+                    <div class="forecast-precipitation">Precip: ${day.precipitation}%</div>
+                    <div class="forecast-wind">Wind: ${day.wind_speed} km/h</div>
+                `;
+                forecastContainer.appendChild(forecastDay);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const cityButtons = document.querySelectorAll('.city-btn');
+            
+            // Set up city selection
+            cityButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    cityButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    const selectedCity = this.getAttribute('data-city');
+                    updateWeatherDisplay(selectedCity);
+                });
+            });
+            
+            // Initialize with first city's data
+            updateWeatherDisplay('Addis Ababa');
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
