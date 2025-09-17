@@ -2,11 +2,12 @@ import requests
 import json
 import datetime
 import time
+import os
 
 class EthiopianWeatherForecast:
     def __init__(self):
         # API configuration for WeatherAPI.com
-        self.api_key = "7add9cf5aa00418a91161932251709"  # Replace with your actual API key
+        self.api_key = " "  # Replace with your actual API key
         self.base_url = "http://api.weatherapi.com/v1"
         
         # Ethiopian agricultural regions with coordinates
@@ -125,33 +126,28 @@ class EthiopianWeatherForecast:
         if failed_count > 0:
             print("Failed locations:", ", ".join(self.failed_locations))
     
-    def save_to_data_txt(self):
-        """Save the collected data to data.txt in a readable format"""
+    def save_to_json_file(self):
+        """Save the collected data to data.json file"""
         if not self.forecast_data:
             print("No data to save. Please fetch data first.")
             return False
         
         try:
-            with open('data.txt', 'w') as file:
-                file.write("Ethiopian Weather Forecast Data\n")
-                file.write("=" * 50 + "\n\n")
-                file.write(f"Last updated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-                
-                for forecast in self.forecast_data:
-                    file.write(f"Location: {forecast['location']}\n")
-                    file.write(f"Current Temperature: {forecast['current']['temperature']}°C\n")
-                    file.write(f"Current Conditions: {forecast['current']['weather']}\n")
-                    file.write(f"Humidity: {forecast['current']['humidity']}%\n")
-                    file.write(f"Wind Speed: {forecast['current']['wind_speed']} km/h\n")
-                    
-                    file.write("\n7-Day Forecast:\n")
-                    for day in forecast['forecast']:
-                        file.write(f"  {day['date']}: {day['temp_min']}°C - {day['temp_max']}°C, ")
-                        file.write(f"{day['weather']}, Precip: {day['precipitation']}%\n")
-                    
-                    file.write("\n" + "-" * 40 + "\n\n")
+            # Create a clean data structure with metadata
+            output_data = {
+                "metadata": {
+                    "generated_at": datetime.datetime.now().isoformat(),
+                    "locations_count": len(self.forecast_data),
+                    "failed_locations": self.failed_locations
+                },
+                "weather_data": self.forecast_data
+            }
             
-            print("Data successfully saved to data.txt")
+            # Save to JSON file
+            with open('data.json', 'w') as file:
+                json.dump(output_data, file, indent=2)
+            
+            print("Data successfully saved to data.json")
             return True
         except Exception as e:
             print(f"Error saving data to file: {str(e)}")
@@ -161,14 +157,22 @@ def main():
     """Main function to run the data collection"""
     print("Starting Ethiopian Weather Data Collection...")
     
+    # Remove previous data file if it exists
+    if os.path.exists('data.json'):
+        try:
+            os.remove('data.json')
+            print("Removed previous data.json file")
+        except Exception as e:
+            print(f"Error removing previous data file: {str(e)}")
+    
     # Initialize the weather collector
     collector = EthiopianWeatherForecast()
     
     # Fetch all forecast data
     collector.fetch_all_forecasts()
     
-    # Save the data to data.txt
-    collector.save_to_data_txt()
+    # Save the data to data.json
+    collector.save_to_json_file()
     
     print("Data collection completed!")
 
