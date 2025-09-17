@@ -2,8 +2,8 @@ name: Collect Weather Data
 
 on:
   schedule:
-    # Runs at 8 AM UTC every day
-    - cron: '0 8 * * *'
+    # Runs every 30 minutes
+    - cron: '*/30 * * * *'
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
