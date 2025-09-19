@@ -1,954 +1,938 @@
 {
   "metadata": {
-    "generated_at": "2025-09-17T10:34:19.412939",
+    "generated_at": "2025-09-19T12:53:33.140779",
     "locations_count": 22,
     "failed_locations": []
   },
   "weather_data": [
     {
       "location": "Addis Ababa",
-      "timestamp": "2025-09-17T10:33:40.923561",
+      "timestamp": "2025-09-19T12:52:33.239068",
       "current": {
-        "temperature": 18.4,
+        "temperature": 19.4,
         "humidity": 73,
         "weather": "Partly cloudy",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 8.3,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 10.4,
-          "temp_max": 20.3,
-          "weather": "Moderate rain",
-          "precipitation": 95,
-          "wind_speed": 8.6
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 11.3,
-          "temp_max": 19.8,
-          "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 10.4
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 11.3,
-          "temp_max": 18.6,
+          "temp_min": 11.6,
+          "temp_max": 19.3,
           "weather": "Moderate rain",
-          "precipitation": 85,
-          "wind_speed": 10.1
+          "precipitation": 96,
+          "wind_speed": 9.4
         },
         {
           "date": "2025-09-20",
-          "temp_min": 12.6,
-          "temp_max": 17.4,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 8.6
+          "temp_min": 12.0,
+          "temp_max": 17.8,
+          "weather": "Heavy rain",
+          "precipitation": 87,
+          "wind_speed": 9.4
         },
         {
           "date": "2025-09-21",
-          "temp_min": 12.6,
-          "temp_max": 19.6,
+          "temp_min": 11.3,
+          "temp_max": 17.6,
           "weather": "Heavy rain",
-          "precipitation": 89,
-          "wind_speed": 7.2
+          "precipitation": 88,
+          "wind_speed": 6.8
         },
         {
           "date": "2025-09-22",
-          "temp_min": 11.8,
-          "temp_max": 17.6,
+          "temp_min": 11.3,
+          "temp_max": 20.2,
           "weather": "Patchy rain nearby",
-          "precipitation": 85,
-          "wind_speed": 7.6
+          "precipitation": 84,
+          "wind_speed": 15.1
         },
         {
           "date": "2025-09-23",
-          "temp_min": 11.0,
-          "temp_max": 18.5,
+          "temp_min": 10.6,
+          "temp_max": 18.7,
+          "weather": "Moderate rain",
+          "precipitation": 79,
+          "wind_speed": 13.7
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 11.1,
+          "temp_max": 19.2,
           "weather": "Patchy rain nearby",
-          "precipitation": 82,
-          "wind_speed": 16.9
+          "precipitation": 74,
+          "wind_speed": 7.6
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 10.3,
+          "temp_max": 19.5,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 10.1
         }
       ]
     },
     {
       "location": "Mekelle",
-      "timestamp": "2025-09-17T10:33:42.428994",
+      "timestamp": "2025-09-19T12:52:38.338488",
       "current": {
-        "temperature": 18.3,
-        "humidity": 61,
+        "temperature": 20.5,
+        "humidity": 62,
         "weather": "Patchy rain nearby",
-        "wind_speed": 4.0,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 12.2,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 16.4,
-          "temp_max": 21.9,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 13.0
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 15.5,
-          "temp_max": 23.1,
-          "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 24.1
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 15.9,
-          "temp_max": 21.9,
+          "temp_min": 15.1,
+          "temp_max": 21.3,
           "weather": "Moderate rain",
-          "precipitation": 86,
-          "wind_speed": 22.7
+          "precipitation": 96,
+          "wind_speed": 18.7
         },
         {
           "date": "2025-09-20",
-          "temp_min": 13.3,
-          "temp_max": 19.3,
-          "weather": "Heavy rain",
-          "precipitation": 85,
-          "wind_speed": 12.2
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 13.0,
-          "temp_max": 21.2,
+          "temp_min": 16.1,
+          "temp_max": 21.8,
           "weather": "Moderate rain",
-          "precipitation": 84,
-          "wind_speed": 19.8
-        },
-        {
-          "date": "2025-09-22",
-          "temp_min": 15.6,
-          "temp_max": 22.6,
-          "weather": "Patchy rain nearby",
           "precipitation": 89,
           "wind_speed": 19.8
         },
         {
-          "date": "2025-09-23",
-          "temp_min": 14.5,
+          "date": "2025-09-21",
+          "temp_min": 15.1,
+          "temp_max": 21.6,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 18.0
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 15.2,
           "temp_max": 23.1,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 21.2
+        },
+        {
+          "date": "2025-09-23",
+          "temp_min": 14.4,
+          "temp_max": 24.6,
           "weather": "Sunny",
           "precipitation": 0,
-          "wind_speed": 23.0
+          "wind_speed": 22.7
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 15.9,
+          "temp_max": 22.3,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 18.4
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 14.5,
+          "temp_max": 23.8,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 21.6
         }
       ]
     },
     {
       "location": "Bahir Dar",
-      "timestamp": "2025-09-17T10:33:44.016599",
+      "timestamp": "2025-09-19T12:52:39.975479",
       "current": {
-        "temperature": 20.1,
-        "humidity": 75,
+        "temperature": 22.1,
+        "humidity": 72,
         "weather": "Patchy rain nearby",
-        "wind_speed": 4.3,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 8.3,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 13.1,
-          "temp_max": 23.3,
-          "weather": "Moderate rain",
-          "precipitation": 97,
-          "wind_speed": 9.0
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.2,
-          "temp_max": 23.2,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 9.7
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 14.1,
-          "temp_max": 21.5,
+          "temp_min": 13.8,
+          "temp_max": 22.5,
           "weather": "Heavy rain",
-          "precipitation": 85,
-          "wind_speed": 17.6
+          "precipitation": 95,
+          "wind_speed": 14.8
         },
         {
           "date": "2025-09-20",
-          "temp_min": 13.4,
-          "temp_max": 20.3,
+          "temp_min": 13.3,
+          "temp_max": 20.2,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 13.0
+          "precipitation": 91,
+          "wind_speed": 14.8
         },
         {
           "date": "2025-09-21",
-          "temp_min": 13.9,
-          "temp_max": 21.2,
+          "temp_min": 13.1,
+          "temp_max": 23.1,
           "weather": "Moderate rain",
-          "precipitation": 85,
-          "wind_speed": 9.4
+          "precipitation": 86,
+          "wind_speed": 8.3
         },
         {
           "date": "2025-09-22",
-          "temp_min": 13.8,
-          "temp_max": 21.6,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 9.7
+          "temp_min": 13.4,
+          "temp_max": 22.9,
+          "weather": "Moderate rain",
+          "precipitation": 88,
+          "wind_speed": 7.2
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.5,
-          "temp_max": 22.7,
+          "temp_min": 13.6,
+          "temp_max": 23.7,
+          "weather": "Moderate rain",
+          "precipitation": 89,
+          "wind_speed": 8.6
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 12.7,
+          "temp_max": 23.8,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 11.9
+          "precipitation": 81,
+          "wind_speed": 10.8
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.0,
+          "temp_max": 24.2,
+          "weather": "Patchy rain nearby",
+          "precipitation": 84,
+          "wind_speed": 8.6
         }
       ]
     },
     {
       "location": "Hawassa",
-      "timestamp": "2025-09-17T10:33:46.467247",
+      "timestamp": "2025-09-19T12:52:42.444835",
       "current": {
-        "temperature": 21.5,
-        "humidity": 67,
-        "weather": "Patchy rain nearby",
-        "wind_speed": 11.2,
-        "timestamp": "2025-09-17 10:30"
+        "temperature": 23.0,
+        "humidity": 63,
+        "weather": "Light rain shower",
+        "wind_speed": 15.8,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 12.4,
-          "temp_max": 24.5,
-          "weather": "Patchy rain nearby",
-          "precipitation": 87,
-          "wind_speed": 15.1
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 14.3,
-          "temp_max": 23.5,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 16.2
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 14.6,
-          "temp_max": 23.1,
+          "temp_min": 14.1,
+          "temp_max": 23.3,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 19.1
+          "precipitation": 95,
+          "wind_speed": 17.3
         },
         {
           "date": "2025-09-20",
-          "temp_min": 13.3,
-          "temp_max": 23.5,
+          "temp_min": 13.8,
+          "temp_max": 22.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 19.1
+          "precipitation": 87,
+          "wind_speed": 16.9
         },
         {
           "date": "2025-09-21",
-          "temp_min": 12.4,
-          "temp_max": 24.3,
+          "temp_min": 14.7,
+          "temp_max": 20.4,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 15.5
+          "precipitation": 89,
+          "wind_speed": 9.4
         },
         {
           "date": "2025-09-22",
-          "temp_min": 14.0,
-          "temp_max": 19.2,
-          "weather": "Patchy rain nearby",
-          "precipitation": 83,
-          "wind_speed": 7.2
+          "temp_min": 13.0,
+          "temp_max": 22.8,
+          "weather": "Heavy rain",
+          "precipitation": 85,
+          "wind_speed": 10.4
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.3,
-          "temp_max": 22.0,
+          "temp_min": 12.7,
+          "temp_max": 21.4,
+          "weather": "Moderate rain",
+          "precipitation": 85,
+          "wind_speed": 15.8
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 12.8,
+          "temp_max": 22.2,
           "weather": "Patchy rain nearby",
           "precipitation": 88,
-          "wind_speed": 11.5
+          "wind_speed": 10.8
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 12.9,
+          "temp_max": 22.9,
+          "weather": "Patchy rain nearby",
+          "precipitation": 86,
+          "wind_speed": 11.9
         }
       ]
     },
     {
       "location": "Dire Dawa",
-      "timestamp": "2025-09-17T10:33:48.311596",
+      "timestamp": "2025-09-19T12:52:47.071702",
       "current": {
-        "temperature": 26.5,
-        "humidity": 49,
+        "temperature": 27.1,
+        "humidity": 51,
         "weather": "Patchy rain nearby",
-        "wind_speed": 7.9,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 9.0,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 17.7,
-          "temp_max": 28.5,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 26.3
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 18.7,
-          "temp_max": 28.1,
-          "weather": "Patchy rain nearby",
-          "precipitation": 87,
-          "wind_speed": 28.1
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 18.0,
-          "temp_max": 27.0,
+          "temp_min": 17.4,
+          "temp_max": 27.3,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 27.7
+          "precipitation": 89,
+          "wind_speed": 24.8
         },
         {
           "date": "2025-09-20",
-          "temp_min": 19.1,
-          "temp_max": 28.0,
+          "temp_min": 18.4,
+          "temp_max": 27.7,
           "weather": "Patchy rain nearby",
-          "precipitation": 87,
+          "precipitation": 89,
           "wind_speed": 25.6
         },
         {
           "date": "2025-09-21",
-          "temp_min": 18.3,
-          "temp_max": 29.8,
+          "temp_min": 17.4,
+          "temp_max": 29.2,
           "weather": "Patchy rain nearby",
-          "precipitation": 86,
-          "wind_speed": 21.6
+          "precipitation": 83,
+          "wind_speed": 27.7
         },
         {
           "date": "2025-09-22",
-          "temp_min": 16.3,
-          "temp_max": 28.0,
+          "temp_min": 17.9,
+          "temp_max": 29.3,
           "weather": "Moderate rain",
-          "precipitation": 81,
-          "wind_speed": 18.7
+          "precipitation": 85,
+          "wind_speed": 21.2
         },
         {
           "date": "2025-09-23",
-          "temp_min": 16.2,
-          "temp_max": 27.8,
+          "temp_min": 16.7,
+          "temp_max": 29.4,
           "weather": "Patchy rain nearby",
           "precipitation": 89,
-          "wind_speed": 23.0
+          "wind_speed": 17.3
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 16.9,
+          "temp_max": 28.7,
+          "weather": "Patchy rain nearby",
+          "precipitation": 86,
+          "wind_speed": 20.9
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 17.1,
+          "temp_max": 29.4,
+          "weather": "Patchy rain nearby",
+          "precipitation": 86,
+          "wind_speed": 18.0
         }
       ]
     },
     {
       "location": "Jijiga",
-      "timestamp": "2025-09-17T10:33:49.845112",
+      "timestamp": "2025-09-19T12:52:50.354523",
       "current": {
-        "temperature": 20.4,
-        "humidity": 58,
+        "temperature": 20.5,
+        "humidity": 63,
         "weather": "Patchy rain nearby",
-        "wind_speed": 22.7,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 28.4,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 15.5,
-          "temp_max": 23.0,
-          "weather": "Patchy rain nearby",
-          "precipitation": 96,
-          "wind_speed": 22.7
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 17.1,
-          "temp_max": 22.5,
-          "weather": "Patchy rain nearby",
-          "precipitation": 87,
+          "date": "2025-09-19",
+          "temp_min": 15.3,
+          "temp_max": 21.2,
+          "weather": "Moderate rain",
+          "precipitation": 89,
           "wind_speed": 30.6
         },
         {
-          "date": "2025-09-19",
-          "temp_min": 16.6,
-          "temp_max": 23.9,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 37.8
-        },
-        {
           "date": "2025-09-20",
-          "temp_min": 16.4,
-          "temp_max": 24.2,
-          "weather": "Sunny",
-          "precipitation": 0,
-          "wind_speed": 31.3
+          "temp_min": 16.3,
+          "temp_max": 25.2,
+          "weather": "Patchy rain nearby",
+          "precipitation": 88,
+          "wind_speed": 31.0
         },
         {
           "date": "2025-09-21",
-          "temp_min": 16.7,
-          "temp_max": 27.8,
-          "weather": "Patchy rain nearby",
-          "precipitation": 85,
-          "wind_speed": 18.0
+          "temp_min": 14.9,
+          "temp_max": 26.7,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 28.1
         },
         {
           "date": "2025-09-22",
-          "temp_min": 16.1,
-          "temp_max": 23.6,
-          "weather": "Patchy rain nearby",
-          "precipitation": 69,
-          "wind_speed": 19.4
+          "temp_min": 14.9,
+          "temp_max": 25.2,
+          "weather": "Moderate rain",
+          "precipitation": 85,
+          "wind_speed": 20.2
         },
         {
           "date": "2025-09-23",
-          "temp_min": 14.0,
-          "temp_max": 22.4,
+          "temp_min": 14.2,
+          "temp_max": 23.6,
+          "weather": "Heavy rain",
+          "precipitation": 83,
+          "wind_speed": 24.5
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 14.1,
+          "temp_max": 22.7,
           "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 14.8
+          "precipitation": 84,
+          "wind_speed": 18.7
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.8,
+          "temp_max": 24.0,
+          "weather": "Patchy rain nearby",
+          "precipitation": 82,
+          "wind_speed": 7.6
         }
       ]
     },
     {
       "location": "Gambela",
-      "timestamp": "2025-09-17T10:33:51.412242",
+      "timestamp": "2025-09-19T12:52:52.157455",
       "current": {
-        "temperature": 23.0,
-        "humidity": 65,
-        "weather": "Sunny",
-        "wind_speed": 5.0,
-        "timestamp": "2025-09-17 10:30"
+        "temperature": 21.5,
+        "humidity": 85,
+        "weather": "Patchy rain nearby",
+        "wind_speed": 7.6,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 15.2,
-          "temp_max": 25.6,
-          "weather": "Patchy rain nearby",
-          "precipitation": 93,
-          "wind_speed": 8.3
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 16.3,
-          "temp_max": 25.1,
-          "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 7.9
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 16.6,
-          "temp_max": 20.2,
+          "temp_min": 16.9,
+          "temp_max": 22.5,
           "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 7.6
+          "precipitation": 95,
+          "wind_speed": 9.4
         },
         {
           "date": "2025-09-20",
-          "temp_min": 16.8,
-          "temp_max": 23.8,
-          "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 10.1
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 16.3,
-          "temp_max": 24.0,
+          "temp_min": 15.7,
+          "temp_max": 19.2,
           "weather": "Patchy rain nearby",
           "precipitation": 89,
           "wind_speed": 8.6
         },
         {
-          "date": "2025-09-22",
-          "temp_min": 14.5,
-          "temp_max": 18.3,
+          "date": "2025-09-21",
+          "temp_min": 15.4,
+          "temp_max": 24.3,
           "weather": "Patchy rain nearby",
-          "precipitation": 86,
+          "precipitation": 88,
+          "wind_speed": 9.0
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 14.7,
+          "temp_max": 21.0,
+          "weather": "Moderate rain",
+          "precipitation": 89,
           "wind_speed": 8.6
         },
         {
           "date": "2025-09-23",
-          "temp_min": 13.9,
-          "temp_max": 22.0,
+          "temp_min": 15.0,
+          "temp_max": 21.4,
+          "weather": "Moderate rain",
+          "precipitation": 86,
+          "wind_speed": 7.9
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 14.6,
+          "temp_max": 22.2,
+          "weather": "Patchy rain nearby",
+          "precipitation": 82,
+          "wind_speed": 9.4
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 15.3,
+          "temp_max": 22.3,
           "weather": "Patchy rain nearby",
           "precipitation": 86,
-          "wind_speed": 7.2
+          "wind_speed": 9.0
         }
       ]
     },
     {
       "location": "Asosa",
-      "timestamp": "2025-09-17T10:33:53.039398",
+      "timestamp": "2025-09-19T12:52:56.361538",
       "current": {
-        "temperature": 26.4,
-        "humidity": 68,
-        "weather": "Sunny",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:15"
+        "temperature": 29.0,
+        "humidity": 62,
+        "weather": "Patchy rain nearby",
+        "wind_speed": 7.9,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 18.5,
-          "temp_max": 30.1,
+          "date": "2025-09-19",
+          "temp_min": 19.9,
+          "temp_max": 29.0,
           "weather": "Moderate rain",
-          "precipitation": 84,
-          "wind_speed": 7.6
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 20.1,
-          "temp_max": 29.8,
-          "weather": "Moderate rain",
-          "precipitation": 89,
+          "precipitation": 94,
           "wind_speed": 7.9
         },
         {
-          "date": "2025-09-19",
-          "temp_min": 19.7,
-          "temp_max": 24.8,
+          "date": "2025-09-20",
+          "temp_min": 20.2,
+          "temp_max": 25.3,
           "weather": "Patchy rain nearby",
           "precipitation": 88,
-          "wind_speed": 7.6
-        },
-        {
-          "date": "2025-09-20",
-          "temp_min": 20.8,
-          "temp_max": 27.3,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 6.8
+          "wind_speed": 7.2
         },
         {
           "date": "2025-09-21",
-          "temp_min": 20.0,
-          "temp_max": 30.0,
-          "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 7.6
+          "temp_min": 19.9,
+          "temp_max": 28.3,
+          "weather": "Patchy rain nearby",
+          "precipitation": 86,
+          "wind_speed": 8.3
         },
         {
           "date": "2025-09-22",
-          "temp_min": 19.9,
-          "temp_max": 26.3,
+          "temp_min": 18.7,
+          "temp_max": 29.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 87,
-          "wind_speed": 9.0
+          "precipitation": 88,
+          "wind_speed": 7.9
         },
         {
           "date": "2025-09-23",
-          "temp_min": 18.4,
-          "temp_max": 28.6,
+          "temp_min": 17.8,
+          "temp_max": 29.9,
+          "weather": "Moderate rain",
+          "precipitation": 82,
+          "wind_speed": 8.6
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 19.7,
+          "temp_max": 27.7,
+          "weather": "Moderate rain",
+          "precipitation": 75,
+          "wind_speed": 6.1
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 19.0,
+          "temp_max": 29.1,
           "weather": "Patchy rain nearby",
-          "precipitation": 77,
-          "wind_speed": 7.2
+          "precipitation": 74,
+          "wind_speed": 7.6
         }
       ]
     },
     {
       "location": "Semera",
-      "timestamp": "2025-09-17T10:33:54.595477",
+      "timestamp": "2025-09-19T12:52:58.039034",
       "current": {
-        "temperature": 35.2,
-        "humidity": 31,
-        "weather": "Sunny",
-        "wind_speed": 4.0,
-        "timestamp": "2025-09-17 10:15"
+        "temperature": 34.5,
+        "humidity": 40,
+        "weather": "Partly Cloudy",
+        "wind_speed": 4.3,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 31.0,
-          "temp_max": 39.3,
-          "weather": "Patchy rain nearby",
-          "precipitation": 79,
-          "wind_speed": 21.6
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 28.6,
-          "temp_max": 38.2,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 20.9
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 29.8,
-          "temp_max": 33.2,
+          "temp_min": 28.4,
+          "temp_max": 35.4,
           "weather": "Patchy rain nearby",
           "precipitation": 89,
-          "wind_speed": 13.0
+          "wind_speed": 27.7
         },
         {
           "date": "2025-09-20",
-          "temp_min": 26.0,
-          "temp_max": 35.3,
+          "temp_min": 27.6,
+          "temp_max": 36.6,
           "weather": "Moderate rain",
-          "precipitation": 83,
-          "wind_speed": 16.9
+          "precipitation": 88,
+          "wind_speed": 33.5
         },
         {
           "date": "2025-09-21",
-          "temp_min": 27.7,
-          "temp_max": 36.6,
+          "temp_min": 27.5,
+          "temp_max": 36.0,
           "weather": "Patchy rain nearby",
-          "precipitation": 83,
-          "wind_speed": 34.6
+          "precipitation": 74,
+          "wind_speed": 14.4
         },
         {
           "date": "2025-09-22",
-          "temp_min": 29.8,
-          "temp_max": 37.1,
-          "weather": "Patchy rain nearby",
-          "precipitation": 75,
-          "wind_speed": 16.9
+          "temp_min": 29.7,
+          "temp_max": 38.4,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 18.7
         },
         {
           "date": "2025-09-23",
-          "temp_min": 28.1,
-          "temp_max": 37.5,
+          "temp_min": 30.4,
+          "temp_max": 38.9,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 25.6
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 31.0,
+          "temp_max": 38.8,
           "weather": "Patchy rain nearby",
-          "precipitation": 62,
-          "wind_speed": 17.6
+          "precipitation": 51,
+          "wind_speed": 17.3
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 33.2,
+          "temp_max": 39.9,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 19.4
         }
       ]
     },
     {
       "location": "Jimma",
-      "timestamp": "2025-09-17T10:33:56.298735",
+      "timestamp": "2025-09-19T12:52:59.834275",
       "current": {
-        "temperature": 19.5,
-        "humidity": 82,
+        "temperature": 21.8,
+        "humidity": 76,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 4.3,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 11.7,
-          "temp_max": 23.0,
-          "weather": "Moderate rain",
-          "precipitation": 95,
-          "wind_speed": 4.3
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 11.0,
-          "temp_max": 22.7,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 5.8
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 12.0,
-          "temp_max": 20.3,
+          "temp_min": 11.6,
+          "temp_max": 21.8,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 2.9
+          "precipitation": 96,
+          "wind_speed": 5.0
         },
         {
           "date": "2025-09-20",
-          "temp_min": 13.3,
-          "temp_max": 20.3,
+          "temp_min": 13.2,
+          "temp_max": 17.9,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 3.2
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 12.7,
-          "temp_max": 21.5,
-          "weather": "Moderate rain",
-          "precipitation": 79,
+          "precipitation": 91,
           "wind_speed": 5.4
         },
         {
+          "date": "2025-09-21",
+          "temp_min": 11.6,
+          "temp_max": 18.8,
+          "weather": "Patchy rain nearby",
+          "precipitation": 88,
+          "wind_speed": 4.3
+        },
+        {
           "date": "2025-09-22",
-          "temp_min": 11.9,
-          "temp_max": 17.5,
+          "temp_min": 12.0,
+          "temp_max": 21.3,
           "weather": "Moderate rain",
-          "precipitation": 62,
-          "wind_speed": 3.6
+          "precipitation": 86,
+          "wind_speed": 4.0
         },
         {
           "date": "2025-09-23",
-          "temp_min": 10.8,
-          "temp_max": 20.9,
+          "temp_min": 12.0,
+          "temp_max": 21.7,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 4.3
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 12.1,
+          "temp_max": 21.2,
           "weather": "Patchy rain nearby",
-          "precipitation": 81,
-          "wind_speed": 4.7
+          "precipitation": 85,
+          "wind_speed": 3.2
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 11.1,
+          "temp_max": 21.9,
+          "weather": "Patchy rain nearby",
+          "precipitation": 88,
+          "wind_speed": 4.3
         }
       ]
     },
     {
       "location": "Nekemte",
-      "timestamp": "2025-09-17T10:33:58.141687",
+      "timestamp": "2025-09-19T12:53:02.473509",
       "current": {
-        "temperature": 16.4,
-        "humidity": 89,
+        "temperature": 19.5,
+        "humidity": 81,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 5.8,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 12.8,
-          "temp_max": 21.2,
-          "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 4.3
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.5,
-          "temp_max": 21.0,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 5.4
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 13.0,
-          "temp_max": 18.5,
+          "temp_min": 12.3,
+          "temp_max": 19.6,
           "weather": "Moderate rain",
-          "precipitation": 86,
+          "precipitation": 96,
           "wind_speed": 7.9
         },
         {
           "date": "2025-09-20",
-          "temp_min": 12.7,
-          "temp_max": 16.2,
+          "temp_min": 13.2,
+          "temp_max": 15.2,
           "weather": "Heavy rain",
-          "precipitation": 81,
-          "wind_speed": 5.0
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 12.6,
-          "temp_max": 18.6,
-          "weather": "Moderate rain",
-          "precipitation": 85,
+          "precipitation": 91,
           "wind_speed": 6.1
         },
         {
+          "date": "2025-09-21",
+          "temp_min": 12.5,
+          "temp_max": 20.0,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 7.2
+        },
+        {
           "date": "2025-09-22",
-          "temp_min": 13.7,
-          "temp_max": 19.4,
-          "weather": "Patchy rain nearby",
-          "precipitation": 85,
-          "wind_speed": 6.8
+          "temp_min": 12.9,
+          "temp_max": 21.2,
+          "weather": "Moderate rain",
+          "precipitation": 89,
+          "wind_speed": 5.8
         },
         {
           "date": "2025-09-23",
-          "temp_min": 15.6,
-          "temp_max": 19.9,
+          "temp_min": 11.9,
+          "temp_max": 19.8,
+          "weather": "Moderate rain",
+          "precipitation": 84,
+          "wind_speed": 8.3
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 15.0,
+          "temp_max": 20.4,
           "weather": "Patchy rain nearby",
-          "precipitation": 87,
-          "wind_speed": 5.0
+          "precipitation": 86,
+          "wind_speed": 4.7
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 15.5,
+          "temp_max": 21.1,
+          "weather": "Patchy rain nearby",
+          "precipitation": 86,
+          "wind_speed": 5.4
         }
       ]
     },
     {
       "location": "Bale Robe",
-      "timestamp": "2025-09-17T10:34:00.804390",
+      "timestamp": "2025-09-19T12:53:05.153752",
       "current": {
-        "temperature": 15.6,
-        "humidity": 72,
+        "temperature": 18.4,
+        "humidity": 63,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 10.1,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 10.0,
-          "temp_max": 19.0,
+          "date": "2025-09-19",
+          "temp_min": 9.7,
+          "temp_max": 18.7,
           "weather": "Patchy rain nearby",
           "precipitation": 95,
+          "wind_speed": 12.6
+        },
+        {
+          "date": "2025-09-20",
+          "temp_min": 10.7,
+          "temp_max": 18.8,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 14.4
+        },
+        {
+          "date": "2025-09-21",
+          "temp_min": 10.9,
+          "temp_max": 17.2,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 13.3
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 11.1,
+          "temp_max": 17.3,
+          "weather": "Moderate rain",
+          "precipitation": 87,
           "wind_speed": 10.4
         },
         {
-          "date": "2025-09-18",
-          "temp_min": 10.2,
-          "temp_max": 18.1,
-          "weather": "Patchy rain nearby",
+          "date": "2025-09-23",
+          "temp_min": 9.7,
+          "temp_max": 18.6,
+          "weather": "Moderate rain",
           "precipitation": 88,
           "wind_speed": 13.3
         },
         {
-          "date": "2025-09-19",
-          "temp_min": 10.6,
-          "temp_max": 19.2,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 16.6
-        },
-        {
-          "date": "2025-09-20",
+          "date": "2025-09-24",
           "temp_min": 10.0,
-          "temp_max": 19.3,
+          "temp_max": 18.8,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 17.6
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 9.9,
-          "temp_max": 19.1,
-          "weather": "Moderate rain",
           "precipitation": 89,
-          "wind_speed": 10.4
+          "wind_speed": 11.5
         },
         {
-          "date": "2025-09-22",
-          "temp_min": 11.5,
-          "temp_max": 17.6,
+          "date": "2025-09-25",
+          "temp_min": 11.6,
+          "temp_max": 19.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 83,
-          "wind_speed": 7.6
-        },
-        {
-          "date": "2025-09-23",
-          "temp_min": 10.6,
-          "temp_max": 17.7,
-          "weather": "Patchy rain nearby",
-          "precipitation": 81,
-          "wind_speed": 9.0
+          "precipitation": 84,
+          "wind_speed": 13.7
         }
       ]
     },
     {
       "location": "Shashemene",
-      "timestamp": "2025-09-17T10:34:02.297585",
+      "timestamp": "2025-09-19T12:53:06.870797",
       "current": {
-        "temperature": 19.7,
-        "humidity": 66,
+        "temperature": 21.6,
+        "humidity": 64,
         "weather": "Patchy rain nearby",
-        "wind_speed": 8.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 15.1,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 12.3,
-          "temp_max": 22.4,
-          "weather": "Patchy rain nearby",
-          "precipitation": 95,
-          "wind_speed": 13.0
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.9,
-          "temp_max": 21.6,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 15.1
-        },
-        {
           "date": "2025-09-19",
           "temp_min": 14.0,
-          "temp_max": 21.3,
+          "temp_max": 21.6,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 18.0
+          "precipitation": 95,
+          "wind_speed": 16.6
         },
         {
           "date": "2025-09-20",
-          "temp_min": 12.7,
-          "temp_max": 21.1,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 16.9
+          "temp_min": 14.3,
+          "temp_max": 20.1,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 16.2
         },
         {
           "date": "2025-09-21",
-          "temp_min": 11.5,
-          "temp_max": 22.0,
+          "temp_min": 13.7,
+          "temp_max": 19.0,
           "weather": "Patchy rain nearby",
-          "precipitation": 73,
-          "wind_speed": 14.8
+          "precipitation": 87,
+          "wind_speed": 11.9
         },
         {
           "date": "2025-09-22",
           "temp_min": 13.6,
-          "temp_max": 15.9,
-          "weather": "Patchy rain nearby",
-          "precipitation": 80,
-          "wind_speed": 7.2
+          "temp_max": 20.4,
+          "weather": "Heavy rain",
+          "precipitation": 87,
+          "wind_speed": 10.1
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.6,
-          "temp_max": 20.9,
+          "temp_min": 12.5,
+          "temp_max": 19.9,
+          "weather": "Moderate rain",
+          "precipitation": 86,
+          "wind_speed": 13.3
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 13.0,
+          "temp_max": 19.7,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 10.4
+          "precipitation": 85,
+          "wind_speed": 8.6
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.6,
+          "temp_max": 20.8,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 9.4
         }
       ]
     },
     {
       "location": "Dilla",
-      "timestamp": "2025-09-17T10:34:04.181025",
+      "timestamp": "2025-09-19T12:53:10.258469",
       "current": {
-        "temperature": 20.2,
-        "humidity": 79,
+        "temperature": 22.3,
+        "humidity": 63,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 4.7,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 13.1,
-          "temp_max": 22.8,
-          "weather": "Moderate rain",
-          "precipitation": 96,
-          "wind_speed": 8.6
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.7,
-          "temp_max": 24.0,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 9.0
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 12.7,
-          "temp_max": 22.9,
+          "temp_min": 12.6,
+          "temp_max": 23.4,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
+          "precipitation": 93,
           "wind_speed": 9.4
         },
         {
           "date": "2025-09-20",
-          "temp_min": 12.3,
-          "temp_max": 24.1,
+          "temp_min": 12.5,
+          "temp_max": 23.8,
           "weather": "Patchy rain nearby",
-          "precipitation": 89,
+          "precipitation": 87,
           "wind_speed": 9.0
         },
         {
           "date": "2025-09-21",
-          "temp_min": 11.4,
-          "temp_max": 23.9,
+          "temp_min": 12.6,
+          "temp_max": 23.0,
           "weather": "Patchy rain nearby",
           "precipitation": 88,
           "wind_speed": 9.0
@@ -956,570 +940,586 @@
         {
           "date": "2025-09-22",
           "temp_min": 13.9,
-          "temp_max": 20.9,
+          "temp_max": 22.7,
           "weather": "Patchy rain nearby",
-          "precipitation": 76,
-          "wind_speed": 7.2
+          "precipitation": 86,
+          "wind_speed": 7.6
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.9,
-          "temp_max": 18.4,
+          "temp_min": 13.3,
+          "temp_max": 21.2,
           "weather": "Moderate rain",
           "precipitation": 88,
-          "wind_speed": 6.1
+          "wind_speed": 8.3
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 13.5,
+          "temp_max": 21.4,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 7.2
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.4,
+          "temp_max": 24.0,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 9.4
         }
       ]
     },
     {
       "location": "Bonga",
-      "timestamp": "2025-09-17T10:34:06.437212",
+      "timestamp": "2025-09-19T12:53:14.469118",
       "current": {
-        "temperature": 19.3,
-        "humidity": 67,
-        "weather": "Patchy rain nearby",
+        "temperature": 18.7,
+        "humidity": 82,
+        "weather": "Light rain shower",
         "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 10.4,
-          "temp_max": 24.6,
-          "weather": "Patchy rain nearby",
-          "precipitation": 93,
-          "wind_speed": 7.2
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 11.5,
-          "temp_max": 21.7,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 6.8
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 11.5,
-          "temp_max": 17.5,
+          "temp_min": 12.2,
+          "temp_max": 18.7,
           "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 4.3
+          "precipitation": 96,
+          "wind_speed": 4.7
         },
         {
           "date": "2025-09-20",
-          "temp_min": 11.6,
-          "temp_max": 21.4,
+          "temp_min": 12.4,
+          "temp_max": 18.1,
           "weather": "Moderate rain",
-          "precipitation": 82,
-          "wind_speed": 5.8
+          "precipitation": 87,
+          "wind_speed": 4.0
         },
         {
           "date": "2025-09-21",
           "temp_min": 10.6,
-          "temp_max": 23.8,
-          "weather": "Patchy rain nearby",
+          "temp_max": 24.3,
+          "weather": "Moderate rain",
           "precipitation": 88,
-          "wind_speed": 5.0
+          "wind_speed": 4.3
         },
         {
           "date": "2025-09-22",
-          "temp_min": 11.4,
-          "temp_max": 16.3,
+          "temp_min": 12.1,
+          "temp_max": 21.1,
           "weather": "Patchy rain nearby",
-          "precipitation": 78,
-          "wind_speed": 3.2
+          "precipitation": 84,
+          "wind_speed": 4.0
         },
         {
           "date": "2025-09-23",
-          "temp_min": 10.6,
-          "temp_max": 18.0,
+          "temp_min": 11.9,
+          "temp_max": 20.3,
           "weather": "Moderate rain",
           "precipitation": 89,
-          "wind_speed": 3.2
+          "wind_speed": 5.4
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 11.7,
+          "temp_max": 20.9,
+          "weather": "Patchy rain nearby",
+          "precipitation": 61,
+          "wind_speed": 5.0
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 12.7,
+          "temp_max": 18.9,
+          "weather": "Moderate rain",
+          "precipitation": 88,
+          "wind_speed": 3.6
         }
       ]
     },
     {
       "location": "Arba Minch",
-      "timestamp": "2025-09-17T10:34:08.280599",
+      "timestamp": "2025-09-19T12:53:17.436356",
       "current": {
-        "temperature": 22.2,
-        "humidity": 65,
+        "temperature": 24.3,
+        "humidity": 54,
         "weather": "Patchy rain nearby",
-        "wind_speed": 4.0,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 9.7,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 15.1,
-          "temp_max": 24.7,
-          "weather": "Patchy rain nearby",
-          "precipitation": 90,
-          "wind_speed": 10.1
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 16.7,
-          "temp_max": 24.9,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 13.0
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 16.0,
-          "temp_max": 25.1,
+          "temp_min": 16.6,
+          "temp_max": 25.6,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 10.8
+          "precipitation": 93,
+          "wind_speed": 14.0
         },
         {
           "date": "2025-09-20",
-          "temp_min": 15.5,
-          "temp_max": 24.3,
+          "temp_min": 16.4,
+          "temp_max": 25.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 84,
-          "wind_speed": 10.1
+          "precipitation": 86,
+          "wind_speed": 11.2
         },
         {
           "date": "2025-09-21",
-          "temp_min": 15.1,
-          "temp_max": 26.1,
+          "temp_min": 14.6,
+          "temp_max": 26.0,
           "weather": "Patchy rain nearby",
-          "precipitation": 78,
-          "wind_speed": 10.1
+          "precipitation": 86,
+          "wind_speed": 9.7
         },
         {
           "date": "2025-09-22",
-          "temp_min": 15.4,
-          "temp_max": 24.6,
+          "temp_min": 16.7,
+          "temp_max": 25.3,
           "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 8.3
+          "precipitation": 84,
+          "wind_speed": 11.5
         },
         {
           "date": "2025-09-23",
-          "temp_min": 16.2,
-          "temp_max": 19.9,
-          "weather": "Patchy rain nearby",
+          "temp_min": 16.4,
+          "temp_max": 23.7,
+          "weather": "Moderate rain",
           "precipitation": 88,
-          "wind_speed": 7.6
+          "wind_speed": 8.6
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 16.5,
+          "temp_max": 24.6,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 9.7
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 16.3,
+          "temp_max": 26.6,
+          "weather": "Patchy rain nearby",
+          "precipitation": 82,
+          "wind_speed": 8.3
         }
       ]
     },
     {
       "location": "Hosaena",
-      "timestamp": "2025-09-17T10:34:09.954576",
+      "timestamp": "2025-09-19T12:53:18.939168",
       "current": {
-        "temperature": 19.1,
-        "humidity": 71,
+        "temperature": 20.4,
+        "humidity": 70,
         "weather": "Patchy rain nearby",
-        "wind_speed": 7.2,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 15.1,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 12.6,
-          "temp_max": 20.6,
-          "weather": "Patchy rain nearby",
-          "precipitation": 93,
-          "wind_speed": 9.0
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.7,
-          "temp_max": 20.2,
-          "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 13.3
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 13.6,
-          "temp_max": 20.4,
+          "temp_min": 13.4,
+          "temp_max": 20.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 89,
-          "wind_speed": 17.6
+          "precipitation": 96,
+          "wind_speed": 15.5
         },
         {
           "date": "2025-09-20",
           "temp_min": 13.9,
-          "temp_max": 19.9,
-          "weather": "Patchy rain nearby",
+          "temp_max": 17.1,
+          "weather": "Moderate rain",
           "precipitation": 89,
-          "wind_speed": 19.4
+          "wind_speed": 12.2
         },
         {
           "date": "2025-09-21",
-          "temp_min": 13.0,
-          "temp_max": 20.1,
+          "temp_min": 13.2,
+          "temp_max": 17.1,
           "weather": "Moderate rain",
-          "precipitation": 79,
-          "wind_speed": 10.8
+          "precipitation": 88,
+          "wind_speed": 9.7
         },
         {
           "date": "2025-09-22",
-          "temp_min": 12.5,
-          "temp_max": 14.9,
-          "weather": "Patchy rain nearby",
-          "precipitation": 66,
-          "wind_speed": 8.3
+          "temp_min": 12.6,
+          "temp_max": 20.2,
+          "weather": "Moderate rain",
+          "precipitation": 83,
+          "wind_speed": 8.6
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.4,
-          "temp_max": 18.9,
+          "temp_min": 12.5,
+          "temp_max": 19.2,
+          "weather": "Moderate rain",
+          "precipitation": 82,
+          "wind_speed": 7.2
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 13.3,
+          "temp_max": 19.9,
           "weather": "Patchy rain nearby",
           "precipitation": 83,
-          "wind_speed": 8.3
+          "wind_speed": 8.6
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.0,
+          "temp_max": 21.1,
+          "weather": "Moderate rain",
+          "precipitation": 89,
+          "wind_speed": 9.7
         }
       ]
     },
     {
       "location": "Debre Markos",
-      "timestamp": "2025-09-17T10:34:11.556397",
+      "timestamp": "2025-09-19T12:53:21.185697",
       "current": {
-        "temperature": 17.7,
-        "humidity": 76,
-        "weather": "Moderate rain at times",
-        "wind_speed": 6.1,
-        "timestamp": "2025-09-17 10:30"
+        "temperature": 18.3,
+        "humidity": 82,
+        "weather": "Patchy rain nearby",
+        "wind_speed": 8.6,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 11.8,
-          "temp_max": 19.9,
-          "weather": "Moderate rain",
-          "precipitation": 97,
+          "date": "2025-09-19",
+          "temp_min": 11.7,
+          "temp_max": 18.9,
+          "weather": "Heavy rain",
+          "precipitation": 96,
           "wind_speed": 9.4
         },
         {
-          "date": "2025-09-18",
-          "temp_min": 11.3,
-          "temp_max": 19.3,
-          "weather": "Moderate rain",
-          "precipitation": 88,
-          "wind_speed": 9.0
-        },
-        {
-          "date": "2025-09-19",
-          "temp_min": 11.5,
-          "temp_max": 18.4,
-          "weather": "Moderate rain",
-          "precipitation": 79,
-          "wind_speed": 11.9
-        },
-        {
           "date": "2025-09-20",
-          "temp_min": 11.7,
-          "temp_max": 17.0,
-          "weather": "Moderate rain",
-          "precipitation": 85,
-          "wind_speed": 10.8
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 11.8,
-          "temp_max": 17.2,
+          "temp_min": 11.4,
+          "temp_max": 16.4,
           "weather": "Heavy rain",
-          "precipitation": 88,
-          "wind_speed": 8.3
-        },
-        {
-          "date": "2025-09-22",
-          "temp_min": 10.7,
-          "temp_max": 18.1,
-          "weather": "Moderate rain",
-          "precipitation": 76,
+          "precipitation": 91,
           "wind_speed": 10.1
         },
         {
-          "date": "2025-09-23",
-          "temp_min": 10.2,
-          "temp_max": 19.2,
-          "weather": "Patchy rain nearby",
+          "date": "2025-09-21",
+          "temp_min": 11.0,
+          "temp_max": 17.5,
+          "weather": "Moderate rain",
           "precipitation": 86,
+          "wind_speed": 10.8
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 9.8,
+          "temp_max": 20.4,
+          "weather": "Patchy rain nearby",
+          "precipitation": 85,
+          "wind_speed": 11.2
+        },
+        {
+          "date": "2025-09-23",
+          "temp_min": 10.0,
+          "temp_max": 19.6,
+          "weather": "Moderate rain",
+          "precipitation": 86,
+          "wind_speed": 9.4
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 10.8,
+          "temp_max": 18.8,
+          "weather": "Patchy rain nearby",
+          "precipitation": 72,
+          "wind_speed": 9.4
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 10.7,
+          "temp_max": 19.4,
+          "weather": "Patchy rain nearby",
+          "precipitation": 88,
           "wind_speed": 8.6
         }
       ]
     },
     {
       "location": "Debre Birhan",
-      "timestamp": "2025-09-17T10:34:13.129166",
+      "timestamp": "2025-09-19T12:53:23.679255",
       "current": {
-        "temperature": 16.4,
-        "humidity": 63,
+        "temperature": 17.8,
+        "humidity": 66,
         "weather": "Patchy rain nearby",
-        "wind_speed": 4.3,
-        "timestamp": "2025-09-17 10:15"
+        "wind_speed": 8.3,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 11.9,
-          "temp_max": 17.2,
+          "date": "2025-09-19",
+          "temp_min": 11.6,
+          "temp_max": 18.4,
           "weather": "Moderate rain",
           "precipitation": 95,
-          "wind_speed": 8.6
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 11.8,
-          "temp_max": 17.9,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 11.2
-        },
-        {
-          "date": "2025-09-19",
-          "temp_min": 11.7,
-          "temp_max": 17.3,
-          "weather": "Heavy rain",
-          "precipitation": 84,
-          "wind_speed": 10.1
+          "wind_speed": 11.5
         },
         {
           "date": "2025-09-20",
-          "temp_min": 11.7,
-          "temp_max": 15.6,
-          "weather": "Heavy rain",
-          "precipitation": 89,
-          "wind_speed": 6.8
+          "temp_min": 11.1,
+          "temp_max": 15.3,
+          "weather": "Moderate rain",
+          "precipitation": 91,
+          "wind_speed": 8.6
         },
         {
           "date": "2025-09-21",
-          "temp_min": 10.3,
-          "temp_max": 17.1,
-          "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 14.0
+          "temp_min": 9.4,
+          "temp_max": 17.2,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 11.5
         },
         {
           "date": "2025-09-22",
-          "temp_min": 9.4,
-          "temp_max": 17.0,
+          "temp_min": 9.0,
+          "temp_max": 18.4,
           "weather": "Patchy rain nearby",
-          "precipitation": 81,
-          "wind_speed": 13.7
+          "precipitation": 83,
+          "wind_speed": 18.7
         },
         {
           "date": "2025-09-23",
-          "temp_min": 9.8,
-          "temp_max": 17.4,
+          "temp_min": 9.3,
+          "temp_max": 18.2,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 18.4
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 9.5,
+          "temp_max": 18.1,
           "weather": "Patchy rain nearby",
           "precipitation": 84,
-          "wind_speed": 18.0
+          "wind_speed": 16.2
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 10.1,
+          "temp_max": 18.0,
+          "weather": "Patchy rain nearby",
+          "precipitation": 89,
+          "wind_speed": 16.2
         }
       ]
     },
     {
       "location": "Metu",
-      "timestamp": "2025-09-17T10:34:14.732517",
+      "timestamp": "2025-09-19T12:53:26.169203",
       "current": {
-        "temperature": 22.1,
-        "humidity": 67,
+        "temperature": 21.0,
+        "humidity": 85,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 4.7,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 12.0,
-          "temp_max": 26.3,
-          "weather": "Moderate rain",
-          "precipitation": 93,
-          "wind_speed": 7.9
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 13.2,
-          "temp_max": 22.8,
-          "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 6.8
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 13.5,
-          "temp_max": 20.1,
+          "temp_min": 14.8,
+          "temp_max": 21.8,
           "weather": "Moderate rain",
+          "precipitation": 98,
+          "wind_speed": 6.1
+        },
+        {
+          "date": "2025-09-20",
+          "temp_min": 13.6,
+          "temp_max": 19.1,
+          "weather": "Heavy rain",
           "precipitation": 89,
           "wind_speed": 5.8
         },
         {
-          "date": "2025-09-20",
-          "temp_min": 13.5,
-          "temp_max": 23.5,
-          "weather": "Heavy rain",
-          "precipitation": 88,
-          "wind_speed": 4.7
-        },
-        {
           "date": "2025-09-21",
-          "temp_min": 12.9,
-          "temp_max": 24.6,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 10.8
+          "temp_min": 13.1,
+          "temp_max": 25.3,
+          "weather": "Heavy rain",
+          "precipitation": 86,
+          "wind_speed": 7.9
         },
         {
           "date": "2025-09-22",
-          "temp_min": 13.1,
-          "temp_max": 16.8,
-          "weather": "Moderate rain",
-          "precipitation": 87,
-          "wind_speed": 5.0
+          "temp_min": 12.8,
+          "temp_max": 23.6,
+          "weather": "Patchy rain nearby",
+          "precipitation": 83,
+          "wind_speed": 5.8
         },
         {
           "date": "2025-09-23",
-          "temp_min": 12.4,
-          "temp_max": 23.4,
+          "temp_min": 13.5,
+          "temp_max": 22.0,
+          "weather": "Moderate rain",
+          "precipitation": 83,
+          "wind_speed": 5.8
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 14.2,
+          "temp_max": 22.9,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 7.6
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.7,
+          "temp_max": 24.3,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 5.0
+          "precipitation": 86,
+          "wind_speed": 6.5
         }
       ]
     },
     {
       "location": "Adigrat",
-      "timestamp": "2025-09-17T10:34:16.671890",
+      "timestamp": "2025-09-19T12:53:29.528817",
       "current": {
-        "temperature": 15.3,
-        "humidity": 70,
+        "temperature": 20.3,
+        "humidity": 58,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 11.2,
+        "timestamp": "2025-09-19 12:45"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 15.1,
-          "temp_max": 19.2,
-          "weather": "Moderate rain",
-          "precipitation": 92,
-          "wind_speed": 13.7
-        },
-        {
-          "date": "2025-09-18",
-          "temp_min": 15.0,
-          "temp_max": 20.4,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 22.0
-        },
-        {
           "date": "2025-09-19",
-          "temp_min": 14.7,
+          "temp_min": 14.5,
           "temp_max": 20.6,
           "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 19.8
-        },
-        {
-          "date": "2025-09-20",
-          "temp_min": 14.0,
-          "temp_max": 18.6,
-          "weather": "Moderate rain",
-          "precipitation": 89,
-          "wind_speed": 12.2
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 14.1,
-          "temp_max": 20.1,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
+          "precipitation": 95,
           "wind_speed": 18.0
         },
         {
-          "date": "2025-09-22",
-          "temp_min": 13.9,
-          "temp_max": 21.0,
+          "date": "2025-09-20",
+          "temp_min": 14.4,
+          "temp_max": 21.3,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 19.1
+        },
+        {
+          "date": "2025-09-21",
+          "temp_min": 14.2,
+          "temp_max": 18.9,
           "weather": "Patchy rain nearby",
-          "precipitation": 82,
-          "wind_speed": 14.0
+          "precipitation": 89,
+          "wind_speed": 11.2
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 13.6,
+          "temp_max": 21.6,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 18.7
         },
         {
           "date": "2025-09-23",
-          "temp_min": 13.4,
-          "temp_max": 21.6,
+          "temp_min": 14.1,
+          "temp_max": 22.4,
           "weather": "Sunny",
           "precipitation": 0,
-          "wind_speed": 19.1
+          "wind_speed": 18.0
+        },
+        {
+          "date": "2025-09-24",
+          "temp_min": 14.9,
+          "temp_max": 21.1,
+          "weather": "Patchy rain nearby",
+          "precipitation": 84,
+          "wind_speed": 17.3
+        },
+        {
+          "date": "2025-09-25",
+          "temp_min": 13.9,
+          "temp_max": 21.4,
+          "weather": "Sunny",
+          "precipitation": 0,
+          "wind_speed": 15.5
         }
       ]
     },
     {
       "location": "Goba",
-      "timestamp": "2025-09-17T10:34:18.408895",
+      "timestamp": "2025-09-19T12:53:32.138186",
       "current": {
-        "temperature": 15.6,
-        "humidity": 72,
+        "temperature": 18.7,
+        "humidity": 63,
         "weather": "Patchy rain nearby",
-        "wind_speed": 3.6,
-        "timestamp": "2025-09-17 10:30"
+        "wind_speed": 10.8,
+        "timestamp": "2025-09-19 13:00"
       },
       "forecast": [
         {
-          "date": "2025-09-17",
-          "temp_min": 10.0,
-          "temp_max": 19.0,
+          "date": "2025-09-19",
+          "temp_min": 9.7,
+          "temp_max": 18.7,
           "weather": "Patchy rain nearby",
           "precipitation": 95,
+          "wind_speed": 12.6
+        },
+        {
+          "date": "2025-09-20",
+          "temp_min": 10.7,
+          "temp_max": 18.8,
+          "weather": "Patchy rain nearby",
+          "precipitation": 87,
+          "wind_speed": 14.4
+        },
+        {
+          "date": "2025-09-21",
+          "temp_min": 10.9,
+          "temp_max": 17.2,
+          "weather": "Moderate rain",
+          "precipitation": 87,
+          "wind_speed": 13.3
+        },
+        {
+          "date": "2025-09-22",
+          "temp_min": 11.1,
+          "temp_max": 17.3,
+          "weather": "Moderate rain",
+          "precipitation": 87,
           "wind_speed": 10.4
         },
         {
-          "date": "2025-09-18",
-          "temp_min": 10.2,
-          "temp_max": 18.1,
-          "weather": "Patchy rain nearby",
+          "date": "2025-09-23",
+          "temp_min": 9.7,
+          "temp_max": 18.6,
+          "weather": "Moderate rain",
           "precipitation": 88,
           "wind_speed": 13.3
         },
         {
-          "date": "2025-09-19",
-          "temp_min": 10.6,
-          "temp_max": 19.2,
-          "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 16.6
-        },
-        {
-          "date": "2025-09-20",
+          "date": "2025-09-24",
           "temp_min": 10.0,
-          "temp_max": 19.3,
+          "temp_max": 18.8,
           "weather": "Patchy rain nearby",
-          "precipitation": 88,
-          "wind_speed": 17.6
-        },
-        {
-          "date": "2025-09-21",
-          "temp_min": 9.9,
-          "temp_max": 19.1,
-          "weather": "Moderate rain",
           "precipitation": 89,
-          "wind_speed": 10.4
+          "wind_speed": 11.5
         },
         {
-          "date": "2025-09-22",
-          "temp_min": 11.5,
-          "temp_max": 17.6,
+          "date": "2025-09-25",
+          "temp_min": 11.6,
+          "temp_max": 19.5,
           "weather": "Patchy rain nearby",
-          "precipitation": 83,
-          "wind_speed": 7.6
-        },
-        {
-          "date": "2025-09-23",
-          "temp_min": 10.6,
-          "temp_max": 17.7,
-          "weather": "Patchy rain nearby",
-          "precipitation": 81,
-          "wind_speed": 9.0
+          "precipitation": 84,
+          "wind_speed": 13.7
         }
       ]
     }
