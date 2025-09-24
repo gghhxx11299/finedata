@@ -103,6 +103,21 @@
             cursor: pointer;
             color: var(--primary-color);
         }
+        /* Export Button */
+        .export-btn {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+        .export-btn:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+        }
         /* Page Header */
         .page-header {
             background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1571835782488-179d2c6eecb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
@@ -223,6 +238,47 @@
         .data-table tr:hover {
             background-color: rgba(88, 166, 255, 0.05);
         }
+        /* Export Modal */
+        #exportModal {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        #exportModal h4 {
+            margin: 0 0 0.8rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        #exportModal button {
+            display: block;
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.4rem 0;
+            background: rgba(88,166,255,0.1);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        #exportModal button:hover {
+            background: rgba(88,166,255,0.2);
+        }
+        #exportModal .close-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            margin-top: 0.6rem;
+        }
         /* Footer */
         footer {
             background-color: var(--card-bg);
@@ -301,6 +357,11 @@
             .mobile-menu-btn {
                 display: block;
             }
+            .export-btn {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
+            }
             .page-header h2 {
                 font-size: 2rem;
             }
@@ -323,13 +384,18 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
-                    <li><a href="demographic.html"  class="active">Demographic</a></li>
+                    <li><a href="demographic.html" class="active">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="support.html">Support</a></li>
+                    <li>
+                        <button class="export-btn" onclick="showExportOptions()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                    </li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -338,6 +404,18 @@
             </nav>
         </div>
     </header>
+
+    <!-- Export Modal -->
+    <div id="exportModal">
+        <h4><i class="fas fa-file-export"></i> Export Options</h4>
+        <button onclick="exportAllTablesToCSV()"><i class="fas fa-table"></i> All Tables (CSV)</button>
+        <button onclick="exportKeyMetricsAsJSON()"><i class="fas fa-code"></i> Key Metrics (JSON)</button>
+        <button onclick="exportSummaryAsText()"><i class="fas fa-file-alt"></i> Summary Report (TXT)</button>
+        <button class="close-btn" onclick="document.getElementById('exportModal').style.display='none'">
+            <i class="fas fa-times"></i> Close
+        </button>
+    </div>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -348,26 +426,27 @@
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Population Growth Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="population-growth">
             <h3 class="section-title"><i class="fas fa-users"></i> Population Growth (2020-2030)</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Total Population" data-value="132.06M" data-detail="2024 estimate">
                     <h4><i class="fas fa-chart-line"></i> Total Population</h4>
                     <div class="stat-value">132.06M</div>
                     <div class="stat-detail">2024 population (mid-year estimate)</div>
                     <p class="stat-detail">Ethiopia's population rose from about 118.92 million in 2020 to ~132.06 million in 2024, an 11% increase over 5 years.</p>
                     <p class="source-note">Source: World Bank/UN estimates via FRED</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Annual Growth Rate" data-value="2.58%" data-detail="2024">
                     <h4><i class="fas fa-running"></i> Annual Growth Rate</h4>
                     <div class="stat-value">2.58%</div>
                     <div class="stat-detail">2024 growth rate (gradually slowing)</div>
                     <p class="stat-detail">The growth rate has slowed from 2.71% in 2020 to 2.58% in 2024, showing a modest deceleration.</p>
                     <p class="source-note">Source: World Bank/UN estimates</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Birth and Death Rates" data-value="31.5/6.8" data-detail="per 1,000">
                     <h4><i class="fas fa-baby"></i> Birth and Death Rates</h4>
                     <div class="stat-detail">Birth Rate: 31.5 per 1,000 (2024)</div>
                     <div class="stat-detail">Death Rate: 6.8 per 1,000 (2024)</div>
@@ -377,7 +456,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Population Trends (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-population">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -389,114 +468,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>118.918</td>
-                        <td>2.71</td>
-                        <td>32.8</td>
-                        <td>7.2</td>
-                        <td>-0.5</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>122.139</td>
-                        <td>2.67</td>
-                        <td>32.3</td>
-                        <td>7.1</td>
-                        <td>-0.5</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>125.384</td>
-                        <td>2.62</td>
-                        <td>32.0</td>
-                        <td>7.0</td>
-                        <td>-0.6</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>128.692</td>
-                        <td>2.60</td>
-                        <td>31.8</td>
-                        <td>6.9</td>
-                        <td>-0.6</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>132.060</td>
-                        <td>2.58</td>
-                        <td>31.5</td>
-                        <td>6.8</td>
-                        <td>-0.6</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>135.490</td>
-                        <td>2.55</td>
-                        <td>31.2</td>
-                        <td>6.7</td>
-                        <td>-0.7</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>138.980</td>
-                        <td>2.52</td>
-                        <td>30.9</td>
-                        <td>6.6</td>
-                        <td>-0.7</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>142.530</td>
-                        <td>2.49</td>
-                        <td>30.6</td>
-                        <td>6.5</td>
-                        <td>-0.8</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>146.140</td>
-                        <td>2.46</td>
-                        <td>30.3</td>
-                        <td>6.4</td>
-                        <td>-0.8</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>149.810</td>
-                        <td>2.43</td>
-                        <td>30.0</td>
-                        <td>6.3</td>
-                        <td>-0.9</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>153.540</td>
-                        <td>2.40</td>
-                        <td>29.7</td>
-                        <td>6.2</td>
-                        <td>-0.9</td>
-                    </tr>
+                    <tr><td>2020</td><td>118.918</td><td>2.71</td><td>32.8</td><td>7.2</td><td>-0.5</td></tr>
+                    <tr><td>2021</td><td>122.139</td><td>2.67</td><td>32.3</td><td>7.1</td><td>-0.5</td></tr>
+                    <tr><td>2022</td><td>125.384</td><td>2.62</td><td>32.0</td><td>7.0</td><td>-0.6</td></tr>
+                    <tr><td>2023</td><td>128.692</td><td>2.60</td><td>31.8</td><td>6.9</td><td>-0.6</td></tr>
+                    <tr><td>2024</td><td>132.060</td><td>2.58</td><td>31.5</td><td>6.8</td><td>-0.6</td></tr>
+                    <tr><td>2025</td><td>135.490</td><td>2.55</td><td>31.2</td><td>6.7</td><td>-0.7</td></tr>
+                    <tr><td>2026</td><td>138.980</td><td>2.52</td><td>30.9</td><td>6.6</td><td>-0.7</td></tr>
+                    <tr><td>2027</td><td>142.530</td><td>2.49</td><td>30.6</td><td>6.5</td><td>-0.8</td></tr>
+                    <tr><td>2028</td><td>146.140</td><td>2.46</td><td>30.3</td><td>6.4</td><td>-0.8</td></tr>
+                    <tr><td>2029</td><td>149.810</td><td>2.43</td><td>30.0</td><td>6.3</td><td>-0.9</td></tr>
+                    <tr><td>2030</td><td>153.540</td><td>2.40</td><td>29.7</td><td>6.2</td><td>-0.9</td></tr>
                 </tbody>
             </table>
         </section>
 
-        <!-- NEW: Population Density by Region -->
-        <section class="demographic-section">
+        <!-- Population Density by Region -->
+        <section class="demographic-section" id="population-density">
             <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Population Density by Region (2024)</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Addis Ababa Density" data-value="6,800/km²">
                     <h4><i class="fas fa-city"></i> Addis Ababa</h4>
                     <div class="stat-value">6,800/km²</div>
                     <div class="stat-detail">Highest density in the country</div>
                     <p class="stat-detail">Urban core with limited land area</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Dire Dawa Density" data-value="185/km²">
                     <h4><i class="fas fa-landmark"></i> Dire Dawa</h4>
                     <div class="stat-value">185/km²</div>
                     <div class="stat-detail">Second most densely populated region</div>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Afar Density" data-value="28/km²">
                     <h4><i class="fas fa-mountain"></i> Afar</h4>
                     <div class="stat-value">28/km²</div>
                     <div class="stat-detail">Lowest population density</div>
@@ -504,7 +506,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Regional Population Density (persons per km²)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-density">
                 <thead>
                     <tr>
                         <th>Region</th>
@@ -531,24 +533,24 @@
         </section>
 
         <!-- Urban vs Rural Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="urban-rural">
             <h3 class="section-title"><i class="fas fa-city"></i> Urban vs Rural Population</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Urban Population" data-value="22.1%" data-detail="2024">
                     <h4><i class="fas fa-building"></i> Urban Population</h4>
                     <div class="stat-value">22.1%</div>
                     <div class="stat-detail">2024 urban population share</div>
                     <p class="stat-detail">Projected to reach 22.5% by 2025, up from 20.6% in 2020.</p>
                     <p class="stat-detail">Urban population grows at about 4-5% per year.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Rural Population" data-value="77.9%" data-detail="2024">
                     <h4><i class="fas fa-tree"></i> Rural Population</h4>
                     <div class="stat-value">77.9%</div>
                     <div class="stat-detail">2024 rural population share</div>
                     <p class="stat-detail">Projected to decline to 77.5% by 2025, down from 79.4% in 2020.</p>
                     <p class="stat-detail">Rural population grows at about 2% per year.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Largest Cities" data-value="Addis Ababa: 5.2M">
                     <h4><i class="fas fa-home"></i> Largest Cities (2025)</h4>
                     <div class="stat-detail">Addis Ababa: 5.2M</div>
                     <div class="stat-detail">Dire Dawa: 610K</div>
@@ -559,7 +561,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Urban-Rural Distribution (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-urban-rural">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -570,107 +572,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>20.6</td>
-                        <td>79.4</td>
-                        <td>24.5</td>
-                        <td>94.4</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>21.2</td>
-                        <td>78.8</td>
-                        <td>25.9</td>
-                        <td>96.2</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>21.3</td>
-                        <td>78.7</td>
-                        <td>26.7</td>
-                        <td>98.7</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>21.7</td>
-                        <td>78.3</td>
-                        <td>27.9</td>
-                        <td>100.8</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>22.1</td>
-                        <td>77.9</td>
-                        <td>29.2</td>
-                        <td>102.9</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>22.5</td>
-                        <td>77.5</td>
-                        <td>30.5</td>
-                        <td>105.0</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>22.9</td>
-                        <td>77.1</td>
-                        <td>31.8</td>
-                        <td>107.2</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>23.3</td>
-                        <td>76.7</td>
-                        <td>33.2</td>
-                        <td>109.3</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>23.7</td>
-                        <td>76.3</td>
-                        <td>34.6</td>
-                        <td>111.5</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>24.1</td>
-                        <td>75.9</td>
-                        <td>36.1</td>
-                        <td>113.7</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>24.5</td>
-                        <td>75.5</td>
-                        <td>37.6</td>
-                        <td>115.9</td>
-                    </tr>
+                    <tr><td>2020</td><td>20.6</td><td>79.4</td><td>24.5</td><td>94.4</td></tr>
+                    <tr><td>2021</td><td>21.2</td><td>78.8</td><td>25.9</td><td>96.2</td></tr>
+                    <tr><td>2022</td><td>21.3</td><td>78.7</td><td>26.7</td><td>98.7</td></tr>
+                    <tr><td>2023</td><td>21.7</td><td>78.3</td><td>27.9</td><td>100.8</td></tr>
+                    <tr><td>2024</td><td>22.1</td><td>77.9</td><td>29.2</td><td>102.9</td></tr>
+                    <tr><td>2025</td><td>22.5</td><td>77.5</td><td>30.5</td><td>105.0</td></tr>
+                    <tr><td>2026</td><td>22.9</td><td>77.1</td><td>31.8</td><td>107.2</td></tr>
+                    <tr><td>2027</td><td>23.3</td><td>76.7</td><td>33.2</td><td>109.3</td></tr>
+                    <tr><td>2028</td><td>23.7</td><td>76.3</td><td>34.6</td><td>111.5</td></tr>
+                    <tr><td>2029</td><td>24.1</td><td>75.9</td><td>36.1</td><td>113.7</td></tr>
+                    <tr><td>2030</td><td>24.5</td><td>75.5</td><td>37.6</td><td>115.9</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: UN Population Division, CIA World Factbook</p>
         </section>
 
         <!-- Age and Sex Structure Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="age-sex">
             <h3 class="section-title"><i class="fas fa-user-friends"></i> Age and Sex Structure</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Median Age" data-value="19.1 years" data-detail="2025">
                     <h4><i class="fas fa-birthday-cake"></i> Median Age</h4>
                     <div class="stat-value">19.1 years</div>
                     <div class="stat-detail">2025 projected median age</div>
                     <p class="stat-detail">Rising from 18.1 years in 2020, reflecting continued high fertility.</p>
                     <p class="stat-detail">Ethiopia has a very young population compared to the worldwide median age of 30+ years.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Sex Ratio" data-value="1.00:1" data-detail="Males per female">
                     <h4><i class="fas fa-venus-mars"></i> Sex Ratio</h4>
                     <div class="stat-value">1.00:1</div>
                     <div class="stat-detail">Males per female</div>
                     <p class="stat-detail">Population is nearly evenly split by sex (approx. 50.3% male, 49.7% female).</p>
                     <p class="stat-detail">The slight male advantage at birth (~1.03:1) evens out in adulthood.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Age Distribution" data-value="0-14: 39.8%" data-detail="2025">
                     <h4><i class="fas fa-chart-pie"></i> Age Distribution (2025)</h4>
                     <div class="stat-detail">0-14 years: 39.8%</div>
                     <div class="stat-detail">15-24 years: 20.2%</div>
@@ -681,7 +617,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Dependency Ratios (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-dependency">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -691,96 +627,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>75.2</td>
-                        <td>5.8</td>
-                        <td>81.0</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>74.8</td>
-                        <td>5.8</td>
-                        <td>80.6</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>74.3</td>
-                        <td>5.8</td>
-                        <td>80.1</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>73.9</td>
-                        <td>5.8</td>
-                        <td>79.7</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>73.4</td>
-                        <td>5.8</td>
-                        <td>79.2</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>72.9</td>
-                        <td>5.8</td>
-                        <td>78.7</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>72.4</td>
-                        <td>5.9</td>
-                        <td>78.3</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>71.9</td>
-                        <td>6.0</td>
-                        <td>77.9</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>71.4</td>
-                        <td>6.1</td>
-                        <td>77.5</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>70.9</td>
-                        <td>6.2</td>
-                        <td>77.1</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>70.4</td>
-                        <td>6.3</td>
-                        <td>76.7</td>
-                    </tr>
+                    <tr><td>2020</td><td>75.2</td><td>5.8</td><td>81.0</td></tr>
+                    <tr><td>2021</td><td>74.8</td><td>5.8</td><td>80.6</td></tr>
+                    <tr><td>2022</td><td>74.3</td><td>5.8</td><td>80.1</td></tr>
+                    <tr><td>2023</td><td>73.9</td><td>5.8</td><td>79.7</td></tr>
+                    <tr><td>2024</td><td>73.4</td><td>5.8</td><td>79.2</td></tr>
+                    <tr><td>2025</td><td>72.9</td><td>5.8</td><td>78.7</td></tr>
+                    <tr><td>2026</td><td>72.4</td><td>5.9</td><td>78.3</td></tr>
+                    <tr><td>2027</td><td>71.9</td><td>6.0</td><td>77.9</td></tr>
+                    <tr><td>2028</td><td>71.4</td><td>6.1</td><td>77.5</td></tr>
+                    <tr><td>2029</td><td>70.9</td><td>6.2</td><td>77.1</td></tr>
+                    <tr><td>2030</td><td>70.4</td><td>6.3</td><td>76.7</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: Worldometer/UN data, CIA World Factbook</p>
         </section>
 
-        <!-- NEW: Fertility and Family Planning -->
-        <section class="demographic-section">
+        <!-- Fertility and Family Planning -->
+        <section class="demographic-section" id="fertility">
             <h3 class="section-title"><i class="fas fa-heart-pulse"></i> Fertility Trends and Family Planning</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Total Fertility Rate" data-value="4.1" data-detail="2024">
                     <h4><i class="fas fa-baby-carriage"></i> Total Fertility Rate</h4>
                     <div class="stat-value">4.1</div>
                     <div class="stat-detail">Births per woman (2024)</div>
                     <p class="stat-detail">Down from 4.6 in 2016 and 6.0 in 2000</p>
                     <p class="stat-detail">Urban TFR: 2.8 | Rural TFR: 4.5</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Contraceptive Prevalence" data-value="45%" data-detail="2024">
                     <h4><i class="fas fa-pills"></i> Contraceptive Prevalence</h4>
                     <div class="stat-value">45%</div>
                     <div class="stat-detail">Modern methods among married women (2024)</div>
                     <p class="stat-detail">Up from 35% in 2016</p>
                     <p class="stat-detail">Unmet need for family planning: 22%</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Birth Spacing" data-value="32 months" data-detail="median">
                     <h4><i class="fas fa-calendar-check"></i> Birth Spacing</h4>
                     <div class="stat-detail">Median birth interval: 32 months</div>
                     <div class="stat-detail">Ideal number of children: 4.2 (women)</div>
@@ -789,7 +670,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Fertility Indicators (2016–2024)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-fertility">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -810,24 +691,24 @@
         </section>
 
         <!-- Literacy and Education Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="education">
             <h3 class="section-title"><i class="fas fa-book-open"></i> Literacy and Education</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Adult Literacy" data-value="52%" data-detail="2024">
                     <h4><i class="fas fa-book"></i> Adult Literacy</h4>
                     <div class="stat-value">52%</div>
                     <div class="stat-detail">Age 15+ literacy rate (both sexes)</div>
                     <p class="stat-detail">Improved from ~47% in 2016 to ~52% by 2017.</p>
                     <p class="stat-detail">Female literacy significantly lags behind male literacy.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Youth Literacy" data-value="52%" data-detail="15-24">
                     <h4><i class="fas fa-graduation-cap"></i> Youth Literacy</h4>
                     <div class="stat-value">52%</div>
                     <div class="stat-detail">Ages 15-24 literacy rate</div>
                     <p class="stat-detail">About 59% for young men vs. 44% for young women.</p>
                     <p class="stat-detail">Shows significant gender disparity in education.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Education Enrollment" data-value="Primary: 85%" data-detail="2025">
                     <h4><i class="fas fa-school"></i> Education Enrollment (2025)</h4>
                     <div class="stat-detail">Primary: 85% net enrollment</div>
                     <div class="stat-detail">Secondary: 35% net enrollment</div>
@@ -836,25 +717,22 @@
                     <p class="source-note">Source: UNESCO/World Bank data</p>
                 </div>
             </div>
-
-            <!-- NEW: Education Quality -->
             <div class="data-grid" style="margin-top: 2rem;">
-                <div class="data-card">
+                <div class="data-card" data-metric="Pupil-Teacher Ratio" data-value="42:1" data-detail="Primary">
                     <h4><i class="fas fa-chalkboard-teacher"></i> Pupil-Teacher Ratio</h4>
                     <div class="stat-detail">Primary: 42:1</div>
                     <div class="stat-detail">Secondary: 38:1</div>
                     <p class="stat-detail">Higher than Sub-Saharan average (36:1)</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Learning Outcomes" data-value="Reading: 28%" data-detail="Grade 4">
                     <h4><i class="fas fa-award"></i> Learning Outcomes</h4>
                     <div class="stat-detail">Grade 4 reading proficiency: 28%</div>
                     <div class="stat-detail">Grade 4 math proficiency: 22%</div>
                     <p class="stat-detail">Below regional average (35% reading)</p>
                 </div>
             </div>
-
             <h4 style="margin: 1.5rem 0 1rem;">Education Indicators (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-education">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -865,107 +743,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>51.8</td>
-                        <td>72.5</td>
-                        <td>32.1</td>
-                        <td>4.7</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>52.3</td>
-                        <td>73.8</td>
-                        <td>33.4</td>
-                        <td>4.9</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>52.9</td>
-                        <td>75.2</td>
-                        <td>34.7</td>
-                        <td>5.1</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>53.5</td>
-                        <td>76.5</td>
-                        <td>36.0</td>
-                        <td>5.2</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>54.1</td>
-                        <td>77.8</td>
-                        <td>37.3</td>
-                        <td>5.3</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>54.7</td>
-                        <td>79.2</td>
-                        <td>38.6</td>
-                        <td>5.4</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>55.3</td>
-                        <td>80.5</td>
-                        <td>39.9</td>
-                        <td>5.5</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>55.9</td>
-                        <td>81.8</td>
-                        <td>41.2</td>
-                        <td>5.6</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>56.5</td>
-                        <td>83.0</td>
-                        <td>42.5</td>
-                        <td>5.7</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>57.1</td>
-                        <td>84.2</td>
-                        <td>43.8</td>
-                        <td>5.8</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>57.7</td>
-                        <td>85.4</td>
-                        <td>45.0</td>
-                        <td>5.9</td>
-                    </tr>
+                    <tr><td>2020</td><td>51.8</td><td>72.5</td><td>32.1</td><td>4.7</td></tr>
+                    <tr><td>2021</td><td>52.3</td><td>73.8</td><td>33.4</td><td>4.9</td></tr>
+                    <tr><td>2022</td><td>52.9</td><td>75.2</td><td>34.7</td><td>5.1</td></tr>
+                    <tr><td>2023</td><td>53.5</td><td>76.5</td><td>36.0</td><td>5.2</td></tr>
+                    <tr><td>2024</td><td>54.1</td><td>77.8</td><td>37.3</td><td>5.3</td></tr>
+                    <tr><td>2025</td><td>54.7</td><td>79.2</td><td>38.6</td><td>5.4</td></tr>
+                    <tr><td>2026</td><td>55.3</td><td>80.5</td><td>39.9</td><td>5.5</td></tr>
+                    <tr><td>2027</td><td>55.9</td><td>81.8</td><td>41.2</td><td>5.6</td></tr>
+                    <tr><td>2028</td><td>56.5</td><td>83.0</td><td>42.5</td><td>5.7</td></tr>
+                    <tr><td>2029</td><td>57.1</td><td>84.2</td><td>43.8</td><td>5.8</td></tr>
+                    <tr><td>2030</td><td>57.7</td><td>85.4</td><td>45.0</td><td>5.9</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: UNESCO/World Bank data</p>
         </section>
 
         <!-- Health and Life Expectancy Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="health">
             <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health and Life Expectancy</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Life Expectancy" data-value="67.8 years" data-detail="2025">
                     <h4><i class="fas fa-heart"></i> Life Expectancy</h4>
                     <div class="stat-value">67.8 years</div>
                     <div class="stat-detail">At birth, both sexes (2025)</div>
                     <p class="stat-detail">Male: 65.4 years | Female: 70.3 years</p>
                     <p class="stat-detail">Increased from 65.2 years in 2015</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Child Mortality" data-value="43.2" data-detail="per 1,000">
                     <h4><i class="fas fa-baby"></i> Child Mortality</h4>
                     <div class="stat-value">43.2</div>
                     <div class="stat-detail">Under-5 mortality per 1,000 live births (2024)</div>
                     <p class="stat-detail">Significant reduction from 166 in 2000</p>
                     <p class="stat-detail">Infant mortality: 33.5 per 1,000 live births</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Healthcare Access" data-value="0.1 physicians/1000" data-detail="2024">
                     <h4><i class="fas fa-hospital"></i> Healthcare Access</h4>
                     <div class="stat-detail">Physicians: 0.1 per 1,000 people</div>
                     <div class="stat-detail">Hospital beds: 0.3 per 1,000 people</div>
@@ -975,7 +787,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Health Indicators (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-health">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -986,107 +798,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>66.6</td>
-                        <td>48.5</td>
-                        <td>401</td>
-                        <td>0.9</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>66.9</td>
-                        <td>47.2</td>
-                        <td>388</td>
-                        <td>0.9</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>67.1</td>
-                        <td>45.9</td>
-                        <td>375</td>
-                        <td>0.8</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>67.4</td>
-                        <td>44.6</td>
-                        <td>362</td>
-                        <td>0.8</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>67.6</td>
-                        <td>43.2</td>
-                        <td>350</td>
-                        <td>0.8</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>67.8</td>
-                        <td>41.9</td>
-                        <td>338</td>
-                        <td>0.7</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>68.0</td>
-                        <td>40.6</td>
-                        <td>326</td>
-                        <td>0.7</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>68.2</td>
-                        <td>39.3</td>
-                        <td>315</td>
-                        <td>0.7</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>68.4</td>
-                        <td>38.0</td>
-                        <td>304</td>
-                        <td>0.6</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>68.6</td>
-                        <td>36.8</td>
-                        <td>294</td>
-                        <td>0.6</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>68.8</td>
-                        <td>35.6</td>
-                        <td>284</td>
-                        <td>0.6</td>
-                    </tr>
+                    <tr><td>2020</td><td>66.6</td><td>48.5</td><td>401</td><td>0.9</td></tr>
+                    <tr><td>2021</td><td>66.9</td><td>47.2</td><td>388</td><td>0.9</td></tr>
+                    <tr><td>2022</td><td>67.1</td><td>45.9</td><td>375</td><td>0.8</td></tr>
+                    <tr><td>2023</td><td>67.4</td><td>44.6</td><td>362</td><td>0.8</td></tr>
+                    <tr><td>2024</td><td>67.6</td><td>43.2</td><td>350</td><td>0.8</td></tr>
+                    <tr><td>2025</td><td>67.8</td><td>41.9</td><td>338</td><td>0.7</td></tr>
+                    <tr><td>2026</td><td>68.0</td><td>40.6</td><td>326</td><td>0.7</td></tr>
+                    <tr><td>2027</td><td>68.2</td><td>39.3</td><td>315</td><td>0.7</td></tr>
+                    <tr><td>2028</td><td>68.4</td><td>38.0</td><td>304</td><td>0.6</td></tr>
+                    <tr><td>2029</td><td>68.6</td><td>36.8</td><td>294</td><td>0.6</td></tr>
+                    <tr><td>2030</td><td>68.8</td><td>35.6</td><td>284</td><td>0.6</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: WHO, UNICEF, World Bank</p>
         </section>
 
         <!-- Labor Force Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="labor">
             <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force and Employment</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Labor Force Participation" data-value="50%" data-detail="15+">
                     <h4><i class="fas fa-user-tie"></i> Labor Force Participation</h4>
                     <div class="stat-value">50%</div>
                     <div class="stat-detail">Of people aged 15+ are active in labor force</div>
                     <p class="stat-detail">Men: ~70% participation rate</p>
                     <p class="stat-detail">Women: ~30-35% participation rate</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Employment by Sector" data-value="Agriculture: 60-63%" data-detail="2024">
                     <h4><i class="fas fa-tractor"></i> Employment by Sector</h4>
                     <div class="stat-detail">Agriculture: 60-63%</div>
                     <div class="stat-detail">Services: 27-30%</div>
                     <div class="stat-detail">Industry: ~10%</div>
                     <p class="stat-detail">Economy remains heavily agrarian with gradual shift toward services.</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Unemployment" data-value="19.1%" data-detail="2024">
                     <h4><i class="fas fa-chart-line"></i> Unemployment</h4>
                     <div class="stat-value">19.1%</div>
                     <div class="stat-detail">Overall unemployment rate (2024)</div>
@@ -1096,7 +842,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Labor Market Indicators (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-labor">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -1107,107 +853,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>52.8</td>
-                        <td>17.8</td>
-                        <td>23.5</td>
-                        <td>32.5</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>54.2</td>
-                        <td>18.2</td>
-                        <td>24.1</td>
-                        <td>33.1</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>55.7</td>
-                        <td>18.6</td>
-                        <td>24.7</td>
-                        <td>33.7</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>57.2</td>
-                        <td>18.9</td>
-                        <td>25.0</td>
-                        <td>34.3</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>58.8</td>
-                        <td>19.1</td>
-                        <td>25.4</td>
-                        <td>34.9</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>60.4</td>
-                        <td>19.3</td>
-                        <td>25.8</td>
-                        <td>35.5</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>62.1</td>
-                        <td>19.5</td>
-                        <td>26.1</td>
-                        <td>36.1</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>63.8</td>
-                        <td>19.7</td>
-                        <td>26.4</td>
-                        <td>36.7</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>65.5</td>
-                        <td>19.8</td>
-                        <td>26.7</td>
-                        <td>37.3</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>67.2</td>
-                        <td>19.9</td>
-                        <td>27.0</td>
-                        <td>37.9</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>69.0</td>
-                        <td>20.0</td>
-                        <td>27.2</td>
-                        <td>38.5</td>
-                    </tr>
+                    <tr><td>2020</td><td>52.8</td><td>17.8</td><td>23.5</td><td>32.5</td></tr>
+                    <tr><td>2021</td><td>54.2</td><td>18.2</td><td>24.1</td><td>33.1</td></tr>
+                    <tr><td>2022</td><td>55.7</td><td>18.6</td><td>24.7</td><td>33.7</td></tr>
+                    <tr><td>2023</td><td>57.2</td><td>18.9</td><td>25.0</td><td>34.3</td></tr>
+                    <tr><td>2024</td><td>58.8</td><td>19.1</td><td>25.4</td><td>34.9</td></tr>
+                    <tr><td>2025</td><td>60.4</td><td>19.3</td><td>25.8</td><td>35.5</td></tr>
+                    <tr><td>2026</td><td>62.1</td><td>19.5</td><td>26.1</td><td>36.1</td></tr>
+                    <tr><td>2027</td><td>63.8</td><td>19.7</td><td>26.4</td><td>36.7</td></tr>
+                    <tr><td>2028</td><td>65.5</td><td>19.8</td><td>26.7</td><td>37.3</td></tr>
+                    <tr><td>2029</td><td>67.2</td><td>19.9</td><td>27.0</td><td>37.9</td></tr>
+                    <tr><td>2030</td><td>69.0</td><td>20.0</td><td>27.2</td><td>38.5</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: ILO/World Bank estimates, Ethiopian Labour Survey (ESS)</p>
         </section>
 
         <!-- Household and Income Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="household">
             <h3 class="section-title"><i class="fas fa-home"></i> Household and Income Characteristics</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Household Size" data-value="4.6" data-detail="2024">
                     <h4><i class="fas fa-house-user"></i> Household Size</h4>
                     <div class="stat-value">4.6</div>
                     <div class="stat-detail">Average persons per household (2024)</div>
                     <p class="stat-detail">Urban: 3.8 persons per household</p>
                     <p class="stat-detail">Rural: 4.9 persons per household</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Income Distribution" data-value="Gini: 35.0" data-detail="2023">
                     <h4><i class="fas fa-money-bill-wave"></i> Income Distribution</h4>
                     <div class="stat-detail">Gini Coefficient: 35.0 (2023)</div>
                     <div class="stat-detail">Poverty Rate: 23.5% (2024)</div>
                     <div class="stat-detail">Extreme Poverty: 10.2% (2024)</div>
                     <p class="stat-detail">Income inequality has slightly decreased since 2015</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Technology Access" data-value="Mobile: 45%" data-detail="2024">
                     <h4><i class="fas fa-mobile-alt"></i> Technology Access</h4>
                     <div class="stat-detail">Mobile penetration: 45% (2024)</div>
                     <div class="stat-detail">Internet access: 25% (2024)</div>
@@ -1217,7 +897,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Household Characteristics (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-household">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -1228,93 +908,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>4.7</td>
-                        <td>26.7</td>
-                        <td>44.3</td>
-                        <td>60.5</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>4.7</td>
-                        <td>25.8</td>
-                        <td>45.9</td>
-                        <td>61.8</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>4.6</td>
-                        <td>25.0</td>
-                        <td>47.5</td>
-                        <td>63.1</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>4.6</td>
-                        <td>24.2</td>
-                        <td>48.8</td>
-                        <td>64.4</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>4.6</td>
-                        <td>23.5</td>
-                        <td>50.1</td>
-                        <td>65.7</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>4.5</td>
-                        <td>22.8</td>
-                        <td>51.5</td>
-                        <td>67.0</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>4.5</td>
-                        <td>22.1</td>
-                        <td>52.8</td>
-                        <td>68.2</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>4.4</td>
-                        <td>21.5</td>
-                        <td>54.1</td>
-                        <td>69.4</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>4.4</td>
-                        <td>20.9</td>
-                        <td>55.4</td>
-                        <td>70.6</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>4.3</td>
-                        <td>20.3</td>
-                        <td>56.7</td>
-                        <td>71.8</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>4.3</td>
-                        <td>19.7</td>
-                        <td>58.0</td>
-                        <td>73.0</td>
-                    </tr>
+                    <tr><td>2020</td><td>4.7</td><td>26.7</td><td>44.3</td><td>60.5</td></tr>
+                    <tr><td>2021</td><td>4.7</td><td>25.8</td><td>45.9</td><td>61.8</td></tr>
+                    <tr><td>2022</td><td>4.6</td><td>25.0</td><td>47.5</td><td>63.1</td></tr>
+                    <tr><td>2023</td><td>4.6</td><td>24.2</td><td>48.8</td><td>64.4</td></tr>
+                    <tr><td>2024</td><td>4.6</td><td>23.5</td><td>50.1</td><td>65.7</td></tr>
+                    <tr><td>2025</td><td>4.5</td><td>22.8</td><td>51.5</td><td>67.0</td></tr>
+                    <tr><td>2026</td><td>4.5</td><td>22.1</td><td>52.8</td><td>68.2</td></tr>
+                    <tr><td>2027</td><td>4.4</td><td>21.5</td><td>54.1</td><td>69.4</td></tr>
+                    <tr><td>2028</td><td>4.4</td><td>20.9</td><td>55.4</td><td>70.6</td></tr>
+                    <tr><td>2029</td><td>4.3</td><td>20.3</td><td>56.7</td><td>71.8</td></tr>
+                    <tr><td>2030</td><td>4.3</td><td>19.7</td><td>58.0</td><td>73.0</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: World Bank, Central Statistical Agency of Ethiopia</p>
         </section>
 
         <!-- Ethnic and Linguistic Composition Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="ethnic">
             <h3 class="section-title"><i class="fas fa-globe-africa"></i> Ethnic and Linguistic Composition</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Ethnic Groups" data-value="Oromo: 35.8%">
                     <h4><i class="fas fa-users"></i> Ethnic Groups</h4>
                     <div class="stat-detail">Oromo: ~35.8%</div>
                     <div class="stat-detail">Amhara: ~24.1%</div>
@@ -1328,7 +942,7 @@
                     <div class="stat-detail">Gamo: ~1.5%</div>
                     <div class="stat-detail">Other: ~13.4%</div>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Languages" data-value="Oromo: 33.8%">
                     <h4><i class="fas fa-language"></i> Languages</h4>
                     <div class="stat-detail">Oromo: ~33.8%</div>
                     <div class="stat-detail">Amharic: ~29.3%</div>
@@ -1342,7 +956,7 @@
                     <div class="stat-detail">English: ~0.2% (official)</div>
                     <div class="stat-detail">Other: ~13.4%</div>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Religious Affiliation" data-value="Orthodox: 43.5%">
                     <h4><i class="fas fa-pray"></i> Religious Affiliation</h4>
                     <div class="stat-detail">Ethiopian Orthodox: 43.5%</div>
                     <div class="stat-detail">Muslim: 33.9%</div>
@@ -1357,24 +971,24 @@
         </section>
 
         <!-- Migration and Displacement Section -->
-        <section class="demographic-section">
+        <section class="demographic-section" id="migration">
             <h3 class="section-title"><i class="fas fa-people-carry"></i> Migration and Displacement</h3>
             <div class="data-grid">
-                <div class="data-card">
+                <div class="data-card" data-metric="Net Migration" data-value="-0.6" data-detail="per 1,000">
                     <h4><i class="fas fa-exchange-alt"></i> Net Migration</h4>
                     <div class="stat-value">-0.6</div>
                     <div class="stat-detail">Net migrants per 1,000 population (2024)</div>
                     <p class="stat-detail">Slight negative migration balance</p>
                     <p class="stat-detail">Primarily labor migration to Middle East</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Internally Displaced" data-value="3.5M" data-detail="2024">
                     <h4><i class="fas fa-hands-helping"></i> Internally Displaced</h4>
                     <div class="stat-value">3.5M</div>
                     <div class="stat-detail">Internally displaced persons (2024)</div>
                     <p class="stat-detail">Due to conflict and climate factors</p>
                     <p class="stat-detail">Significant humanitarian needs</p>
                 </div>
-                <div class="data-card">
+                <div class="data-card" data-metric="Refugee Population" data-value="800K" data-detail="2024">
                     <h4><i class="fas fa-globe"></i> Refugee Population</h4>
                     <div class="stat-value">800K</div>
                     <div class="stat-detail">Refugees hosted in Ethiopia (2024)</div>
@@ -1384,7 +998,7 @@
                 </div>
             </div>
             <h4 style="margin: 1.5rem 0 1rem;">Migration Trends (2020-2030)</h4>
-            <table class="data-table">
+            <table class="data-table" id="table-migration">
                 <thead>
                     <tr>
                         <th>Year</th>
@@ -1395,83 +1009,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2020</td>
-                        <td>-0.5</td>
-                        <td>2.1</td>
-                        <td>735</td>
-                        <td>2.3</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>-0.5</td>
-                        <td>3.8</td>
-                        <td>742</td>
-                        <td>2.4</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>-0.6</td>
-                        <td>4.2</td>
-                        <td>768</td>
-                        <td>2.5</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>-0.6</td>
-                        <td>3.9</td>
-                        <td>785</td>
-                        <td>2.6</td>
-                    </tr>
-                    <tr>
-                        <td>2024</td>
-                        <td>-0.6</td>
-                        <td>3.5</td>
-                        <td>800</td>
-                        <td>2.7</td>
-                    </tr>
-                    <tr>
-                        <td>2025</td>
-                        <td>-0.7</td>
-                        <td>3.2</td>
-                        <td>815</td>
-                        <td>2.8</td>
-                    </tr>
-                    <tr>
-                        <td>2026</td>
-                        <td>-0.7</td>
-                        <td>2.9</td>
-                        <td>830</td>
-                        <td>2.9</td>
-                    </tr>
-                    <tr>
-                        <td>2027</td>
-                        <td>-0.8</td>
-                        <td>2.7</td>
-                        <td>845</td>
-                        <td>3.0</td>
-                    </tr>
-                    <tr>
-                        <td>2028</td>
-                        <td>-0.8</td>
-                        <td>2.5</td>
-                        <td>860</td>
-                        <td>3.1</td>
-                    </tr>
-                    <tr>
-                        <td>2029</td>
-                        <td>-0.9</td>
-                        <td>2.3</td>
-                        <td>875</td>
-                        <td>3.2</td>
-                    </tr>
-                    <tr>
-                        <td>2030</td>
-                        <td>-0.9</td>
-                        <td>2.1</td>
-                        <td>890</td>
-                        <td>3.3</td>
-                    </tr>
+                    <tr><td>2020</td><td>-0.5</td><td>2.1</td><td>735</td><td>2.3</td></tr>
+                    <tr><td>2021</td><td>-0.5</td><td>3.8</td><td>742</td><td>2.4</td></tr>
+                    <tr><td>2022</td><td>-0.6</td><td>4.2</td><td>768</td><td>2.5</td></tr>
+                    <tr><td>2023</td><td>-0.6</td><td>3.9</td><td>785</td><td>2.6</td></tr>
+                    <tr><td>2024</td><td>-0.6</td><td>3.5</td><td>800</td><td>2.7</td></tr>
+                    <tr><td>2025</td><td>-0.7</td><td>3.2</td><td>815</td><td>2.8</td></tr>
+                    <tr><td>2026</td><td>-0.7</td><td>2.9</td><td>830</td><td>2.9</td></tr>
+                    <tr><td>2027</td><td>-0.8</td><td>2.7</td><td>845</td><td>3.0</td></tr>
+                    <tr><td>2028</td><td>-0.8</td><td>2.5</td><td>860</td><td>3.1</td></tr>
+                    <tr><td>2029</td><td>-0.9</td><td>2.3</td><td>875</td><td>3.2</td></tr>
+                    <tr><td>2030</td><td>-0.9</td><td>2.1</td><td>890</td><td>3.3</td></tr>
                 </tbody>
             </table>
             <p class="source-note">Source: UNHCR, IOM, Internal Displacement Monitoring Centre</p>
@@ -1497,6 +1045,7 @@
             <p>We strive to provide the most accurate and up-to-date information available.</p>
         </section>
     </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1524,6 +1073,7 @@
             </div>
         </div>
     </footer>
+
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1535,6 +1085,127 @@
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
+            }
+        });
+
+        // Show export modal
+        function showExportOptions() {
+            const modal = document.getElementById('exportModal');
+            if (window.innerWidth <= 768) {
+                modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+            } else {
+                // On desktop, you could show a dropdown or keep modal
+                modal.style.display = 'block';
+                // Auto-hide after 5 seconds on desktop for UX
+                setTimeout(() => {
+                    if (window.innerWidth > 768) {
+                        modal.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+
+        // Utility: Download file
+        function downloadFile(filename, text, mimeType = 'text/plain') {
+            const blob = new Blob([text], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 1. Export ALL tables as CSV (concatenated)
+        function exportAllTablesToCSV() {
+            let allCSV = '';
+            const tables = document.querySelectorAll('.data-table');
+            tables.forEach((table, index) => {
+                if (index > 0) allCSV += '\n\n';
+                const sectionTitle = table.closest('.demographic-section').querySelector('.section-title').innerText.trim();
+                allCSV += `# ${sectionTitle}\n`;
+                let csv = [];
+                const rows = table.querySelectorAll('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    const cols = rows[i].querySelectorAll('td, th');
+                    const row = [];
+                    for (let j = 0; j < cols.length; j++) {
+                        let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+                        if (data.includes(',') || data.includes('"')) {
+                            data = `"${data}"`;
+                        }
+                        row.push(data);
+                    }
+                    csv.push(row.join(','));
+                }
+                allCSV += csv.join('\n');
+            });
+            downloadFile('ethiopia_demographic_data_all_tables.csv', allCSV, 'text/csv');
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // 2. Export key metrics from data cards as JSON
+        function exportKeyMetricsAsJSON() {
+            const cards = document.querySelectorAll('.data-card');
+            const metrics = [];
+            cards.forEach(card => {
+                const metric = card.getAttribute('data-metric');
+                const value = card.getAttribute('data-value');
+                const detail = card.getAttribute('data-detail') || '';
+                if (metric) {
+                    metrics.push({ metric, value, detail });
+                }
+            });
+            const jsonString = JSON.stringify(metrics, null, 2);
+            downloadFile('demographic_key_metrics.json', jsonString, 'application/json');
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // 3. Export summary report as TXT
+        function exportSummaryAsText() {
+            let report = `Ethiopian Demographic Data Summary\n`;
+            report += `Generated by Finedatas - ${new Date().toLocaleDateString('en-ET', { timeZone: 'Africa/Addis_Ababa' })}\n`;
+            report += `========================================\n\n`;
+
+            // Key sections
+            const sections = [
+                { id: 'population-growth', title: 'Population Growth' },
+                { id: 'urban-rural', title: 'Urban vs Rural' },
+                { id: 'age-sex', title: 'Age & Sex Structure' },
+                { id: 'education', title: 'Education' },
+                { id: 'health', title: 'Health' },
+                { id: 'labor', title: 'Labor Force' }
+            ];
+
+            sections.forEach(sec => {
+                const section = document.getElementById(sec.id);
+                if (section) {
+                    report += `${sec.title}:\n`;
+                    section.querySelectorAll('.data-card').forEach(card => {
+                        const title = card.querySelector('h4').innerText.replace(/[\s\S]*?>/g, '').trim();
+                        const value = card.querySelector('.stat-value')?.innerText || 'N/A';
+                        const details = Array.from(card.querySelectorAll('.stat-detail'))
+                            .map(el => el.innerText)
+                            .join('; ');
+                        report += `  • ${title}: ${value} (${details})\n`;
+                    });
+                    report += '\n';
+                }
+            });
+
+            downloadFile('demographic_summary_report.txt', report);
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside (desktop)
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('exportModal');
+            if (window.innerWidth > 768 && modal.style.display === 'block') {
+                if (!e.target.closest('#exportModal') && !e.target.closest('.export-btn')) {
+                    modal.style.display = 'none';
+                }
             }
         });
     </script>
