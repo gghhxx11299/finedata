@@ -3,8 +3,8 @@
 <head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finedatas Ethiopia - Weather Data</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+    <title>Finedatas Ethiopia - Weather & Crop Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,7 +40,7 @@
         .hero p {font-size:1.2rem;max-width:800px;margin:0 auto 2rem;color:var(--text-secondary);}
         .btn {display:inline-block;background-color:var(--primary-accent);color:var(--bg-primary);padding:0.8rem 1.5rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.3s ease;border:none;cursor:pointer;}
         .btn:hover {background-color:var(--secondary-accent);color:var(--text-primary);box-shadow:0 0 10px var(--secondary-accent),0 0 20px rgba(255,123,114,0.3);transform:translateY(-2px);}
-        .weather-section, .soil-section {padding:3rem 0;}
+        .weather-section, .soil-section, .recommendation-section {padding:3rem 0;}
         .section-title {text-align:center;color:var(--primary-accent);margin-bottom:3rem;font-size:2.2rem;font-family:'Montserrat',sans-serif;font-weight:700;}
         .city-selector {display:flex;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
         .city-btn {background-color:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);padding:0.5rem 1rem;border-radius:6px;cursor:pointer;transition:all 0.3s;}
@@ -54,10 +54,23 @@
             .mobile-menu-btn{display:block;}
             .hero h2{font-size:2rem;}
             .forecast-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
-            .soil-grid {grid-template-columns: 1fr;}
+            .soil-grid, .calendar-grid {grid-template-columns: 1fr;}
+            .recommendation-container {grid-template-columns: 1fr;}
         }
-        .current-weather, .forecast, .soil-card {background-color:var(--bg-card);border-radius:12px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--border-color);}
-        .current-weather h3, .forecast h3, .soil-card h3 {color:var(--primary-accent);margin-bottom:1rem;font-family:'Montserrat',sans-serif;border-bottom:1px solid var(--border-color);padding-bottom:0.5rem;}
+        .current-weather, .forecast, .soil-card, .crop-card, .alerts-list, .calendar-grid {
+            background-color:var(--bg-card);
+            border-radius:12px;
+            padding:2rem;
+            box-shadow:var(--shadow);
+            border:1px solid var(--border-color);
+        }
+        .current-weather h3, .forecast h3, .soil-card h3, .crop-card h3, .alerts-list h3, .calendar-grid h3 {
+            color:var(--primary-accent);
+            margin-bottom:1rem;
+            font-family:'Montserrat',sans-serif;
+            border-bottom:1px solid var(--border-color);
+            padding-bottom:0.5rem;
+        }
         .weather-detail {display:flex;justify-content:space-between;margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border-color);}
         .weather-detail:last-child {border-bottom:none;}
         .weather-detail .label {color:var(--text-secondary);}
@@ -114,6 +127,90 @@
         .soil-detail .value {
             color: var(--text-primary);
         }
+
+        /* Crop Recommendation Section */
+        .recommendation-section {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .recommendation-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .crop-card h4 {
+            color: var(--primary-accent);
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        .crop-detail {
+            display: flex;
+            margin-bottom: 8px;
+        }
+
+        .crop-detail .label {
+            color: var(--text-secondary);
+            min-width: 140px;
+            font-weight: 500;
+        }
+
+        .crop-detail .value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .alerts-list .alert-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .alerts-list .alert-item:last-child {
+            border-bottom: none;
+        }
+
+        .alerts-list i {
+            color: var(--success-color);
+            font-size: 1.2rem;
+            min-width: 24px;
+            margin-top: 4px;
+        }
+
+        .seasonal-calendar {
+            margin-top: 2rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 1rem;
+        }
+
+        .calendar-item {
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .calendar-item h5 {
+            color: var(--primary-accent);
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+
+        .calendar-item .window {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body>
@@ -125,7 +222,7 @@
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="index.html" >Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
@@ -143,8 +240,8 @@
 
     <section class="hero">
         <div class="container">
-            <h2>Ethiopia Weather & Soil Data</h2>
-            <p>Access real-time weather forecasts and soil requirements for key crops to optimize your farming decisions</p>
+            <h2>Ethiopia Weather & Crop Recommendations</h2>
+            <p>Access real-time weather, soil data, and smart planting advice to maximize your harvest</p>
             <a href="#weather-data" class="btn">View Weather Data</a>
         </div>
     </section>
@@ -303,6 +400,53 @@
                     <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">High</span></div>
                     <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">K, P, Mg</span></div>
                     <div class="soil-detail"><span class="label">Notes:</span><span class="value">Acidic soils reduce scab; rotate crops</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crop Recommendation Section -->
+    <section class="recommendation-section">
+        <div class="container">
+            <h2 class="section-title">Smart Crop Recommendations</h2>
+            <p style="text-align:center; color:var(--text-secondary); margin-bottom:2rem;">
+                Personalized planting advice based on current weather, soil, and seasonal cycles in your region
+            </p>
+
+            <div class="recommendation-container">
+                <div class="current-recommendation">
+                    <h3>Recommended Crop to Plant Now</h3>
+                    <div class="crop-card" id="recommended-crop">
+                        <div class="loading">Analyzing conditions for <span id="rec-city">Addis Ababa</span>...</div>
+                    </div>
+                </div>
+
+                <div class="harvest-alerts">
+                    <h3>Upcoming Harvest Alerts</h3>
+                    <div class="alerts-list" id="harvest-alerts">
+                        <div class="alert-item">
+                            <i class="fas fa-seedling"></i>
+                            <div>
+                                <strong>Maize</strong> planted in early August will be ready to harvest in <strong>2 weeks</strong>.
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <i class="fas fa-wheat-alt"></i>
+                            <div>
+                                <strong>Teff</strong> harvest window opens next week in highland zones.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seasonal-calendar">
+                <h3>Regional Planting Calendar</h3>
+                <p style="text-align:center; color:var(--text-secondary); margin:1rem 0;">
+                    Optimal planting windows for <span id="calendar-city">Addis Ababa</span>
+                </p>
+                <div class="calendar-grid" id="planting-calendar">
+                    <!-- Dynamically populated -->
                 </div>
             </div>
         </div>
@@ -481,6 +625,30 @@
                             "wind_speed": 13.3
                         }
                     ]
+                },
+                {
+                    "location": "Jimma",
+                    "timestamp": "2025-09-17T10:33:42.428994",
+                    "current": {
+                        "temperature": 22.1,
+                        "humidity": 85,
+                        "weather": "Heavy rain",
+                        "wind_speed": 5.2,
+                        "timestamp": "2025-09-17 10:30"
+                    },
+                    "forecast": []
+                },
+                {
+                    "location": "Gambela",
+                    "timestamp": "2025-09-17T10:33:42.428994",
+                    "current": {
+                        "temperature": 26.3,
+                        "humidity": 88,
+                        "weather": "Heavy rain",
+                        "wind_speed": 4.8,
+                        "timestamp": "2025-09-17 10:30"
+                    },
+                    "forecast": []
                 }
             ]
         };
@@ -538,6 +706,119 @@
             return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         }
 
+        // Crop recommendation logic (mock for now – replace with real API later)
+        function getRecommendation(city, weatherData) {
+            const current = weatherData;
+            const today = new Date();
+            const month = today.getMonth(); // 0 = Jan, 11 = Dec
+
+            // Simplified logic based on region & season (Ethiopia has Kiremt, Belg, Bega seasons)
+            let crop = "Teff";
+            let reason = "Optimal soil moisture and temperature for teff planting.";
+            let window = "Now – 2 weeks";
+
+            if (city.includes("Jimma") || city.includes("Bonga") || city.includes("Gambela") || city.includes("Metu")) {
+                // Coffee/enset zones (southwest – high rainfall)
+                if (month >= 3 && month <= 6) {
+                    crop = "Maize";
+                    reason = "Heavy rains support maize growth in lowlands.";
+                    window = "This week";
+                } else if (month >= 9 && month <= 11) {
+                    crop = "Coffee";
+                    reason = "Dry season ideal for coffee flowering.";
+                    window = "Not planting – monitor flowering";
+                } else {
+                    crop = "Enset";
+                    reason = "Consistent moisture supports enset development.";
+                    window = "Year-round (with compost)";
+                }
+            } else if (city.includes("Mekelle") || city.includes("Adigrat") || city.includes("Semera") || city.includes("Dire Dawa")) {
+                // Dry zones – Tigray, Afar, Somali
+                crop = "Sorghum";
+                reason = "Highly drought-tolerant; suitable for current dry conditions.";
+                window = "Next 10 days";
+            } else if (month >= 6 && month <= 8) {
+                // Main rainy season (Kiremt) – highlands
+                crop = "Teff or Wheat";
+                reason = "Peak Kiremt rains – ideal for cereal planting.";
+                window = "Now – 3 weeks";
+            } else if (month >= 2 && month <= 4) {
+                // Belg season
+                crop = "Barley or Chickpea";
+                reason = "Short rains support cool-season crops.";
+                window = "Now – 2 weeks";
+            }
+
+            return { crop, reason, window };
+        }
+
+        function updateRecommendations(city, weatherData) {
+            // Update city references
+            document.getElementById('rec-city').textContent = city;
+            document.getElementById('calendar-city').textContent = city;
+
+            // Get recommendation
+            const rec = getRecommendation(city, weatherData);
+
+            // Render crop card
+            const cropCard = document.getElementById('recommended-crop');
+            cropCard.innerHTML = `
+                <h4>${rec.crop}</h4>
+                <div class="crop-detail"><span class="label">Why:</span><span class="value">${rec.reason}</span></div>
+                <div class="crop-detail"><span class="label">Planting Window:</span><span class="value">${rec.window}</span></div>
+                <div class="crop-detail"><span class="label">Soil Match:</span><span class="value">✅ High</span></div>
+            `;
+
+            // Render calendar (static for demo – could be dynamic)
+            const calendarGrid = document.getElementById('planting-calendar');
+            if (city.includes("Jimma") || city.includes("Gambela")) {
+                calendarGrid.innerHTML = `
+                    <div class="calendar-item">
+                        <h5>Maize</h5>
+                        <div class="window">Apr – Jul</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Coffee</h5>
+                        <div class="window">Sep – Nov</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Enset</h5>
+                        <div class="window">Year-round</div>
+                    </div>
+                `;
+            } else if (city.includes("Mekelle") || city.includes("Semera")) {
+                calendarGrid.innerHTML = `
+                    <div class="calendar-item">
+                        <h5>Sorghum</h5>
+                        <div class="window">May – Aug</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Sesame</h5>
+                        <div class="window">Jun – Sep</div>
+                    </div>
+                `;
+            } else {
+                calendarGrid.innerHTML = `
+                    <div class="calendar-item">
+                        <h5>Maize</h5>
+                        <div class="window">Jun – Sep</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Teff</h5>
+                        <div class="window">Jul – Oct</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Wheat</h5>
+                        <div class="window">Jul – Nov</div>
+                    </div>
+                    <div class="calendar-item">
+                        <h5>Barley</h5>
+                        <div class="window">Mar – May</div>
+                    </div>
+                `;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             const cityButtons = document.querySelectorAll('.city-btn');
             const data = await fetchWeatherData();
@@ -548,10 +829,19 @@
                     btn.classList.add('active');
                     const city = btn.getAttribute('data-city');
                     updateWeatherDisplay(data, city);
+                    const cityData = data.weather_data.find(item => item.location === city);
+                    if (cityData) {
+                        updateRecommendations(city, cityData.current);
+                    }
                 });
             });
 
+            // Initial load
             updateWeatherDisplay(data, 'Addis Ababa');
+            const initialCityData = data.weather_data.find(item => item.location === 'Addis Ababa');
+            if (initialCityData) {
+                updateRecommendations('Addis Ababa', initialCityData.current);
+            }
 
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.nav-links').classList.toggle('active');
