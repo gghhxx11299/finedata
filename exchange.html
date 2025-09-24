@@ -480,14 +480,14 @@
             <div class="converter-form">
                 <div class="form-group">
                     <label for="amount">Amount</label>
-                    <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+                    <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01" value="100">
                 </div>
                 
                 <div class="form-group">
                     <label for="fromCurrency">From</label>
                     <select id="fromCurrency">
                         <option value="ETB">ETB - Ethiopian Birr</option>
-                        <option value="USD">USD - US Dollar</option>
+                        <option value="USD" selected>USD - US Dollar</option>
                         <option value="EUR">EUR - Euro</option>
                         <option value="GBP">GBP - British Pound</option>
                         <option value="JPY">JPY - Japanese Yen</option>
@@ -497,6 +497,8 @@
                         <option value="CHF">CHF - Swiss Franc</option>
                         <option value="KWD">KWD - Kuwaiti Dinar</option>
                         <option value="SAR">SAR - Saudi Riyal</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="ZAR">ZAR - South African Rand</option>
                     </select>
                 </div>
                 
@@ -507,8 +509,8 @@
                 <div class="form-group">
                     <label for="toCurrency">To</label>
                     <select id="toCurrency">
-                        <option value="USD">USD - US Dollar</option>
                         <option value="ETB" selected>ETB - Ethiopian Birr</option>
+                        <option value="USD">USD - US Dollar</option>
                         <option value="EUR">EUR - Euro</option>
                         <option value="GBP">GBP - British Pound</option>
                         <option value="JPY">JPY - Japanese Yen</option>
@@ -518,6 +520,8 @@
                         <option value="CHF">CHF - Swiss Franc</option>
                         <option value="KWD">KWD - Kuwaiti Dinar</option>
                         <option value="SAR">SAR - Saudi Riyal</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="ZAR">ZAR - South African Rand</option>
                     </select>
                 </div>
                 
@@ -660,6 +664,37 @@
                             <td>196.344</td>
                             <td>195.372</td>
                         </tr>
+                        <!-- Added more currencies -->
+                        <tr>
+                            <td class="currency-code">INDIAN RUPEE - INR</td>
+                            <td>1.6297</td>
+                            <td>1.646</td>
+                            <td>1.6379</td>
+                        </tr>
+                        <tr>
+                            <td class="currency-code">SINGAPORE DOLLAR - SGD</td>
+                            <td>108.25</td>
+                            <td>109.33</td>
+                            <td>108.79</td>
+                        </tr>
+                        <tr>
+                            <td class="currency-code">MALAYSIAN RINGGIT - MYR</td>
+                            <td>31.25</td>
+                            <td>31.56</td>
+                            <td>31.41</td>
+                        </tr>
+                        <tr>
+                            <td class="currency-code">THAI BAHT - THB</td>
+                            <td>4.05</td>
+                            <td>4.09</td>
+                            <td>4.07</td>
+                        </tr>
+                        <tr>
+                            <td class="currency-code">TURKISH LIRA - TRY</td>
+                            <td>4.85</td>
+                            <td>4.90</td>
+                            <td>4.88</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -687,6 +722,16 @@
                 <div class="rate-value">20.2661</div>
                 <div class="rate-change positive">+0.32%</div>
             </div>
+            <div class="rate-card">
+                <h3>JPY/ETB</h3>
+                <div class="rate-value">0.9788</div>
+                <div class="rate-change positive">+0.15%</div>
+            </div>
+            <div class="rate-card">
+                <h3>INR/ETB</h3>
+                <div class="rate-value">1.6379</div>
+                <div class="rate-change negative">-0.08%</div>
+            </div>
         </section>
 
         <!-- Charts Section -->
@@ -698,6 +743,70 @@
             <div class="chart-container">
                 <h3>ETB Performance Trend (Last 30 Days)</h3>
                 <canvas id="trendChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Historical Data Section -->
+        <section class="exchange-rates">
+            <h3 class="section-title" style="color: var(--primary-accent); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+                <i class="fas fa-history" style="margin-right: 0.5rem; color: var(--secondary-accent);"></i> Historical Exchange Rates (USD/ETB)
+            </h3>
+            <div class="rates-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Buying Rate</th>
+                            <th>Selling Rate</th>
+                            <th>Mid-Rate</th>
+                            <th>Change (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-09-17</td>
+                            <td>143.617</td>
+                            <td>143.6171</td>
+                            <td>143.6171</td>
+                            <td class="positive">+0.25%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-10</td>
+                            <td>143.258</td>
+                            <td>143.2581</td>
+                            <td>143.2581</td>
+                            <td class="positive">+0.18%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-03</td>
+                            <td>142.999</td>
+                            <td>142.9991</td>
+                            <td>142.9991</td>
+                            <td class="negative">-0.05%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-27</td>
+                            <td>143.071</td>
+                            <td>143.0711</td>
+                            <td>143.0711</td>
+                            <td class="positive">+0.12%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-20</td>
+                            <td>142.899</td>
+                            <td>142.8991</td>
+                            <td>142.8991</td>
+                            <td class="positive">+0.21%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-13</td>
+                            <td>142.599</td>
+                            <td>142.5991</td>
+                            <td>142.5991</td>
+                            <td class="negative">-0.10%</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
     </div>
@@ -742,7 +851,13 @@
             "CAD": 104.1454,
             "CHF": 180.9164,
             "KWD": 472.4087,
-            "SAR": 38.4709
+            "SAR": 38.4709,
+            "INR": 1.6379,
+            "ZAR": 8.2172,
+            "SGD": 108.79,
+            "MYR": 31.41,
+            "THB": 4.07,
+            "TRY": 4.88
         };
 
         // DOM Elements
@@ -787,10 +902,10 @@
         const majorCurrenciesChart = new Chart(majorCurrenciesCtx, {
             type: 'bar',
             data: {
-                labels: ['USD', 'EUR', 'GBP', 'CNY', 'JPY', 'CAD'],
+                labels: ['USD', 'EUR', 'GBP', 'CNY', 'JPY', 'CAD', 'INR', 'ZAR'],
                 datasets: [{
                     label: 'Buying Rate (ETB)',
-                    data: [143.617, 168.0319, 194.4, 20.1653, 0.9739, 103.6272],
+                    data: [143.617, 168.0319, 194.4, 20.1653, 0.9739, 103.6272, 1.6297, 8.1763],
                     backgroundColor: '#58A6FF',
                     borderColor: '#0D1117',
                     borderWidth: 1
@@ -798,12 +913,20 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: false,
                         title: {
                             display: true,
                             text: 'Ethiopian Birr (ETB)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#C9D1D9'
                         }
                     }
                 }
@@ -818,13 +941,13 @@
                 labels: ['Aug 13', 'Aug 20', 'Aug 27', 'Sep 3', 'Sep 10', 'Today'],
                 datasets: [{
                     label: 'USD/ETB',
-                    data: [142.1, 142.5, 142.8, 143.0, 143.3, 143.6],
+                    data: [142.599, 142.899, 143.071, 142.999, 143.258, 143.617],
                     borderColor: '#58A6FF',
                     tension: 0.3,
                     fill: false
                 }, {
                     label: 'EUR/ETB',
-                    data: [167.2, 167.5, 167.9, 168.2, 168.5, 168.9],
+                    data: [167.5, 167.9, 168.2, 168.0, 168.5, 168.872],
                     borderColor: '#FF7B72',
                     tension: 0.3,
                     fill: false
@@ -832,12 +955,28 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: false,
                         title: {
                             display: true,
                             text: 'Ethiopian Birr (ETB)'
+                        },
+                        ticks: {
+                            color: '#C9D1D9'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#C9D1D9'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#C9D1D9'
                         }
                     }
                 }
