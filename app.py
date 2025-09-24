@@ -10,6 +10,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
+from googletrans import Translator
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +18,9 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
+
+# Initialize Google Translate
+translator = Translator()
 
 # ======================
 # CACHING
@@ -140,7 +144,7 @@ def get_planting_seasons(location: str) -> str:
     return f"{base} {belg} {kiremt}."
 
 # ======================
-# WEATHER
+# WEATHER (Optional - only if weather_collector module exists)
 # ======================
 
 try:
@@ -149,8 +153,6 @@ try:
     weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY) if WEATHER_API_KEY else None
     if weather_collector:
         logger.info("Weather collector initialized successfully")
-    else:
-        logger.warning("Weather API key not found - weather features disabled")
 except ImportError:
     logger.warning("weather_collector module not available")
     weather_collector = None
@@ -191,13 +193,23 @@ def get_weather_data(location: str) -> Optional[str]:
     return None
 
 # ======================
-# TRANSLATION (LibreTranslate with fallback)
+# TRANSLATION - USING GOOGLE TRANSLATE AS REQUIRED
 # ======================
 
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
+# Google Translate language codes mapping
+GOOGLE_LANG_MAP = {
+    "am": "am",    # Amharic
+    "om": "om",    # Oromo
+    "fr": "fr",    # French
+    "es": "es",    # Spanish
+    "ar": "ar",    # Arabic
+    "en": "en"     # English
+}
+
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate text from English to target language."""
+    """Translate text from English to target language using Google Translate."""
     if target_lang == "en" or not text:
         return text
     
@@ -205,29 +217,36 @@ def translate_text(text: str, target_lang: str) -> str:
         logger.warning(f"Unsupported target language: {target_lang}")
         return text
     
+    google_lang = GOOGLE_LANG_MAP.get(target_lang, "en")
+    
     try:
-        resp = requests.post(
-            "https://libretranslate.de/translate",
-            json={
-                "q": text, 
-                "source": "en", 
-                "target": target_lang
-            },
-            timeout=10
-        )
-        if resp.status_code == 200:
-            data = resp.json()
-            if isinstance(data, dict):
-                return data.get("translatedText", text)
-        else:
-            logger.warning(f"Translation API returned status {resp.status_code}")
+        # Retry logic for Google Translate (it can be flaky)
+        for attempt in range(3):
+            try:
+                translation = translator.translate(text, src='en', dest=google_lang)
+                if translation and translation.text:
+                    return translation.text
+                break
+            except Exception as e:
+                if attempt == 2:  # Last attempt
+                    logger.error(f"Google Translate failed after 3 attempts: {e}")
+                    raise
+                time.sleep(1)  # Wait before retry
+                
+    except AttributeError as e:
+        # Handle common googletrans attribute errors
+        logger.warning(f"Google Translate attribute error: {e}")
+        # Fallback: return original text
+        return text
     except Exception as e:
-        logger.warning(f"Translation to {target_lang} failed: {e}")
+        logger.error(f"Google Translate error for {target_lang}: {e}")
+        # Fallback: return original text
+        return text
     
     return text
 
 def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
-    """Detect language and translate to English if needed."""
+    """Detect language and translate to English if needed using Google Translate."""
     if not text or not text.strip():
         return "", "en"
     
@@ -235,53 +254,49 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
     if len(text.split()) <= 3 or all(ord(c) < 128 for c in text):
         return text, "en"
     
+    detected_lang = "en"
+    
     try:
-        # Detect language
-        resp = requests.post(
-            "https://libretranslate.de/detect",
-            json={"q": text[:100]},  # Limit detection text length
-            timeout=5
-        )
-        
-        detected_lang = "en"
-        if resp.status_code == 200:
-            data = resp.json()
-            if isinstance(data, list) and len(data) > 0:
-                detected_lang = data[0].get("language", "en")
-        
-        # Translate to English if not already English
-        if detected_lang != "en" and detected_lang in SUPPORTED_LANGUAGES:
-            trans_resp = requests.post(
-                "https://libretranslate.de/translate",
-                json={
-                    "q": text, 
-                    "source": detected_lang, 
-                    "target": "en"
-                },
-                timeout=8
-            )
-            if trans_resp.status_code == 200:
-                trans_data = trans_resp.json()
-                if isinstance(trans_data, dict):
-                    translated_text = trans_data.get("translatedText", text)
-                    return translated_text, detected_lang
-        
-        return text, detected_lang
-        
+        # Detect language with retry logic
+        for attempt in range(3):
+            try:
+                detection = translator.detect(text)
+                if detection and detection.lang:
+                    detected_lang = detection.lang
+                    # Map to our supported language codes
+                    if detected_lang in GOOGLE_LANG_MAP.values():
+                        # Reverse lookup to get our code
+                        for our_code, google_code in GOOGLE_LANG_MAP.items():
+                            if google_code == detected_lang:
+                                detected_lang = our_code
+                                break
+                    
+                    # Only translate if it's not English
+                    if detected_lang != "en" and detected_lang in SUPPORTED_LANGUAGES:
+                        google_src_lang = GOOGLE_LANG_MAP.get(detected_lang, detected_lang)
+                        translation = translator.translate(text, src=google_src_lang, dest='en')
+                        if translation and translation.text:
+                            return translation.text, detected_lang
+                    break
+            except Exception as e:
+                if attempt == 2:
+                    logger.error(f"Language detection failed after 3 attempts: {e}")
+                time.sleep(1)
+                
     except Exception as e:
-        logger.warning(f"Translation detection error: {e}")
-        return text, "en"
+        logger.warning(f"Language detection and translation failed: {e}")
+    
+    return text, detected_lang
 
 # ======================
-# AI RESPONSE - USING WORKING MODELS
+# AI RESPONSE
 # ======================
 
 # Available free models on OpenRouter
 AVAILABLE_MODELS = [
-    "google/gemma-2-2b-it:free",  # Free and reliable
-    "microsoft/phi-3-medium-4k-instruct:free",  # Free alternative
-    "huggingfaceh4/zephyr-7b-beta:free",  # Another free option
-    "meta-llama/llama-3-8b-instruct",  # Paid but widely available (remove :free)
+    "google/gemma-2-2b-it:free",
+    "microsoft/phi-3-medium-4k-instruct:free", 
+    "huggingfaceh4/zephyr-7b-beta:free",
 ]
 
 def is_in_scope(question: str) -> bool:
@@ -294,7 +309,7 @@ def is_in_scope(question: str) -> bool:
         "ethiopia", "addis", "jimma", "hawassa", "bahir dar", "mekelle", 
         "weather", "crop", "plant", "agriculture", "farm", "gdp", "inflation", 
         "population", "exchange", "currency", "teff", "kiremt", "belg", 
-        "rain", "season", "economy", "demographic", "africa"
+        "rain", "season", "economy", "demographic", "africa", "ethiopian"
     ]
     return any(kw in q for kw in keywords)
 
@@ -308,15 +323,13 @@ def try_ai_models(question: str, context: str) -> str:
         try:
             logger.info(f"Trying model: {model}")
             
-            # Prepare headers
             headers = {
                 "Authorization": f"Bearer {openrouter_key}",
-                "HTTP-Referer": "https://finedata.onrender.com",
+                "HTTP-Referer": "https://finedata.onrender.com", 
                 "X-Title": "Finedata Ethiopia AI",
                 "Content-Type": "application/json"
             }
             
-            # Prepare payload
             payload = {
                 "model": model,
                 "messages": [{"role": "user", "content": context}],
@@ -324,10 +337,6 @@ def try_ai_models(question: str, context: str) -> str:
                 "max_tokens": 300,
                 "top_p": 0.9
             }
-            
-            # Remove :free from the model name if it's a paid model
-            if model == "meta-llama/llama-3-8b-instruct" and ":free" in model:
-                payload["model"] = "meta-llama/llama-3-8b-instruct"
             
             resp = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
@@ -341,36 +350,38 @@ def try_ai_models(question: str, context: str) -> str:
                 answer = response_data["choices"][0]["message"]["content"].strip()
                 cleaned_answer = answer.split("Question:")[0].split("User Question:")[0].strip()
                 
-                if cleaned_answer and len(cleaned_answer) > 10:  # Valid response
+                if cleaned_answer and len(cleaned_answer) > 10:
                     logger.info(f"Success with model: {model}")
                     return cleaned_answer
             
             elif resp.status_code == 404:
                 logger.warning(f"Model not available: {model}")
-                continue  # Try next model
+                continue
             else:
                 logger.warning(f"Model {model} returned status {resp.status_code}")
                 
         except Exception as e:
             logger.warning(f"Model {model} failed: {e}")
-            continue  # Try next model
+            continue
     
     return "I'm unable to generate a response at the moment. Please try again later."
 
 def generate_ai_response(question: str) -> str:
-    """Generate AI response using OpenRouter API with fallback models."""
+    """Generate AI response using OpenRouter API."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
-        logger.error("OPENROUTER_API_KEY is missing in environment!")
-        return "AI assistant is not configured. Please add your OpenRouter API key to the environment variables."
+        return "AI assistant is not configured. Please add your OpenRouter API key."
 
     if not is_in_scope(question):
-        return (
-            "I specialize in Ethiopia-related questions about economy, agriculture, "
-            "weather, and demographics. Please ask something about Ethiopia!"
-        )
+        return "I specialize in Ethiopia-related questions about economy, agriculture, weather, and demographics."
 
-    # Build comprehensive context
+    # Include weather data if available and relevant
+    weather_info = ""
+    if "weather" in question.lower() or "rain" in question.lower():
+        weather_data = get_weather_data("Addis Ababa")  # Default to capital
+        if weather_data:
+            weather_info = f"\nWEATHER DATA:\n- {weather_data}"
+
     context = f"""You are Finedata AI, an expert assistant for Ethiopia. Use ONLY the verified data below:
 
 ECONOMIC DATA:
@@ -384,12 +395,13 @@ DEMOGRAPHIC DATA:
 AGRICULTURAL INFORMATION:
 - Planting seasons: {get_planting_seasons("Ethiopia")}
 - Common crops: {get_agricultural_data("Ethiopia")}
+{weather_info}
 
 RULES:
-1. Answer concisely in 1-3 sentences maximum
+1. Answer concisely in 1-3 sentences
 2. Use only the data provided above
-3. If specific data is not available, say "I don't have that specific data"
-4. Keep answers factual and focused on Ethiopia
+3. If data is not available, say "I don't have that specific data"
+4. Keep answers factual and Ethiopia-focused
 
 Question: {question}
 
@@ -453,55 +465,29 @@ def health_check():
             "translation": "available",
             "ai": "available" if os.getenv("OPENROUTER_API_KEY") else "disabled",
             "weather": "available" if weather_collector else "disabled"
-        }
+        },
+        "supported_languages": list(SUPPORTED_LANGUAGES)
     })
 
-@app.route('/models', methods=['GET'])
-def list_models():
-    """Endpoint to check available AI models."""
-    return jsonify({
-        "available_models": AVAILABLE_MODELS,
-        "current_preference": AVAILABLE_MODELS[0] if AVAILABLE_MODELS else "none"
-    })
+@app.route('/')
+def home():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/ai-chat.html')
 def ai_chat_page():
-    """Serve the AI chat interface."""
     return send_from_directory('.', 'ai-chat.html')
 
 @app.route('/<path:filename>')
 def static_files(filename):
-    """Serve static files."""
     if '..' in filename or filename.startswith('/'):
         return "Invalid path", 400
     return send_from_directory('.', filename)
 
-@app.route('/')
-def home():
-    """Serve the main page."""
-    return send_from_directory('.', 'index.html')
-
-# Error handlers
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Endpoint not found"}), 404
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({"error": "Internal server error"}), 500
-
 if __name__ == '__main__':
-    # Check for required API key
-    if not os.getenv("OPENROUTER_API_KEY"):
-        logger.warning("OPENROUTER_API_KEY not set - AI features will be disabled")
-    else:
-        logger.info("OpenRouter API key found - AI features enabled")
-    
-    # Start the application
     port = int(os.environ.get("PORT", 5000))
     host = os.environ.get("HOST", "0.0.0.0")
     
     logger.info(f"Starting Finedata Ethiopia AI server on {host}:{port}")
-    logger.info(f"Available AI models: {AVAILABLE_MODELS}")
+    logger.info(f"Supported languages: {SUPPORTED_LANGUAGES}")
     
     app.run(debug=False, host=host, port=port)
