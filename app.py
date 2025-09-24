@@ -41,7 +41,6 @@ def get_exchange_rates():
 def get_inflation_rate():
     """Get Ethiopia's latest inflation rate from World Bank"""
     try:
-        # World Bank: FP.CPI.TOTL.ZG = Inflation, consumer prices (annual %)
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/FP.CPI.TOTL.ZG?format=json&per_page=1",
             timeout=8
@@ -57,7 +56,6 @@ def get_inflation_rate():
 def get_gdp_per_capita():
     """Get Ethiopia's GDP per capita"""
     try:
-        # World Bank: NY.GDP.PCAP.CD = GDP per capita (current US$)
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/NY.GDP.PCAP.CD?format=json&per_page=1",
             timeout=8
@@ -74,7 +72,6 @@ def get_gdp_per_capita():
 def get_population():
     """Get Ethiopia's population"""
     try:
-        # World Bank: SP.POP.TOTL = Population, total
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/SP.POP.TOTL?format=json&per_page=1",
             timeout=8
@@ -90,12 +87,11 @@ def get_population():
 
 def get_agricultural_data(location):
     """Get crop data for Ethiopian regions (simplified)"""
-    # In real app, connect to FAO API or Ethiopian agricultural DB
     crops = {
         "Jimma": "Coffee, maize, teff",
         "Arba Minch": "Bananas, cotton, sorghum",
         "Hawassa": "Vegetables, fruits, dairy",
-        "Bahir Dar": "Tefer, maize, pulses",
+        "Bahir Dar": "Teff, maize, pulses",
         "Mekelle": "Wheat, barley, teff"
     }
     return crops.get(location, "Coffee, teff, maize (national staples)")
@@ -133,7 +129,7 @@ def detect_question_type(question: str):
         return "weather"  # default
 
 def extract_location_with_ai(question: str):
-    """Extract Ethiopian city (same as before)"""
+    """Extract Ethiopian city"""
     if not HF_API_TOKEN:
         for loc in weather_collector.locations:
             if loc.lower() in question.lower():
@@ -176,7 +172,7 @@ def translate_text(text: str, target_lang: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not 
+    if not data:
         return jsonify({"error": "Invalid JSON"}), 400
         
     user_question = data.get("question", "").strip()
@@ -215,7 +211,7 @@ def ask_ai():
     else:  # weather
         coords = weather_collector.get_location_coords(location)[1]
         live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_
+        if live_data and 'current' in live_data:
             current = live_data['current']
             today = live_data['forecast']['forecastday'][0]['day']
             answer_en = (
