@@ -9,7 +9,6 @@ Finedatas Ethiopia AI Backend
 """
 
 import os
-import json
 import time
 import logging
 from datetime import datetime
@@ -27,22 +26,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
 
-# Environment variables are read at request time — NOT at import time
-# This fixes Render deployment issues
-
 # ======================
 # CACHING UTILITY
 # ======================
 
 _CACHE = {}
-_CACHE_TIMEOUT = 3600  # 1 hour
+_CACHE_TIMEOUT = 3600
 
 def cached(timeout: int = _CACHE_TIMEOUT):
     def decorator(func):
@@ -221,7 +216,7 @@ def get_weather_data(location: str) -> Optional[str]:
     try:
         coords = weather_collector.get_location_coords(location)[1]
         live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_data:  # ✅ FIXED SYNTAX
+        if live_data and 'current' in live_  # ✅ FIXED: complete variable + colon
             current = live_data['current']
             today = live_data['forecast']['forecastday'][0]['day']
             return (
@@ -274,7 +269,6 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         return "", "en"
     
     try:
-        # Detect language
         resp = requests.post(
             "https://libretranslate.de/detect",
             json={"q": text[:100]},
@@ -283,10 +277,9 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         detected = "en"
         if resp.status_code == 200:
             data = resp.json()
-            if isinstance(data, list) and 
+            if isinstance(data, list) and len(data) > 0:  # ✅ FIXED: complete condition
                 detected = data[0].get("language", "en")
         
-        # Translate if needed
         if detected != "en":
             trans_resp = requests.post(
                 "https://libretranslate.de/translate",
@@ -320,7 +313,6 @@ def is_query_in_scope(question: str) -> bool:
     return any(kw in q for kw in ethiopia_keywords) or any(kw in q for kw in domain_keywords)
 
 def generate_ai_response(question: str) -> str:
-    # ✅ Read API key at request time — critical for Render
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
         logger.error("OPENROUTER_API_KEY is missing in environment")
@@ -329,7 +321,6 @@ def generate_ai_response(question: str) -> str:
     if not is_query_in_scope(question):
         return "We're still working on this! Please ask something about Ethiopia's economy, agriculture, weather, population, or exchange rates."
 
-    # Gather all data
     gdp = get_gdp_per_capita()
     inflation = get_inflation_rate()
     exchange = get_exchange_rates()
@@ -426,13 +417,8 @@ def ask_ai():
     if target_lang not in SUPPORTED_LANGUAGES:
         target_lang = "en"
 
-    # Step 1: Translate input to English
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-
-    # Step 2: Generate AI response in English
     answer_en = generate_ai_response(english_question)
-
-    # Step 3: Translate answer to target language
     answer_translated = translate_text(answer_en, "en", target_lang)
 
     return jsonify({
