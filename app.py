@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 import os
-import re
 from weather_collector import EthiopianWeatherForecast
 from dotenv import load_dotenv
 
@@ -14,19 +13,15 @@ CORS(app)
 
 # Initialize services
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-HF_API_TOKEN = os.getenv("HF_API_TOKEN")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY)
 
-# ===== DATA FETCHING FUNCTIONS =====
+# ===== DATA FETCHING FUNCTIONS (unchanged) =====
 
 def get_exchange_rates():
-    """Get real ETB exchange rates"""
     try:
-        response = requests.get(
-            "https://api.exchangerate-api.com/v4/latest/ETB",
-            timeout=8
-        )
+        response = requests.get("https://api.exchangerate-api.com/v4/latest/ETB", timeout=8)
         data = response.json()
         rates = data.get("rates", {})
         return {
@@ -39,7 +34,6 @@ def get_exchange_rates():
         return {"USD": "N/A", "EUR": "N/A", "GBP": "N/A"}
 
 def get_inflation_rate():
-    """Get Ethiopia's latest inflation rate from World Bank"""
     try:
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/FP.CPI.TOTL.ZG?format=json&per_page=1",
@@ -54,7 +48,6 @@ def get_inflation_rate():
         return "N/A"
 
 def get_gdp_per_capita():
-    """Get Ethiopia's GDP per capita"""
     try:
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/NY.GDP.PCAP.CD?format=json&per_page=1",
@@ -70,7 +63,6 @@ def get_gdp_per_capita():
         return "N/A"
 
 def get_population():
-    """Get Ethiopia's population"""
     try:
         response = requests.get(
             "https://api.worldbank.org/v2/country/ETH/indicator/SP.POP.TOTL?format=json&per_page=1",
@@ -86,7 +78,6 @@ def get_population():
         return "N/A"
 
 def get_agricultural_data(location):
-    """Get crop data for Ethiopian regions (simplified)"""
     crops = {
         "Jimma": "Coffee, maize, teff",
         "Arba Minch": "Bananas, cotton, sorghum",
@@ -96,7 +87,19 @@ def get_agricultural_data(location):
     }
     return crops.get(location, "Coffee, teff, maize (national staples)")
 
-# ===== AI UNDERSTANDING =====
+def get_weather_data(location):
+    coords = weather_collector.get_location_coords(location)[1]
+    live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
+    if live_data and 'current' in live_
+        current = live_data['current']
+        today = live_data['forecast']['forecastday'][0]['day']
+        return (
+            f"Live weather in {location}: {current['temp_c']}°C, {current['condition']['text']}. "
+            f"Today's high: {today['maxtemp_c']}°C, low: {today['mintemp_c']}°C."
+        )
+    return None
+
+# ===== TRANSLATION (unchanged) =====
 
 def translate_to_english(text: str) -> str:
     if not text.strip():
@@ -111,49 +114,6 @@ def translate_to_english(text: str) -> str:
     except:
         return text
 
-def detect_question_type(question: str):
-    """Detect what kind of data the user wants"""
-    q = question.lower()
-    
-    if any(word in q for word in ["exchange", "rate", "dollar", "usd", "eur", "currency"]):
-        return "exchange"
-    elif any(word in q for word in ["inflation", "price", "cpi"]):
-        return "inflation"
-    elif any(word in q for word in ["gdp", "economy", "economic", "status"]):
-        return "economy"
-    elif any(word in q for word in ["population", "people", "demographic"]):
-        return "population"
-    elif any(word in q for word in ["crop", "agri", "farm", "coffee", "teff"]):
-        return "agriculture"
-    else:
-        return "weather"  # default
-
-def extract_location_with_ai(question: str):
-    """Extract Ethiopian city"""
-    if not HF_API_TOKEN:
-        for loc in weather_collector.locations:
-            if loc.lower() in question.lower():
-                return loc
-        return "Addis Ababa"
-    
-    try:
-        prompt = f"Extract only the Ethiopian city name. If none, return 'Ethiopia'. Question: {question}"
-        response = requests.post(
-            "https://api-inference.huggingface.co/models/google/flan-t5-large",
-            headers={"Authorization": f"Bearer {HF_API_TOKEN}"},
-            json={"inputs": prompt, "parameters": {"max_new_tokens": 20}},
-            timeout=12
-        )
-        result = response.json()
-        text = result[0].get("generated_text", "") if isinstance(result, list) else result.get("generated_text", "Ethiopia")
-        city = text.strip().split("\n")[0].split(".")[0].split(":")[-1].strip()
-        return city if city and city != "Ethiopia" else "Addis Ababa"
-    except:
-        for loc in weather_collector.locations:
-            if loc.lower() in question.lower():
-                return loc
-        return "Addis Ababa"
-
 def translate_text(text: str, target_lang: str) -> str:
     if target_lang == "en" or not text:
         return text
@@ -167,74 +127,101 @@ def translate_text(text: str, target_lang: str) -> str:
     except:
         return text
 
+# ===== DYNAMIC AI WITH OPENROUTER =====
+
+def ask_ai_with_openrouter(question: str):
+    if not OPENROUTER_API_KEY:
+        return "AI is not configured. Please set OPENROUTER_API_KEY."
+
+    # Pre-fetch all relevant data
+    exchange = get_exchange_rates()
+    inflation = get_inflation_rate()
+    gdp = get_gdp_per_capita()
+    population = get_population()
+
+    context_prompt = f"""
+You are an expert AI assistant for Ethiopia. Use ONLY the following real-time data to answer the user's question accurately and concisely.
+
+Available Data:
+- Exchange Rates (1 foreign = X ETB): {exchange}
+- Inflation Rate: {inflation}
+- GDP per Capita: {gdp}
+- Population: {population}
+- Agricultural regions: Jimma, Arba Minch, Hawassa, Bahir Dar, Mekelle
+- Weather: available for any Ethiopian city
+
+Rules:
+1. If the question mentions a city and weather/crops, assume it's about that city.
+2. If no city is given for weather, use "Addis Ababa".
+3. Do NOT invent data. If unsure, say "I don't have that information."
+4. Keep answers short and factual.
+5. Respond in plain English without markdown.
+
+User Question: {question}
+Answer:
+"""
+
+    try:
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "HTTP-Referer": "https://yourwebsite.com",  # ← REPLACE with your actual site URL
+                "X-Title": "Ethiopia AI Assistant"
+            },
+            json={
+                "model": "meta-llama/llama-3-8b-instruct:free",
+                "messages": [{"role": "user", "content": context_prompt}],
+                "temperature": 0.3,
+                "max_tokens": 300
+            },
+            timeout=20
+        )
+        if response.status_code == 200:
+            data = response.json()
+            answer = data["choices"][0]["message"]["content"].strip()
+            # Clean up common repetition
+            return answer.split("User Question")[0].strip()
+        else:
+            print(f"OpenRouter error {response.status_code}: {response.text}")
+            return "I'm having trouble processing your request right now."
+    except Exception as e:
+        print(f"OpenRouter exception: {e}")
+        return "AI service is temporarily unavailable."
+
 # ===== MAIN ENDPOINT =====
 
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
-        
+
     user_question = data.get("question", "").strip()
     target_lang = data.get("language", "en")
 
     if not user_question:
         return jsonify({"error": "Please ask a question."}), 400
 
-    # Translate input to English
-    english_question = translate_to_english(user_question)
-    question_type = detect_question_type(english_question)
-    location = extract_location_with_ai(english_question) if question_type in ["weather", "agriculture"] else "Ethiopia"
+    # Translate to English if needed
+    english_question = translate_to_english(user_question) if target_lang != "en" else user_question
 
-    # Fetch data based on question type
-    if question_type == "exchange":
-        rates = get_exchange_rates()
-        answer_en = f"Current exchange rates: 1 USD = {rates['USD']} ETB, 1 EUR = {rates['EUR']} ETB, 1 GBP = {rates['GBP']} ETB."
-        
-    elif question_type == "inflation":
-        inflation = get_inflation_rate()
-        answer_en = f"Ethiopia's latest annual inflation rate is {inflation}."
-        
-    elif question_type == "economy":
-        gdp = get_gdp_per_capita()
-        inflation = get_inflation_rate()
-        answer_en = f"Ethiopia's economic status: GDP per capita is {gdp}. Annual inflation is {inflation}."
-        
-    elif question_type == "population":
-        pop = get_population()
-        answer_en = f"Ethiopia's population is approximately {pop}."
-        
-    elif question_type == "agriculture":
-        crops = get_agricultural_data(location)
-        answer_en = f"Main crops in {location}: {crops}."
-        
-    else:  # weather
-        coords = weather_collector.get_location_coords(location)[1]
-        live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_data:
-            current = live_data['current']
-            today = live_data['forecast']['forecastday'][0]['day']
-            answer_en = (
-                f"Live weather in {location}: {current['temp_c']}°C, {current['condition']['text']}. "
-                f"Today's high: {today['maxtemp_c']}°C, low: {today['mintemp_c']}°C."
-            )
-        else:
-            answer_en = f"Sorry, couldn't fetch weather for {location}."
+    # Use OpenRouter for dynamic understanding
+    answer_en = ask_ai_with_openrouter(english_question)
 
-    # Translate response
-    answer_translated = translate_text(answer_en, target_lang)
+    # Translate back if needed
+    answer_translated = translate_text(answer_en, target_lang) if target_lang != "en" else answer_en
 
     return jsonify({
         "question_original": user_question,
         "question_english": english_question,
-        "question_type": question_type,
-        "location": location,
         "answer_english": answer_en,
         "answer_translated": answer_translated,
         "language": target_lang
     })
 
-# ===== SERVE FILES =====
+# ===== STATIC FILE SERVING =====
+
 @app.route('/ai-chat.html')
 def ai_chat_page():
     return send_from_directory('.', 'ai-chat.html')
