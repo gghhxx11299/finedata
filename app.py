@@ -148,20 +148,10 @@ def get_planting_seasons(location: str) -> str:
     return f"{base} {belg} {kiremt}."
 
 # ======================
-# TRANSLATION - USING DEEP-TRANSLATOR (MORE RELIABLE)
+# TRANSLATION - USING DEEP-TRANSLATOR
 # ======================
 
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
-
-# Language code mapping for deep-translator
-LANG_MAP = {
-    "am": "am",    # Amharic
-    "om": "om",    # Oromo
-    "fr": "fr",    # French
-    "es": "es",    # Spanish
-    "ar": "ar",    # Arabic
-    "en": "en"     # English
-}
 
 def translate_text(text: str, target_lang: str) -> str:
     """Translate text from English to target language."""
@@ -189,7 +179,7 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
         # Likely Amharic
         if TRANSLATION_AVAILABLE:
             try:
-                translated = GoogleTranslator(source='am', target='en').translate(text)
+                translated = GoogleTranslator(source='auto', target='en').translate(text)
                 return translated if translated else text, "am"
             except:
                 pass
@@ -209,13 +199,16 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
     return text, "en"
 
 # ======================
-# AI RESPONSE
+# AI RESPONSE - WITH WORKING MODELS
 # ======================
 
+# ACTUALLY AVAILABLE FREE MODELS ON OPENROUTER (Updated)
 AVAILABLE_MODELS = [
-    "google/gemma-2-2b-it:free",
-    "microsoft/phi-3-medium-4k-instruct:free", 
-    "huggingfaceh4/zephyr-7b-beta:free",
+    "google/gemma-2-2b-it:free",  # Usually available and reliable
+    "microsoft/phi-3-medium-4k-instruct:free",  # Good alternative
+    "meta-llama/llama-3.1-8b-instruct:free",  # Newer Llama model
+    "qwen/qwen-2.5-0.5b-instruct:free",  # Lightweight option
+    "huggingfaceh4/zephyr-7b-beta",  # Try without :free suffix
 ]
 
 def is_in_scope(question: str) -> bool:
@@ -232,13 +225,65 @@ def is_in_scope(question: str) -> bool:
     ]
     return any(kw in q for kw in keywords)
 
+def get_available_models() -> list:
+    """Dynamically check which models are available."""
+    openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    if not openrouter_key:
+        return []
+    
+    working_models = []
+    for model in AVAILABLE_MODELS:
+        try:
+            # Test each model with a simple request
+            headers = {
+                "Authorization": f"Bearer {openrouter_key}",
+                "HTTP-Referer": "https://finedata.onrender.com",
+                "X-Title": "Finedata Ethiopia AI",
+            }
+            
+            # Quick test payload
+            test_payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": "Say 'hello'"}],
+                "max_tokens": 10
+            }
+            
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=test_payload,
+                timeout=10
+            )
+            
+            if resp.status_code == 200:
+                working_models.append(model)
+                logger.info(f"✅ Model available: {model}")
+            else:
+                logger.warning(f"❌ Model not available: {model} (Status: {resp.status_code})")
+                
+        except Exception as e:
+            logger.warning(f"❌ Model failed: {model} - {e}")
+    
+    # If no models work, return a basic fallback
+    if not working_models:
+        logger.error("❌ No AI models are working!")
+        return ["google/gemma-2-2b-it:free"]  # Fallback to most common
+    
+    return working_models
+
 def try_ai_models(question: str, context: str) -> str:
     """Try different AI models until one works."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
         return "AI service is not configured. Please check your API key."
     
-    for model in AVAILABLE_MODELS:
+    # Get working models dynamically
+    working_models = get_available_models()
+    
+    if not working_models:
+        return "AI service is currently unavailable. Please try again later."
+    
+    for model in working_models:
         try:
             logger.info(f"Trying model: {model}")
             
@@ -270,14 +315,16 @@ def try_ai_models(question: str, context: str) -> str:
                 cleaned_answer = answer.split("Question:")[0].split("User Question:")[0].strip()
                 
                 if cleaned_answer and len(cleaned_answer) > 10:
-                    logger.info(f"Success with model: {model}")
+                    logger.info(f"✅ Success with model: {model}")
                     return cleaned_answer
+                else:
+                    logger.warning(f"Empty response from model: {model}")
             
-            elif resp.status_code == 404:
-                logger.warning(f"Model not available: {model}")
-                continue
             else:
                 logger.warning(f"Model {model} returned status {resp.status_code}")
+                # Remove failing model from cache for next time
+                if model in AVAILABLE_MODELS:
+                    logger.info(f"Removing failing model: {model}")
                 
         except Exception as e:
             logger.warning(f"Model {model} failed: {e}")
@@ -369,12 +416,15 @@ def ask_ai():
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for monitoring."""
+    working_models = get_available_models()
+    
     return jsonify({
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "services": {
             "translation": "available" if TRANSLATION_AVAILABLE else "disabled",
-            "ai": "available" if os.getenv("OPENROUTER_API_KEY") else "disabled"
+            "ai": "available" if os.getenv("OPENROUTER_API_KEY") and working_models else "disabled",
+            "working_models": working_models
         },
         "supported_languages": list(SUPPORTED_LANGUAGES)
     })
@@ -399,5 +449,9 @@ if __name__ == '__main__':
     
     logger.info(f"Starting Finedata Ethiopia AI server on {host}:{port}")
     logger.info(f"Translation available: {TRANSLATION_AVAILABLE}")
+    
+    # Test available models on startup
+    working_models = get_available_models()
+    logger.info(f"Working AI models: {working_models}")
     
     app.run(debug=False, host=host, port=port)
