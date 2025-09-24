@@ -41,7 +41,6 @@ def cached(timeout: int = _CACHE_TIMEOUT):
                 return result
             except Exception as e:
                 logger.error(f"Error in cached function {func.__name__}: {e}")
-                # Return cached value even if expired if available
                 if key in _CACHE:
                     return _CACHE[key][0]
                 raise
@@ -274,8 +273,16 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
         return text, "en"
 
 # ======================
-# AI RESPONSE
+# AI RESPONSE - USING WORKING MODELS
 # ======================
+
+# Available free models on OpenRouter
+AVAILABLE_MODELS = [
+    "google/gemma-2-2b-it:free",  # Free and reliable
+    "microsoft/phi-3-medium-4k-instruct:free",  # Free alternative
+    "huggingfaceh4/zephyr-7b-beta:free",  # Another free option
+    "meta-llama/llama-3-8b-instruct",  # Paid but widely available (remove :free)
+]
 
 def is_in_scope(question: str) -> bool:
     """Check if the question is within the scope of Ethiopia-focused data."""
@@ -287,16 +294,75 @@ def is_in_scope(question: str) -> bool:
         "ethiopia", "addis", "jimma", "hawassa", "bahir dar", "mekelle", 
         "weather", "crop", "plant", "agriculture", "farm", "gdp", "inflation", 
         "population", "exchange", "currency", "teff", "kiremt", "belg", 
-        "rain", "season", "economy", "demographic"
+        "rain", "season", "economy", "demographic", "africa"
     ]
     return any(kw in q for kw in keywords)
 
+def try_ai_models(question: str, context: str) -> str:
+    """Try different AI models until one works."""
+    openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    if not openrouter_key:
+        return "AI service is not configured. Please check your API key."
+    
+    for model in AVAILABLE_MODELS:
+        try:
+            logger.info(f"Trying model: {model}")
+            
+            # Prepare headers
+            headers = {
+                "Authorization": f"Bearer {openrouter_key}",
+                "HTTP-Referer": "https://finedata.onrender.com",
+                "X-Title": "Finedata Ethiopia AI",
+                "Content-Type": "application/json"
+            }
+            
+            # Prepare payload
+            payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": context}],
+                "temperature": 0.3,
+                "max_tokens": 300,
+                "top_p": 0.9
+            }
+            
+            # Remove :free from the model name if it's a paid model
+            if model == "meta-llama/llama-3-8b-instruct" and ":free" in model:
+                payload["model"] = "meta-llama/llama-3-8b-instruct"
+            
+            resp = requests.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=25
+            )
+            
+            if resp.status_code == 200:
+                response_data = resp.json()
+                answer = response_data["choices"][0]["message"]["content"].strip()
+                cleaned_answer = answer.split("Question:")[0].split("User Question:")[0].strip()
+                
+                if cleaned_answer and len(cleaned_answer) > 10:  # Valid response
+                    logger.info(f"Success with model: {model}")
+                    return cleaned_answer
+            
+            elif resp.status_code == 404:
+                logger.warning(f"Model not available: {model}")
+                continue  # Try next model
+            else:
+                logger.warning(f"Model {model} returned status {resp.status_code}")
+                
+        except Exception as e:
+            logger.warning(f"Model {model} failed: {e}")
+            continue  # Try next model
+    
+    return "I'm unable to generate a response at the moment. Please try again later."
+
 def generate_ai_response(question: str) -> str:
-    """Generate AI response using OpenRouter API."""
+    """Generate AI response using OpenRouter API with fallback models."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
         logger.error("OPENROUTER_API_KEY is missing in environment!")
-        return "AI assistant is not configured. Please contact support."
+        return "AI assistant is not configured. Please add your OpenRouter API key to the environment variables."
 
     if not is_in_scope(question):
         return (
@@ -304,9 +370,8 @@ def generate_ai_response(question: str) -> str:
             "weather, and demographics. Please ask something about Ethiopia!"
         )
 
-    # Build comprehensive context with all available data
-    context = f"""
-You are Finedata AI, an expert assistant for Ethiopia. Use ONLY the verified data below:
+    # Build comprehensive context
+    context = f"""You are Finedata AI, an expert assistant for Ethiopia. Use ONLY the verified data below:
 
 ECONOMIC DATA:
 - GDP per capita: {get_gdp_per_capita()}
@@ -320,56 +385,17 @@ AGRICULTURAL INFORMATION:
 - Planting seasons: {get_planting_seasons("Ethiopia")}
 - Common crops: {get_agricultural_data("Ethiopia")}
 
-WEATHER DATA:
-- Current weather available for major Ethiopian cities
-
-IMPORTANT RULES:
+RULES:
 1. Answer concisely in 1-3 sentences maximum
-2. Use only the data provided above - never invent or guess numbers
-3. If specific data is not available, say "I don't have that specific data point"
+2. Use only the data provided above
+3. If specific data is not available, say "I don't have that specific data"
 4. Keep answers factual and focused on Ethiopia
-5. Reference the data sources when possible
 
-User Question: {question}
+Question: {question}
 
-Assistant Answer:
-"""
+Answer:"""
 
-    try:
-        resp = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": f"Bearer {openrouter_key}",
-                "HTTP-Referer": "https://finedata.onrender.com",
-                "X-Title": "Finedata Ethiopia AI",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": "meta-llama/llama-3-8b-instruct:free",
-                "messages": [{"role": "user", "content": context}],
-                "temperature": 0.2,
-                "max_tokens": 250,
-                "top_p": 0.9
-            },
-            timeout=30
-        )
-        
-        if resp.status_code == 200:
-            response_data = resp.json()
-            answer = response_data["choices"][0]["message"]["content"].strip()
-            # Clean up the response
-            cleaned_answer = answer.split("Question:")[0].split("User Question:")[0].strip()
-            return cleaned_answer or "I couldn't generate a response for that question."
-        else:
-            logger.error(f"OpenRouter API error: {resp.status_code} - {resp.text}")
-            return "I'm having trouble processing your request right now. Please try again shortly."
-            
-    except requests.exceptions.Timeout:
-        logger.error("OpenRouter API timeout")
-        return "The AI service is taking too long to respond. Please try again."
-    except Exception as e:
-        logger.exception("OpenRouter request failed")
-        return "AI service is temporarily unavailable. Please try again later."
+    return try_ai_models(question, context)
 
 # ======================
 # ROUTES
@@ -378,7 +404,6 @@ Assistant Answer:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     """Main endpoint for AI questions with translation support."""
-    # Validate request
     if not request.is_json:
         return jsonify({"error": "Content-Type must be application/json"}), 400
     
@@ -386,7 +411,6 @@ def ask_ai():
     if not data:
         return jsonify({"error": "Invalid JSON data"}), 400
 
-    # Extract and validate parameters
     user_question = data.get("question", "").strip()
     target_lang = data.get("language", "en")
 
@@ -400,7 +424,6 @@ def ask_ai():
         target_lang = "en"
 
     try:
-        # Process the question
         english_question, detected_lang = detect_and_translate_to_english(user_question)
         answer_en = generate_ai_response(english_question)
         answer_translated = translate_text(answer_en, target_lang)
@@ -433,6 +456,14 @@ def health_check():
         }
     })
 
+@app.route('/models', methods=['GET'])
+def list_models():
+    """Endpoint to check available AI models."""
+    return jsonify({
+        "available_models": AVAILABLE_MODELS,
+        "current_preference": AVAILABLE_MODELS[0] if AVAILABLE_MODELS else "none"
+    })
+
 @app.route('/ai-chat.html')
 def ai_chat_page():
     """Serve the AI chat interface."""
@@ -441,7 +472,6 @@ def ai_chat_page():
 @app.route('/<path:filename>')
 def static_files(filename):
     """Serve static files."""
-    # Basic security check
     if '..' in filename or filename.startswith('/'):
         return "Invalid path", 400
     return send_from_directory('.', filename)
@@ -461,13 +491,17 @@ def internal_error(error):
     return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == '__main__':
-    # Validate required environment variables
+    # Check for required API key
     if not os.getenv("OPENROUTER_API_KEY"):
         logger.warning("OPENROUTER_API_KEY not set - AI features will be disabled")
+    else:
+        logger.info("OpenRouter API key found - AI features enabled")
     
     # Start the application
     port = int(os.environ.get("PORT", 5000))
     host = os.environ.get("HOST", "0.0.0.0")
     
     logger.info(f"Starting Finedata Ethiopia AI server on {host}:{port}")
+    logger.info(f"Available AI models: {AVAILABLE_MODELS}")
+    
     app.run(debug=False, host=host, port=port)
