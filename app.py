@@ -221,7 +221,7 @@ def get_weather_data(location: str) -> Optional[str]:
     try:
         coords = weather_collector.get_location_coords(location)[1]
         live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_  # ✅ FIXED SYNTAX
+        if live_data and 'current' in live_data:  # ✅ FIXED SYNTAX
             current = live_data['current']
             today = live_data['forecast']['forecastday'][0]['day']
             return (
