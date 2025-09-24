@@ -1,1 +1,224 @@
+<!-- ai-chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Weather Assistant - Ethiopia</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #2980b9;
+    }
+    .subtitle {
+      color: #7f8c8d;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      padding: 16px;
+      margin: 15px 0;
+      border: 2px solid #e0e6ed;
+      border-radius: 12px;
+      font-size: 16px;
+      resize: vertical;
+      min-height: 100px;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    select {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      border: 2px solid #e0e6ed;
+      border-radius: 12px;
+      font-size: 16px;
+      background: white;
+    }
+    button {
+      background: #2980b9;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background: #1c6ea4;
+    }
+    button:active {
+      transform: translateY(2px);
+    }
+    #response {
+      margin-top: 25px;
+      padding: 20px;
+      background: #f8fbff;
+      border-radius: 12px;
+      border-left: 4px solid #3498db;
+      display: none;
+    }
+    #response.show {
+      display: block;
+    }
+    .location {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+    .answer {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    .amharic {
+      font-family: 'Noto Sans Ethiopic', 'Abyssinica SIL', sans-serif;
+      font-size: 19px !important;
+    }
+    .english-hint {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px dashed #d5dbdb;
+      color: #7f8c8d;
+      font-size: 14px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #95a5a6;
+      font-size: 14px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🤖 Ethiopian Weather AI Assistant</h1>
+      <p class="subtitle">Ask about weather in any Ethiopian city — get live data in your language!</p>
+    </header>
 
+    <textarea id="question" placeholder="Examples: 
+• What's the weather in Jimma today?
+• Is it raining in Hawassa?
+• Show me forecast for Arba Minch"></textarea>
+
+    <div class="controls">
+      <select id="language">
+        <option value="en">English</option>
+        <option value="am">Amharic (አማርኛ)</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="ar">العربية</option>
+        <option value="ru">Русский</option>
+      </select>
+    </div>
+
+    <button onclick="askAI()">Get Live Weather Info</button>
+
+    <div id="response">
+      <div class="location" id="location"></div>
+      <div class="answer" id="answer"></div>
+      <div class="english-hint" id="englishHint"></div>
+    </div>
+
+    <footer>
+      Powered by WeatherAPI • Hugging Face • LibreTranslate
+    </footer>
+  </div>
+
+  <script>
+    async function askAI() {
+      const questionInput = document.getElementById('question');
+      const languageSelect = document.getElementById('language');
+      const responseDiv = document.getElementById('response');
+      const locationEl = document.getElementById('location');
+      const answerEl = document.getElementById('answer');
+      const englishHintEl = document.getElementById('englishHint');
+
+      const question = questionInput.value.trim();
+      const lang = languageSelect.value;
+
+      if (!question) {
+        alert("Please enter a question about Ethiopian weather!");
+        return;
+      }
+
+      // Show loading state
+      responseDiv.classList.remove('show');
+      answerEl.textContent = "📡 Fetching live weather data from online sources...";
+      responseDiv.classList.add('show');
+
+      try {
+        const response = await fetch('/ask-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question, language: lang })
+        });
+
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        // Update UI
+        locationEl.textContent = `📍 ${data.location}`;
+        answerEl.textContent = data.answer_translated;
+        englishHintEl.innerHTML = `<strong>English:</strong> ${data.answer_english}`;
+        
+        // Apply Amharic font if needed
+        if (lang === 'am') {
+          answerEl.className = 'answer amharic';
+        } else {
+          answerEl.className = 'answer';
+        }
+
+      } catch (err) {
+        answerEl.textContent = `❌ Error: ${err.message || 'Failed to get response'}`;
+        answerEl.style.color = '#e74c3c';
+        englishHintEl.textContent = '';
+      }
+    }
+
+    // Allow Enter key to submit (with Shift+Enter for new line)
+    document.getElementById('question').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askAI();
+      }
+    });
+  </script>
+</body>
+</html>
