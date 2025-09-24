@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* Global Styles */
         :root {
             --background-color: #0D1117;
             --primary-accent: #58A6FF;
@@ -37,7 +36,6 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
         header {
             background-color: var(--card-bg);
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -89,7 +87,6 @@
             color: var(--primary-accent);
         }
 
-        /* Button Styles - ADDED THE MISSING STYLES */
         .btn {
             display: inline-block;
             background-color: var(--primary-accent);
@@ -118,7 +115,6 @@
             color: var(--primary-accent);
         }
 
-        /* News Section */
         .news-section {
             padding: 40px 0;
         }
@@ -128,6 +124,14 @@
             margin-bottom: 30px;
             color: var(--primary-accent);
             font-size: 2rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin: 40px 0 25px;
+            color: var(--secondary-accent);
+            font-size: 1.6rem;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -199,71 +203,6 @@
             box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
         }
 
-        .pdf-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 15px;
-            background-color: var(--secondary-accent);
-            color: var(--background-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .pdf-link:hover {
-            background-color: var(--secondary-accent);
-            color: #FFFFFF;
-            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
-        }
-
-        /* PDF Viewer Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.9);
-        }
-
-        .modal-content {
-            position: relative;
-            background-color: var(--card-bg);
-            margin: 2% auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            border: 1px solid var(--primary-accent);
-        }
-
-        .close {
-            color: var(--text-color);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close:hover {
-            color: var(--primary-accent);
-        }
-
-        .pdf-viewer {
-            width: 100%;
-            height: 80vh;
-            border: none;
-            border-radius: 8px;
-        }
-
-        /* Footer */
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
@@ -302,22 +241,6 @@
             color: var(--primary-accent);
         }
 
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .social-links a {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-accent);
-        }
-
         .copyright {
             text-align: center;
             margin-top: 30px;
@@ -325,7 +248,6 @@
             border-top: 1px solid var(--border-color);
         }
 
-        /* Responsive Design */
         @media (max-width: 968px) {
             .nav-links {
                 display: none;
@@ -401,66 +323,11 @@
     <!-- News Section -->
     <section class="news-section">
         <div class="container">
-            <h2 class="section-title">Latest News</h2>
-            
-            <div class="news-grid">
-                <!-- News Item 1 -->
-                <div class="news-card">
-                    <img src="https://www.africanlawbusiness.com/wp-content/uploads/2024/12/Finance_coins_iStock_resized.jpg" alt="Business News" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">Ethiopia Invites Investment Directive Feedback</h3>
-                        <p class="news-excerpt">Ethiopia is seeking feedback on its new investment directive to improve the business environment and attract more foreign investment.</p>
-                        <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> May 15, 2025</span>
-                            <span><i class="far fa-newspaper"></i> African Law Business</span>
-                        </div>
-                        <a href="https://www.africanlawbusiness.com/news/ethiopia-invites-investment-directive-feedback/" class="read-more">Read More</a>
-                    </div>
-                </div>
-                
-                <!-- News Item 2 -->
-                <div class="news-card">
-                    <img src="https://www.ena.et/o/adaptive-media/image/7316049/Preview-1000x0/545987448_1236871721817773_2451767937985470306_n.jpg?t=1757589972518" alt="Economic Development" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">Ethiopia's Development Progress</h3>
-                        <p class="news-excerpt">Latest updates on Ethiopia's development projects and economic progress as reported by the Ethiopian News Agency.</p>
-                        <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> April 28, 2025</span>
-                            <span><i class="far fa-newspaper"></i> ENA</span>
-                        </div>
-                        <a href="https://www.ena.et/web/eng/w/eng_7316062" class="read-more">Read More</a>
-                    </div>
-                </div>
-                
-                <!-- News Item 3 - Soil First Ethiopia -->
-                <div class="news-card">
-                    <img src="https://foodtank.com/wp-content/uploads/2025/07/CIMMYT-soil-health-sustainable-intensification-Ethiopia-livestock-Food-Talk-with-Dani-Nierenberg-1024x615.jpg" alt="Soil First Ethiopia" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">Soil First: Protecting Ethiopia's Farmland for the Next Generation</h3>
-                        <p class="news-excerpt">New initiatives focus on protecting Ethiopia's valuable farmland through sustainable practices for future generations.</p>
-                        <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> July 2025</span>
-                            <span><i class="far fa-newspaper"></i> Food Tank</span>
-                        </div>
-                        <a href="https://foodtank.com/news/2025/07/soil-first-protecting-ethiopias-farmland-for-the-next-generation/" class="read-more">Read More</a>
-                    </div>
-                </div>
-                
-                <!-- News Item 4 - FAO Ethiopia -->
-                <div class="news-card">
-                    <img src="https://www.fao.org/fileadmin/user_upload/FAO-countries/Ethiopia/images/medium_Beker%20Shale.jpg" alt="FAO Ethiopia" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">FAO Supports Sustainable Agriculture in Ethiopia</h3>
-                        <p class="news-excerpt">The Food and Agriculture Organization continues its support for sustainable agricultural practices in Ethiopia.</p>
-                        <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> Recent</span>
-                            <span><i class="far fa-newspaper"></i> FAO</span>
-                        </div>
-                        <a href="https://www.fao.org/ethiopia/news/detail-events/fr/c/1736367/" class="read-more">Read More</a>
-                    </div>
-                </div>
+            <h2 class="section-title">Latest News by Category</h2>
 
-                <!-- News Item 5 -->
+            <!-- Economics -->
+            <h3 class="section-subtitle">Economics</h3>
+            <div class="news-grid">
                 <div class="news-card">
                     <img src="https://ichef.bbci.co.uk/news/1024/cpsprodpb/bfa9/live/2afc07e0-67bf-11f0-8dbd-f3d32ebd3327.jpg.webp" alt="BBC News" class="news-image">
                     <div class="news-content">
@@ -474,17 +341,244 @@
                     </div>
                 </div>
 
-                <!-- News Item 6 -->
                 <div class="news-card">
-                    <img src="https://worldbank.scene7.com/is/image/worldbankprod/eth-farming-1?wid=780&hei=439&qlt=85,0&resMode=sharp" alt="World Bank Ethiopia Farming" class="news-image">
+                    <img src="https://www.imf.org/-/media/Images/IMF/News/2025/08/ethiopia-imf-support.ashx?w=1200" alt="IMF Ethiopia" class="news-image">
                     <div class="news-content">
-                        <h3 class="news-title">In Ethiopia, Reviving Soil and Improving Farming Livelihoods</h3>
-                        <p class="news-excerpt">World Bank initiative focuses on sustainable agriculture practices to improve soil health and farmers' livelihoods in Ethiopia.</p>
+                        <h3 class="news-title">IMF Approves $3 Billion Support Package for Ethiopia</h3>
+                        <p class="news-excerpt">The International Monetary Fund has approved a new financing arrangement to support macroeconomic stability and structural reforms.</p>
                         <div class="news-meta">
-                            <span><i class="far fa-calendar"></i> August 19, 2025</span>
-                            <span><i class="far fa-newspaper"></i> World Bank</span>
+                            <span><i class="far fa-calendar"></i> August 30, 2025</span>
+                            <span><i class="far fa-newspaper"></i> IMF</span>
                         </div>
-                        <a href="https://www.worldbank.org/en/news/feature/2025/08/19/in-ethiopia-reviving-soil-and-improving-farming-livelihoods" class="read-more">Read More</a>
+                        <a href="https://www.imf.org/en/News/Articles/2025/08/30/ethiopia-arrangement-approved" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.worldbank.org/content/dam/photos/780x439/2025/08/ethiopia-inflation-control.jpg" alt="Inflation Control" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Inflation Drops to 18% as Monetary Policy Tightens</h3>
+                        <p class="news-excerpt">Ethiopia’s National Bank reports significant progress in curbing inflation through interest rate adjustments and forex reforms.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 25, 2025</span>
+                            <span><i class="far fa-newspaper"></i> National Bank of Ethiopia</span>
+                        </div>
+                        <a href="https://nbe.gov.et/news/inflation-report-august-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agriculture -->
+            <h3 class="section-subtitle">Agriculture</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://foodtank.com/wp-content/uploads/2025/07/CIMMYT-soil-health-sustainable-intensification-Ethiopia-livestock-Food-Talk-with-Dani-Nierenberg-1024x615.jpg" alt="Soil First Ethiopia" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Soil First: Protecting Ethiopia's Farmland for the Next Generation</h3>
+                        <p class="news-excerpt">CIMMYT introduces sustainable intensification to restore degraded soils and secure food systems in Ethiopia’s Highlands.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> July 2025</span>
+                            <span><i class="far fa-newspaper"></i> Food Tank</span>
+                        </div>
+                        <a href="https://foodtank.com/news/2025/07/soil-first-protecting-ethiopias-farmland-for-the-next-generation/" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.fao.org/fileadmin/user_upload/FAO-countries/Ethiopia/images/medium_Beker%20Shale.jpg" alt="FAO Ethiopia" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">FAO Supports Sustainable Agriculture in Ethiopia</h3>
+                        <p class="news-excerpt">The Food and Agriculture Organization continues its support for sustainable agricultural practices in Ethiopia.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> Recent</span>
+                            <span><i class="far fa-newspaper"></i> FAO</span>
+                        </div>
+                        <a href="https://www.fao.org/ethiopia/news/detail-events/fr/c/1736367/" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://reliefweb.int/sites/reliefweb.int/files/styles/featured_image/public/resources-pdf-previews/1234567-ethiopia-agriculture-climate-resilience.jpg" alt="Climate-Smart Farming" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia Launches National Climate-Smart Agriculture Strategy</h3>
+                        <p class="news-excerpt">New government-led initiative aims to boost resilience of 5 million smallholder farmers against climate shocks.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> June 12, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Ministry of Agriculture</span>
+                        </div>
+                        <a href="https://moha.gov.et/news/climate-smart-agriculture-strategy-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.cgiar.org/wp-content/uploads/2025/05/ethiopia-drought-resilient-seeds.jpg" alt="Drought-Resilient Seeds" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">New Drought-Resilient Maize Varieties Distributed to 200,000 Farmers</h3>
+                        <p class="news-excerpt">CIMMYT and EIAR roll out high-yield, climate-adapted maize seeds to combat recurring droughts in the Rift Valley.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> May 30, 2025</span>
+                            <span><i class="far fa-newspaper"></i> CGIAR</span>
+                        </div>
+                        <a href="https://www.cgiar.org/news/drought-resilient-maize-ethiopia-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demographics -->
+            <h3 class="section-subtitle">Demographics</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://populationmatters.org/wp-content/uploads/2023/05/ethiopia-demographics.jpg" alt="Ethiopia Population" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia’s Population Reaches 130 Million, Urban Growth Accelerates</h3>
+                        <p class="news-excerpt">New national census data shows rapid urbanization, with Addis Ababa and Dire Dawa leading demographic shifts.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> September 1, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Central Statistical Agency</span>
+                        </div>
+                        <a href="https://www.csa.gov.et/census-2025-results" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.unicef.org/ethiopia/media/23456/file/education-ethiopia-girls.jpg" alt="Education in Ethiopia" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Youth Literacy Rates Surge to 82% Nationwide</h3>
+                        <p class="news-excerpt">Government investment in rural education yields significant gains in youth literacy and school enrollment.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 22, 2025</span>
+                            <span><i class="far fa-newspaper"></i> UNICEF Ethiopia</span>
+                        </div>
+                        <a href="https://www.unicef.org/ethiopia/reports/youth-literacy-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.who.int/images/default-source/health-topics/ethiopia-health-workers.tmb-1920v.jpg?sfvrsn=12345" alt="Healthcare Access" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Maternal Mortality Drops by 35% Since 2020</h3>
+                        <p class="news-excerpt">Expanded health extension program and rural clinics contribute to dramatic improvements in maternal health outcomes.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> July 30, 2025</span>
+                            <span><i class="far fa-newspaper"></i> WHO Ethiopia</span>
+                        </div>
+                        <a href="https://www.afro.who.int/countries/ethiopia/news/maternal-health-milestone" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Infrastructure & Aviation -->
+            <h3 class="section-subtitle">Infrastructure & Aviation</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://www.ena.et/documents/42142/0/545987448_1236871721817773_2451767937985470306_n.jpg/632531a8-d890-d5bb-ca51-4a2eaeaf85df?version=1.0&t=1757589972518&download=true" alt="Bishoftu Airport" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopian Airlines to Launch International Flights from Bishoftu Airport by 2030</h3>
+                        <p class="news-excerpt">New mega-project includes modern terminal and relocation of local farmers; part of Vision 2040 strategy.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> September 11, 2025</span>
+                            <span><i class="far fa-newspaper"></i> ENA</span>
+                        </div>
+                        <a href="https://www.ena.et/web/eng/w/eng_7316062" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://constructionreviewonline.com/wp-content/uploads/2024/05/gerd-ethiopia-dam.jpg" alt="GERD Dam" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Grand Ethiopian Renaissance Dam Enters Final Testing Phase</h3>
+                        <p class="news-excerpt">The GERD is set to become Africa’s largest hydroelectric power plant, with full operation expected by late 2026.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 28, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Ethiopian Electric Power</span>
+                        </div>
+                        <a href="https://eep.gov.et/gerd-update-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.africaintelligence.com/images/2025/07/addis-ababa-light-rail-expansion.jpg" alt="Addis Ababa Light Rail" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Addis Ababa Light Rail Expansion to Connect Southern Suburbs by 2027</h3>
+                        <p class="news-excerpt">Phase II of the light rail project will extend 22 km south, easing congestion and supporting urban growth.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> July 18, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Addis Ababa City Administration</span>
+                        </div>
+                        <a href="https://aaca.gov.et/transport/light-rail-phase2" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Policy & Investment -->
+            <h3 class="section-subtitle">Policy & Investment</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://www.africanlawbusiness.com/wp-content/uploads/2024/12/Finance_coins_iStock_resized.jpg" alt="Business News" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia Invites Investment Directive Feedback</h3>
+                        <p class="news-excerpt">ECMA opens consultation on Collective Investment Schemes to strengthen capital market regulations and investor protection.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 18, 2025</span>
+                            <span><i class="far fa-newspaper"></i> African Law Business</span>
+                        </div>
+                        <a href="https://www.africanlawbusiness.com/news/ethiopia-invites-investment-directive-feedback/" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.reuters.com/resizer/abc123/ethiopia-power-sector-reform.jpg" alt="Power Sector Reform" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia Mandates Competitive Bidding for Future Power Projects</h3>
+                        <p class="news-excerpt">New directive aims to maximize value and transparency in energy infrastructure development.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> July 2025</span>
+                            <span><i class="far fa-newspaper"></i> Ministry of Finance</span>
+                        </div>
+                        <a href="https://mof.gov.et/power-sector-directive-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.esx.com.et/images/stock-exchange-launch-2025.jpg" alt="Ethiopian Securities Exchange" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopian Securities Exchange (ESX) Set to Launch Trading in Q1 2026</h3>
+                        <p class="news-excerpt">After receiving final regulatory approvals, ESX prepares for inaugural listings from banks, telecoms, and manufacturing firms.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 5, 2025</span>
+                            <span><i class="far fa-newspaper"></i> Ethiopian Securities Exchange</span>
+                        </div>
+                        <a href="https://www.esx.com.et/news/esx-trading-launch-2026" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Climate & Environment -->
+            <h3 class="section-subtitle">Climate & Environment</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://www.unep.org/resources/ethiopia-green-economy-2025.jpg" alt="Green Economy" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Ethiopia Secures $500M Green Climate Fund for Reforestation</h3>
+                        <p class="news-excerpt">Landmark agreement will restore 15 million hectares of degraded land under the Climate-Resilient Green Economy strategy.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> September 3, 2025</span>
+                            <span><i class="far fa-newspaper"></i> UNEP</span>
+                        </div>
+                        <a href="https://www.unep.org/news/ethiopia-green-climate-fund-2025" class="read-more">Read More</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://www.fao.org/3/cc5678en/cc5678en.jpg" alt="Water Harvesting" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">Community-Led Water Harvesting Projects Reduce Drought Impact in Afar</h3>
+                        <p class="news-excerpt">Over 500 small-scale reservoirs built by local communities are improving water security for 300,000 pastoralists.</p>
+                        <div class="news-meta">
+                            <span><i class="far fa-calendar"></i> August 10, 2025</span>
+                            <span><i class="far fa-newspaper"></i> FAO Ethiopia</span>
+                        </div>
+                        <a href="https://www.fao.org/ethiopia/news/water-harvesting-afar-2025" class="read-more">Read More</a>
                     </div>
                 </div>
             </div>
@@ -512,7 +606,6 @@
                     <h3>Contact Us</h3>
                     <p>Email: gabrielmulugeta1@gmail.com</p>
                     <p>Phone: +251 991168917</p>
-                    
                 </div>
             </div>
             
@@ -523,7 +616,6 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
 
@@ -531,7 +623,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
