@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finedatas Ethiopia - Weather Data</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,15 +40,24 @@
         .hero p {font-size:1.2rem;max-width:800px;margin:0 auto 2rem;color:var(--text-secondary);}
         .btn {display:inline-block;background-color:var(--primary-accent);color:var(--bg-primary);padding:0.8rem 1.5rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.3s ease;border:none;cursor:pointer;}
         .btn:hover {background-color:var(--secondary-accent);color:var(--text-primary);box-shadow:0 0 10px var(--secondary-accent),0 0 20px rgba(255,123,114,0.3);transform:translateY(-2px);}
-        .weather-section {padding:3rem 0;}
+        .weather-section, .soil-section {padding:3rem 0;}
         .section-title {text-align:center;color:var(--primary-accent);margin-bottom:3rem;font-size:2.2rem;font-family:'Montserrat',sans-serif;font-weight:700;}
         .city-selector {display:flex;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
         .city-btn {background-color:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);padding:0.5rem 1rem;border-radius:6px;cursor:pointer;transition:all 0.3s;}
         .city-btn:hover, .city-btn.active {background-color:var(--primary-accent);color:var(--bg-primary);}
         .weather-container {display:grid;grid-template-columns:1fr 2fr;gap:2rem;margin-bottom:3rem;}
-        @media(max-width:768px){.weather-container{grid-template-columns:1fr;}.nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background-color:var(--bg-secondary);box-shadow:var(--shadow);padding:1rem 0;border-top:1px solid var(--border-color);}.nav-links.active{display:flex;}.nav-links li{margin:0.5rem 1.5rem;}.mobile-menu-btn{display:block;}.hero h2{font-size:2rem;}.forecast-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}}
-        .current-weather, .forecast {background-color:var(--bg-card);border-radius:12px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--border-color);}
-        .current-weather h3, .forecast h3 {color:var(--primary-accent);margin-bottom:1rem;font-family:'Montserrat',sans-serif;border-bottom:1px solid var(--border-color);padding-bottom:0.5rem;}
+        @media(max-width:768px){
+            .weather-container{grid-template-columns:1fr;}
+            .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background-color:var(--bg-secondary);box-shadow:var(--shadow);padding:1rem 0;border-top:1px solid var(--border-color);}
+            .nav-links.active{display:flex;}
+            .nav-links li{margin:0.5rem 1.5rem;}
+            .mobile-menu-btn{display:block;}
+            .hero h2{font-size:2rem;}
+            .forecast-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+            .soil-grid {grid-template-columns: 1fr;}
+        }
+        .current-weather, .forecast, .soil-card {background-color:var(--bg-card);border-radius:12px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--border-color);}
+        .current-weather h3, .forecast h3, .soil-card h3 {color:var(--primary-accent);margin-bottom:1rem;font-family:'Montserrat',sans-serif;border-bottom:1px solid var(--border-color);padding-bottom:0.5rem;}
         .weather-detail {display:flex;justify-content:space-between;margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border-color);}
         .weather-detail:last-child {border-bottom:none;}
         .weather-detail .label {color:var(--text-secondary);}
@@ -76,6 +85,35 @@
         .footer-bottom {text-align:center;padding-top:1.5rem;border-top:1px solid var(--border-color);color:var(--text-secondary);}
         .loading {text-align:center;padding:2rem;color:var(--text-secondary);}
         .error {text-align:center;padding:2rem;color:var(--secondary-accent);}
+
+        /* Soil Section Styles */
+        .soil-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+
+        .soil-card h4 {
+            color: var(--primary-accent);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .soil-detail {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .soil-detail .label {
+            color: var(--text-secondary);
+            min-width: 120px;
+            font-weight: 500;
+        }
+
+        .soil-detail .value {
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
@@ -105,8 +143,8 @@
 
     <section class="hero">
         <div class="container">
-            <h2>Ethiopia Weather Data</h2>
-            <p>Access real-time weather information and 7-day forecasts for major Ethiopian cities and agricultural regions</p>
+            <h2>Ethiopia Weather & Soil Data</h2>
+            <p>Access real-time weather forecasts and soil requirements for key crops to optimize your farming decisions</p>
             <a href="#weather-data" class="btn">View Weather Data</a>
         </div>
     </section>
@@ -154,6 +192,117 @@
                     <div class="forecast-grid" id="forecast-container">
                         <div class="loading">Loading weather data...</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Soil & Crop Guidance Section -->
+    <section class="soil-section">
+        <div class="container">
+            <h2 class="section-title">Soil Requirements for Key Crops</h2>
+            <p style="text-align:center; color:var(--text-secondary); margin-bottom:2rem;">
+                Based on CIMMYT, FAO, and Ethiopian Institute of Agricultural Research (EIAR) recommendations
+            </p>
+            <div class="soil-grid">
+                <!-- Maize -->
+                <div class="soil-card">
+                    <h4>Maize</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loamy, well-drained</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 7.0</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 2%</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, K</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Avoid waterlogged soils; drought-tolerant varieties available</span></div>
+                </div>
+
+                <!-- Teff -->
+                <div class="soil-card">
+                    <h4>Teff</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Clay-loam, heavy soils</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 7.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Moderate</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Thrives in water-retentive soils; shallow root system</span></div>
+                </div>
+
+                <!-- Wheat -->
+                <div class="soil-card">
+                    <h4>Wheat</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loam to clay-loam</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 7.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 1.5%</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, S, Zn</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Sensitive to waterlogging; requires good drainage</span></div>
+                </div>
+
+                <!-- Sorghum -->
+                <div class="soil-card">
+                    <h4>Sorghum</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam to clay</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 8.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Low to moderate</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Highly drought-tolerant; grows in marginal soils</span></div>
+                </div>
+
+                <!-- Coffee (Arabica) -->
+                <div class="soil-card">
+                    <h4>Coffee (Arabica)</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Volcanic, well-drained loam</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 6.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">High (≥ 3%)</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, K, Mg, B</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Requires shade; sensitive to water stress</span></div>
+                </div>
+
+                <!-- Enset -->
+                <div class="soil-card">
+                    <h4>Enset</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Deep, moist, fertile loam</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 6.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Very high</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">K, Ca, Mg</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Needs consistent moisture; traditional composting essential</span></div>
+                </div>
+
+                <!-- Barley -->
+                <div class="soil-card">
+                    <h4>Barley</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loam, tolerates lighter soils</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 7.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 1.2%</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Cold-tolerant; suitable for highlands</span></div>
+                </div>
+
+                <!-- Chickpea -->
+                <div class="soil-card">
+                    <h4>Chickpea</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam, well-drained</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 9.0</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Low to moderate</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">P, S, Zn</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Fixes nitrogen; avoid acidic or waterlogged soils</span></div>
+                </div>
+
+                <!-- Sesame -->
+                <div class="soil-card">
+                    <h4>Sesame</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam to loam</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 8.0</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Moderate</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, K</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Drought-tolerant; sensitive to waterlogging</span></div>
+                </div>
+
+                <!-- Potato -->
+                <div class="soil-card">
+                    <h4>Potato</h4>
+                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam, loose, well-drained</span></div>
+                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 6.5</span></div>
+                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">High</span></div>
+                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">K, P, Mg</span></div>
+                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Acidic soils reduce scab; rotate crops</span></div>
                 </div>
             </div>
         </div>
@@ -350,7 +499,6 @@
         }
 
         function updateWeatherDisplay(data, city) {
-            // Find the city data in the weather_data array
             const cityData = data.weather_data.find(item => item.location === city);
             
             if (!cityData) {
@@ -359,14 +507,12 @@
                 return;
             }
 
-            // Update current weather
             document.getElementById('temp').textContent = cityData.current.temperature + '°C';
             document.getElementById('humidity').textContent = cityData.current.humidity + '%';
             document.getElementById('conditions').textContent = cityData.current.weather;
             document.getElementById('wind').textContent = cityData.current.wind_speed + ' km/h';
             document.getElementById('updated').textContent = cityData.current.timestamp;
 
-            // Update forecast
             const forecastContainer = document.getElementById('forecast-container');
             forecastContainer.innerHTML = '';
             
@@ -405,10 +551,8 @@
                 });
             });
 
-            // Initialize first city
             updateWeatherDisplay(data, 'Addis Ababa');
 
-            // Mobile menu toggle
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.nav-links').classList.toggle('active');
             });
