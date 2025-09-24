@@ -1,6 +1,6 @@
 # app.py
 """
-Finedata Ethiopia AI Backend
+Finedatas Ethiopia AI Backend
 - All-in-one data hub for Ethiopia: economic, demographic, agricultural, weather, exchange, forecasts
 - Multilingual AI assistant (en, am, om, fr, es, ar)
 - Dynamic context-aware responses via OpenRouter + Llama-3
@@ -12,7 +12,7 @@ import os
 import json
 import time
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 from functools import wraps
 from typing import Dict, Optional, Any
 
@@ -34,16 +34,8 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-# Environment variables
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-LIBRETRANSLATE_URL = "https://libretranslate.de/translate"
-
-# Validate critical keys
-if not WEATHER_API_KEY:
-    logger.warning("WEATHER_API_KEY not set – weather features will fail")
-if not OPENROUTER_API_KEY:
-    logger.warning("OPENROUTER_API_KEY not set – AI will be disabled")
+# Environment variables are read at request time — NOT at import time
+# This fixes Render deployment issues
 
 # ======================
 # CACHING UTILITY
@@ -120,7 +112,6 @@ def get_exchange_rates() -> Dict[str, Any]:
 
 @cached()
 def get_trade_balance() -> str:
-    # Placeholder – could connect to UN Comtrade or NBE
     return "Ethiopia runs a trade deficit; imports exceed exports (mainly machinery, oil, chemicals)."
 
 @cached()
@@ -218,7 +209,8 @@ def get_livestock_data() -> str:
 
 try:
     from weather_collector import EthiopianWeatherForecast
-    weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY)
+    WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+    weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY) if WEATHER_API_KEY else None
 except Exception as e:
     logger.error(f"Failed to load weather_collector: {e}")
     weather_collector = None
@@ -229,7 +221,7 @@ def get_weather_data(location: str) -> Optional[str]:
     try:
         coords = weather_collector.get_location_coords(location)[1]
         live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_data:  # ✅ FIXED SYNTAX
+        if live_data and 'current' in live_  # ✅ FIXED SYNTAX
             current = live_data['current']
             today = live_data['forecast']['forecastday'][0]['day']
             return (
@@ -268,34 +260,48 @@ def translate_text(text: str, source_lang: str, target_lang: str) -> str:
             "source": source_lang,
             "target": target_lang
         }
-        resp = requests.post(LIBRETRANSLATE_URL, json=payload, timeout=10)
+        resp = requests.post("https://libretranslate.de/translate", json=payload, timeout=10)
         if resp.status_code == 200:
-            return resp.json().get("translatedText", text)
+            data = resp.json()
+            if isinstance(data, dict):
+                return data.get("translatedText", text)
     except Exception as e:
         logger.warning(f"Translation failed ({source_lang}→{target_lang}): {e}")
     return text
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
-    """Returns (english_text, detected_source_lang)"""
     if not text.strip():
         return "", "en"
+    
     try:
-        # First, detect language
-        detect_resp = requests.post(
+        # Detect language
+        resp = requests.post(
             "https://libretranslate.de/detect",
-            json={"q": text[:100]},  # limit for speed
+            json={"q": text[:100]},
             timeout=5
         )
-        if detect_resp.status_code == 200:
-            detections = detect_resp.json()
-            if detections and isinstance(detections, list):
-                detected = detections[0].get("language", "en")
-                if detected != "en":
-                    translated = translate_text(text, detected, "en")
-                    return translated, detected
-        return text, "en"
+        detected = "en"
+        if resp.status_code == 200:
+            data = resp.json()
+            if isinstance(data, list) and 
+                detected = data[0].get("language", "en")
+        
+        # Translate if needed
+        if detected != "en":
+            trans_resp = requests.post(
+                "https://libretranslate.de/translate",
+                json={"q": text, "source": detected, "target": "en"},
+                timeout=8
+            )
+            if trans_resp.status_code == 200:
+                trans_data = trans_resp.json()
+                if isinstance(trans_data, dict):
+                    return trans_data.get("translatedText", text), detected
+        
+        return text, detected
+
     except Exception as e:
-        logger.warning(f"Language detection failed: {e}")
+        logger.warning(f"Translation fallback due to error: {e}")
         return text, "en"
 
 # ======================
@@ -303,19 +309,21 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
 # ======================
 
 def is_query_in_scope(question: str) -> bool:
-    """Check if query is about Ethiopia and within our data domains"""
     q = question.lower()
     ethiopia_keywords = ["ethiopia", "addis", "jimma", "hawassa", "bahir", "mekelle", "teff", "birr", "etb", "kiremt", "belg"]
     domain_keywords = [
         "weather", "rain", "forecast", "plant", "crop", "soil", "agri", "farm",
         "gdp", "inflation", "economy", "exchange", "rate", "usd", "eur",
         "population", "people", "urban", "demographic",
-        "2025", "outlook", "prediction"
+        "2025", "outlook", "prediction", "livestock", "coffee"
     ]
     return any(kw in q for kw in ethiopia_keywords) or any(kw in q for kw in domain_keywords)
 
 def generate_ai_response(question: str) -> str:
-    if not OPENROUTER_API_KEY:
+    # ✅ Read API key at request time — critical for Render
+    openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    if not openrouter_key:
+        logger.error("OPENROUTER_API_KEY is missing in environment")
         return "AI assistant is not configured. Contact support."
 
     if not is_query_in_scope(question):
@@ -376,7 +384,7 @@ Answer:
         resp = requests.post(
             "https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                "Authorization": f"Bearer {openrouter_key}",
                 "HTTP-Referer": "https://finedata.onrender.com",
                 "X-Title": "Finedata Ethiopia AI"
             },
@@ -390,7 +398,6 @@ Answer:
         )
         if resp.status_code == 200:
             answer = resp.json()["choices"][0]["message"]["content"].strip()
-            # Clean artifacts
             answer = answer.split("Question:")[0].split("Answer:")[0].strip()
             return answer if answer else "I couldn't generate a response."
         else:
@@ -407,7 +414,7 @@ Answer:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -419,7 +426,7 @@ def ask_ai():
     if target_lang not in SUPPORTED_LANGUAGES:
         target_lang = "en"
 
-    # Step 1: Translate input to English + detect source
+    # Step 1: Translate input to English
     english_question, detected_lang = detect_and_translate_to_english(user_question)
 
     # Step 2: Generate AI response in English
@@ -464,7 +471,7 @@ def health():
         "status": "ok",
         "timestamp": datetime.utcnow().isoformat(),
         "weather_collector": weather_collector is not None,
-        "openrouter_configured": bool(OPENROUTER_API_KEY)
+        "openrouter_configured": bool(os.getenv("OPENROUTER_API_KEY"))
     })
 
 # ======================
