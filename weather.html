@@ -6,6 +6,9 @@
     <title>Finedatas Ethiopia - Weather & Crop Recommendations</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- PDF Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-primary: #0D1117;
@@ -211,6 +214,68 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
+
+        /* Export Button */
+        .export-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .btn-export {
+            background-color: var(--success-color);
+            color: var(--bg-primary);
+            padding: 0.7rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-export:hover {
+            background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.4);
+        }
+
+        .btn-export:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Hidden export content for PDF */
+        #pdf-content {
+            position: fixed;
+            left: -9999px;
+            top: -9999px;
+            width: 800px;
+            background: white;
+            color: black;
+            padding: 30px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #pdf-content h1, #pdf-content h2, #pdf-content h3 {
+            color: #0d1117;
+        }
+
+        #pdf-content .weather-detail, #pdf-content .crop-detail {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+
+        #pdf-content .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -242,7 +307,12 @@
         <div class="container">
             <h2>Ethiopia Weather & Crop Recommendations</h2>
             <p>Access real-time weather, soil data, and smart planting advice to maximize your harvest</p>
-            <a href="#weather-data" class="btn">View Weather Data</a>
+            <div style="margin-top: 1.5rem;">
+                <a href="#weather-data" class="btn" style="margin-right: 1rem;">View Weather Data</a>
+                <button id="exportBtnHero" class="btn-export">
+                    <i class="fas fa-file-pdf"></i> Export Report (PDF)
+                </button>
+            </div>
         </div>
     </section>
 
@@ -413,6 +483,12 @@
                 Personalized planting advice based on current weather, soil, and seasonal cycles in your region
             </p>
 
+            <div class="export-section">
+                <button id="exportBtnRec" class="btn-export">
+                    <i class="fas fa-file-pdf"></i> Export This Report as PDF
+                </button>
+            </div>
+
             <div class="recommendation-container">
                 <div class="current-recommendation">
                     <h3>Recommended Crop to Plant Now</h3>
@@ -452,6 +528,33 @@
         </div>
     </section>
 
+    <!-- Hidden div for PDF generation -->
+    <div id="pdf-content">
+        <h1>Finedatas Ethiopia</h1>
+        <h2>Farming Advisory Report</h2>
+        <p id="pdf-city">Addis Ababa</p>
+        <p id="pdf-date">Generated on: <span id="pdf-timestamp"></span></p>
+
+        <div class="section">
+            <h3>Current Weather</h3>
+            <div class="weather-detail"><span>Temperature:</span><span id="pdf-temp">--</span></div>
+            <div class="weather-detail"><span>Humidity:</span><span id="pdf-humidity">--</span></div>
+            <div class="weather-detail"><span>Conditions:</span><span id="pdf-conditions">--</span></div>
+            <div class="weather-detail"><span>Wind Speed:</span><span id="pdf-wind">--</span></div>
+        </div>
+
+        <div class="section">
+            <h3>Recommended Crop</h3>
+            <div class="crop-detail"><span>Crop:</span><span id="pdf-crop">--</span></div>
+            <div class="crop-detail"><span>Why:</span><span id="pdf-reason">--</span></div>
+            <div class="crop-detail"><span>Planting Window:</span><span id="pdf-window">--</span></div>
+        </div>
+
+        <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
+            Powered by Finedatas Ethiopia • Data based on EIAR, FAO, and real-time weather
+        </p>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -480,6 +583,9 @@
     </footer>
 
     <script>
+        // Make jsPDF available globally
+        const { jsPDF } = window.jspdf;
+
         // Sample data to use if the JSON file is not found
         const sampleData = {
             "metadata": {
@@ -706,19 +812,17 @@
             return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         }
 
-        // Crop recommendation logic (mock for now – replace with real API later)
+        // Crop recommendation logic
         function getRecommendation(city, weatherData) {
             const current = weatherData;
             const today = new Date();
-            const month = today.getMonth(); // 0 = Jan, 11 = Dec
+            const month = today.getMonth();
 
-            // Simplified logic based on region & season (Ethiopia has Kiremt, Belg, Bega seasons)
             let crop = "Teff";
             let reason = "Optimal soil moisture and temperature for teff planting.";
             let window = "Now – 2 weeks";
 
             if (city.includes("Jimma") || city.includes("Bonga") || city.includes("Gambela") || city.includes("Metu")) {
-                // Coffee/enset zones (southwest – high rainfall)
                 if (month >= 3 && month <= 6) {
                     crop = "Maize";
                     reason = "Heavy rains support maize growth in lowlands.";
@@ -733,17 +837,14 @@
                     window = "Year-round (with compost)";
                 }
             } else if (city.includes("Mekelle") || city.includes("Adigrat") || city.includes("Semera") || city.includes("Dire Dawa")) {
-                // Dry zones – Tigray, Afar, Somali
                 crop = "Sorghum";
                 reason = "Highly drought-tolerant; suitable for current dry conditions.";
                 window = "Next 10 days";
             } else if (month >= 6 && month <= 8) {
-                // Main rainy season (Kiremt) – highlands
                 crop = "Teff or Wheat";
                 reason = "Peak Kiremt rains – ideal for cereal planting.";
                 window = "Now – 3 weeks";
             } else if (month >= 2 && month <= 4) {
-                // Belg season
                 crop = "Barley or Chickpea";
                 reason = "Short rains support cool-season crops.";
                 window = "Now – 2 weeks";
@@ -753,14 +854,10 @@
         }
 
         function updateRecommendations(city, weatherData) {
-            // Update city references
             document.getElementById('rec-city').textContent = city;
             document.getElementById('calendar-city').textContent = city;
 
-            // Get recommendation
             const rec = getRecommendation(city, weatherData);
-
-            // Render crop card
             const cropCard = document.getElementById('recommended-crop');
             cropCard.innerHTML = `
                 <h4>${rec.crop}</h4>
@@ -769,7 +866,7 @@
                 <div class="crop-detail"><span class="label">Soil Match:</span><span class="value">✅ High</span></div>
             `;
 
-            // Render calendar (static for demo – could be dynamic)
+            // Update calendar
             const calendarGrid = document.getElementById('planting-calendar');
             if (city.includes("Jimma") || city.includes("Gambela")) {
                 calendarGrid.innerHTML = `
@@ -819,6 +916,76 @@
             }
         }
 
+        // PDF Export Function
+        async function exportToPDF() {
+            const exportBtn = document.getElementById('exportBtnHero');
+            const exportBtnRec = document.getElementById('exportBtnRec');
+            exportBtn.disabled = true;
+            exportBtnRec.disabled = true;
+            exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            exportBtnRec.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+
+            try {
+                // Get current city
+                const activeCityBtn = document.querySelector('.city-btn.active');
+                const city = activeCityBtn ? activeCityBtn.getAttribute('data-city') : 'Addis Ababa';
+
+                // Update hidden PDF content
+                document.getElementById('pdf-city').textContent = city;
+                document.getElementById('pdf-timestamp').textContent = new Date().toLocaleString('en-ET', { timeZone: 'Africa/Addis_Ababa' });
+
+                // Weather
+                document.getElementById('pdf-temp').textContent = document.getElementById('temp').textContent;
+                document.getElementById('pdf-humidity').textContent = document.getElementById('humidity').textContent;
+                document.getElementById('pdf-conditions').textContent = document.getElementById('conditions').textContent;
+                document.getElementById('pdf-wind').textContent = document.getElementById('wind').textContent;
+
+                // Crop
+                const cropCard = document.getElementById('recommended-crop');
+                const cropTitle = cropCard.querySelector('h4')?.textContent || '--';
+                const reasonEl = cropCard.querySelector('.crop-detail .value')?.textContent || '--';
+                const windowEl = cropCard.querySelectorAll('.crop-detail .value')[1]?.textContent || '--';
+
+                document.getElementById('pdf-crop').textContent = cropTitle;
+                document.getElementById('pdf-reason').textContent = reasonEl;
+                document.getElementById('pdf-window').textContent = windowEl;
+
+                // Generate PDF
+                const pdfContent = document.getElementById('pdf-content');
+                const canvas = await html2canvas(pdfContent, {
+                    scale: 2,
+                    backgroundColor: '#ffffff'
+                });
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save(`Finedatas_Farming_Report_${city.replace(/\s+/g, '_')}.pdf`);
+            } catch (error) {
+                console.error('PDF generation failed:', error);
+                alert('Failed to generate PDF. Please try again.');
+            } finally {
+                exportBtn.disabled = false;
+                exportBtnRec.disabled = false;
+                exportBtn.innerHTML = '<i class="fas fa-file-pdf"></i> Export Report (PDF)';
+                exportBtnRec.innerHTML = '<i class="fas fa-file-pdf"></i> Export This Report as PDF';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             const cityButtons = document.querySelectorAll('.city-btn');
             const data = await fetchWeatherData();
@@ -842,6 +1009,10 @@
             if (initialCityData) {
                 updateRecommendations('Addis Ababa', initialCityData.current);
             }
+
+            // Export buttons
+            document.getElementById('exportBtnHero').addEventListener('click', exportToPDF);
+            document.getElementById('exportBtnRec').addEventListener('click', exportToPDF);
 
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.nav-links').classList.toggle('active');
