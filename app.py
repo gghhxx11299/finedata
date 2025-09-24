@@ -148,7 +148,7 @@ def get_planting_seasons(location: str) -> str:
     return f"{base} {belg} {kiremt}."
 
 # ======================
-# TRANSLATION - USING DEEP-TRANSLATOR
+# TRANSLATION
 # ======================
 
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
@@ -174,9 +174,7 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
         return "", "en"
     
     # Simple detection based on character ranges
-    # Amharic characters: U+1200 to U+137F
-    if any('\u1200' <= char <= '\u137F' for char in text):
-        # Likely Amharic
+    if any('\u1200' <= char <= '\u137F' for char in text):  # Amharic
         if TRANSLATION_AVAILABLE:
             try:
                 translated = GoogleTranslator(source='auto', target='en').translate(text)
@@ -185,8 +183,7 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
                 pass
         return text, "am"
     
-    # Arabic script (for Arabic and some other languages)
-    elif any('\u0600' <= char <= '\u06FF' for char in text):
+    elif any('\u0600' <= char <= '\u06FF' for char in text):  # Arabic script
         if TRANSLATION_AVAILABLE:
             try:
                 translated = GoogleTranslator(source='auto', target='en').translate(text)
@@ -195,21 +192,11 @@ def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
                 pass
         return text, "ar"
     
-    # Default to English
     return text, "en"
 
 # ======================
-# AI RESPONSE - WITH WORKING MODELS
+# AI RESPONSE - WITH FALLBACK SYSTEM
 # ======================
-
-# ACTUALLY AVAILABLE FREE MODELS ON OPENROUTER (Updated)
-AVAILABLE_MODELS = [
-    "google/gemma-2-2b-it:free",  # Usually available and reliable
-    "microsoft/phi-3-medium-4k-instruct:free",  # Good alternative
-    "meta-llama/llama-3.1-8b-instruct:free",  # Newer Llama model
-    "qwen/qwen-2.5-0.5b-instruct:free",  # Lightweight option
-    "huggingfaceh4/zephyr-7b-beta",  # Try without :free suffix
-]
 
 def is_in_scope(question: str) -> bool:
     """Check if the question is within the scope of Ethiopia-focused data."""
@@ -225,68 +212,62 @@ def is_in_scope(question: str) -> bool:
     ]
     return any(kw in q for kw in keywords)
 
-def get_available_models() -> list:
-    """Dynamically check which models are available."""
-    openrouter_key = os.getenv("OPENROUTER_API_KEY")
-    if not openrouter_key:
-        return []
+def generate_simple_response(question: str) -> str:
+    """Generate a simple rule-based response when AI is unavailable."""
+    question_lower = question.lower()
     
-    working_models = []
-    for model in AVAILABLE_MODELS:
-        try:
-            # Test each model with a simple request
-            headers = {
-                "Authorization": f"Bearer {openrouter_key}",
-                "HTTP-Referer": "https://finedata.onrender.com",
-                "X-Title": "Finedata Ethiopia AI",
-            }
-            
-            # Quick test payload
-            test_payload = {
-                "model": model,
-                "messages": [{"role": "user", "content": "Say 'hello'"}],
-                "max_tokens": 10
-            }
-            
-            resp = requests.post(
-                "https://openrouter.ai/api/v1/chat/completions",
-                headers=headers,
-                json=test_payload,
-                timeout=10
-            )
-            
-            if resp.status_code == 200:
-                working_models.append(model)
-                logger.info(f"✅ Model available: {model}")
-            else:
-                logger.warning(f"❌ Model not available: {model} (Status: {resp.status_code})")
-                
-        except Exception as e:
-            logger.warning(f"❌ Model failed: {model} - {e}")
+    # Economic questions
+    if "gdp" in question_lower:
+        return f"Ethiopia's GDP per capita is currently {get_gdp_per_capita()} according to World Bank data."
     
-    # If no models work, return a basic fallback
-    if not working_models:
-        logger.error("❌ No AI models are working!")
-        return ["google/gemma-2-2b-it:free"]  # Fallback to most common
+    elif "inflation" in question_lower:
+        return f"The current inflation rate in Ethiopia is {get_inflation_rate()} based on World Bank figures."
     
-    return working_models
+    elif "population" in question_lower:
+        return f"Ethiopia has a population of approximately {get_population()} people."
+    
+    elif "exchange" in question_lower or "currency" in question_lower:
+        rates = get_exchange_rates()
+        return f"Current exchange rates: 1 ETB = {rates['USD']} USD, {rates['EUR']} EUR, {rates['GBP']} GBP."
+    
+    elif "weather" in question_lower:
+        return "Weather data requires a specific location. Please specify a city like Addis Ababa, Jimma, etc."
+    
+    elif "crop" in question_lower or "agriculture" in question_lower:
+        return f"Common crops in Ethiopia include {get_agricultural_data('Ethiopia')}. Planting seasons: {get_planting_seasons('Ethiopia')}"
+    
+    elif "season" in question_lower or "rain" in question_lower:
+        return f"Ethiopia has two main rainy seasons: {get_planting_seasons('Ethiopia')}"
+    
+    elif "teff" in question_lower:
+        return "Teff is a staple grain in Ethiopia, used to make injera. It's mainly grown in the highlands."
+    
+    elif "coffee" in question_lower:
+        return "Coffee is Ethiopia's largest export crop, primarily grown in regions like Jimma, Sidamo, and Harar."
+    
+    # General Ethiopia questions
+    elif any(word in question_lower for word in ["ethiopia", "addis", "addis ababa"]):
+        return f"Ethiopia has a population of {get_population()} with GDP per capita of {get_gdp_per_capita()}. {get_planting_seasons('Ethiopia')}"
+    
+    else:
+        return "I can provide information about Ethiopia's economy, population, agriculture, and weather. Please ask a specific question about Ethiopia."
 
-def try_ai_models(question: str, context: str) -> str:
-    """Try different AI models until one works."""
+def try_openrouter_ai(question: str, context: str) -> Optional[str]:
+    """Try to get response from OpenRouter API."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
-        return "AI service is not configured. Please check your API key."
+        return None
     
-    # Get working models dynamically
-    working_models = get_available_models()
+    # Try a few model variations
+    models_to_try = [
+        "google/gemma-2-2b-it",  # Try without :free
+        "microsoft/phi-3-medium-4k-instruct",
+        "meta-llama/llama-3.1-8b-instruct",
+        "gryphe/mythomax-l2-13b",  # Another common model
+    ]
     
-    if not working_models:
-        return "AI service is currently unavailable. Please try again later."
-    
-    for model in working_models:
+    for model in models_to_try:
         try:
-            logger.info(f"Trying model: {model}")
-            
             headers = {
                 "Authorization": f"Bearer {openrouter_key}",
                 "HTTP-Referer": "https://finedata.onrender.com", 
@@ -299,14 +280,13 @@ def try_ai_models(question: str, context: str) -> str:
                 "messages": [{"role": "user", "content": context}],
                 "temperature": 0.3,
                 "max_tokens": 300,
-                "top_p": 0.9
             }
             
             resp = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=25
+                timeout=20
             )
             
             if resp.status_code == 200:
@@ -315,38 +295,29 @@ def try_ai_models(question: str, context: str) -> str:
                 cleaned_answer = answer.split("Question:")[0].split("User Question:")[0].strip()
                 
                 if cleaned_answer and len(cleaned_answer) > 10:
-                    logger.info(f"✅ Success with model: {model}")
+                    logger.info(f"✅ OpenRouter success with model: {model}")
                     return cleaned_answer
-                else:
-                    logger.warning(f"Empty response from model: {model}")
             
-            else:
-                logger.warning(f"Model {model} returned status {resp.status_code}")
-                # Remove failing model from cache for next time
-                if model in AVAILABLE_MODELS:
-                    logger.info(f"Removing failing model: {model}")
-                
+            logger.debug(f"Model {model} failed: {resp.status_code}")
+            
         except Exception as e:
-            logger.warning(f"Model {model} failed: {e}")
+            logger.debug(f"Model {model} error: {e}")
             continue
     
-    return "I'm unable to generate a response at the moment. Please try again later."
+    return None
 
 def generate_ai_response(question: str) -> str:
-    """Generate AI response using OpenRouter API."""
-    openrouter_key = os.getenv("OPENROUTER_API_KEY")
-    if not openrouter_key:
-        return "AI assistant is not configured. Please add your OpenRouter API key."
-
+    """Generate AI response with fallback to simple responses."""
     if not is_in_scope(question):
         return "I specialize in Ethiopia-related questions about economy, agriculture, weather, and demographics."
-
-    context = f"""You are Finedata AI, an expert assistant for Ethiopia. Use ONLY the verified data below:
+    
+    # First try OpenRouter AI
+    context = f"""You are Finedata AI, an expert assistant for Ethiopia. Use ONLY this data:
 
 ECONOMIC DATA:
 - GDP per capita: {get_gdp_per_capita()}
 - Inflation rate: {get_inflation_rate()}
-- Exchange rates (ETB to): {get_exchange_rates()}
+- Exchange rates: {get_exchange_rates()}
 
 DEMOGRAPHIC DATA:
 - Population: {get_population()}
@@ -358,14 +329,21 @@ AGRICULTURAL INFORMATION:
 RULES:
 1. Answer concisely in 1-3 sentences
 2. Use only the data provided above
-3. If data is not available, say "I don't have that specific data"
+3. If data is not available, say so
 4. Keep answers factual and Ethiopia-focused
 
 Question: {question}
 
 Answer:"""
-
-    return try_ai_models(question, context)
+    
+    ai_response = try_openrouter_ai(question, context)
+    
+    if ai_response:
+        return ai_response
+    
+    # Fallback to simple rule-based responses
+    logger.info("Using fallback simple response system")
+    return generate_simple_response(question)
 
 # ======================
 # ROUTES
@@ -416,15 +394,26 @@ def ask_ai():
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for monitoring."""
-    working_models = get_available_models()
+    # Test OpenRouter connectivity
+    openrouter_working = False
+    openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    
+    if openrouter_key:
+        try:
+            # Simple test request
+            headers = {"Authorization": f"Bearer {openrouter_key}"}
+            resp = requests.get("https://openrouter.ai/api/v1/models", headers=headers, timeout=10)
+            openrouter_working = resp.status_code == 200
+        except:
+            openrouter_working = False
     
     return jsonify({
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "services": {
             "translation": "available" if TRANSLATION_AVAILABLE else "disabled",
-            "ai": "available" if os.getenv("OPENROUTER_API_KEY") and working_models else "disabled",
-            "working_models": working_models
+            "ai_openrouter": "available" if openrouter_working else "disabled",
+            "ai_fallback": "available",  # Simple responses always work
         },
         "supported_languages": list(SUPPORTED_LANGUAGES)
     })
@@ -450,8 +439,10 @@ if __name__ == '__main__':
     logger.info(f"Starting Finedata Ethiopia AI server on {host}:{port}")
     logger.info(f"Translation available: {TRANSLATION_AVAILABLE}")
     
-    # Test available models on startup
-    working_models = get_available_models()
-    logger.info(f"Working AI models: {working_models}")
+    # Test OpenRouter connectivity
+    if os.getenv("OPENROUTER_API_KEY"):
+        logger.info("OpenRouter API key found - AI features enabled")
+    else:
+        logger.warning("OpenRouter API key not found - using fallback responses")
     
     app.run(debug=False, host=host, port=port)
