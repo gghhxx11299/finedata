@@ -18,32 +18,27 @@
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
         }
-
         h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
         }
-
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
         }
-
         /* Header Styles */
         header {
             background-color: var(--card-bg);
@@ -53,49 +48,40 @@
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
         }
-
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
         }
-
         .logo {
             display: flex;
             align-items: center;
         }
-
         .logo img {
             height: 40px;
             margin-right: 10px;
         }
-
         .logo h1 {
             color: var(--primary-color);
             font-size: 1.5rem;
         }
-
         .nav-links {
             display: flex;
             list-style: none;
         }
-
         .nav-links li {
             margin-left: 1.5rem;
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--text-color);
             font-weight: 500;
             transition: color 0.3s;
         }
-
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary-color);
         }
-
         .btn {
             background-color: var(--primary-color);
             color: var(--bg-color);
@@ -104,13 +90,11 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
         .btn:hover {
             background-color: var(--secondary-color);
             color: #FFFFFF;
             box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
         }
-
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -118,6 +102,25 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary-color);
+        }
+
+        /* Export Button - NEW */
+        .export-btn {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            margin-left: 1rem;
+        }
+        .export-btn:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+            color: var(--text-color);
         }
 
         /* Page Header */
@@ -129,38 +132,31 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border-color);
         }
-
         .page-header h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
-
         .breadcrumb {
             display: flex;
             justify-content: center;
             list-style: none;
         }
-
         .breadcrumb li {
             margin: 0 0.5rem;
         }
-
         .breadcrumb li:not(:last-child)::after {
             content: ">";
             margin-left: 1rem;
             color: var(--secondary-color);
         }
-
         .breadcrumb a {
             color: var(--text-color);
             text-decoration: none;
         }
-
         .breadcrumb a:hover {
             color: var(--primary-color);
         }
-
         /* Economic Sections */
         .economic-section {
             background-color: var(--card-bg);
@@ -170,7 +166,6 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
-
         .section-title {
             color: var(--primary-color);
             border-bottom: 2px solid var(--border-color);
@@ -179,19 +174,16 @@
             display: flex;
             align-items: center;
         }
-
         .section-title i {
             margin-right: 0.5rem;
             color: var(--secondary-color);
         }
-
         .data-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
-
         .data-card {
             background-color: var(--bg-color);
             border-radius: 12px;
@@ -200,45 +192,38 @@
             transition: transform 0.3s ease;
             border: 1px solid var(--border-color);
         }
-
         .data-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--hover-shadow);
             border-color: var(--primary-color);
         }
-
         .data-card h4 {
             color: var(--primary-color);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
         }
-
         .data-card h4 i {
             margin-right: 0.5rem;
             color: var(--secondary-color);
         }
-
         .stat-value {
             font-size: 1.8rem;
             font-weight: bold;
             color: var(--primary-color);
             margin: 0.5rem 0;
         }
-
         .stat-detail {
             margin: 0.5rem 0;
             line-height: 1.6;
             color: var(--text-color);
         }
-
         .source-note {
             font-size: 0.85rem;
             color: #8B949E;
             margin-top: 1rem;
             font-style: italic;
         }
-
         /* Chart Container */
         .chart-container {
             background-color: var(--card-bg);
@@ -248,7 +233,6 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
-
         .chart-placeholder {
             background-color: var(--bg-color);
             height: 300px;
@@ -259,26 +243,21 @@
             color: #8B949E;
             border: 1px solid var(--border-color);
         }
-
         /* New styles for enhanced content */
         .stat-trend {
             display: inline-block;
             margin-left: 0.5rem;
             font-size: 0.9rem;
         }
-
         .trend-up {
             color: #3FB950;
         }
-
         .trend-down {
             color: var(--secondary-color);
         }
-
         .trend-neutral {
             color: #D29922;
         }
-
         .data-highlight {
             background-color: rgba(88, 166, 255, 0.1);
             border-left: 4px solid var(--primary-color);
@@ -287,35 +266,29 @@
             border-radius: 0 4px 4px 0;
             color: var(--text-color);
         }
-
         .data-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
         }
-
         .data-table th, .data-table td {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
-
         .data-table th {
             background-color: var(--bg-color);
             font-weight: 600;
             color: var(--primary-color);
         }
-
         .data-table tr:hover {
             background-color: rgba(88, 166, 255, 0.05);
         }
-
         .year-comparison {
             display: flex;
             justify-content: space-between;
             margin: 1rem 0;
         }
-
         .year-box {
             flex: 1;
             text-align: center;
@@ -325,21 +298,17 @@
             border-radius: 4px;
             border: 1px solid var(--border-color);
         }
-
         .year-box:first-child {
             margin-left: 0;
         }
-
         .year-box:last-child {
             margin-right: 0;
         }
-
         .year-value {
             font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
         }
-
         /* Footer */
         footer {
             background-color: var(--card-bg);
@@ -348,40 +317,33 @@
             margin-top: 3rem;
             border-top: 1px solid var(--border-color);
         }
-
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
         }
-
         .footer-section h3 {
             margin-bottom: 1rem;
             font-size: 1.2rem;
             color: var(--primary-color);
         }
-
         .footer-section p, .footer-section a {
             margin-bottom: 0.5rem;
             color: #8B949E;
         }
-
         .footer-section a {
             display: block;
             text-decoration: none;
         }
-
         .footer-section a:hover {
             color: var(--primary-color);
         }
-
         .social-links {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
         }
-
         .social-links a {
             display: inline-block;
             color: var(--text-color);
@@ -393,18 +355,15 @@
             line-height: 40px;
             transition: background-color 0.3s;
         }
-
         .social-links a:hover {
             background-color: rgba(255, 255, 255, 0.2);
             color: var(--primary-color);
         }
-
         .footer-bottom {
             text-align: center;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
         }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
@@ -419,27 +378,21 @@
                 padding: 1rem 0;
                 border-top: 1px solid var(--border-color);
             }
-            
             .nav-links.active {
                 display: flex;
             }
-            
             .nav-links li {
                 margin: 0.5rem 1.5rem;
             }
-            
             .mobile-menu-btn {
                 display: block;
             }
-            
             .page-header h2 {
                 font-size: 2rem;
             }
-            
             .year-comparison {
                 flex-direction: column;
             }
-            
             .year-box {
                 margin: 0.5rem 0;
             }
@@ -465,6 +418,12 @@
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="support.html">Support</a></li>
+                    <!-- Export Button Added Here -->
+                    <li>
+                        <button class="export-btn" onclick="exportEconomicData()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                    </li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -473,7 +432,6 @@
             </nav>
         </div>
     </header>
-
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -484,63 +442,47 @@
             </ul>
         </div>
     </div>
-
     <div class="container">
         <!-- Key Economic Indicators Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-chart-line"></i> Key Economic Indicators</h3>
-            
             <div class="data-highlight">
                 <p>Ethiopia has been one of Africa's fastest-growing economies over the past decade, with an average annual GDP growth of 9-10% until 2019. While growth slowed due to COVID-19 and internal conflicts, the economy is showing signs of recovery.</p>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-globe-africa"></i> GDP</h4>
                     <div class="stat-value">$126B <span class="stat-trend trend-up">+6.4%</span></div>
                     <div class="stat-detail">Nominal GDP (2025)</div>
-                    
                     <div class="stat-value">$1,150</div>
                     <div class="stat-detail">GDP per Capita</div>
-                    
                     <div class="stat-value">5.9%</div>
                     <div class="stat-detail">Real GDP Growth</div>
-                    
                     <div class="stat-value">8.2%</div>
                     <div class="stat-detail">GDP Deflator</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-money-bill-wave"></i> Inflation</h4>
                     <div class="stat-value">10.5%</div>
                     <div class="stat-detail">Inflation Rate (2025)</div>
-                    
                     <div class="stat-value">7.5%</div>
                     <div class="stat-detail">Interest Rate</div>
-                    
                     <div class="stat-value">18.3%</div>
                     <div class="stat-detail">Money Supply Growth</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-coins"></i> Currency</h4>
                     <div class="stat-value">ETB 57.2/$1</div>
                     <div class="stat-detail">Exchange Rate (ETB/USD)</div>
-                    
                     <div class="stat-value">$8.1B</div>
                     <div class="stat-detail">Foreign Reserves (2025)</div>
-                    
                     <p class="stat-detail">The Ethiopian Birr has faced significant depreciation pressure, with a wide gap between official and parallel market rates.</p>
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-industry"></i> Sector Contribution to GDP</h4>
-                    
                     <table class="data-table">
                         <tr>
                             <th>Sector</th>
@@ -559,51 +501,40 @@
                             <td>35%</td>
                         </tr>
                     </table>
-                    
                     <p class="stat-detail">Services have surpassed agriculture as the largest sector, reflecting Ethiopia's economic transformation.</p>
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
             </div>
         </section>
-
         <!-- Manufacturing and Industry Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-industry"></i> Manufacturing and Industry</h3>
-            
             <div class="data-highlight">
                 <p>Ethiopia's industrial policy focuses on light manufacturing, particularly textiles and agro-processing, as part of its "Made in Ethiopia" strategy.</p>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-tshirt"></i> Textile and Apparel</h4>
                     <div class="stat-value">$1.2B</div>
                     <div class="stat-detail">Textile exports (2025)</div>
-                    
                     <div class="stat-value">150,000+</div>
                     <div class="stat-detail">Workers employed in textile sector</div>
-                    
                     <p class="stat-detail">Ethiopia aims to become a major global textile hub, leveraging low labor costs and preferential trade access.</p>
                     <p class="source-note">Source: Ethiopian Textile Industry Development Institute</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-cogs"></i> Industrial Parks</h4>
                     <div class="stat-value">12</div>
                     <div class="stat-detail">Operational industrial parks</div>
-                    
                     <div class="stat-value">80,000+</div>
                     <div class="stat-detail">Jobs created in industrial parks</div>
-                    
                     <p class="stat-detail">Major parks include Hawassa, Bole Lemi, and Kombolcha, with significant Chinese and Turkish investment.</p>
                     <p class="source-note">Source: Ethiopian Investment Commission</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-factory"></i> Manufacturing Growth</h4>
                     <div class="stat-value">8.5%</div>
                     <div class="stat-detail">Annual manufacturing growth (2025)</div>
-                    
                     <div class="year-comparison">
                         <div class="year-box">
                             <div class="year-value">2020</div>
@@ -614,11 +545,9 @@
                             <div>8.5% growth</div>
                         </div>
                     </div>
-                    
                     <p class="stat-detail">Manufacturing is growing faster than overall GDP, driven by industrial park investments.</p>
                     <p class="source-note">Source: Central Statistical Agency</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-box-open"></i> Export Diversification</h4>
                     <table class="data-table">
@@ -651,20 +580,16 @@
                 </div>
             </div>
         </section>
-
         <!-- Tourism Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-umbrella-beach"></i> Tourism</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-plane-arrival"></i> Tourist Arrivals</h4>
                     <div class="stat-value">1.2M</div>
                     <div class="stat-detail">International tourist arrivals (2025)</div>
-                    
                     <div class="stat-value">$3.8B</div>
                     <div class="stat-detail">Tourism revenue (2025)</div>
-                    
                     <div class="year-comparison">
                         <div class="year-box">
                             <div class="year-value">2019</div>
@@ -675,22 +600,17 @@
                             <div>1.2M arrivals</div>
                         </div>
                     </div>
-                    
                     <p class="source-note">Source: Ethiopian Tourism Commission</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-hotel"></i> Accommodation</h4>
                     <div class="stat-value">1,200+</div>
                     <div class="stat-detail">Registered hotels and lodges</div>
-                    
                     <div class="stat-value">45,000+</div>
                     <div class="stat-detail">Hotel rooms nationwide</div>
-                    
                     <p class="stat-detail">Addis Ababa accounts for 40% of hotel capacity, followed by Bahir Dar and Hawassa.</p>
                     <p class="source-note">Source: Ethiopian Tourism Commission</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-mountain"></i> Key Attractions</h4>
                     <div class="stat-detail">• Lalibela Rock Churches</div>
@@ -698,261 +618,200 @@
                     <div class="stat-detail">• Lake Tana and Blue Nile Falls</div>
                     <div class="stat-detail">• Axum Obelisks and Stelae</div>
                     <div class="stat-detail">• Omo Valley Cultural Tourism</div>
-                    
                     <p class="stat-detail">UNESCO World Heritage Sites: 11 properties (9 cultural, 2 natural)</p>
                     <p class="source-note">Source: UNESCO, Ethiopian Tourism Commission</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-chart-line"></i> Tourism Growth</h4>
                     <div class="stat-value">12.5%</div>
                     <div class="stat-detail">Annual tourism growth rate</div>
-                    
                     <div class="stat-value">2.1%</div>
                     <div class="stat-detail">Contribution to GDP</div>
-                    
                     <p class="stat-detail">Tourism is identified as a key growth sector in Ethiopia's Ten-Year Development Plan.</p>
                     <p class="source-note">Source: World Travel & Tourism Council</p>
                 </div>
             </div>
         </section>
-
         <!-- Digital Economy Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-laptop-code"></i> Digital Economy</h3>
-            
             <div class="data-highlight">
                 <p>Ethiopia's digital transformation is accelerating with telecom liberalization and fintech innovation.</p>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-mobile-alt"></i> Telecom Sector</h4>
                     <div class="stat-value">72M</div>
                     <div class="stat-detail">Mobile subscribers (2025)</div>
-                    
                     <div class="stat-value">28%</div>
                     <div class="stat-detail">Internet penetration rate</div>
-                    
                     <div class="stat-value">$8.5B</div>
                     <div class="stat-detail">Telecom sector revenue (2025)</div>
-                    
                     <p class="stat-detail">Private operators (Safaricom, MTN) launched services in 2022, ending Ethio Telecom's monopoly.</p>
                     <p class="source-note">Source: Ethiopian Communications Authority</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-wallet"></i> Fintech Growth</h4>
                     <div class="stat-value">15M+</div>
                     <div class="stat-detail">Mobile money users (2025)</div>
-                    
                     <div class="stat-value">45%</div>
                     <div class="stat-detail">Adults with digital financial accounts</div>
-                    
                     <p class="stat-detail">Mobile money transaction value grew by 200% annually since 2022.</p>
                     <p class="source-note">Source: National Bank of Ethiopia</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-code"></i> Tech Startups</h4>
                     <div class="stat-value">200+</div>
                     <div class="stat-detail">Active tech startups</div>
-                    
                     <div class="stat-value">$120M</div>
                     <div class="stat-detail">Startup funding (2025)</div>
-                    
                     <p class="stat-detail">Key sectors: fintech, agritech, e-commerce, and healthtech.</p>
                     <p class="source-note">Source: BlueMoon Ventures, 2025</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-server"></i> Digital Infrastructure</h4>
                     <div class="stat-value">12,000+ km</div>
                     <div class="stat-detail">National fiber optic network</div>
-                    
                     <div class="stat-value">85%</div>
                     <div class="stat-detail">4G population coverage</div>
-                    
                     <p class="stat-detail">Government aims for 60% internet penetration by 2030 through digital transformation strategy.</p>
                     <p class="source-note">Source: Ministry of Innovation and Technology</p>
                 </div>
             </div>
         </section>
-
         <!-- Public Finance Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-landmark"></i> Public Finance</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-money-check"></i> Government Budget</h4>
                     <div class="stat-value">3.2% of GDP</div>
                     <div class="stat-detail">Budget Deficit</div>
-                    
                     <div class="stat-value">14.5% of GDP</div>
                     <div class="stat-detail">Tax Revenue</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-chart-pie"></i> Public Debt</h4>
                     <div class="stat-value">57% of GDP</div>
                     <div class="stat-detail">Public Debt</div>
-                    
                     <div class="stat-value">$29.8B</div>
                     <div class="stat-detail">External Debt</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-hand-holding-usd"></i> Foreign Revenue</h4>
                     <div class="stat-value">$32B</div>
                     <div class="stat-detail">Foreign Revenue</div>
-                    
                     <div class="stat-value">$4.3B</div>
                     <div class="stat-detail">FDI Inflow (2025)</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-globe-americas"></i> Current Account</h4>
                     <div class="stat-value">-$5.2B</div>
                     <div class="stat-detail">Current Account Balance</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
             </div>
         </section>
-
         <!-- Trade and Investment Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-handshake"></i> Trade and Investment</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-file-export"></i> Exports</h4>
                     <div class="stat-value">$18.2B</div>
                     <div class="stat-detail">Total Exports (2025)</div>
-                    
                     <div class="stat-value">15.2%</div>
                     <div class="stat-detail">Export Growth Rate</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-file-import"></i> Imports</h4>
                     <div class="stat-value">$24.7B</div>
                     <div class="stat-detail">Total Imports (2025)</div>
-                    
                     <div class="stat-value">12.8%</div>
                     <div class="stat-detail">Import Growth Rate</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-money-bill-trend-up"></i> Trade Balance</h4>
                     <div class="stat-value">-$6.5B</div>
                     <div class="stat-detail">Trade Balance (2025)</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-hands-helping"></i> Foreign Investment</h4>
                     <div class="stat-value">$4.3B</div>
                     <div class="stat-detail">FDI Inflow (2025)</div>
-                    
                     <p class="source-note">Source: 2025 Economic Data</p>
                 </div>
             </div>
         </section>
-
         <!-- Infrastructure Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-road"></i> Infrastructure</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-road"></i> Road Network</h4>
                     <div class="stat-value">~165,000 km</div>
                     <div class="stat-detail">Ethiopia's road network has expanded rapidly from 127,000 km in 2019</div>
                     <p class="stat-detail">The government has built thousands of km of new paved roads in recent years, including major corridors connecting interior regions.</p>
-                    
                     <div class="stat-detail">
                         <strong>Paved roads:</strong> 25% of total network<br>
                         <strong>Road density:</strong> 0.15 km/km² (still below African average)
                     </div>
-                    
                     <p class="stat-detail"><strong>Note:</strong> Many rural areas still lack all-weather roads.</p>
                     <p class="source-note">Source: Ministry of Transport, 2022</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-train"></i> Railway Development</h4>
                     <div class="stat-value">759 km</div>
                     <div class="stat-detail">Operational standard gauge railway</div>
-                    
                     <div class="stat-detail">
                         <strong>Addis Ababa-Djibouti Railway:</strong> 656 km electrified line<br>
                         <strong>Urban light rail:</strong> Addis Ababa's 34 km system serves 60,000+ daily
                     </div>
-                    
                     <p class="stat-detail">Rail transport is playing an increasing role in freight movement to Djibouti ports.</p>
                     <p class="source-note">Source: Ethiopian Railways Corporation, 2023</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-tower-cell"></i> Telecommunications</h4>
                     <div class="stat-value">~100%</div>
                     <div class="stat-detail">Mobile population coverage by Ethio telecom and new private entrants</div>
-                    
                     <div class="stat-value">72 million</div>
                     <div class="stat-detail">Mobile subscribers (2023)</div>
-                    
                     <div class="stat-value">16.7%</div>
                     <div class="stat-detail">Internet penetration rate (2023)</div>
-                    
                     <p class="stat-detail">Mobile subscriptions now exceed the population (several SIMs per person), but data penetration remains low. Fixed-line broadband is rare.</p>
                     <p class="source-note">Source: Ethio Telecom, 2023</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-bolt"></i> Energy</h4>
                     <div class="stat-value">4,500+ MW</div>
                     <div class="stat-detail">Installed electricity generation capacity</div>
-                    
                     <div class="stat-detail">
                         <strong>Hydropower:</strong> 90% of generation<br>
                         <strong>Grand Ethiopian Renaissance Dam:</strong> 5,150 MW (phased commissioning)
                     </div>
-                    
                     <div class="stat-value">52%</div>
                     <div class="stat-detail">National electrification rate (2023)</div>
-                    
                     <p class="stat-detail">Ethiopia has significant renewable energy potential, with hydro, wind, solar and geothermal resources.</p>
                     <p class="source-note">Source: Ethiopian Electric Power, 2023</p>
                 </div>
             </div>
         </section>
-
         <!-- Poverty and Living Standards Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Poverty and Living Standards</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-house-circle-exclamation"></i> Poverty Rates</h4>
                     <div class="stat-value">30-40%</div>
                     <div class="stat-detail">Below $3.20/day (2011 PPP) according to World Bank estimates</div>
-                    
                     <div class="stat-value"><5%</div>
                     <div class="stat-detail">Extreme poverty (below $1.90/day)</div>
-                    
                     <div class="year-comparison">
                         <div class="year-box">
                             <div class="year-value">2015</div>
@@ -963,53 +822,41 @@
                             <div>~30% estimated</div>
                         </div>
                     </div>
-                    
                     <p class="stat-detail">Rural poverty is much higher than urban. No recent official survey is available post-2015.</p>
                     <p class="source-note">Source: World Bank, recent estimates</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-chart-line"></i> Income Inequality</h4>
                     <div class="stat-value">31.1</div>
                     <div class="stat-detail">Gini coefficient (2021), indicating moderate inequality</div>
-                    
                     <div class="stat-detail">
                         <strong>Urban inequality:</strong> 37.2<br>
                         <strong>Rural inequality:</strong> 28.5
                     </div>
-                    
                     <p class="stat-detail">Income inequality has risen only modestly; it remains lower than many African peers.</p>
                     <p class="source-note">Source: World Factbook, 2021</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-globe"></i> Human Development Index</h4>
                     <div class="stat-value">0.488</div>
                     <div class="stat-detail">Placing Ethiopia in the Low HDI category (UNDP 2021)</div>
-                    
                     <div class="stat-detail">
                         <strong>Life expectancy:</strong> ~68 years for men, ~70 for women (2022)<br>
                         <strong>Education:</strong> Mean schooling around 3-4 years<br>
                         <strong>GNI per capita:</strong> ~$2,600 (nominal) or ~$5,000 (PPP)
                     </div>
-                    
                     <div class="stat-value">173/191</div>
                     <div class="stat-detail">Global HDI ranking (2021)</div>
-                    
                     <p class="source-note">Source: UNDP, 2021</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-handshake"></i> Access to Services</h4>
                     <div class="stat-value">50%</div>
                     <div class="stat-detail">Access to basic drinking water supply</div>
-                    
                     <div class="stat-value">9%</div>
                     <div class="stat-detail">Access to basic sanitation facilities</div>
-                    
                     <div class="stat-value">22%</div>
                     <div class="stat-detail">Open defecation nationwide (mostly rural)</div>
-                    
                     <div class="stat-detail">
                         Only ~44% of rural health clinics have reliable electricity, and health worker density is low (≈1 per 2,000 people).
                     </div>
@@ -1017,69 +864,56 @@
                 </div>
             </div>
         </section>
-
         <!-- Business and Entrepreneurship Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-business-time"></i> Business and Entrepreneurship</h3>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-building"></i> Enterprise Formation</h4>
                     <div class="stat-value">12,500+</div>
                     <div class="stat-detail">New businesses registered annually</div>
-                    
                     <p class="stat-detail">Precise figures on new business registrations are not readily published. Pre-reform data suggest very few new firms are formally registered each year relative to the growing population.</p>
                     <p class="stat-detail">Informal micro-enterprises (especially in trade and services) dominate.</p>
                     <p class="source-note">Source: Central Statistical Agency</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-chart-bar"></i> Ease of Doing Business</h4>
                     <div class="stat-value">159/190</div>
                     <div class="stat-detail">Ethiopia's ranking in the 2019 Doing Business report</div>
-                    
                     <div class="stat-detail">
                         <strong>Starting a business:</strong> 12 procedures, 32 days<br>
                         <strong>Getting electricity:</strong> 6 procedures, 99 days<br>
                         <strong>Enforcing contracts:</strong> 620 days, 33.4% of claim value
                     </div>
-                    
                     <p class="stat-detail">Reflects lengthy procedures and high costs (e.g. many licenses, delays in getting construction permits, limited credit access).</p>
                     <p class="stat-detail">Reform efforts are ongoing but impact has been limited so far.</p>
                     <p class="source-note">Source: World Bank, 2019</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-university"></i> Financial Inclusion</h4>
                     <div class="stat-value">45%</div>
                     <div class="stat-detail">Adults with a formal bank account</div>
-                    
                     <div class="stat-detail">
                         <strong>Mobile money accounts:</strong> 12% of adults (growing rapidly)<br>
                         <strong>Credit access:</strong> 18% of adults<br>
                         <strong>Insurance penetration:</strong> <1% of GDP
                     </div>
-                    
                     <p class="stat-detail">Leaving a large informal sector. MFIs are active in rural areas, but credit remains scarce for small entrepreneurs.</p>
                     <p class="stat-detail">Mobile money services began in 2022 (by new operators) and may soon expand access.</p>
                     <p class="source-note">Source: National Bank of Ethiopia</p>
                 </div>
-                
                 <div class="data-card">
                     <h4><i class="fas fa-store-slash"></i> Informal Economy</h4>
                     <div class="stat-value">60-80%</div>
                     <div class="stat-detail">Estimated share of non-agricultural employment</div>
-                    
                     <div class="stat-value">35-40%</div>
                     <div class="stat-detail">Estimated share of GDP</div>
-                    
                     <p class="stat-detail">Especially in urban areas – though no official data is available.</p>
                     <p class="stat-detail">The government cites a large "ghost workers" problem, and many micro-businesses operate outside formal regulation.</p>
                     <p class="source-note">Source: Industry reports and estimates</p>
                 </div>
             </div>
         </section>
-
         <!-- Data Sources Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -1098,7 +932,6 @@
             <p>We strive to provide the most accurate and up-to-date information available. Last updated: August 2025.</p>
         </section>
     </div>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1120,7 +953,6 @@
                     <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
                     <p><i class="fas fa-phone"></i> +251991168917</p>
                     <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
-                    
                 </div>
             </div>
             <div class="footer-bottom">
@@ -1128,22 +960,100 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
             }
         });
+
+        // =============== EXPORT FUNCTIONALITY ===============
+        function downloadFile(filename, text, mimeType = 'text/plain') {
+            const blob = new Blob([text], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportAllTablesToCSV() {
+            let allCSV = '';
+            const tables = document.querySelectorAll('.data-table');
+            tables.forEach((table, idx) => {
+                if (idx > 0) allCSV += '\n\n';
+                let csv = [];
+                const rows = table.querySelectorAll('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    const cols = rows[i].querySelectorAll('th, td');
+                    const row = [];
+                    for (let j = 0; j < cols.length; j++) {
+                        let txt = cols[j].innerText.trim().replace(/"/g, '""');
+                        if (txt.includes(',') || txt.includes('\n') || txt.includes('"')) txt = `"${txt}"`;
+                        row.push(txt);
+                    }
+                    csv.push(row.join(','));
+                }
+                allCSV += csv.join('\n');
+            });
+            return allCSV;
+        }
+
+        function exportKeyMetricsAsJSON() {
+            const cards = document.querySelectorAll('.data-card');
+            const metrics = [];
+            cards.forEach(card => {
+                const title = card.querySelector('h4')?.innerText.trim();
+                const values = Array.from(card.querySelectorAll('.stat-value')).map(el => el.innerText.trim());
+                const details = Array.from(card.querySelectorAll('.stat-detail')).map(el => el.innerText.trim());
+                if (title) metrics.push({ title, values, details });
+            });
+            return JSON.stringify(metrics, null, 2);
+        }
+
+        function exportEconomicData() {
+            const format = prompt("Choose export format:\n- 'csv' for all tables\n- 'json' for key metrics\n- 'txt' for summary report\n\nLeave blank for CSV (default)");
+            
+            if (format === null || format === "" || format.toLowerCase() === "csv") {
+                const csv = exportAllTablesToCSV();
+                downloadFile('ethiopia_economic_data_tables.csv', csv, 'text/csv');
+            } 
+            else if (format.toLowerCase() === "json") {
+                const json = exportKeyMetricsAsJSON();
+                downloadFile('economic_key_metrics.json', json, 'application/json');
+            }
+            else if (format.toLowerCase() === "txt") {
+                let report = `Ethiopian Economic Data Summary (2025)\nGenerated by Finedatas\n\n`;
+                document.querySelectorAll('.economic-section').forEach(section => {
+                    const title = section.querySelector('.section-title')?.innerText.trim();
+                    if (title) report += `\n=== ${title} ===\n\n`;
+                    section.querySelectorAll('.data-card').forEach(card => {
+                        const cardTitle = card.querySelector('h4')?.innerText.trim();
+                        if (cardTitle) {
+                            report += `${cardTitle}\n`;
+                            card.querySelectorAll('.stat-value, .stat-detail').forEach(el => {
+                                report += `- ${el.innerText.trim()}\n`;
+                            });
+                            report += '\n';
+                        }
+                    });
+                });
+                downloadFile('economic_summary_report.txt', report);
+            }
+            else {
+                alert("Please use 'csv', 'json', or 'txt'.");
+            }
+        }
     </script>
 </body>
 </html>
