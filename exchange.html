@@ -93,9 +93,24 @@
             font-weight: 700;
         }
 
-        /* FIXED: Remove absolute positioning that breaks layout */
+        /* Export Button */
+        .export-btn {
+            background: none;
+            border: 1px solid var(--primary-accent);
+            color: var(--primary-accent);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+        .export-btn:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+
         .nav-links li:last-child {
-            position: static; /* ← Critical fix */
+            position: static;
         }
 
         .nav-links li:last-child a {
@@ -278,7 +293,7 @@
             border: 1px solid var(--primary-accent);
         }
 
-        /* FIXED: Charts Section - Set explicit height */
+        /* Charts Section */
         .charts-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -293,7 +308,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             border: 1px solid var(--primary-accent);
             transition: transform 0.2s;
-            height: 400px; /* ← Critical fix: fixed height */
+            height: 400px;
         }
 
         .chart-container:hover {
@@ -399,13 +414,55 @@
             width: 100%;
         }
 
+        /* Export Modal */
+        #exportModal {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-accent);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        #exportModal h4 {
+            margin: 0 0 0.8rem;
+            color: var(--primary-accent);
+            font-size: 1.1rem;
+        }
+        #exportModal button {
+            display: block;
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.4rem 0;
+            background: rgba(88,166,255,0.1);
+            color: var(--text-color);
+            border: 1px solid var(--primary-accent);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        #exportModal button:hover {
+            background: rgba(88,166,255,0.2);
+        }
+        #exportModal .close-btn {
+            background: var(--secondary-accent);
+            color: white;
+            border: none;
+            margin-top: 0.6rem;
+        }
+
         @media (max-width: 768px) {
             .charts-section {
                 grid-template-columns: 1fr;
             }
             
             .chart-container {
-                height: 350px; /* Adjust for mobile */
+                height: 350px;
             }
             
             .nav-links {
@@ -424,6 +481,12 @@
             
             .footer-content {
                 flex-direction: column;
+            }
+
+            .export-btn {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
             }
         }
     </style>
@@ -447,11 +510,27 @@
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="support.html">Support</a></li>
+                    <li>
+                        <button class="export-btn" onclick="showExportOptions()">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                    </li>
                     <li><a href="donate.html">Donate</a></li>
                 </ul>
             </nav>
         </div>
     </header>
+
+    <!-- Export Modal -->
+    <div id="exportModal">
+        <h4><i class="fas fa-file-export"></i> Export Options</h4>
+        <button onclick="exportAllTablesToCSV()"><i class="fas fa-table"></i> All Tables (CSV)</button>
+        <button onclick="exportKeyRatesAsJSON()"><i class="fas fa-code"></i> Key Rates (JSON)</button>
+        <button onclick="exportSummaryAsText()"><i class="fas fa-file-alt"></i> Summary Report (TXT)</button>
+        <button class="close-btn" onclick="document.getElementById('exportModal').style.display='none'">
+            <i class="fas fa-times"></i> Close
+        </button>
+    </div>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -524,12 +603,12 @@
 
         <!-- Exchange Rates Table -->
         <section class="exchange-rates">
-            <div class="date-info">
+            <div class="date-info" id="mainDateInfo">
                 Applicable on September 17, 2025
             </div>
             
             <div class="rates-table-container">
-                <table>
+                <table id="currentRatesTable">
                     <thead>
                         <tr>
                             <th>Currency Code</th>
@@ -684,32 +763,32 @@
 
         <!-- Key Rates Cards -->
         <section class="key-rates">
-            <div class="rate-card">
+            <div class="rate-card" data-currency="USD" data-rate="143.6171" data-change="+0.25%">
                 <h3>USD/ETB</h3>
                 <div class="rate-value">143.6171</div>
                 <div class="rate-change positive">+0.25%</div>
             </div>
-            <div class="rate-card">
+            <div class="rate-card" data-currency="EUR" data-rate="168.8721" data-change="+0.18%">
                 <h3>EUR/ETB</h3>
                 <div class="rate-value">168.8721</div>
                 <div class="rate-change positive">+0.18%</div>
             </div>
-            <div class="rate-card">
+            <div class="rate-card" data-currency="GBP" data-rate="195.372" data-change="-0.12%">
                 <h3>GBP/ETB</h3>
                 <div class="rate-value">195.372</div>
                 <div class="rate-change negative">-0.12%</div>
             </div>
-            <div class="rate-card">
+            <div class="rate-card" data-currency="CNY" data-rate="20.2661" data-change="+0.32%">
                 <h3>CNY/ETB</h3>
                 <div class="rate-value">20.2661</div>
                 <div class="rate-change positive">+0.32%</div>
             </div>
-            <div class="rate-card">
+            <div class="rate-card" data-currency="JPY" data-rate="0.9788" data-change="+0.15%">
                 <h3>JPY/ETB</h3>
                 <div class="rate-value">0.9788</div>
                 <div class="rate-change positive">+0.15%</div>
             </div>
-            <div class="rate-card">
+            <div class="rate-card" data-currency="INR" data-rate="1.6379" data-change="-0.08%">
                 <h3>INR/ETB</h3>
                 <div class="rate-value">1.6379</div>
                 <div class="rate-change negative">-0.08%</div>
@@ -734,7 +813,7 @@
                 <i class="fas fa-history" style="margin-right: 0.5rem; color: var(--secondary-accent);"></i> Historical Exchange Rates (USD/ETB)
             </h3>
             <div class="rates-table-container">
-                <table>
+                <table id="historicalRatesTable">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -819,6 +898,7 @@
             </div>
         </div>
     </footer>
+
     <script>
         const exchangeRates = {
             "ETB": 1,
@@ -884,7 +964,6 @@
             },
             options: {
                 responsive: true,
-                // maintainAspectRatio: false, // ← Removed to prevent height issues
                 scales: {
                     y: {
                         beginAtZero: false,
@@ -926,7 +1005,6 @@
             },
             options: {
                 responsive: true,
-                // maintainAspectRatio: false, // ← Removed
                 scales: {
                     y: {
                         beginAtZero: false,
@@ -950,6 +1028,116 @@
                             color: '#C9D1D9'
                         }
                     }
+                }
+            }
+        });
+
+        // === EXPORT FUNCTIONS ===
+        function showExportOptions() {
+            const modal = document.getElementById('exportModal');
+            if (window.innerWidth <= 768) {
+                modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
+            } else {
+                modal.style.display = 'block';
+                setTimeout(() => {
+                    if (window.innerWidth > 768) {
+                        modal.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+
+        function downloadFile(filename, text, mimeType = 'text/plain') {
+            const blob = new Blob([text], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 1. Export ALL tables as CSV
+        function exportAllTablesToCSV() {
+            let allCSV = '';
+            const tables = [document.getElementById('currentRatesTable'), document.getElementById('historicalRatesTable')];
+            const titles = ['Current Exchange Rates', 'Historical Exchange Rates (USD/ETB)'];
+            
+            tables.forEach((table, index) => {
+                if (index > 0) allCSV += '\n\n';
+                allCSV += `# ${titles[index]}\n`;
+                let csv = [];
+                const rows = table.querySelectorAll('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    const cols = rows[i].querySelectorAll('td, th');
+                    const row = [];
+                    for (let j = 0; j < cols.length; j++) {
+                        let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+                        if (data.includes(',') || data.includes('"')) {
+                            data = `"${data}"`;
+                        }
+                        row.push(data);
+                    }
+                    csv.push(row.join(','));
+                }
+                allCSV += csv.join('\n');
+            });
+            downloadFile('ethiopia_exchange_rates.csv', allCSV, 'text/csv');
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // 2. Export key rates as JSON
+        function exportKeyRatesAsJSON() {
+            const cards = document.querySelectorAll('.rate-card');
+            const rates = [];
+            cards.forEach(card => {
+                const currency = card.getAttribute('data-currency');
+                const rate = card.getAttribute('data-rate');
+                const change = card.getAttribute('data-change');
+                if (currency) {
+                    rates.push({ currency, rate, change });
+                }
+            });
+            const jsonString = JSON.stringify(rates, null, 2);
+            downloadFile('exchange_key_rates.json', jsonString, 'application/json');
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // 3. Export summary as TXT
+        function exportSummaryAsText() {
+            const date = document.getElementById('mainDateInfo').innerText.replace('Applicable on ', '');
+            let report = `Ethiopian Exchange Rates Summary\n`;
+            report += `Generated by Finedatas - ${new Date().toLocaleDateString('en-ET', { timeZone: 'Africa/Addis_Ababa' })}\n`;
+            report += `========================================\n\n`;
+            report += `Data as of: ${date}\n\n`;
+
+            report += `Key Rates:\n`;
+            document.querySelectorAll('.rate-card').forEach(card => {
+                const title = card.querySelector('h3').innerText;
+                const value = card.querySelector('.rate-value').innerText;
+                const change = card.querySelector('.rate-change').innerText;
+                report += `  • ${title}: ${value} (${change})\n`;
+            });
+
+            report += `\nTop 5 Currencies:\n`;
+            const topCurrencies = ['USD', 'EUR', 'GBP', 'CNY', 'CHF'];
+            topCurrencies.forEach(curr => {
+                const rate = exchangeRates[curr];
+                report += `  • 1 ${curr} = ${rate.toFixed(4)} ETB\n`;
+            });
+
+            downloadFile('exchange_rates_summary.txt', report);
+            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside (desktop)
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('exportModal');
+            if (window.innerWidth > 768 && modal.style.display === 'block') {
+                if (!e.target.closest('#exportModal') && !e.target.closest('.export-btn')) {
+                    modal.style.display = 'none';
                 }
             }
         });
