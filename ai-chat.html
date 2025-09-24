@@ -3,105 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Chat - Ethiopia Data Hub</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>AI Chat - Finedatas Ethiopia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Chat-specific styles */
+    /* ===== GLOBAL STYLES (MATCH economic.html) ===== */
+    :root {
+      --bg-color: #0D1117;
+      --card-bg: #161B22;
+      --primary-color: #58A6FF;
+      --secondary-color: #FF7B72;
+      --text-color: #C9D1D9;
+      --border-color: #30363D;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* ===== HEADER & NAV (MATCH economic.html) ===== */
+    header {
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .logo h1 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    .nav-links li {
+      margin-left: 1.5rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+    .btn {
+      background-color: var(--primary-color);
+      color: var(--bg-color);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background-color: var(--secondary-color);
+      color: #FFFFFF;
+      box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+
+    /* ===== CHAT CONTAINER ===== */
     .chat-container {
       max-width: 900px;
-      margin: 20px auto;
-      background: white;
+      margin: 2rem auto;
+      background: var(--card-bg);
       border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 85vh;
+      height: 75vh;
+      border: 1px solid var(--border-color);
     }
-    
+
     .chat-header {
-      background: #2980b9;
-      color: white;
+      background: var(--primary-color);
+      color: var(--bg-color);
       padding: 20px;
       text-align: center;
     }
-    
+
     .chat-messages {
       flex: 1;
       padding: 20px;
       overflow-y: auto;
-      background: #f9fbfd;
+      background: var(--bg-color);
       display: flex;
       flex-direction: column;
     }
-    
+
     .message {
       max-width: 80%;
-      padding: 12px 16px;
-      margin-bottom: 16px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
       border-radius: 18px;
       line-height: 1.5;
       position: relative;
       animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
     }
-    
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     .user-message {
-      background: #2980b9;
-      color: white;
+      background: var(--primary-color);
+      color: var(--bg-color);
       align-self: flex-end;
       border-bottom-right-radius: 4px;
     }
-    
+
     .ai-message {
-      background: #eef2f7;
-      color: #2c3e50;
+      background: var(--card-bg);
+      color: var(--text-color);
       align-self: flex-start;
       border-bottom-left-radius: 4px;
+      border: 1px solid var(--border-color);
     }
-    
+
     .ai-message.amharic {
       font-family: 'Noto Sans Ethiopic', sans-serif;
       font-size: 18px;
     }
-    
+
     .ai-message.oromo {
-      font-family: 'Noto Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 17px;
     }
-    
+
+    .language-selector {
+      padding: 0 20px 10px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .language-selector select {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 14px;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
     .chat-input-area {
       padding: 16px;
-      background: white;
-      border-top: 1px solid #eee;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
       display: flex;
       gap: 12px;
     }
-    
+
     .chat-input-area textarea {
       flex: 1;
       padding: 14px;
-      border: 1px solid #ddd;
+      border: 1px solid var(--border-color);
       border-radius: 24px;
       resize: none;
       font-size: 16px;
       min-height: 24px;
       max-height: 120px;
-      font-family: inherit;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
     }
-    
+
     .chat-input-area textarea:focus {
       outline: none;
-      border-color: #3498db;
+      border-color: var(--primary-color);
     }
-    
+
     .send-button {
-      background: #2980b9;
-      color: white;
+      background: var(--primary-color);
+      color: var(--bg-color);
       border: none;
       width: 48px;
       height: 48px;
@@ -113,37 +235,22 @@
       font-size: 18px;
       transition: background 0.2s;
     }
-    
+
     .send-button:hover {
-      background: #1c6ea4;
+      background: #3d8be0;
     }
-    
-    .language-selector {
-      padding: 0 20px 10px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    
-    .language-selector select {
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 20px;
-      font-size: 14px;
-      background: white;
-    }
-    
+
     .typing-indicator {
       display: none;
       align-self: flex-start;
-      background: #eef2f7;
+      background: var(--card-bg);
       padding: 12px 16px;
       border-radius: 18px;
       border-bottom-left-radius: 4px;
-      color: #666;
+      color: #8B949E;
+      border: 1px solid var(--border-color);
     }
-    
+
     .typing-indicator span {
       height: 8px;
       width: 8px;
@@ -154,53 +261,117 @@
       border-radius: 50%;
       opacity: 0.4;
     }
-    
+
     .typing-indicator span:nth-of-type(1) {
       animation: typing 1s infinite;
     }
-    
     .typing-indicator span:nth-of-type(2) {
       animation: typing 1s infinite 0.2s;
     }
-    
     .typing-indicator span:nth-of-type(3) {
       animation: typing 1s infinite 0.4s;
     }
-    
+
     @keyframes typing {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
     }
-    
-    /* Responsive */
+
+    /* ===== FOOTER (MATCH economic.html) ===== */
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      padding: 3rem 0 1.5rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+    .footer-section p, .footer-section a {
+      margin-bottom: 0.5rem;
+      color: #8B949E;
+    }
+    .footer-section a {
+      display: block;
+      text-decoration: none;
+    }
+    .footer-section a:hover {
+      color: var(--primary-color);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        box-shadow: var(--shadow);
+        padding: 1rem 0;
+        border-top: 1px solid var(--border-color);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0.5rem 1.5rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
       .chat-container {
-        height: 80vh;
-        margin: 10px;
+        height: 70vh;
+        margin: 1rem;
       }
       .message {
         max-width: 90%;
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Navigation (same as your other pages) -->
-  <nav>
+  <!-- Header (same as economic.html) -->
+  <header>
     <div class="container">
-      <h1><a href="index.html">Ethiopia Data Hub</a></h1>
-      <ul>
-        <li><a href="weather.html">Weather</a></li>
-        <li><a href="agricultural.html">Agricultural</a></li>
-        <li><a href="demographic.html">Demographic</a></li>
-        <li><a href="economic.html">Economic</a></li>
-        <li><a href="ai-chat.html">AI Chat</a></li>
-        <li><a href="news.html">News</a></li>
-        <li><a href="support.html">Support</a></li>
-      </ul>
+      <nav>
+        <div class="logo">
+          <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+          <h1>Finedatas</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="economic.html">Economic</a></li>
+          <li><a href="demographic.html">Demographic</a></li>
+          <li><a href="agricultural.html">Agricultural</a></li>
+          <li><a href="weather.html">For Farmers</a></li>
+          <li><a href="ai-chat.html" class="active">AI Chat</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="donate.html" class="btn">Donate</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <main>
     <div class="chat-container">
@@ -208,7 +379,7 @@
         <h2>🤖 Ethiopian AI Assistant</h2>
         <p>Ask about weather, agriculture, or cities in any language!</p>
       </div>
-      
+
       <div class="language-selector">
         <select id="language">
           <option value="en">English</option>
@@ -219,10 +390,10 @@
           <option value="ar">العربية</option>
         </select>
       </div>
-      
+
       <div class="chat-messages" id="chatMessages">
         <div class="message ai-message">
-          Hello! I'm your Ethiopian weather and data assistant.  
+          Hello! I'm your Ethiopian data assistant.  
           Ask me anything like: <em>"What's the weather in Jimma?"</em> or <em>"Maal ta’iin Hawassa?"</em>
         </div>
         <div class="typing-indicator" id="typingIndicator">
@@ -231,7 +402,7 @@
           <span></span>
         </div>
       </div>
-      
+
       <div class="chat-input-area">
         <textarea 
           id="userInput" 
@@ -247,20 +418,37 @@
     </div>
   </main>
 
-  <!-- Footer (same as your other pages) -->
+  <!-- Footer (same as economic.html) -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 Ethiopia Data Hub. All data sourced from official and open APIs.</p>
-      <p>
-        <a href="support.html">Support</a> | 
-        <a href="donate.html">Donate</a> | 
-        <a href="pdf.html">PDF Reports</a>
-      </p>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Finedatas</h3>
+          <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <a href="economic.html">Economic Data</a>
+          <a href="demographic.html">Demographic Data</a>
+          <a href="agricultural.html">Agricultural Data</a>
+          <a href="weather.html">For Farmers</a>
+          <a href="ai-chat.html">AI Chat</a>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
+          <p><i class="fas fa-phone"></i> +251991168917</p>
+          <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Finedatas. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <script>
-    // 🔁 REPLACE WITH YOUR RENDER URL AFTER DEPLOYMENT
+    // ✅ FIXED: No extra spaces in URL
     const BACKEND_URL = "https://finedata.onrender.com";
 
     const chatMessages = document.getElementById('chatMessages');
@@ -268,13 +456,22 @@
     const typingIndicator = document.getElementById('typingIndicator');
     const languageSelect = document.getElementById('language');
 
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
     // Auto-resize textarea
     userInput.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = Math.min(this.scrollHeight, 120) + 'px';
     });
 
-    // Send message on Enter (Shift+Enter for new line)
+    // Send on Enter
     userInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -287,7 +484,6 @@
       messageDiv.classList.add('message');
       messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
       
-      // Apply language-specific styling
       if (!isUser) {
         const lang = languageSelect.value;
         if (lang === 'am') {
@@ -306,12 +502,10 @@
       const text = userInput.value.trim();
       if (!text) return;
 
-      // Add user message
       addMessage(text, true);
       userInput.value = '';
       userInput.style.height = 'auto';
 
-      // Show typing indicator
       typingIndicator.style.display = 'block';
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
