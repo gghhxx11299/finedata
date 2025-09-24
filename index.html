@@ -16,6 +16,7 @@
             --text-muted: #8B949E;
             --border: #30363D;
             --shadow: 0 4px 12px rgba(0,0,0,0.5);
+            --success: #3FB950;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -110,14 +111,25 @@
         .hero {
             text-align: center;
             padding: 5rem 0 4rem;
-            background: linear-gradient(rgba(13,17,23,0.8), rgba(13,17,23,0.9)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(rgba(13,17,23,0.85), rgba(13,17,23,0.95)), url('https://images.unsplash.com/photo-1500382016159-13a6de07a353?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 70%, rgba(88, 166, 255, 0.1), transparent 70%);
         }
         .hero h1 {
             font-size: 2.8rem;
             font-family: 'Montserrat', sans-serif;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: white;
         }
         .hero p {
@@ -132,73 +144,143 @@
             gap: 1rem;
         }
 
-        /* Quick Access */
-        .quick-access {
-            background-color: var(--card-bg);
+        /* Features */
+        .features-section {
             padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            padding: 1.8rem 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Insights Preview */
+        .insights-section {
+            background: var(--card-bg);
+            padding: 3rem;
             border-radius: 16px;
             margin-bottom: 3rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
         }
-        .section-title {
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--primary);
-        }
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        .insight-item {
+            display: flex;
             gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
         }
-        .card {
-            background: rgba(88, 166, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid var(--border);
+        .insight-item:last-child {
+            border-bottom: none;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-        .card i {
-            font-size: 2rem;
+        .insight-icon {
+            font-size: 1.8rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            min-width: 40px;
         }
-        .card h3 {
-            font-family: 'Montserrat', sans-serif;
+        .insight-content h4 {
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
         }
-        .card a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
+        .insight-content p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .insight-meta {
+            font-size: 0.85rem;
+            color: var(--success);
         }
 
-        /* Why Us */
-        .why {
+        /* Export CTA */
+        .export-section {
+            text-align: center;
             padding: 3rem 0;
             margin-bottom: 3rem;
         }
-        .features {
+        .export-section p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            color: var(--text-muted);
+        }
+
+        /* About */
+        .about-section {
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: center;
         }
-        .feature {
-            display: flex;
-            gap: 1rem;
-        }
-        .feature i {
+        .about-text h3 {
+            font-family: 'Montserrat', sans-serif;
             color: var(--primary);
-            font-size: 1.5rem;
-            margin-top: 0.3rem;
+            margin-bottom: 1rem;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+        .founder {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Sources */
+        .sources-section {
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .sources-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .source-badge {
+            background: rgba(88, 166, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text);
+            border: 1px solid var(--border);
         }
 
         /* Footer */
@@ -206,7 +288,6 @@
             background-color: var(--card-bg);
             padding: 2.5rem 0 1.5rem;
             border-top: 1px solid var(--border);
-            margin-top: auto;
         }
         .footer-content {
             display: grid;
@@ -241,6 +322,8 @@
             .hero h1 { font-size: 2rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .hero-buttons .btn { width: 100%; max-width: 250px; }
+            .about-content { grid-template-columns: 1fr; }
+            .insight-item { flex-direction: column; }
         }
     </style>
 </head>
@@ -259,7 +342,7 @@
                     <li><a href="agricultural.html">Agricultural</a></li>
                     <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
-                    <li><a href="insights.html" class="active">Get Forecasts</a></li>
+                    <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -272,8 +355,8 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Ethiopia’s Trusted Data Hub</h1>
-            <p>Reliable, up-to-date statistics on Ethiopia’s economy, people, and agriculture — sourced from ESS, NBE, and global partners.</p>
+            <h1>Ethiopia’s Data, Made Actionable</h1>
+            <p>Open, reliable statistics — with weather forecasts, crop guidance, and export-ready datasets for researchers, farmers, and policymakers.</p>
             <div class="hero-buttons">
                 <a href="insights.html" class="btn">✨ Get 2025 Forecasts</a>
                 <a href="#explore" class="btn btn-outline">Explore Data</a>
@@ -281,78 +364,111 @@
         </div>
     </section>
 
-    <!-- Quick Access -->
-    <section id="explore" class="quick-access">
+    <!-- Key Features -->
+    <section id="explore" class="features-section">
         <div class="container">
-            <h2 class="section-title">Explore by Topic</h2>
-            <div class="cards">
-                <div class="card">
+            <h2 class="section-title">Explore by Need</h2>
+            <div class="features-grid">
+                <a href="economic.html" class="feature-card">
                     <i class="fas fa-chart-line"></i>
                     <h3>Economic Data</h3>
-                    <a href="economic.html">GDP, inflation, trade</a>
-                </div>
-                <div class="card">
-                    <i class="fas fa-users"></i>
-                    <h3>Demographics</h3>
-                    <a href="demographic.html">Population, health, education</a>
-                </div>
-                <div class="card">
+                    <p>GDP, inflation, trade</p>
+                </a>
+                <a href="agricultural.html" class="feature-card">
                     <i class="fas fa-tractor"></i>
-                    <h3>Agriculture</h3>
-                    <a href="agricultural.html">Crops, livestock, climate</a>
-                </div>
-                <div class="card">
+                    <h3>For Farmers</h3>
+                    <p>Crop advice + weather</p>
+                </a>
+                <a href="exchange.html" class="feature-card">
                     <i class="fas fa-money-bill-wave"></i>
                     <h3>Exchange Rates</h3>
-                    <a href="exchange.html">ETB/USD trends</a>
+                    <p>ETB/USD trends</p>
+                </a>
+                <a href="demographic.html" class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Demographics</h3>
+                    <p>Population, health, education</p>
+                </a>
+                <a href="pdf.html" class="feature-card">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>PDF Reports</h3>
+                    <p>Downloadable research</p>
+                </a>
+                <a href="insights.html" class="feature-card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>2025 Forecasts</h3>
+                    <p>Predictive insights</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Insights -->
+    <section class="insights-section">
+        <div class="container">
+            <h2 class="section-title">Latest Insights</h2>
+            <div class="insight-item">
+                <div class="insight-icon">
+                    <i class="fas fa-coffee"></i>
                 </div>
-                <div class="card">
-                    <i class="fas fa-cloud-sun"></i>
-                    <h3>For Farmers</h3>
-                    <a href="weather.html">Rainfall & forecasts</a>
+                <div class="insight-content">
+                    <h4>Coffee Exports Rebound in Q2 2025</h4>
+                    <p>Exports rose 12.5% YoY to $1.35B despite global headwinds.</p>
+                    <div class="insight-meta">Updated: 2 days ago • Source: NBE</div>
+                    <a href="agricultural.html">Read more →</a>
                 </div>
-                <div class="card">
-                    <i class="fas fa-newspaper"></i>
-                    <h3>News & Updates</h3>
-                    <a href="news.html">Latest insights</a>
+            </div>
+            <div class="insight-item">
+                <div class="insight-icon">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                </div>
+                <div class="insight-content">
+                    <h4>Kiremt Rains Forecast: Near-Normal</h4>
+                    <p>Favorable conditions expected for teff and maize planting.</p>
+                    <div class="insight-meta">Updated: 5 days ago • Source: NMA</div>
+                    <a href="weather.html">Read more →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us -->
-    <section class="why">
+    <!-- Export CTA -->
+    <section class="export-section">
         <div class="container">
-            <h2 class="section-title">Why Researchers Trust Us</h2>
-            <div class="features">
-                <div class="feature">
-                    <i class="fas fa-check-circle"></i>
-                    <div>
-                        <strong>Official Sources</strong><br>
-                        <small>Direct from ESS, NBE, World Bank</small>
-                    </div>
+            <h2 class="section-title">Need Raw Data?</h2>
+            <p>Download CSV, JSON, or TXT files from any data page — no registration required.</p>
+            <a href="agricultural.html" class="btn">Try Export on Agricultural Data</a>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Founder" style="width:100%; border-radius:8px;">
                 </div>
-                <div class="feature">
-                    <i class="fas fa-sync-alt"></i>
-                    <div>
-                        <strong>Updated Weekly</strong><br>
-                        <small>Fresh data as it’s released</small>
-                    </div>
+                <div class="about-text">
+                    <h3>Why Finedatas Exists</h3>
+                    <p>I built Finedatas because Ethiopia deserves a transparent, accessible data hub — one that combines official statistics with real-world context like weather, culture, and farmer needs.</p>
+                    <p>As a young Ethiopian passionate about data, I wanted to bridge the gap between national institutions and everyday users.</p>
+                    <p class="founder">— Gabriel Mulugeta, Founder</p>
                 </div>
-                <div class="feature">
-                    <i class="fas fa-globe-africa"></i>
-                    <div>
-                        <strong>Ethiopia-First</strong><br>
-                        <small>Contextualized for local relevance</small>
-                    </div>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-lock-open"></i>
-                    <div>
-                        <strong>Free Access</strong><br>
-                        <small>No paywalls, ever</small>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="sources-section">
+        <div class="container">
+            <h2 class="section-title">Trusted Sources</h2>
+            <div class="sources-grid">
+                <div class="source-badge">Ethiopian Statistical Service</div>
+                <div class="source-badge">National Bank of Ethiopia</div>
+                <div class="source-badge">World Bank</div>
+                <div class="source-badge">IMF</div>
+                <div class="source-badge">FAO</div>
+                <div class="source-badge">UNICEF</div>
             </div>
         </div>
     </section>
@@ -377,7 +493,6 @@
                     <h3>Contact</h3>
                     <p>gabrielmulugeta1@gmail.com</p>
                     <p>+251 991168917</p>
-                    <p>Addis Ababa, Ethiopia</p>
                 </div>
             </div>
             <div class="footer-bottom">
