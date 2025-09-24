@@ -372,6 +372,16 @@
             .card-value {
                 font-size: 1.7rem;
             }
+            
+            .data-table th, .data-table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .data-item {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
 
         /* Simple Data Section */
@@ -421,6 +431,99 @@
         .negative-change {
             color: var(--coral-red);
         }
+
+        /* New sections */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .section-title i {
+            color: var(--electric-blue);
+        }
+
+        .chart-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-style: italic;
+            border: 1px dashed rgba(88, 166, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .region-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.2rem;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .region-card h4 {
+            color: var(--electric-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.2rem;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: var(--white);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Mobile menu improvements */
+        .nav-links li {
+            width: 100%;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links .btn {
+            display: block;
+            margin: 1rem auto 0;
+            max-width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -436,7 +539,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
-                    <li><a href="agricultural.html"  class="active">Agricultural</a></li>
+                    <li><a href="agricultural.html" class="active">Agricultural</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
@@ -455,7 +558,7 @@
     <section class="hero">
         <div class="container">
             <h2>Ethiopian Agricultural Data</h2>
-            <p>Comprehensive data and analytics on Ethiopia's agricultural sector, including crop production, livestock statistics, and market trends.</p>
+            <p>Comprehensive data and analytics on Ethiopia's agricultural sector, including crop production, livestock statistics, market trends, and climate impact analysis.</p>
         </div>
     </section>
 
@@ -498,6 +601,43 @@
                     <div class="card-change negative">
                         <i class="fas fa-arrow-down"></i>
                         <span>3.7% from previous year</span>
+                    </div>
+                </div>
+                
+                <!-- New metrics -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Irrigated Land</h4>
+                        <i class="fas fa-tint card-icon"></i>
+                    </div>
+                    <div class="card-value">1.2M ha</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>15.3% from previous year</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Fertilizer Use</h4>
+                        <i class="fas fa-flask card-icon"></i>
+                    </div>
+                    <div class="card-value">850K tons</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>9.1% from previous year</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Agricultural GDP</h4>
+                        <i class="fas fa-chart-line card-icon"></i>
+                    </div>
+                    <div class="card-value">$22.4B</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>6.8% from previous year</span>
                     </div>
                 </div>
             </div>
@@ -566,9 +706,245 @@
                     <span class="data-value positive-change">+5.8%</span>
                 </div>
             </div>
+            
+            <!-- New regions -->
+            <div class="data-highlight">
+                <h3>Tigray Region</h3>
+                <div class="data-item">
+                    <span class="data-label">Wheat Production</span>
+                    <span class="data-value">4.8M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Barley Production</span>
+                    <span class="data-value">4.6M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Pulses Production</span>
+                    <span class="data-value">3.2M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Year-over-Year Change</span>
+                    <span class="data-value negative-change">-2.1%</span>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Afar Region</h3>
+                <div class="data-item">
+                    <span class="data-label">Sorghum Production</span>
+                    <span class="data-value">1.2M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Maize Production</span>
+                    <span class="data-value">0.9M tons</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Livestock Contribution</span>
+                    <span class="data-value">68% of regional agri-GDP</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Year-over-Year Change</span>
+                    <span class="data-value positive-change">+3.5%</span>
+                </div>
+            </div>
         </section>
 
-        <!-- Table Section -->
+        <!-- Livestock Statistics -->
+        <section class="simple-data-section">
+            <h3 class="section-title"><i class="fas fa-cow"></i> Livestock Statistics (2023)</h3>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value">65.3M</div>
+                    <div class="stat-label">Cattle</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">31.2M</div>
+                    <div class="stat-label">Sheep</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">32.1M</div>
+                    <div class="stat-label">Goats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">56.8M</div>
+                    <div class="stat-label">Poultry</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">9.4M</div>
+                    <div class="stat-label">Camels</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2.1M</div>
+                    <div class="stat-label">Equines</div>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Regional Livestock Distribution</h3>
+                <div class="region-grid">
+                    <div class="region-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Oromia</h4>
+                        <div class="data-item">
+                            <span class="data-label">Cattle</span>
+                            <span class="data-value">24.5M (37.5%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Sheep</span>
+                            <span class="data-value">12.3M (39.4%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Goats</span>
+                            <span class="data-value">13.1M (40.8%)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Amhara</h4>
+                        <div class="data-item">
+                            <span class="data-label">Cattle</span>
+                            <span class="data-value">18.7M (28.6%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Sheep</span>
+                            <span class="data-value">8.2M (26.3%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Goats</span>
+                            <span class="data-value">7.9M (24.6%)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> SNNPR</h4>
+                        <div class="data-item">
+                            <span class="data-label">Cattle</span>
+                            <span class="data-value">12.3M (18.8%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Sheep</span>
+                            <span class="data-value">5.7M (18.3%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Goats</span>
+                            <span class="data-value">6.2M (19.3%)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="region-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Somali</h4>
+                        <div class="data-item">
+                            <span class="data-label">Camels</span>
+                            <span class="data-value">7.8M (83.0%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Goats</span>
+                            <span class="data-value">4.1M (12.8%)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Sheep</span>
+                            <span class="data-value">3.2M (10.3%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Trends -->
+        <section class="simple-data-section">
+            <h3 class="section-title"><i class="fas fa-chart-bar"></i> Agricultural Market Trends</h3>
+            
+            <div class="data-highlight">
+                <h3>Price Trends (2023 vs 2022)</h3>
+                <div class="data-item">
+                    <span class="data-label">Teff (ETB/kg)</span>
+                    <span class="data-value">85.50 <span class="positive-change">(+12.3%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Wheat (ETB/kg)</span>
+                    <span class="data-value">42.75 <span class="positive-change">(+8.7%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Maize (ETB/kg)</span>
+                    <span class="data-value">32.20 <span class="positive-change">(+6.5%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Coffee (ETB/kg)</span>
+                    <span class="data-value">210.75 <span class="negative-change">(-3.7%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Pulses (ETB/kg)</span>
+                    <span class="data-value">48.30 <span class="positive-change">(+9.2%)</span></span>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Export Performance</h3>
+                <div class="data-item">
+                    <span class="data-label">Coffee Exports</span>
+                    <span class="data-value">$1.2B <span class="negative-change">(-3.7%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Oilseeds Exports</span>
+                    <span class="data-value">$420M <span class="positive-change">(+5.2%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Khat Exports</span>
+                    <span class="data-value">$850M <span class="positive-change">(+11.3%)</span></span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Livestock Exports</span>
+                    <span class="data-value">$380M <span class="positive-change">(+7.8%)</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Climate Impact -->
+        <section class="simple-data-section">
+            <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Climate Impact on Agriculture</h3>
+            
+            <div class="data-highlight">
+                <h3>Climate Conditions (2023)</h3>
+                <div class="data-item">
+                    <span class="data-label">Rainfall Deviation</span>
+                    <span class="data-value">-8.2% below average</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Drought Affected Areas</span>
+                    <span class="data-value">28% of agricultural land</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Flood Affected Areas</span>
+                    <span class="data-value">12% of agricultural land</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Crop Loss Estimate</span>
+                    <span class="data-value">$420M</span>
+                </div>
+            </div>
+            
+            <div class="data-highlight">
+                <h3>Adaptation Measures</h3>
+                <div class="data-item">
+                    <span class="data-label">Drought-Resistant Seeds</span>
+                    <span class="data-value">1.2M hectares planted</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Irrigation Expansion</span>
+                    <span class="data-value">+15.3% from previous year</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Climate-Smart Practices</span>
+                    <span class="data-value">Adopted by 32% of farmers</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Early Warning Systems</span>
+                    <span class="data-value">Covering 78% of agricultural zones</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Crop Production Table -->
         <section class="table-section">
             <h3>Detailed Crop Production Data (2023)</h3>
             <table class="data-table">
@@ -631,58 +1007,104 @@
                         <td class="positive-change">+6.2%</td>
                         <td>48.30</td>
                     </tr>
+                    <!-- New rows -->
+                    <tr>
+                        <td>Tea</td>
+                        <td>SNNPR</td>
+                        <td>842,567</td>
+                        <td class="positive-change">+12.4%</td>
+                        <td>185.30</td>
+                    </tr>
+                    <tr>
+                        <td>Sesame</td>
+                        <td>Benishangul-Gumuz</td>
+                        <td>2,145,890</td>
+                        <td class="positive-change">+9.8%</td>
+                        <td>65.75</td>
+                    </tr>
+                    <tr>
+                        <td>Castor Beans</td>
+                        <td>Oromia</td>
+                        <td>1,876,432</td>
+                        <td class="positive-change">+14.2%</td>
+                        <td>42.90</td>
+                    </tr>
+                    <tr>
+                        <td>Linseed</td>
+                        <td>Amhara</td>
+                        <td>987,654</td>
+                        <td class="positive-change">+7.5%</td>
+                        <td>58.20</td>
+                    </tr>
+                    <tr>
+                        <td>Niger Seed</td>
+                        <td>Tigray</td>
+                        <td>654,321</td>
+                        <td class="negative-change">-1.8%</td>
+                        <td>52.40</td>
+                    </tr>
                 </tbody>
             </table>
         </section>
 
-        <!-- Livestock Data -->
+        <!-- Agricultural Inputs -->
         <section class="simple-data-section">
-            <h3>Livestock Statistics (2023)</h3>
+            <h3 class="section-title"><i class="fas fa-tools"></i> Agricultural Inputs (2023)</h3>
             
-            <div class="data-highlight">
-                <h3>National Totals</h3>
-                <div class="data-item">
-                    <span class="data-label">Cattle</span>
-                    <span class="data-value">65.3M</span>
+            <div class="region-grid">
+                <div class="region-card">
+                    <h4><i class="fas fa-seedling"></i> Seed Distribution</h4>
+                    <div class="data-item">
+                        <span class="data-label">Improved Seeds</span>
+                        <span class="data-value">1.8M quintals</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Coverage</span>
+                        <span class="data-value">42% of cultivated area</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Year-over-Year Change</span>
+                        <span class="data-value positive-change">+11.2%</span>
+                    </div>
                 </div>
-                <div class="data-item">
-                    <span class="data-label">Sheep</span>
-                    <span class="data-value">31.2M</span>
+                
+                <div class="region-card">
+                    <h4><i class="fas fa-flask"></i> Fertilizer Use</h4>
+                    <div class="data-item">
+                        <span class="data-label">Total Consumption</span>
+                        <span class="data-value">850,000 tons</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Per Hectare</span>
+                        <span class="data-value">28.5 kg/ha</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Year-over-Year Change</span>
+                        <span class="data-value positive-change">+9.1%</span>
+                    </div>
                 </div>
-                <div class="data-item">
-                    <span class="data-label">Goats</span>
-                    <span class="data-value">32.1M</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Poultry</span>
-                    <span class="data-value">56.8M</span>
-                </div>
-            </div>
-            
-            <div class="data-highlight">
-                <h3>Regional Distribution</h3>
-                <div class="data-item">
-                    <span class="data-label">Oromia (Cattle)</span>
-                    <span class="data-value">24.5M (37.5%)</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Amhara (Cattle)</span>
-                    <span class="data-value">18.7M (28.6%)</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">SNNPR (Cattle)</span>
-                    <span class="data-value">12.3M (18.8%)</span>
-                </div>
-                <div class="data-item">
-                    <span class="data-label">Other Regions</span>
-                    <span class="data-value">9.8M (15.1%)</span>
+                
+                <div class="region-card">
+                    <h4><i class="fas fa-tint"></i> Irrigation</h4>
+                    <div class="data-item">
+                        <span class="data-label">Irrigated Area</span>
+                        <span class="data-value">1.2M hectares</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Coverage</span>
+                        <span class="data-value">8.5% of cultivated land</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Year-over-Year Change</span>
+                        <span class="data-value positive-change">+15.3%</span>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-     <footer>
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -701,7 +1123,6 @@
                     <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com </p>
                     <p><i class="fas fa-phone"></i> +251 991168917</p>
                     <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
-                    
                 </div>
             </div>
             <div class="footer-bottom">
@@ -714,6 +1135,13 @@
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
         });
     </script>
 </body>
