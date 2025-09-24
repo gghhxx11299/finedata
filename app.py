@@ -3,52 +3,145 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 import os
+import re
 from weather_collector import EthiopianWeatherForecast
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Essential for GitHub Pages frontend
+CORS(app)
 
-# Initialize with API keys
+# Initialize services
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 HF_API_TOKEN = os.getenv("HF_API_TOKEN")
 
-if not WEATHER_API_KEY:
-    raise ValueError("WEATHER_API_KEY not found in environment variables!")
-
 weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY)
 
+# ===== DATA FETCHING FUNCTIONS =====
+
+def get_exchange_rates():
+    """Get real ETB exchange rates"""
+    try:
+        response = requests.get(
+            "https://api.exchangerate-api.com/v4/latest/ETB",
+            timeout=8
+        )
+        data = response.json()
+        rates = data.get("rates", {})
+        return {
+            "USD": round(1 / rates.get("USD", 0), 2) if rates.get("USD") else "N/A",
+            "EUR": round(1 / rates.get("EUR", 0), 2) if rates.get("EUR") else "N/A",
+            "GBP": round(1 / rates.get("GBP", 0), 2) if rates.get("GBP") else "N/A"
+        }
+    except Exception as e:
+        print(f"Exchange rate error: {e}")
+        return {"USD": "N/A", "EUR": "N/A", "GBP": "N/A"}
+
+def get_inflation_rate():
+    """Get Ethiopia's latest inflation rate from World Bank"""
+    try:
+        # World Bank: FP.CPI.TOTL.ZG = Inflation, consumer prices (annual %)
+        response = requests.get(
+            "https://api.worldbank.org/v2/country/ETH/indicator/FP.CPI.TOTL.ZG?format=json&per_page=1",
+            timeout=8
+        )
+        data = response.json()
+        if len(data) > 1 and len(data[1]) > 0:
+            return f"{data[1][0]['value']}%" if data[1][0]['value'] else "N/A"
+        return "N/A"
+    except Exception as e:
+        print(f"Inflation error: {e}")
+        return "N/A"
+
+def get_gdp_per_capita():
+    """Get Ethiopia's GDP per capita"""
+    try:
+        # World Bank: NY.GDP.PCAP.CD = GDP per capita (current US$)
+        response = requests.get(
+            "https://api.worldbank.org/v2/country/ETH/indicator/NY.GDP.PCAP.CD?format=json&per_page=1",
+            timeout=8
+        )
+        data = response.json()
+        if len(data) > 1 and len(data[1]) > 0:
+            value = data[1][0]['value']
+            return f"${int(value):,}" if value else "N/A"
+        return "N/A"
+    except Exception as e:
+        print(f"GDP error: {e}")
+        return "N/A"
+
+def get_population():
+    """Get Ethiopia's population"""
+    try:
+        # World Bank: SP.POP.TOTL = Population, total
+        response = requests.get(
+            "https://api.worldbank.org/v2/country/ETH/indicator/SP.POP.TOTL?format=json&per_page=1",
+            timeout=8
+        )
+        data = response.json()
+        if len(data) > 1 and len(data[1]) > 0:
+            value = data[1][0]['value']
+            return f"{int(value):,}" if value else "N/A"
+        return "N/A"
+    except Exception as e:
+        print(f"Population error: {e}")
+        return "N/A"
+
+def get_agricultural_data(location):
+    """Get crop data for Ethiopian regions (simplified)"""
+    # In real app, connect to FAO API or Ethiopian agricultural DB
+    crops = {
+        "Jimma": "Coffee, maize, teff",
+        "Arba Minch": "Bananas, cotton, sorghum",
+        "Hawassa": "Vegetables, fruits, dairy",
+        "Bahir Dar": "Tefer, maize, pulses",
+        "Mekelle": "Wheat, barley, teff"
+    }
+    return crops.get(location, "Coffee, teff, maize (national staples)")
+
+# ===== AI UNDERSTANDING =====
+
 def translate_to_english(text: str) -> str:
-    """Translate user input to English for AI processing"""
-    if not text or not text.strip():
+    if not text.strip():
         return text
-        
     try:
         response = requests.post(
             "https://libretranslate.de/translate",
             json={"q": text, "source": "auto", "target": "en"},
             timeout=10
         )
-        if response.status_code == 200:
-            return response.json().get("translatedText", text)
-        print(f"Translation to English failed: {response.status_code}")
-    except Exception as e:
-        print(f"Translation error: {e}")
-    return text
+        return response.json().get("translatedText", text) if response.status_code == 200 else text
+    except:
+        return text
 
-def extract_location_with_ai(question: str) -> str:
-    """Extract Ethiopian city from English question"""
-    if not HF_API_TOKEN or not question.strip():
-        # Fallback to keyword matching
+def detect_question_type(question: str):
+    """Detect what kind of data the user wants"""
+    q = question.lower()
+    
+    if any(word in q for word in ["exchange", "rate", "dollar", "usd", "eur", "currency"]):
+        return "exchange"
+    elif any(word in q for word in ["inflation", "price", "cpi"]):
+        return "inflation"
+    elif any(word in q for word in ["gdp", "economy", "economic", "status"]):
+        return "economy"
+    elif any(word in q for word in ["population", "people", "demographic"]):
+        return "population"
+    elif any(word in q for word in ["crop", "agri", "farm", "coffee", "teff"]):
+        return "agriculture"
+    else:
+        return "weather"  # default
+
+def extract_location_with_ai(question: str):
+    """Extract Ethiopian city (same as before)"""
+    if not HF_API_TOKEN:
         for loc in weather_collector.locations:
             if loc.lower() in question.lower():
                 return loc
         return "Addis Ababa"
-
+    
     try:
-        prompt = f"Extract only the Ethiopian city name from this question. If none, return 'Addis Ababa'. Question: {question}"
+        prompt = f"Extract only the Ethiopian city name. If none, return 'Ethiopia'. Question: {question}"
         response = requests.post(
             "https://api-inference.huggingface.co/models/google/flan-t5-large",
             headers={"Authorization": f"Bearer {HF_API_TOKEN}"},
@@ -56,96 +149,100 @@ def extract_location_with_ai(question: str) -> str:
             timeout=12
         )
         result = response.json()
-        
-        if isinstance(result, list) and len(result) > 0:
-            text = result[0].get("generated_text", "")
-        else:
-            text = result.get("generated_text", "Addis Ababa")
-            
+        text = result[0].get("generated_text", "") if isinstance(result, list) else result.get("generated_text", "Ethiopia")
         city = text.strip().split("\n")[0].split(".")[0].split(":")[-1].strip()
-        return city if city else "Addis Ababa"
-    except Exception as e:
-        print(f"AI extraction error: {e}")
+        return city if city and city != "Ethiopia" else "Addis Ababa"
+    except:
         for loc in weather_collector.locations:
             if loc.lower() in question.lower():
                 return loc
         return "Addis Ababa"
 
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate response to user's language"""
     if target_lang == "en" or not text:
         return text
-        
     try:
         response = requests.post(
             "https://libretranslate.de/translate",
             json={"q": text, "source": "en", "target": target_lang},
             timeout=10
         )
-        if response.status_code == 200:
-            return response.json().get("translatedText", text)
-        print(f"Translation failed: {response.status_code}")
-    except Exception as e:
-        print(f"Translation error: {e}")
-    return text
+        return response.json().get("translatedText", text) if response.status_code == 200 else text
+    except:
+        return text
 
-@app.route('/ai-chat.html')
-def ai_chat_page():
-    return send_from_directory('.', 'ai-chat.html')
+# ===== MAIN ENDPOINT =====
 
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
         
     user_question = data.get("question", "").strip()
     target_lang = data.get("language", "en")
 
     if not user_question:
-        return jsonify({"error": "Please ask a question about Ethiopian weather."}), 400
+        return jsonify({"error": "Please ask a question."}), 400
 
-    # Step 1: Translate user input to English
+    # Translate input to English
     english_question = translate_to_english(user_question)
-    print(f"Original: '{user_question}' → English: '{english_question}'")
-    
-    # Step 2: Extract location
-    city = extract_location_with_ai(english_question)
-    print(f"Extracted city: '{city}'")
-    
-    # Step 3: Get coordinates
-    location_name, coords = weather_collector.get_location_coords(city)
-    print(f"Using coordinates: {coords['lat']}, {coords['lon']} for {location_name}")
-    
-    # Step 4: Fetch live weather
-    live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-    
-    if not live_
-        answer_en = f"Sorry, I couldn't fetch live weather data for {location_name}. Please try again."
-    elif 'current' not in live_ or 'forecast' not in live_
-        answer_en = f"Weather data structure invalid for {location_name}."
-    else:
-        current = live_data['current']
-        today = live_data['forecast']['forecastday'][0]['day']
-        answer_en = (
-            f"Live weather in {location_name}: {current['temp_c']}°C, {current['condition']['text']}. "
-            f"Today's high: {today['maxtemp_c']}°C, low: {today['mintemp_c']}°C. "
-            f"Chance of rain: {today['daily_chance_of_rain']}%."
-        )
+    question_type = detect_question_type(english_question)
+    location = extract_location_with_ai(english_question) if question_type in ["weather", "agriculture"] else "Ethiopia"
 
-    # Step 5: Translate to user's language
+    # Fetch data based on question type
+    if question_type == "exchange":
+        rates = get_exchange_rates()
+        answer_en = f"Current exchange rates: 1 USD = {rates['USD']} ETB, 1 EUR = {rates['EUR']} ETB, 1 GBP = {rates['GBP']} ETB."
+        
+    elif question_type == "inflation":
+        inflation = get_inflation_rate()
+        answer_en = f"Ethiopia's latest annual inflation rate is {inflation}."
+        
+    elif question_type == "economy":
+        gdp = get_gdp_per_capita()
+        inflation = get_inflation_rate()
+        answer_en = f"Ethiopia's economic status: GDP per capita is {gdp}. Annual inflation is {inflation}."
+        
+    elif question_type == "population":
+        pop = get_population()
+        answer_en = f"Ethiopia's population is approximately {pop}."
+        
+    elif question_type == "agriculture":
+        crops = get_agricultural_data(location)
+        answer_en = f"Main crops in {location}: {crops}."
+        
+    else:  # weather
+        coords = weather_collector.get_location_coords(location)[1]
+        live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
+        if live_data and 'current' in live_
+            current = live_data['current']
+            today = live_data['forecast']['forecastday'][0]['day']
+            answer_en = (
+                f"Live weather in {location}: {current['temp_c']}°C, {current['condition']['text']}. "
+                f"Today's high: {today['maxtemp_c']}°C, low: {today['mintemp_c']}°C."
+            )
+        else:
+            answer_en = f"Sorry, couldn't fetch weather for {location}."
+
+    # Translate response
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
         "question_original": user_question,
         "question_english": english_question,
-        "location": location_name,
+        "question_type": question_type,
+        "location": location,
         "answer_english": answer_en,
         "answer_translated": answer_translated,
         "language": target_lang
     })
 
-# Serve all static files
+# ===== SERVE FILES =====
+@app.route('/ai-chat.html')
+def ai_chat_page():
+    return send_from_directory('.', 'ai-chat.html')
+
 @app.route('/<path:filename>')
 def static_files(filename):
     return send_from_directory('.', filename)
