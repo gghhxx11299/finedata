@@ -3,9 +3,8 @@ import requests
 
 class EthiopianWeatherForecast:
     def __init__(self, api_key):
-        self.api_key = ""
+        self.api_key = api_key
         self.base_url = "http://api.weatherapi.com/v1"
-        # Real Ethiopian locations with coordinates
         self.locations = {
             "Addis Ababa": {"lat": 9.005401, "lon": 38.763611},
             "Mekelle": {"lat": 13.4969, "lon": 39.4769},
@@ -32,28 +31,42 @@ class EthiopianWeatherForecast:
         }
 
     def get_location_coords(self, query):
-        """Case-insensitive location matcher"""
-        query = query.lower().strip()
+        """Case-insensitive location matcher with space handling"""
+        if not query:
+            return "Addis Ababa", self.locations["Addis Ababa"]
+            
+        query_clean = query.lower().strip()
         for name, coords in self.locations.items():
-            if query in name.lower() or name.lower() in query:
+            if query_clean == name.lower() or query_clean in name.lower():
                 return name, coords
-        # Default fallback
         return "Addis Ababa", self.locations["Addis Ababa"]
 
     def fetch_live_weather(self, lat, lon):
-        """Fetch REAL 14-day forecast from WeatherAPI (online)"""
+        """Fetch 14-day forecast with validation"""
+        # Validate coordinates
+        if not (-90 <= lat <= 90) or not (-180 <= lon <= 180):
+            print(f"Invalid coordinates: {lat}, {lon}")
+            return None
+            
         try:
             url = f"{self.base_url}/forecast.json"
             params = {
                 "key": self.api_key,
                 "q": f"{lat},{lon}",
-                "days": 14,  # Requires paid WeatherAPI plan
+                "days": 14,
                 "aqi": "no",
                 "alerts": "no"
             }
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
-            return response.json()
+            data = response.json()
+            
+            # Verify required keys exist
+            if 'current' not in data or 'forecast' not in data:
+                print(f"WeatherAPI response missing required keys. Keys: {list(data.keys())}")
+                return None
+                
+            return data
         except Exception as e:
-            print(f"Live weather fetch error: {e}")
+            print(f"WeatherAPI error: {e}")
             return None
