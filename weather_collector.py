@@ -3,7 +3,7 @@ import requests
 
 class EthiopianWeatherForecast:
     def __init__(self, api_key):
-        self.api_key = "7add9cf5aa00418a91161932251709"
+        self.api_key = ""
         self.base_url = "http://api.weatherapi.com/v1"
         # Real Ethiopian locations with coordinates
         self.locations = {
