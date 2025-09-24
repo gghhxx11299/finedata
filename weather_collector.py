@@ -1,18 +1,12 @@
+# weather_collector.py
 import requests
-import json
-import datetime
-import time
-import os
 
 class EthiopianWeatherForecast:
-    def __init__(self):
-        # API configuration for WeatherAPI.com
-        self.api_key = " "  # Replace with your actual API key
+    def __init__(self, api_key):
+        self.api_key = "7add9cf5aa00418a91161932251709"
         self.base_url = "http://api.weatherapi.com/v1"
-        
-        # Ethiopian agricultural regions with coordinates
+        # Real Ethiopian locations with coordinates
         self.locations = {
-            # Capitals
             "Addis Ababa": {"lat": 9.005401, "lon": 38.763611},
             "Mekelle": {"lat": 13.4969, "lon": 39.4769},
             "Bahir Dar": {"lat": 11.5936, "lon": 37.3908},
@@ -22,7 +16,6 @@ class EthiopianWeatherForecast:
             "Gambela": {"lat": 8.25, "lon": 34.5833},
             "Asosa": {"lat": 10.0667, "lon": 34.5333},
             "Semera": {"lat": 11.5, "lon": 41.5},
-            # Agricultural Hotspots
             "Jimma": {"lat": 7.6667, "lon": 36.8333},
             "Nekemte": {"lat": 9.0833, "lon": 36.55},
             "Bale Robe": {"lat": 7.1333, "lon": 40.0},
@@ -37,144 +30,30 @@ class EthiopianWeatherForecast:
             "Adigrat": {"lat": 14.2833, "lon": 39.4667},
             "Goba": {"lat": 7.0167, "lon": 39.9833}
         }
-        
-        self.forecast_data = []
-        self.failed_locations = []
-    
-    def fetch_forecast_data(self, location, lat, lon):
-        """Fetch forecast data using WeatherAPI.com"""
+
+    def get_location_coords(self, query):
+        """Case-insensitive location matcher"""
+        query = query.lower().strip()
+        for name, coords in self.locations.items():
+            if query in name.lower() or name.lower() in query:
+                return name, coords
+        # Default fallback
+        return "Addis Ababa", self.locations["Addis Ababa"]
+
+    def fetch_live_weather(self, lat, lon):
+        """Fetch REAL 14-day forecast from WeatherAPI (online)"""
         try:
-            # WeatherAPI.com uses q parameter with "lat,lon" format
-            q = f"{lat},{lon}"
-            days = 7  # Get 7-day forecast
-            
-            url = f"{self.base_url}/forecast.json?key={self.api_key}&q={q}&days={days}&aqi=no&alerts=no"
-            
-            response = requests.get(url)
+            url = f"{self.base_url}/forecast.json"
+            params = {
+                "key": self.api_key,
+                "q": f"{lat},{lon}",
+                "days": 14,  # Requires paid WeatherAPI plan
+                "aqi": "no",
+                "alerts": "no"
+            }
+            response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
-            
-            data = response.json()
-            return data
+            return response.json()
         except Exception as e:
-            print(f"Error fetching forecast for {location}: {str(e)}")
+            print(f"Live weather fetch error: {e}")
             return None
-    
-    def process_forecast_data(self, location, data):
-        """Process forecast data for storage"""
-        forecast_info = {
-            'location': location,
-            'timestamp': datetime.datetime.now().isoformat(),
-            'current': {},
-            'forecast': []
-        }
-        
-        # Current weather
-        if 'current' in data:
-            current = data['current']
-            forecast_info['current'] = {
-                'temperature': current.get('temp_c', 'N/A'),
-                'humidity': current.get('humidity', 'N/A'),
-                'weather': current.get('condition', {}).get('text', 'N/A'),
-                'wind_speed': current.get('wind_kph', 'N/A'),
-                'timestamp': current.get('last_updated', 'N/A')
-            }
-        
-        # Forecast data
-        if 'forecast' in data and 'forecastday' in data['forecast']:
-            for day in data['forecast']['forecastday']:
-                day_data = {
-                    'date': day.get('date', 'N/A'),
-                    'temp_min': day.get('day', {}).get('mintemp_c', 'N/A'),
-                    'temp_max': day.get('day', {}).get('maxtemp_c', 'N/A'),
-                    'weather': day.get('day', {}).get('condition', {}).get('text', 'N/A'),
-                    'precipitation': day.get('day', {}).get('daily_chance_of_rain', 0),
-                    'wind_speed': day.get('day', {}).get('maxwind_kph', 'N/A'),
-                }
-                forecast_info['forecast'].append(day_data)
-        
-        return forecast_info
-    
-    def fetch_all_forecasts(self):
-        """Fetch weather data for all locations"""
-        self.forecast_data = []
-        self.failed_locations = []
-        total_locations = len(self.locations)
-        
-        print(f"Fetching weather forecasts for {total_locations} locations...")
-        
-        for i, (location, coords) in enumerate(self.locations.items(), 1):
-            print(f"[{i}/{total_locations}] Fetching forecast for {location}...", end=" ")
-            
-            data = self.fetch_forecast_data(location, coords['lat'], coords['lon'])
-            
-            if data is not None:
-                forecast_info = self.process_forecast_data(location, data)
-                self.forecast_data.append(forecast_info)
-                print(f"Success")
-            else:
-                self.failed_locations.append(location)
-                print("Failed")
-            
-            # Add a small delay to avoid hitting API rate limits
-            time.sleep(1)
-        
-        print()
-        success_count = len(self.forecast_data)
-        failed_count = len(self.failed_locations)
-        print(f"Forecast fetching completed. {success_count} locations succeeded, {failed_count} locations failed.")
-        
-        if failed_count > 0:
-            print("Failed locations:", ", ".join(self.failed_locations))
-    
-    def save_to_json_file(self):
-        """Save the collected data to data.json file"""
-        if not self.forecast_data:
-            print("No data to save. Please fetch data first.")
-            return False
-        
-        try:
-            # Create a clean data structure with metadata
-            output_data = {
-                "metadata": {
-                    "generated_at": datetime.datetime.now().isoformat(),
-                    "locations_count": len(self.forecast_data),
-                    "failed_locations": self.failed_locations
-                },
-                "weather_data": self.forecast_data
-            }
-            
-            # Save to JSON file
-            with open('data.json', 'w') as file:
-                json.dump(output_data, file, indent=2)
-            
-            print("Data successfully saved to data.json")
-            return True
-        except Exception as e:
-            print(f"Error saving data to file: {str(e)}")
-            return False
-
-def main():
-    """Main function to run the data collection"""
-    print("Starting Ethiopian Weather Data Collection...")
-    
-    # Remove previous data file if it exists
-    if os.path.exists('data.json'):
-        try:
-            os.remove('data.json')
-            print("Removed previous data.json file")
-        except Exception as e:
-            print(f"Error removing previous data file: {str(e)}")
-    
-    # Initialize the weather collector
-    collector = EthiopianWeatherForecast()
-    
-    # Fetch all forecast data
-    collector.fetch_all_forecasts()
-    
-    # Save the data to data.json
-    collector.save_to_json_file()
-    
-    print("Data collection completed!")
-
-if __name__ == "__main__":
-    main()
