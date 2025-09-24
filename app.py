@@ -10,7 +10,14 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
-from googletrans import Translator
+
+# Use deep-translator instead of googletrans
+try:
+    from deep_translator import GoogleTranslator
+    TRANSLATION_AVAILABLE = True
+except ImportError:
+    TRANSLATION_AVAILABLE = False
+    print("Warning: deep-translator not available")
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -18,9 +25,6 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
-
-# Initialize Google Translate
-translator = Translator()
 
 # ======================
 # CACHING
@@ -144,62 +148,13 @@ def get_planting_seasons(location: str) -> str:
     return f"{base} {belg} {kiremt}."
 
 # ======================
-# WEATHER (Optional - only if weather_collector module exists)
-# ======================
-
-try:
-    from weather_collector import EthiopianWeatherForecast
-    WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-    weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY) if WEATHER_API_KEY else None
-    if weather_collector:
-        logger.info("Weather collector initialized successfully")
-except ImportError:
-    logger.warning("weather_collector module not available")
-    weather_collector = None
-except Exception as e:
-    logger.error(f"Weather collector init failed: {e}")
-    weather_collector = None
-
-def get_weather_data(location: str) -> Optional[str]:
-    """Get weather data for a specific location."""
-    if not weather_collector or not location:
-        return None
-    try:
-        coords_result = weather_collector.get_location_coords(location)
-        if not coords_result or len(coords_result) < 2:
-            return f"Weather data not available for {location}"
-        
-        coords = coords_result[1]
-        live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        
-        if live_data and 'current' in live_data:
-            current = live_data['current']
-            
-            # Safely get forecast data
-            forecast_info = ""
-            if 'forecast' in live_data and 'forecastday' in live_data['forecast']:
-                try:
-                    today = live_data['forecast']['forecastday'][0]['day']
-                    forecast_info = f" Today's high: {today['maxtemp_c']}°C, low: {today['mintemp_c']}°C."
-                except (KeyError, IndexError) as e:
-                    logger.warning(f"Forecast data incomplete: {e}")
-            
-            return (
-                f"Live weather in {location}: {current['temp_c']}°C, "
-                f"{current['condition']['text']}.{forecast_info}"
-            )
-    except Exception as e:
-        logger.error(f"Weather error for {location}: {e}")
-    return None
-
-# ======================
-# TRANSLATION - USING GOOGLE TRANSLATE AS REQUIRED
+# TRANSLATION - USING DEEP-TRANSLATOR (MORE RELIABLE)
 # ======================
 
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
-# Google Translate language codes mapping
-GOOGLE_LANG_MAP = {
+# Language code mapping for deep-translator
+LANG_MAP = {
     "am": "am",    # Amharic
     "om": "om",    # Oromo
     "fr": "fr",    # French
@@ -209,90 +164,54 @@ GOOGLE_LANG_MAP = {
 }
 
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate text from English to target language using Google Translate."""
+    """Translate text from English to target language."""
     if target_lang == "en" or not text:
         return text
     
-    if target_lang not in SUPPORTED_LANGUAGES:
-        logger.warning(f"Unsupported target language: {target_lang}")
+    if target_lang not in SUPPORTED_LANGUAGES or not TRANSLATION_AVAILABLE:
         return text
-    
-    google_lang = GOOGLE_LANG_MAP.get(target_lang, "en")
     
     try:
-        # Retry logic for Google Translate (it can be flaky)
-        for attempt in range(3):
-            try:
-                translation = translator.translate(text, src='en', dest=google_lang)
-                if translation and translation.text:
-                    return translation.text
-                break
-            except Exception as e:
-                if attempt == 2:  # Last attempt
-                    logger.error(f"Google Translate failed after 3 attempts: {e}")
-                    raise
-                time.sleep(1)  # Wait before retry
-                
-    except AttributeError as e:
-        # Handle common googletrans attribute errors
-        logger.warning(f"Google Translate attribute error: {e}")
-        # Fallback: return original text
-        return text
+        translated = GoogleTranslator(source='en', target=target_lang).translate(text)
+        return translated if translated else text
     except Exception as e:
-        logger.error(f"Google Translate error for {target_lang}: {e}")
-        # Fallback: return original text
+        logger.warning(f"Translation to {target_lang} failed: {e}")
         return text
-    
-    return text
 
 def detect_and_translate_to_english(text: str) -> Tuple[str, str]:
-    """Detect language and translate to English if needed using Google Translate."""
-    if not text or not text.strip():
+    """Simple language detection and translation to English."""
+    if not text.strip():
         return "", "en"
     
-    # If text is already short or looks like English, return as is
-    if len(text.split()) <= 3 or all(ord(c) < 128 for c in text):
-        return text, "en"
-    
-    detected_lang = "en"
-    
-    try:
-        # Detect language with retry logic
-        for attempt in range(3):
+    # Simple detection based on character ranges
+    # Amharic characters: U+1200 to U+137F
+    if any('\u1200' <= char <= '\u137F' for char in text):
+        # Likely Amharic
+        if TRANSLATION_AVAILABLE:
             try:
-                detection = translator.detect(text)
-                if detection and detection.lang:
-                    detected_lang = detection.lang
-                    # Map to our supported language codes
-                    if detected_lang in GOOGLE_LANG_MAP.values():
-                        # Reverse lookup to get our code
-                        for our_code, google_code in GOOGLE_LANG_MAP.items():
-                            if google_code == detected_lang:
-                                detected_lang = our_code
-                                break
-                    
-                    # Only translate if it's not English
-                    if detected_lang != "en" and detected_lang in SUPPORTED_LANGUAGES:
-                        google_src_lang = GOOGLE_LANG_MAP.get(detected_lang, detected_lang)
-                        translation = translator.translate(text, src=google_src_lang, dest='en')
-                        if translation and translation.text:
-                            return translation.text, detected_lang
-                    break
-            except Exception as e:
-                if attempt == 2:
-                    logger.error(f"Language detection failed after 3 attempts: {e}")
-                time.sleep(1)
-                
-    except Exception as e:
-        logger.warning(f"Language detection and translation failed: {e}")
+                translated = GoogleTranslator(source='am', target='en').translate(text)
+                return translated if translated else text, "am"
+            except:
+                pass
+        return text, "am"
     
-    return text, detected_lang
+    # Arabic script (for Arabic and some other languages)
+    elif any('\u0600' <= char <= '\u06FF' for char in text):
+        if TRANSLATION_AVAILABLE:
+            try:
+                translated = GoogleTranslator(source='auto', target='en').translate(text)
+                return translated if translated else text, "ar"
+            except:
+                pass
+        return text, "ar"
+    
+    # Default to English
+    return text, "en"
 
 # ======================
 # AI RESPONSE
 # ======================
 
-# Available free models on OpenRouter
 AVAILABLE_MODELS = [
     "google/gemma-2-2b-it:free",
     "microsoft/phi-3-medium-4k-instruct:free", 
@@ -375,13 +294,6 @@ def generate_ai_response(question: str) -> str:
     if not is_in_scope(question):
         return "I specialize in Ethiopia-related questions about economy, agriculture, weather, and demographics."
 
-    # Include weather data if available and relevant
-    weather_info = ""
-    if "weather" in question.lower() or "rain" in question.lower():
-        weather_data = get_weather_data("Addis Ababa")  # Default to capital
-        if weather_data:
-            weather_info = f"\nWEATHER DATA:\n- {weather_data}"
-
     context = f"""You are Finedata AI, an expert assistant for Ethiopia. Use ONLY the verified data below:
 
 ECONOMIC DATA:
@@ -395,7 +307,6 @@ DEMOGRAPHIC DATA:
 AGRICULTURAL INFORMATION:
 - Planting seasons: {get_planting_seasons("Ethiopia")}
 - Common crops: {get_agricultural_data("Ethiopia")}
-{weather_info}
 
 RULES:
 1. Answer concisely in 1-3 sentences
@@ -462,9 +373,8 @@ def health_check():
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),
         "services": {
-            "translation": "available",
-            "ai": "available" if os.getenv("OPENROUTER_API_KEY") else "disabled",
-            "weather": "available" if weather_collector else "disabled"
+            "translation": "available" if TRANSLATION_AVAILABLE else "disabled",
+            "ai": "available" if os.getenv("OPENROUTER_API_KEY") else "disabled"
         },
         "supported_languages": list(SUPPORTED_LANGUAGES)
     })
@@ -488,6 +398,6 @@ if __name__ == '__main__':
     host = os.environ.get("HOST", "0.0.0.0")
     
     logger.info(f"Starting Finedata Ethiopia AI server on {host}:{port}")
-    logger.info(f"Supported languages: {SUPPORTED_LANGUAGES}")
+    logger.info(f"Translation available: {TRANSLATION_AVAILABLE}")
     
     app.run(debug=False, host=host, port=port)
