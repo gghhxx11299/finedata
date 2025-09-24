@@ -11,12 +11,16 @@ from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
 
+# Use Google Translate instead of LibreTranslate
+from googletrans import Translator
+
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
+translator = Translator()
 
 # ======================
 # CACHING
@@ -121,7 +125,8 @@ def get_planting_seasons(location: str) -> str:
 
 try:
     from weather_collector import EthiopianWeatherForecast
-    weather_collector = EthiopianWeatherForecast(os.getenv("WEATHER_API_KEY"))
+    WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+    weather_collector = EthiopianWeatherForecast(WEATHER_API_KEY) if WEATHER_API_KEY else None
 except Exception as e:
     logger.error(f"Weather collector init failed: {e}")
     weather_collector = None
@@ -132,7 +137,7 @@ def get_weather_data(location: str) -> Optional[str]:
     try:
         coords = weather_collector.get_location_coords(location)[1]
         live_data = weather_collector.fetch_live_weather(coords['lat'], coords['lon'])
-        if live_data and 'current' in live_:  # ✅ CORRECTED: complete variable name + colon
+        if live_data and 'current' in live_:
             current = live_data['current']
             today = live_data['forecast']['forecastday'][0]['day']
             return (
@@ -144,47 +149,34 @@ def get_weather_data(location: str) -> Optional[str]:
     return None
 
 # ======================
-# TRANSLATION
+# GOOGLE TRANSLATE INTEGRATION
 # ======================
 
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
-
-def translate_text(text: str, source_lang: str, target_lang: str) -> str:
-    if not text or source_lang == target_lang or target_lang == "en":
-        return text
-    try:
-        resp = requests.post("https://libretranslate.de/translate", json={
-            "q": text, "source": source_lang, "target": target_lang
-        }, timeout=10)
-        if resp.status_code == 200:
-            data = resp.json()
-            return data.get("translatedText", text) if isinstance(data, dict) else text
-    except Exception as e:
-        logger.warning(f"Translation error: {e}")
-    return text
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     if not text.strip():
         return "", "en"
     try:
-        resp = requests.post("https://libretranslate.de/detect", json={"q": text[:100]}, timeout=5)
-        detected = "en"
-        if resp.status_code == 200:
-            data = resp.json()
-            if isinstance(data, list) and len(data) > 0:  # ✅ CORRECTED: complete condition + colon
-                detected = data[0].get("language", "en")
-        if detected != "en":
-            trans_resp = requests.post("https://libretranslate.de/translate", json={
-                "q": text, "source": detected, "target": "en"
-            }, timeout=8)
-            if trans_resp.status_code == 200:
-                trans_data = trans_resp.json()
-                if isinstance(trans_data, dict):
-                    return trans_data.get("translatedText", text), detected
-        return text, detected
+        detected = translator.detect(text)
+        lang = detected.lang if detected.lang in SUPPORTED_LANGUAGES else "en"
+        if lang != "en":
+            translated = translator.translate(text, src=lang, dest="en").text
+            return translated, lang
+        return text, lang
     except Exception as e:
-        logger.warning(f"Translation fallback: {e}")
+        logger.warning(f"Google Translate detection error: {e}")
         return text, "en"
+
+def translate_text(text: str, target_lang: str) -> str:
+    if target_lang == "en" or not text:
+        return text
+    try:
+        result = translator.translate(text, src="en", dest=target_lang)
+        return result.text
+    except Exception as e:
+        logger.warning(f"Google Translate to {target_lang} failed: {e}")
+        return text
 
 # ======================
 # AI RESPONSE
@@ -198,22 +190,36 @@ def is_in_scope(question: str) -> bool:
 def generate_ai_response(question: str) -> str:
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     if not openrouter_key:
+        logger.error("❌ OPENROUTER_API_KEY is MISSING in environment!")
         return "AI assistant is not configured. Contact support."
 
     if not is_in_scope(question):
         return "We're still working on this! Please ask something about Ethiopia's economy, agriculture, weather, or population."
 
-    # Build context
     context = f"""
-You are Finedata AI for Ethiopia. Use ONLY this data:
+You are Finedata AI for Ethiopia. Use ONLY this verified 
+
+ECONOMIC:
 - GDP per capita: {get_gdp_per_capita()}
 - Inflation: {get_inflation_rate()}
-- Exchange: {get_exchange_rates()}
-- Population: {get_population()}
-- Planting: {get_planting_seasons("Addis Ababa")}
-- Crops: {get_agricultural_data("Addis Ababa")}
+- Exchange rates: {get_exchange_rates()}
 
-Answer concisely in English. If unsure, say "I don't have that data."
+DEMOGRAPHIC:
+- Population: {get_population()}
+
+AGRICULTURE:
+- Planting seasons: {get_planting_seasons("Addis Ababa")}
+- Crops by region: {get_agricultural_data("Addis Ababa")}
+
+WEATHER:
+- Live weather available for any Ethiopian city
+
+RULES:
+1. Answer concisely in 1-3 sentences
+2. If data is missing, say "I don't have that specific data"
+3. NEVER make up numbers
+4. Keep answers factual and Ethiopia-focused
+
 Question: {question}
 Answer:
 """
@@ -238,9 +244,10 @@ Answer:
             answer = resp.json()["choices"][0]["message"]["content"].strip()
             return answer.split("Question:")[0].strip() or "I couldn't generate a response."
         else:
+            logger.error(f"OpenRouter API error: {resp.status_code}")
             return "I'm having trouble processing your request."
     except Exception as e:
-        logger.exception("OpenRouter error")
+        logger.exception("OpenRouter request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -250,7 +257,7 @@ Answer:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:  # ✅ CORRECTED: complete condition
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -263,7 +270,7 @@ def ask_ai():
 
     english_question, _ = detect_and_translate_to_english(user_question)
     answer_en = generate_ai_response(english_question)
-    answer_translated = translate_text(answer_en, "en", target_lang)
+    answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
         "answer_translated": answer_translated,
