@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Forecasts - Finedatas Ethiopia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reuse your global styles */
+        :root {
+            --primary-color: #2c5282;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --text-color: #2d3748;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Premium Variables */
+            --dark-bg: #0D1117;
+            --card-bg: #161B22;
+            --electric-blue: #58A6FF;
+            --coral-red: #FF7B72;
+            --text-light: #C9D1D9;
+            --neon-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+            --transition: all 0.3s ease;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        a {
+            color: var(--electric-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        a:hover {
+            color: var(--coral-red);
+        }
+        /* Header */
+        header {
+            background-color: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 5px;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-links a:not(.btn):hover {
+            color: var(--electric-blue);
+        }
+        .nav-links a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-blue);
+            transition: var(--transition);
+        }
+        .nav-links a:not(.btn):hover::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--electric-blue);
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .btn {
+            background-color: var(--electric-blue);
+            color: var(--dark-bg);
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--coral-red);
+            color: var(--white);
+            box-shadow: 0 0 10px var(--coral-red), 0 0 20px rgba(255, 123, 114, 0.4);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        /* Hero */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9));
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(88, 166, 255, 0.1), transparent 70%);
+        }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--text-light);
+        }
+        /* Forecast Grid */
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .forecast-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .forecast-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), var(--neon-shadow);
+            border-color: var(--electric-blue);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        .card-icon {
+            font-size: 1.5rem;
+            color: var(--electric-blue);
+        }
+        .forecast-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: var(--white);
+        }
+        .forecast-detail {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            color: #A0AEC0;
+        }
+        .trend-up { color: #4ade80; }
+        .trend-down { color: var(--coral-red); }
+        .trend-neutral { color: #D69E2E; }
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--electric-blue);
+        }
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: block;
+        }
+        .footer-section a:hover {
+            color: var(--coral-red);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                border-top: 1px solid rgba(88, 166, 255, 0.3);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedatas Logo">
+                    <h1>Finedatas</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="exchange.html">Exchange Rates</a></li>
+                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="weather.html">For Farmers</a></li>
+                    <li><a href="insights.html" class="active">Get Forecasts</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h2>Ethiopia 2025 Integrated Forecast Dashboard</h2>
+            <p>Forward-looking, cross-sectoral insights for policymakers, investors, farmers, and researchers — all grounded in Ethiopia’s unique data landscape.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section>
+            <h3>Comprehensive 2025 Forecasts by Sector</h3>
+            <div class="forecast-grid">
+                <!-- ECONOMIC -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">GDP Growth</h4>
+                        <i class="fas fa-chart-line card-icon"></i>
+                    </div>
+                    <div class="forecast-value">5.9%</div>
+                    <p class="forecast-detail">Real GDP growth driven by services (43% of GDP) and manufacturing recovery.</p>
+                    <p class="forecast-detail trend-up">↑ From 5.4% in 2024</p>
+                    <a href="economic.html">View Economic Data →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Inflation</h4>
+                        <i class="fas fa-fire card-icon"></i>
+                    </div>
+                    <div class="forecast-value">9.8%</div>
+                    <p class="forecast-detail">Moderating due to stable food supply and tighter monetary policy.</p>
+                    <p class="forecast-detail trend-down">↓ From 10.5% in 2024</p>
+                    <a href="economic.html">View Indicators →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Foreign Reserves</h4>
+                        <i class="fas fa-wallet card-icon"></i>
+                    </div>
+                    <div class="forecast-value">$8.1B</div>
+                    <p class="forecast-detail">~2.1 months of import cover — remains a critical vulnerability.</p>
+                    <p class="forecast-detail trend-neutral">→ Stable if exports grow</p>
+                    <a href="economic.html">View Public Finance →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">FDI Inflows</h4>
+                        <i class="fas fa-hand-holding-usd card-icon"></i>
+                    </div>
+                    <div class="forecast-value">$4.3B</div>
+                    <p class="forecast-detail">Industrial parks and energy sector attract Turkish, Chinese, and Gulf investment.</p>
+                    <p class="forecast-detail trend-up">↑ +8% YoY</p>
+                    <a href="economic.html">View Investment →</a>
+                </div>
+
+                <!-- AGRICULTURAL -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Total Crop Output</h4>
+                        <i class="fas fa-seedling card-icon"></i>
+                    </div>
+                    <div class="forecast-value">298M tons</div>
+                    <p class="forecast-detail">+4.9% growth from 2024, led by teff, maize, and pulses.</p>
+                    <p class="forecast-detail trend-up">↑ Driven by irrigation & inputs</p>
+                    <a href="agricultural.html">View Agri Data →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Coffee Exports</h4>
+                        <i class="fas fa-coffee card-icon"></i>
+                    </div>
+                    <div class="forecast-value">$1.35B</div>
+                    <p class="forecast-detail">Recovery from 2024 slump; global prices stabilize at $215/kg.</p>
+                    <p class="forecast-detail trend-up">↑ +12.5% YoY</p>
+                    <a href="agricultural.html">View Export Trends →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Irrigated Land</h4>
+                        <i class="fas fa-tint card-icon"></i>
+                    </div>
+                    <div class="forecast-value">1.38M ha</div>
+                    <p class="forecast-detail">+15% expansion from 2024; GERD enables new schemes in Awash & Rift Valley.</p>
+                    <p class="forecast-detail trend-up">↑ Critical for climate resilience</p>
+                    <a href="agricultural.html">View Inputs →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Livestock GDP Share</h4>
+                        <i class="fas fa-cow card-icon"></i>
+                    </div>
+                    <div class="forecast-value">12.3%</div>
+                    <p class="forecast-detail">Livestock contributes 68% of agri-GDP in Afar/Somali regions.</p>
+                    <p class="forecast-detail trend-up">↑ Export demand rising</p>
+                    <a href="agricultural.html">View Livestock →</a>
+                </div>
+
+                <!-- DEMOGRAPHIC -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Population</h4>
+                        <i class="fas fa-users card-icon"></i>
+                    </div>
+                    <div class="forecast-value">135.5M</div>
+                    <p class="forecast-detail">Mid-2025 estimate; urban share reaches 22.5%.</p>
+                    <p class="forecast-detail trend-up">↑ +2.55% annual growth</p>
+                    <a href="demographic.html">View Demographics →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Youth Unemployment</h4>
+                        <i class="fas fa-graduation-cap card-icon"></i>
+                    </div>
+                    <div class="forecast-value">25.8%</div>
+                    <p class="forecast-detail">Remains high despite job creation in industrial parks.</p>
+                    <p class="forecast-detail trend-up">↑ Slight increase from 25.4%</p>
+                    <a href="demographic.html">View Labor Force →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Life Expectancy</h4>
+                        <i class="fas fa-heartbeat card-icon"></i>
+                    </div>
+                    <div class="forecast-value">67.8 yrs</div>
+                    <p class="forecast-detail">Female: 70.3 yrs | Male: 65.4 yrs</p>
+                    <p class="forecast-detail trend-up">↑ +0.2 from 2024</p>
+                    <a href="demographic.html">View Health →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Internet Penetration</h4>
+                        <i class="fas fa-wifi card-icon"></i>
+                    </div>
+                    <div class="forecast-value">32%</div>
+                    <p class="forecast-detail">Driven by Safaricom & MTN rural expansion.</p>
+                    <p class="forecast-detail trend-up">↑ From 28% in 2024</p>
+                    <a href="demographic.html">View Tech Access →</a>
+                </div>
+
+                <!-- EXCHANGE & TRADE -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">ETB/USD (Official)</h4>
+                        <i class="fas fa-coins card-icon"></i>
+                    </div>
+                    <div class="forecast-value">59.8 ETB</div>
+                    <p class="forecast-detail">Parallel market may exceed 65 ETB; forex rationing continues.</p>
+                    <p class="forecast-detail trend-down">↓ Further depreciation</p>
+                    <a href="exchange.html">View Exchange Rates →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Trade Deficit</h4>
+                        <i class="fas fa-money-bill-trend-up card-icon"></i>
+                    </div>
+                    <div class="forecast-value">-$6.5B</div>
+                    <p class="forecast-detail">Exports: $18.2B | Imports: $24.7B</p>
+                    <p class="forecast-detail trend-neutral">→ Stable if oil prices hold</p>
+                    <a href="economic.html">View Trade →</a>
+                </div>
+
+                <!-- WEATHER & CLIMATE -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Kiremt Rainfall</h4>
+                        <i class="fas fa-cloud-sun-rain card-icon"></i>
+                    </div>
+                    <div class="forecast-value">Near-normal</div>
+                    <p class="forecast-detail">June–Sept rains at 95–105% of average — favorable for teff & maize.</p>
+                    <p class="forecast-detail trend-neutral">→ Low drought risk</p>
+                    <a href="weather.html">View Farmer Forecasts →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Temperature Anomaly</h4>
+                        <i class="fas fa-temperature-high card-icon"></i>
+                    </div>
+                    <div class="forecast-value">+0.8°C</div>
+                    <p class="forecast-detail">Above 1991–2020 baseline; heat stress in lowlands.</p>
+                    <p class="forecast-detail trend-up">↑ Warming trend continues</p>
+                    <a href="weather.html">View Climate Data →</a>
+                </div>
+
+                <!-- INFRASTRUCTURE & DIGITAL -->
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">GERD Generation</h4>
+                        <i class="fas fa-bolt card-icon"></i>
+                    </div>
+                    <div class="forecast-value">2,000 MW</div>
+                    <p class="forecast-detail">Phased commissioning begins; full 5,150 MW by 2028.</p>
+                    <p class="forecast-detail trend-up">↑ National grid stability improves</p>
+                    <a href="economic.html">View Energy →</a>
+                </div>
+                <div class="forecast-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Mobile Money Users</h4>
+                        <i class="fas fa-mobile-alt card-icon"></i>
+                    </div>
+                    <div class="forecast-value">15M+</div>
+                    <p class="forecast-detail">200% annual growth since 2022; drives financial inclusion.</p>
+                    <p class="forecast-detail trend-up">↑ Key for rural economy</p>
+                    <a href="economic.html">View Digital Economy →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Dive: Sectoral Outlooks -->
+        <section style="margin-top: 3rem;">
+            <h3>2025 Sectoral Outlooks</h3>
+            <div class="forecast-grid">
+                <div class="forecast-card">
+                    <h4><i class="fas fa-industry" style="color:#58A6FF;"></i> Manufacturing</h4>
+                    <p class="forecast-detail">Industrial parks to employ 100,000+ by 2025. Textile exports target $2B by 2026. Key risk: forex shortages for raw material imports.</p>
+                </div>
+                <div class="forecast-card">
+                    <h4><i class="fas fa-umbrella-beach" style="color:#58A6FF;"></i> Tourism</h4>
+                    <p class="forecast-detail">1.2M arrivals (+41% from 2019). New visa-on-arrival for 30+ countries. Revenue: $3.8B. Focus on cultural (Lalibela) and eco-tourism (Simien).</p>
+                </div>
+                <div class="forecast-card">
+                    <h4><i class="fas fa-tractor" style="color:#58A6FF;"></i> Smallholder Resilience</h4>
+                    <p class="forecast-detail">32% of farmers use climate-smart practices. Drought-resistant seeds cover 1.5M ha. Early warning systems reach 80% of woredas.</p>
+                </div>
+                <div class="forecast-card">
+                    <h4><i class="fas fa-school" style="color:#58A6FF;"></i> Education</h4>
+                    <p class="forecast-detail">Primary completion: 79.2%. Youth literacy gap narrows (59% male vs 46% female). Digital learning pilots in 500 schools.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risks & Opportunities -->
+        <section style="margin-top: 3rem;">
+            <h3>2025: Strategic Risks & Opportunities</h3>
+            <div class="forecast-grid">
+                <div class="forecast-card">
+                    <h4><i class="fas fa-exclamation-triangle" style="color:#FF7B72;"></i> Key Risks</h4>
+                    <ul style="padding-left: 1.2rem; margin-top: 1rem; line-height: 1.7; font-size: 0.95rem;">
+                        <li>Foreign reserves below 3-month import cover</li>
+                        <li>Debt service = 25% of export earnings</li>
+                        <li>Climate volatility in Somali & Afar</li>
+                        <li>Urban youth unemployment >25%</li>
+                        <li>ETB parallel market premium >10%</li>
+                    </ul>
+                </div>
+                <div class="forecast-card">
+                    <h4><i class="fas fa-lightbulb" style="color:#58A6FF;"></i> Strategic Opportunities</h4>
+                    <ul style="padding-left: 1.2rem; margin-top: 1rem; line-height: 1.7; font-size: 0.95rem;">
+                        <li>GERD enables green industrialization</li>
+                        <li>Digital ID rollout boosts service access</li>
+                        <li>Agro-processing for export diversification</li>
+                        <li>Regional integration via AfCFTA</li>
+                        <li>Youth dividend: 70% under age 30</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedatas</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="insights.html">Get Forecasts</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +251 991168917</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
