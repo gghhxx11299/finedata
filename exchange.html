@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Global Styles */
         :root {
             --background-color: #0D1117;
             --primary-accent: #58A6FF;
@@ -38,7 +37,6 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
         header {
             background-color: var(--card-bg);
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -95,11 +93,9 @@
             font-weight: 700;
         }
 
-        /* Fix for top right corner positioning */
+        /* FIXED: Remove absolute positioning that breaks layout */
         .nav-links li:last-child {
-            position: absolute;
-            right: 0;
-            top: 0;
+            position: static; /* ← Critical fix */
         }
 
         .nav-links li:last-child a {
@@ -115,7 +111,6 @@
             color: #FFFFFF;
         }
 
-        /* Page Header */
         .page-header {
             text-align: center;
             padding: 30px 0;
@@ -136,7 +131,6 @@
             opacity: 0.9;
         }
 
-        /* Exchange Rates Section */
         .exchange-rates {
             margin-bottom: 40px;
         }
@@ -189,7 +183,6 @@
             text-align: left;
         }
 
-        /* Currency Converter Styles */
         .currency-converter {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -285,7 +278,7 @@
             border: 1px solid var(--primary-accent);
         }
 
-        /* Charts Section */
+        /* FIXED: Charts Section - Set explicit height */
         .charts-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -300,6 +293,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             border: 1px solid var(--primary-accent);
             transition: transform 0.2s;
+            height: 400px; /* ← Critical fix: fixed height */
         }
 
         .chart-container:hover {
@@ -314,7 +308,6 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Key Rates Section */
         .key-rates {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -362,7 +355,6 @@
             color: var(--secondary-accent);
         }
 
-        /* Footer */
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
@@ -407,10 +399,13 @@
             width: 100%;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .charts-section {
                 grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 350px; /* Adjust for mobile */
             }
             
             .nav-links {
@@ -429,12 +424,6 @@
             
             .footer-content {
                 flex-direction: column;
-            }
-            
-            /* Adjust for mobile view */
-            .nav-links li:last-child {
-                position: static;
-                margin-top: 10px;
             }
         }
     </style>
@@ -458,7 +447,7 @@
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <li><a href="donate.html" class="btn">Donate</a></li>
+                    <li><a href="donate.html">Donate</a></li>
                 </ul>
             </nav>
         </div>
@@ -664,13 +653,6 @@
                             <td>196.344</td>
                             <td>195.372</td>
                         </tr>
-                        <!-- Added more currencies -->
-                        <tr>
-                            <td class="currency-code">INDIAN RUPEE - INR</td>
-                            <td>1.6297</td>
-                            <td>1.646</td>
-                            <td>1.6379</td>
-                        </tr>
                         <tr>
                             <td class="currency-code">SINGAPORE DOLLAR - SGD</td>
                             <td>108.25</td>
@@ -811,7 +793,6 @@
         </section>
     </div>
 
-    
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -839,7 +820,6 @@
         </div>
     </footer>
     <script>
-        // Exchange rate data (using mid-rates from the table)
         const exchangeRates = {
             "ETB": 1,
             "USD": 143.6171,
@@ -860,7 +840,6 @@
             "TRY": 4.88
         };
 
-        // DOM Elements
         const amountInput = document.getElementById('amount');
         const fromCurrencySelect = document.getElementById('fromCurrency');
         const toCurrencySelect = document.getElementById('toCurrency');
@@ -869,30 +848,22 @@
         const resultBox = document.getElementById('resultBox');
         const resultText = document.getElementById('resultText');
 
-        // Swap currencies
         swapButton.addEventListener('click', () => {
             const temp = fromCurrencySelect.value;
             fromCurrencySelect.value = toCurrencySelect.value;
             toCurrencySelect.value = temp;
         });
 
-        // Calculate conversion
         calculateButton.addEventListener('click', () => {
             const amount = parseFloat(amountInput.value);
-            
             if (isNaN(amount) || amount <= 0) {
                 alert('Please enter a valid amount');
                 return;
             }
-            
             const fromCurrency = fromCurrencySelect.value;
             const toCurrency = toCurrencySelect.value;
-            
-            // Convert to ETB first, then to target currency
             const amountInETB = amount * exchangeRates[fromCurrency];
             const convertedAmount = amountInETB / exchangeRates[toCurrency];
-            
-            // Display result
             resultText.textContent = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(4)} ${toCurrency}`;
             resultBox.style.display = 'block';
         });
@@ -913,7 +884,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                // maintainAspectRatio: false, // ← Removed to prevent height issues
                 scales: {
                     y: {
                         beginAtZero: false,
@@ -955,7 +926,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                // maintainAspectRatio: false, // ← Removed
                 scales: {
                     y: {
                         beginAtZero: false,
