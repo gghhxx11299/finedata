@@ -30,8 +30,11 @@
             margin: 0 auto;
             padding: 0 15px;
         }
+        
+        /* ===== FIXED HEADER - Like AI Chat Page ===== */
         header {
             background-color: var(--card-bg);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -190,6 +193,55 @@
             font-weight: 600;
         }
 
+        /* ===== NEW AI SECTION ===== */
+        .ai-section {
+            background: var(--card-bg);
+            padding: 4rem 3rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .ai-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .ai-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .ai-feature {
+            background: rgba(88, 166, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        .ai-feature:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        .ai-feature i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .ai-feature h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .ai-cta {
+            margin-top: 2rem;
+        }
+        .ai-cta .btn {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+        }
+
         /* Insights / Recently Added */
         .insights-section {
             background: var(--card-bg);
@@ -285,13 +337,42 @@
             border-top: 1px solid var(--border);
         }
 
+        /* ===== FIXED MOBILE MENU - Like AI Chat Page ===== */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                box-shadow: var(--shadow);
+                padding: 1rem 0;
+                border-top: 1px solid var(--border);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            .mobile-menu-btn { 
+                display: block; 
+            }
+            
             .hero h1 { font-size: 2rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .hero-buttons .btn { width: 100%; max-width: 250px; }
             .insight-item { flex-direction: column; }
+            
+            .ai-section {
+                padding: 2rem 1.5rem;
+            }
+            .ai-features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -311,7 +392,7 @@
                     <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="ai-chat.html" class="active">AI Chat</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -324,7 +405,7 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <h1>Ethiopia’s Only All-in-One Data Hub</h1>
+            <h1>Ethiopia's Only All-in-One Data Hub</h1>
             <p>One place for economic stats, crop forecasts, population trends, exchange rates, and more — all verified, updated, and free.</p>
             <div class="hero-buttons">
                 <a href="insights.html" class="btn">✨ Get 2025 Forecasts</a>
@@ -339,11 +420,11 @@
             <h2 class="section-title">Why Finedatas Exists</h2>
             <div class="why-content">
                 <p>
-                    I built Finedatas because no single source offered Ethiopia’s full data picture — from teff yields to urban growth to forex trends. 
+                    I built Finedatas because no single source offered Ethiopia's full data picture — from teff yields to urban growth to forex trends. 
                     Government reports are scattered, global sites lack local context, and researchers waste time stitching fragments together.
                 </p>
                 <p>
-                    So I created Ethiopia’s only all-in-one hub: open, reliable, and built for real-world use — whether you’re a farmer checking rain forecasts or a policymaker analyzing GDP.
+                    So I created Ethiopia's only all-in-one hub: open, reliable, and built for real-world use — whether you're a farmer checking rain forecasts or a policymaker analyzing GDP.
                 </p>
                 <p class="founder">— Geabral Mulugeta, Founder</p>
             </div>
@@ -389,6 +470,46 @@
         </div>
     </section>
 
+    <!-- ===== NEW AI SECTION ===== -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="ai-content">
+                <h2 class="section-title">🤖 AI-Powered Ethiopia Assistant</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-muted);">
+                    Get instant answers about Ethiopia's economy, agriculture, weather, and more in any language
+                </p>
+                
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <i class="fas fa-globe-africa"></i>
+                        <h4>Multi-Language Support</h4>
+                        <p>Ask questions in Amharic, Oromo, English, Arabic, French, or Spanish</p>
+                    </div>
+                    <div class="ai-feature">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Real-Time Data</h4>
+                        <p>Get current information from web sources and verified databases</p>
+                    </div>
+                    <div class="ai-feature">
+                        <i class="fas fa-robot"></i>
+                        <h4>Smart Responses</h4>
+                        <p>AI understands context and provides accurate, Ethiopia-specific answers</p>
+                    </div>
+                </div>
+                
+                <div class="ai-cta">
+                    <a href="ai-chat.html" class="btn" style="background: linear-gradient(135deg, var(--primary), #1f6feb);">
+                        <i class="fas fa-comments"></i> Start Chatting with AI
+                    </a>
+                </div>
+                
+                <div style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+                    <p>💡 <strong>Try asking:</strong> "What's the weather in Addis Ababa?" or "የኢትዮጵያ ህዝብ ብዛት ስንት ነው?"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Recently Added -->
     <section class="insights-section">
         <div class="container">
@@ -409,7 +530,7 @@
                     <i class="fas fa-chart-line"></i>
                 </div>
                 <div class="insight-content">
-                    <h4>Ethiopia’s 2025 Economic Outlook</h4>
+                    <h4>Ethiopia's 2025 Economic Outlook</h4>
                     <p>Updated GDP, inflation, and trade forecasts with sectoral breakdowns.</p>
                     <div class="insight-meta">Added: August 2025</div>
                     <a href="economic.html">View Data →</a>
@@ -438,7 +559,7 @@
                     Finedatas is built on open principles. Our code, data pipelines, and documentation are publicly available to promote transparency, collaboration, and trust.
                 </p>
                 <p>
-                    We believe Ethiopia’s data future should be shaped by its people — researchers, developers, students, and citizens alike.
+                    We believe Ethiopia's data future should be shaped by its people — researchers, developers, students, and citizens alike.
                 </p>
                 <a href="https://github.com/gghhxx11299/finedata" target="_blank" class="btn" style="margin-top: 1.5rem;">
                     <i class="fab fa-github"></i> View on GitHub
@@ -494,10 +615,28 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
-            const nav = document.querySelector('.nav-links');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        // ===== FIXED MOBILE MENU - Like AI Chat Page =====
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
         });
     </script>
 </body>
