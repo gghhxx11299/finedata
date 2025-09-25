@@ -18,6 +18,8 @@
       --border-color: #30363D;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      --success-color: #3FB950;
+      --warning-color: #D29922;
     }
     * {
       margin: 0;
@@ -29,6 +31,9 @@
       line-height: 1.6;
       color: var(--text-color);
       background-color: var(--bg-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     h1, h2, h3, h4 {
       font-family: 'Montserrat', sans-serif;
@@ -106,12 +111,12 @@
       color: var(--primary-color);
     }
 
-    /* ===== CHAT CONTAINER ===== */
+    /* ===== CHAT CONTAINER - IMPROVED ===== */
     .chat-container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 2rem auto;
       background: var(--card-bg);
-      border-radius: 16px;
+      border-radius: 20px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
@@ -121,10 +126,100 @@
     }
 
     .chat-header {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      padding: 20px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .chat-header-content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-header-content p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-color);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .language-selector {
+      padding: 15px 25px;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .language-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .language-selector select {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 14px;
+      background: var(--card-bg);
+      color: var(--text-color);
+      min-width: 150px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .quick-action {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quick-action:hover {
       background: var(--primary-color);
       color: var(--bg-color);
-      padding: 20px;
-      text-align: center;
+      border-color: var(--primary-color);
     }
 
     .chat-messages {
@@ -134,86 +229,127 @@
       background: var(--bg-color);
       display: flex;
       flex-direction: column;
+      gap: 15px;
     }
 
     .message {
-      max-width: 80%;
-      padding: 14px 18px;
-      margin-bottom: 18px;
+      max-width: 85%;
+      padding: 16px 20px;
+      margin-bottom: 5px;
       border-radius: 18px;
       line-height: 1.5;
       position: relative;
-      animation: fadeIn 0.3s ease;
+      animation: fadeIn 0.4s ease;
       word-wrap: break-word;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .user-message {
-      background: var(--primary-color);
-      color: var(--bg-color);
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
       align-self: flex-end;
-      border-bottom-right-radius: 4px;
+      border-bottom-right-radius: 6px;
+      margin-left: auto;
     }
 
     .ai-message {
       background: var(--card-bg);
       color: var(--text-color);
       align-self: flex-start;
-      border-bottom-left-radius: 4px;
+      border-bottom-left-radius: 6px;
       border: 1px solid var(--border-color);
+    }
+
+    .message-time {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    .ai-message .message-time {
+      text-align: left;
     }
 
     .ai-message.amharic {
       font-family: 'Noto Sans Ethiopic', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
+      line-height: 1.8;
     }
 
     .ai-message.oromo {
       font-family: 'Inter', sans-serif;
-      font-size: 17px;
+      font-size: 16px;
     }
 
-    .language-selector {
-      padding: 0 20px 10px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .language-selector select {
-      padding: 8px 12px;
+    .welcome-message {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--card-bg);
+      border-radius: 15px;
       border: 1px solid var(--border-color);
-      border-radius: 20px;
-      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    .welcome-message h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .example-questions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .example-question {
       background: var(--bg-color);
-      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .example-question:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
     }
 
     .chat-input-area {
-      padding: 16px;
+      padding: 20px;
       background: var(--card-bg);
       border-top: 1px solid var(--border-color);
       display: flex;
-      gap: 12px;
+      gap: 15px;
+      align-items: flex-end;
+    }
+
+    .input-container {
+      flex: 1;
+      position: relative;
     }
 
     .chat-input-area textarea {
-      flex: 1;
-      padding: 14px;
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
+      width: 100%;
+      padding: 16px 50px 16px 20px;
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
       resize: none;
-      font-size: 16px;
-      min-height: 24px;
+      font-size: 15px;
+      min-height: 50px;
       max-height: 120px;
       font-family: 'Inter', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
+      transition: border-color 0.3s ease;
     }
 
     .chat-input-area textarea:focus {
@@ -221,60 +357,96 @@
       border-color: var(--primary-color);
     }
 
-    .send-button {
-      background: var(--primary-color);
-      color: var(--bg-color);
+    .input-actions {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .mic-button, .attach-button {
+      background: none;
       border: none;
-      width: 48px;
-      height: 48px;
+      color: var(--text-color);
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      padding: 5px;
+    }
+
+    .mic-button:hover, .attach-button:hover {
+      opacity: 1;
+      color: var(--primary-color);
+    }
+
+    .send-button {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
     }
 
     .send-button:hover {
-      background: #3d8be0;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(88, 166, 255, 0.5);
+    }
+
+    .send-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .typing-indicator {
       display: none;
       align-self: flex-start;
       background: var(--card-bg);
-      padding: 12px 16px;
+      padding: 15px 20px;
       border-radius: 18px;
-      border-bottom-left-radius: 4px;
+      border-bottom-left-radius: 6px;
       color: #8B949E;
       border: 1px solid var(--border-color);
+      margin-bottom: 10px;
     }
 
-    .typing-indicator span {
+    .typing-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .typing-dots span {
       height: 8px;
       width: 8px;
-      float: left;
-      margin: 0 1px;
-      background-color: #9E9EA1;
+      background-color: var(--primary-color);
       display: block;
       border-radius: 50%;
       opacity: 0.4;
+      animation: typing 1.4s infinite ease-in-out;
     }
 
-    .typing-indicator span:nth-of-type(1) {
-      animation: typing 1s infinite;
-    }
-    .typing-indicator span:nth-of-type(2) {
-      animation: typing 1s infinite 0.2s;
-    }
-    .typing-indicator span:nth-of-type(3) {
-      animation: typing 1s infinite 0.4s;
-    }
+    .typing-dots span:nth-of-type(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-of-type(2) { animation-delay: -0.16s; }
 
     @keyframes typing {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+      40% { transform: scale(1.2); opacity: 1; }
     }
 
     /* ===== FOOTER (MATCH economic.html) ===== */
@@ -282,7 +454,7 @@
       background-color: var(--card-bg);
       color: var(--text-color);
       padding: 3rem 0 1.5rem;
-      margin-top: 3rem;
+      margin-top: auto;
       border-top: 1px solid var(--border-color);
     }
     .footer-content {
@@ -337,17 +509,32 @@
         display: block;
       }
       .chat-container {
-        height: 70vh;
+        height: 80vh;
         margin: 1rem;
+        border-radius: 15px;
       }
       .message {
-        max-width: 90%;
+        max-width: 95%;
+      }
+      .chat-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+      .language-selector {
+        padding: 10px 15px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .quick-actions {
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header (same as economic.html) -->
+  <!-- Header -->
   <header>
     <div class="container">
       <nav>
@@ -376,49 +563,92 @@
   <main>
     <div class="chat-container">
       <div class="chat-header">
-        <h2>🤖 Ethiopian AI Assistant</h2>
-        <p>Ask about weather, agriculture, or cities in any language!</p>
+        <div class="chat-header-content">
+          <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
+          <p>Ask me anything about Ethiopia's economy, agriculture, weather, and more</p>
+        </div>
+        <div class="ai-status">
+          <div class="status-dot"></div>
+          <span>AI Online</span>
+        </div>
       </div>
 
       <div class="language-selector">
-        <select id="language">
-          <option value="en">English</option>
-          <option value="am">Amharic (አማርኛ)</option>
-          <option value="om">Oromo (Afaan Oromoo)</option>
-          <option value="fr">Français</option>
-          <option value="es">Español</option>
-          <option value="ar">العربية</option>
-        </select>
+        <div class="language-controls">
+          <label for="language">Language:</label>
+          <select id="language">
+            <option value="en">🌐 English</option>
+            <option value="am">🇪🇹 Amharic (አማርኛ)</option>
+            <option value="om">🇪🇹 Oromo (Afaan Oromoo)</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="ar">🇸🇦 العربية</option>
+          </select>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-action" onclick="insertExample('What is the current weather in Addis Ababa?')">🌤️ Weather</div>
+          <div class="quick-action" onclick="insertExample('Tell me about Ethiopian agriculture')">🌾 Agriculture</div>
+          <div class="quick-action" onclick="insertExample('Current economic situation in Ethiopia')">💼 Economy</div>
+          <div class="quick-action" onclick="clearChat()">🗑️ Clear</div>
+        </div>
       </div>
 
       <div class="chat-messages" id="chatMessages">
-        <div class="message ai-message">
-          Hello! I'm your Ethiopian data assistant.  
-          Ask me anything like: <em>"What's the weather in Jimma?"</em> or <em>"Maal ta’iin Hawassa?"</em>
+        <div class="welcome-message">
+          <h3>Welcome to Ethiopian AI Assistant! 🇪🇹</h3>
+          <p>I can help you with information about Ethiopia's economy, agriculture, demographics, weather, and current affairs.</p>
+          <div class="example-questions">
+            <div class="example-question" onclick="insertExample('What is the population of Ethiopia?')">
+              "What is the population of Ethiopia?"
+            </div>
+            <div class="example-question" onclick="insertExample('Best crops to grow in Jimma region')">
+              "Best crops to grow in Jimma region"
+            </div>
+            <div class="example-question" onclick="insertExample('Current exchange rate for ETB to USD')">
+              "Current exchange rate for ETB to USD"
+            </div>
+            <div class="example-question" onclick="insertExample('የአዲስ አበባ የአየር ሁኔታ ምን ይመስላል?')">
+              "የአዲስ አበባ የአየር ሁኔታ ምን ይመስላል?"
+            </div>
+          </div>
         </div>
+        
         <div class="typing-indicator" id="typingIndicator">
-          <span></span>
-          <span></span>
-          <span></span>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
         </div>
       </div>
 
       <div class="chat-input-area">
-        <textarea 
-          id="userInput" 
-          placeholder="Type your question here... (Press Enter to send)"
-          rows="1"
-        ></textarea>
-        <button class="send-button" onclick="sendMessage()">
-          <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-          </svg>
+        <div class="input-container">
+          <textarea 
+            id="userInput" 
+            placeholder="Ask me anything about Ethiopia... (Press Enter to send)"
+            rows="1"
+          ></textarea>
+          <div class="input-actions">
+            <button class="attach-button" title="Attach file">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <button class="mic-button" title="Voice input">
+              <i class="fas fa-microphone"></i>
+            </button>
+          </div>
+        </div>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
         </button>
       </div>
     </div>
   </main>
 
-  <!-- Footer (same as economic.html) -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-content">
@@ -448,13 +678,12 @@
   </footer>
 
   <script>
-    // ✅ FIXED: No extra spaces in URL
     const BACKEND_URL = "https://finedata.onrender.com";
-
     const chatMessages = document.getElementById('chatMessages');
     const userInput = document.getElementById('userInput');
     const typingIndicator = document.getElementById('typingIndicator');
     const languageSelect = document.getElementById('language');
+    const sendButton = document.getElementById('sendButton');
 
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -471,13 +700,18 @@
       this.style.height = Math.min(this.scrollHeight, 120) + 'px';
     });
 
-    // Send on Enter
+    // Send on Enter (without Shift)
     userInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         sendMessage();
       }
     });
+
+    // Add timestamp
+    function getCurrentTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
 
     function addMessage(text, isUser = false) {
       const messageDiv = document.createElement('div');
@@ -493,14 +727,44 @@
         }
       }
       
-      messageDiv.textContent = text;
+      const time = getCurrentTime();
+      messageDiv.innerHTML = `
+        <div class="message-content">${text}</div>
+        <div class="message-time">${time}</div>
+      `;
+      
+      // Remove welcome message after first user message
+      const welcomeMessage = document.querySelector('.welcome-message');
+      if (welcomeMessage && isUser) {
+        welcomeMessage.style.display = 'none';
+      }
+      
       chatMessages.insertBefore(messageDiv, typingIndicator);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function insertExample(text) {
+      userInput.value = text;
+      userInput.focus();
+    }
+
+    function clearChat() {
+      const messages = document.querySelectorAll('.message');
+      messages.forEach(msg => msg.remove());
+      
+      const welcomeMessage = document.querySelector('.welcome-message');
+      if (welcomeMessage) {
+        welcomeMessage.style.display = 'block';
+      }
     }
 
     async function sendMessage() {
       const text = userInput.value.trim();
       if (!text) return;
+
+      // Disable send button during request
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
       addMessage(text, true);
       userInput.value = '';
@@ -523,15 +787,27 @@
         typingIndicator.style.display = 'none';
         
         if (data.error) {
-          addMessage("❌ " + data.error);
-        } else {
+          addMessage("❌ Error: " + data.error);
+        } else if (data.answer) {
+          addMessage(data.answer);
+        } else if (data.answer_translated) {
           addMessage(data.answer_translated);
+        } else {
+          addMessage("❌ No response received from server");
         }
       } catch (err) {
         typingIndicator.style.display = 'none';
-        addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
+        addMessage("❌ Network error: Please check your connection and try again.");
+        console.error('Error:', err);
+      } finally {
+        // Re-enable send button
+        sendButton.disabled = false;
+        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
       }
     }
+
+    // Initialize
+    userInput.focus();
   </script>
 </body>
 </html>
