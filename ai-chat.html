@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +32,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      margin: 0;
     }
     .container {
       width: 90%;
@@ -52,11 +52,11 @@
       padding: 0.5rem 0;
     }
     nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    flex-wrap: wrap; /* ← only added this */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
     }
     .logo {
       display: flex;
@@ -71,14 +71,14 @@
       font-size: 1.3rem;
     }
     .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    flex-wrap: wrap; /* ← only added this */
-    max-width: 100%;  /* ← prevents overflow */
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      max-width: 100%;
     }
     .nav-links li {
       margin-left: 1.2rem;
@@ -110,17 +110,18 @@
       color: var(--primary-color);
     }
 
-    /* ===== CHAT CONTAINER — FULLY FLEXIBLE ===== */
+    /* ===== CHAT CONTAINER — FULL HEIGHT ===== */
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 1rem 0;
+      padding: 0; /* ← critical: no padding */
     }
 
     .chat-container {
       flex: 1;
-      min-height: 0; /* Critical for nested flex scrolling */
+      min-height: 0;
+      width: 90%;
       max-width: 1200px;
       margin: 0 auto;
       background: var(--card-bg);
@@ -294,50 +295,6 @@
       font-size: 15px;
     }
 
-    /* ===== WELCOME MESSAGE ===== */
-    .welcome-message {
-      text-align: center;
-      padding: 20px 15px;
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      margin: 10px 0;
-    }
-
-    .welcome-message h3 {
-      color: var(--primary-color);
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-
-    .welcome-message p {
-      font-size: 0.9rem;
-      margin-bottom: 15px;
-    }
-
-    .example-questions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    .example-question {
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .example-question:hover {
-      border-color: var(--primary-color);
-      transform: translateY(-1px);
-    }
-
     /* ===== INPUT AREA ===== */
     .chat-input-area {
       padding: 15px;
@@ -459,7 +416,7 @@
       40% { transform: scale(1.2); opacity: 1; }
     }
 
-    /* ===== FOOTER — NOW WORKS CORRECTLY ===== */
+    /* ===== FOOTER ===== */
     footer {
       background-color: var(--card-bg);
       color: var(--text-color);
@@ -519,8 +476,9 @@
       }
 
       .chat-container {
-        margin: 0.5rem;
+        margin: 0; /* ← critical: no margin on mobile */
         border-radius: 10px;
+        width: calc(100% - 20px);
       }
 
       .chat-header {
@@ -543,10 +501,6 @@
 
       .message {
         max-width: 90%;
-      }
-
-      .example-questions {
-        grid-template-columns: 1fr;
       }
     }
 
@@ -590,13 +544,13 @@
     </div>
   </header>
 
-  <!-- Main Chat Area -->
+  <!-- Full-height Chat Area -->
   <main>
     <div class="chat-container">
       <div class="chat-header">
         <div class="chat-header-content">
           <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
-          <p>Ask me anything about Ethiopia - Economy, Agriculture, Weather, News</p>
+          <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
         </div>
         <div class="ai-status">
           <div class="status-dot"></div>
@@ -625,23 +579,9 @@
       </div>
 
       <div class="chat-messages" id="chatMessages">
-        <div class="welcome-message">
-          <h3>Welcome to Ethiopian AI Assistant! 🇪🇹</h3>
-          <p>I can help you with real-time information about Ethiopia</p>
-          <div class="example-questions">
-            <div class="example-question" onclick="insertExample('What is the current population of Ethiopia?')">
-              "Current population of Ethiopia?"
-            </div>
-            <div class="example-question" onclick="insertExample('Agriculture in Jimma region')">
-              "Agriculture in Jimma region"
-            </div>
-            <div class="example-question" onclick="insertExample('ETB to USD exchange rate today')">
-              "ETB to USD exchange rate"
-            </div>
-            <div class="example-question" onclick="insertExample('የኢትዮጵያ የአየር ሁኔታ ምን ይመስላል?')">
-              "የኢትዮጵያ የአየር ሁኔታ"
-            </div>
-          </div>
+        <div class="message ai-message">
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
         </div>
         
         <div class="typing-indicator" id="typingIndicator">
@@ -660,10 +600,9 @@
         <div class="input-container">
           <textarea 
             id="userInput" 
-            placeholder="Ask about Ethiopia"
+            placeholder="Ask about Ethiopia..."
             rows="1"
           ></textarea>
-          
         </div>
         <button class="send-button" id="sendButton" onclick="sendMessage()">
           <i class="fas fa-paper-plane"></i>
@@ -672,7 +611,7 @@
     </div>
   </main>
 
-  <!-- Footer — Now properly anchored -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-content">
@@ -736,6 +675,12 @@
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     function addMessage(text, isUser = false) {
       const messageDiv = document.createElement('div');
       messageDiv.classList.add('message');
@@ -748,19 +693,15 @@
         } else if (lang === 'om') {
           messageDiv.classList.add('oromo');
         }
+        messageDiv.style.whiteSpace = 'pre-wrap';
       }
-      
-      const time = getCurrentTime();
+
+      const safeText = escapeHtml(text);
+      const time = isUser ? getCurrentTime() : "Now";
       messageDiv.innerHTML = `
-        <div class="message-content">${text}</div>
+        <div class="message-content">${safeText}</div>
         <div class="message-time">${time}</div>
       `;
-      
-      // Remove welcome message after first user message
-      const welcomeMessage = document.querySelector('.welcome-message');
-      if (welcomeMessage && isUser) {
-        welcomeMessage.style.display = 'none';
-      }
       
       chatMessages.insertBefore(messageDiv, typingIndicator);
       chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -774,28 +715,38 @@
     }
 
     function clearChat() {
-      const messages = document.querySelectorAll('.message');
-      messages.forEach(msg => msg.remove());
-      
-      const welcomeMessage = document.querySelector('.welcome-message');
-      if (welcomeMessage) {
-        welcomeMessage.style.display = 'block';
-      }
+      chatMessages.innerHTML = `
+        <div class="message ai-message">
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('typingIndicator').style.display = 'none';
     }
 
     async function sendMessage() {
       const text = userInput.value.trim();
       if (!text) return;
 
-      sendButton.disabled = true;
-      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
       addMessage(text, true);
       userInput.value = '';
       userInput.style.height = 'auto';
 
-      typingIndicator.style.display = 'block';
+      typingIndicator.style.display = 'flex';
       chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
       try {
         const response = await fetch(BACKEND_URL + '/ask-ai', {
@@ -807,30 +758,27 @@
           })
         });
 
-        const data = await response.json();
         typingIndicator.style.display = 'none';
-        
-        if (data.error) {
-          addMessage("❌ " + data.error);
-        } else if (data.answer) {
-          addMessage(data.answer);
-        } else if (data.answer_translated) {
-          addMessage(data.answer_translated);
-        } else {
-          addMessage("❌ No response received");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        const reply = data.answer_translated ?? data.answer ?? "❌ No response received.";
+        addMessage(reply);
       } catch (err) {
         typingIndicator.style.display = 'none';
-        addMessage("❌ Network error. Please try again.");
+        addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
       } finally {
         sendButton.disabled = false;
         sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
       }
     }
 
-    // Initialize
-    userInput.focus();
+    window.addEventListener('load', () => {
+      userInput.focus();
+    });
   </script>
 </body>
 </html>
-
