@@ -52,10 +52,11 @@
       padding: 0.5rem 0;
     }
     nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    flex-wrap: wrap; /* ← only added this */
     }
     .logo {
       display: flex;
@@ -70,8 +71,14 @@
       font-size: 1.3rem;
     }
     .nav-links {
-      display: flex;
-      list-style: none;
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap; /* ← only added this */
+    max-width: 100%;  /* ← prevents overflow */
     }
     .nav-links li {
       margin-left: 1.2rem;
