@@ -50,6 +50,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
+            /* ✅ FIXED: Prevent overflow on small screens */
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -72,8 +74,12 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 25px;
+            /* ✅ FIXED: Prevent drifting */
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
             align-items: center;
+            gap: 25px;
         }
 
         .nav-links a {
@@ -81,6 +87,7 @@
             color: var(--text-color);
             font-weight: 500;
             transition: color 0.3s;
+            white-space: nowrap; /* Prevent text wrapping */
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -98,6 +105,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap; /* Prevent button text wrap */
         }
 
         .btn:hover {
@@ -262,6 +270,7 @@
                 border: 1px solid var(--primary-accent);
                 border-top: none;
                 gap: 0;
+                align-items: flex-start;
             }
             
             .nav-links.active {
@@ -270,6 +279,8 @@
             
             .nav-links li {
                 margin: 0.5rem 1.5rem;
+                width: 100%;
+                text-align: left;
             }
             
             .mobile-menu-btn {
@@ -282,6 +293,16 @@
             
             .footer-content {
                 flex-direction: column;
+            }
+            
+            /* Stack nav items vertically on mobile */
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
             }
         }
 
@@ -306,7 +327,7 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
                     <li><a href="news.html" class="active">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
@@ -601,6 +622,8 @@
                     <a href="index.html">Home</a>
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="ai-chat.html">AI Chat</a> <!-- ✅ ADDED -->
                     <a href="news.html">Latest News</a>
                 </div>
                 
@@ -625,6 +648,7 @@
             navLinks.classList.toggle('active');
         });
 
+        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
