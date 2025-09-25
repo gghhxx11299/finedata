@@ -81,7 +81,6 @@ def ask_groq_ai(question: str) -> str:
     if not groq_key:
         return "AI is not configured. Please set GROQ_API_KEY."
 
-    # System prompt: Ethiopia-focused, factual, concise
     messages = [
         {
             "role": "system",
@@ -103,7 +102,7 @@ def ask_groq_ai(question: str) -> str:
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama-3.1-70b-versatile",  # Fast + smart
+                "model": "llama-3.3-70b-versatile",  # ✅ CORRECT, SUPPORTED MODEL
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -127,7 +126,7 @@ def ask_groq_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not data:  # ✅ FIXED: complete condition
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
