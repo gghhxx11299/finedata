@@ -46,7 +46,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* ✅ FIXED: Prevent overflow */
             flex-wrap: wrap;
         }
         .logo {
@@ -66,7 +65,6 @@
         .nav-links {
             display: flex;
             list-style: none;
-            /* ✅ FIXED: Prevent drifting */
             margin: 0;
             padding: 0;
             flex-wrap: wrap;
@@ -78,7 +76,7 @@
             color: var(--text-color);
             font-weight: 500;
             transition: color 0.3s;
-            white-space: nowrap; /* Prevent text wrapping */
+            white-space: nowrap;
         }
         .nav-links a:hover {
             color: var(--primary-accent);
@@ -87,7 +85,6 @@
             color: var(--primary-accent);
             font-weight: 700;
         }
-        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--primary-accent);
@@ -98,7 +95,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-left: 1rem;
-            white-space: nowrap; /* Prevent button wrap */
+            white-space: nowrap;
         }
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
@@ -112,7 +109,7 @@
             padding: 8px 15px;
             border-radius: 5px;
             font-weight: 600;
-            white-space: nowrap; /* Prevent text wrap */
+            white-space: nowrap;
         }
         .nav-links li:last-child a:hover {
             background-color: var(--secondary-accent);
@@ -269,7 +266,6 @@
             display: none;
             border: 1px solid var(--primary-accent);
         }
-        /* Charts Section */
         .charts-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -371,7 +367,6 @@
             border-top: 1px solid var(--border-color);
             width: 100%;
         }
-        /* Export Modal */
         #exportModal {
             display: none;
             position: fixed;
@@ -445,7 +440,6 @@
             .mobile-menu-btn {
                 display: block;
             }
-            /* Stack nav vertically on mobile */
             nav {
                 flex-direction: column;
                 align-items: flex-start;
@@ -468,7 +462,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <nav>
@@ -481,7 +474,7 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
+                    <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html" class="active">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
@@ -501,7 +494,7 @@
             </nav>
         </div>
     </header>
-    <!-- Export Modal -->
+
     <div id="exportModal">
         <h4><i class="fas fa-file-export"></i> Export Options</h4>
         <button onclick="exportAllTablesToCSV()"><i class="fas fa-table"></i> All Tables (CSV)</button>
@@ -511,16 +504,15 @@
             <i class="fas fa-times"></i> Close
         </button>
     </div>
-    <!-- Page Header -->
+
     <section class="page-header">
         <div class="container">
             <h2>Exchange Rates</h2>
             <p>Latest currency exchange rates for Ethiopian Birr (ETB)</p>
         </div>
     </section>
-    <!-- Main Content -->
+
     <div class="container">
-        <!-- Currency Converter -->
         <section class="currency-converter">
             <h3>Currency Converter</h3>
             <div class="converter-form">
@@ -544,6 +536,13 @@
                         <option value="SAR">SAR - Saudi Riyal</option>
                         <option value="INR">INR - Indian Rupee</option>
                         <option value="ZAR">ZAR - South African Rand</option>
+                        <option value="XDR">XDR - SDR</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="DKK">DKK - Danish Krone</option>
+                        <option value="NOK">NOK - Norwegian Krone</option>
+                        <option value="SEK">SEK - Swedish Krone</option>
+                        <option value="DJF">DJF - Djibouti Franc</option>
+                        <option value="KES">KES - Kenyan Shilling</option>
                     </select>
                 </div>
                 <button class="swap-button" id="swapButton">
@@ -565,6 +564,13 @@
                         <option value="SAR">SAR - Saudi Riyal</option>
                         <option value="INR">INR - Indian Rupee</option>
                         <option value="ZAR">ZAR - South African Rand</option>
+                        <option value="XDR">XDR - SDR</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="DKK">DKK - Danish Krone</option>
+                        <option value="NOK">NOK - Norwegian Krone</option>
+                        <option value="SEK">SEK - Swedish Krone</option>
+                        <option value="DJF">DJF - Djibouti Franc</option>
+                        <option value="KES">KES - Kenyan Shilling</option>
                     </select>
                 </div>
                 <button class="calculate-button" id="calculateButton">Calculate</button>
@@ -573,10 +579,10 @@
                 <span id="resultText"></span>
             </div>
         </section>
-        <!-- Exchange Rates Table -->
+
         <section class="exchange-rates">
             <div class="date-info" id="mainDateInfo">
-                Applicable on September 25, 2025
+                Applicable on September 26, 2025
             </div>
             <div class="rates-table-container">
                 <table id="currentRatesTable">
@@ -591,180 +597,156 @@
                     <tbody>
                         <tr>
                             <td class="currency-code">JAPANESE YEN - JPY</td>
-                            <td>0.9739</td>
-                            <td>0.9837</td>
-                            <td>0.9788</td>
+                            <td>0.972</td>
+                            <td>0.9818</td>
+                            <td>0.9769</td>
                         </tr>
                         <tr>
                             <td class="currency-code">KUWAITI DINAR - KWD</td>
-                            <td>470.0584</td>
-                            <td>474.759</td>
-                            <td>472.4087</td>
+                            <td>473.5716</td>
+                            <td>478.3074</td>
+                            <td>475.9395</td>
                         </tr>
                         <tr>
                             <td class="currency-code">CHINESE YUAN - CNY</td>
-                            <td>20.1653</td>
-                            <td>20.3669</td>
-                            <td>20.2661</td>
+                            <td>20.248</td>
+                            <td>20.4505</td>
+                            <td>20.3493</td>
                         </tr>
                         <tr>
                             <td class="currency-code">SOUTH AFRICAN RAND - ZAR</td>
-                            <td>8.1763</td>
-                            <td>8.258</td>
-                            <td>8.2172</td>
+                            <td>8.3293</td>
+                            <td>8.4126</td>
+                            <td>8.371</td>
                         </tr>
                         <tr>
                             <td class="currency-code">SDR - XDR</td>
-                            <td>197.2723</td>
-                            <td>199.245</td>
-                            <td>198.2587</td>
+                            <td>198.2812</td>
+                            <td>200.2641</td>
+                            <td>199.2727</td>
                         </tr>
                         <tr>
                             <td class="currency-code">EURO - EUR</td>
-                            <td>168.0319</td>
-                            <td>169.7122</td>
-                            <td>168.8721</td>
+                            <td>169.576</td>
+                            <td>171.2718</td>
+                            <td>170.4239</td>
                         </tr>
                         <tr>
                             <td class="currency-code">UAE DIRHAM - AED</td>
-                            <td>39.0975</td>
-                            <td>39.4885</td>
-                            <td>39.293</td>
+                            <td>39.29</td>
+                            <td>39.6829</td>
+                            <td>39.4865</td>
                         </tr>
                         <tr>
                             <td class="currency-code">SAUDI RIYAL - SAR</td>
-                            <td>38.2795</td>
-                            <td>38.6623</td>
-                            <td>38.4709</td>
+                            <td>38.4751</td>
+                            <td>38.8598</td>
+                            <td>38.6675</td>
                         </tr>
                         <tr>
                             <td class="currency-code">AUSTRALIAN DOLLAR - AUD</td>
-                            <td>94.8447</td>
-                            <td>95.7931</td>
-                            <td>95.3189</td>
+                            <td>95.2801</td>
+                            <td>96.2329</td>
+                            <td>95.7565</td>
                         </tr>
                         <tr>
                             <td class="currency-code">CANADIAN DOLLAR - CAD</td>
-                            <td>103.6272</td>
-                            <td>104.6635</td>
-                            <td>104.1454</td>
+                            <td>104.0069</td>
+                            <td>105.047</td>
+                            <td>104.527</td>
                         </tr>
                         <tr>
                             <td class="currency-code">US DOLLAR - USD</td>
-                            <td>143.617</td>
-                            <td>143.6171</td>
-                            <td>143.6171</td>
+                            <td>144.32</td>
+                            <td>144.3492</td>
+                            <td>144.3346</td>
                         </tr>
                         <tr>
                             <td class="currency-code">KENYAN SHILLING - KES</td>
-                            <td>1.1099</td>
-                            <td>1.1432</td>
-                            <td>1.1266</td>
+                            <td>1.1153</td>
+                            <td>1.1488</td>
+                            <td>1.1321</td>
                         </tr>
                         <tr>
                             <td class="currency-code">INDIAN RUPEE - INR</td>
-                            <td>1.6297</td>
-                            <td>1.646</td>
-                            <td>1.6379</td>
+                            <td>1.6263</td>
+                            <td>1.6425</td>
+                            <td>1.6344</td>
                         </tr>
                         <tr>
                             <td class="currency-code">DJIBOUTI FRANC - DJF</td>
-                            <td>0.8044</td>
-                            <td>0.8285</td>
-                            <td>0.8165</td>
+                            <td>0.8083</td>
+                            <td>0.8325</td>
+                            <td>0.8204</td>
                         </tr>
                         <tr>
                             <td class="currency-code">DANISH KNRONER - DKK</td>
-                            <td>22.5105</td>
-                            <td>22.7356</td>
-                            <td>22.6231</td>
+                            <td>22.7204</td>
+                            <td>22.9476</td>
+                            <td>22.834</td>
                         </tr>
                         <tr>
                             <td class="currency-code">NORWEGIAN KRONE - NOK</td>
-                            <td>14.4578</td>
-                            <td>14.6024</td>
-                            <td>14.5301</td>
+                            <td>14.5029</td>
+                            <td>14.6479</td>
+                            <td>14.5754</td>
                         </tr>
                         <tr>
                             <td class="currency-code">SWIDISH KNRONER - SEK</td>
-                            <td>15.3641</td>
-                            <td>15.5177</td>
-                            <td>15.4409</td>
+                            <td>15.3695</td>
+                            <td>15.5232</td>
+                            <td>15.4464</td>
                         </tr>
                         <tr>
                             <td class="currency-code">SWISS FRANC - CHF</td>
-                            <td>180.0163</td>
-                            <td>181.8165</td>
-                            <td>180.9164</td>
+                            <td>181.5574</td>
+                            <td>183.373</td>
+                            <td>182.4652</td>
                         </tr>
                         <tr>
                             <td class="currency-code">POUND STERLING - GBP</td>
-                            <td>194.4</td>
-                            <td>196.344</td>
-                            <td>195.372</td>
-                        </tr>
-                        <tr>
-                            <td class="currency-code">SINGAPORE DOLLAR - SGD</td>
-                            <td>108.25</td>
-                            <td>109.33</td>
-                            <td>108.79</td>
-                        </tr>
-                        <tr>
-                            <td class="currency-code">MALAYSIAN RINGGIT - MYR</td>
-                            <td>31.25</td>
-                            <td>31.56</td>
-                            <td>31.41</td>
-                        </tr>
-                        <tr>
-                            <td class="currency-code">THAI BAHT - THB</td>
-                            <td>4.05</td>
-                            <td>4.09</td>
-                            <td>4.07</td>
-                        </tr>
-                        <tr>
-                            <td class="currency-code">TURKISH LIRA - TRY</td>
-                            <td>4.85</td>
-                            <td>4.90</td>
-                            <td>4.88</td>
+                            <td>194.1537</td>
+                            <td>196.0952</td>
+                            <td>195.1245</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-        <!-- Key Rates Cards -->
+
         <section class="key-rates">
-            <div class="rate-card" data-currency="USD" data-rate="143.6171" data-change="+0.25%">
+            <div class="rate-card" data-currency="USD" data-rate="144.3346" data-change="+0.50%">
                 <h3>USD/ETB</h3>
-                <div class="rate-value">143.6171</div>
-                <div class="rate-change positive">+0.25%</div>
+                <div class="rate-value">144.3346</div>
+                <div class="rate-change positive">+0.50%</div>
             </div>
-            <div class="rate-card" data-currency="EUR" data-rate="168.8721" data-change="+0.18%">
+            <div class="rate-card" data-currency="EUR" data-rate="170.4239" data-change="+0.92%">
                 <h3>EUR/ETB</h3>
-                <div class="rate-value">168.8721</div>
-                <div class="rate-change positive">+0.18%</div>
+                <div class="rate-value">170.4239</div>
+                <div class="rate-change positive">+0.92%</div>
             </div>
-            <div class="rate-card" data-currency="GBP" data-rate="195.372" data-change="-0.12%">
+            <div class="rate-card" data-currency="GBP" data-rate="195.1245" data-change="-0.13%">
                 <h3>GBP/ETB</h3>
-                <div class="rate-value">195.372</div>
-                <div class="rate-change negative">-0.12%</div>
+                <div class="rate-value">195.1245</div>
+                <div class="rate-change negative">-0.13%</div>
             </div>
-            <div class="rate-card" data-currency="CNY" data-rate="20.2661" data-change="+0.32%">
+            <div class="rate-card" data-currency="CNY" data-rate="20.3493" data-change="+0.41%">
                 <h3>CNY/ETB</h3>
-                <div class="rate-value">20.2661</div>
-                <div class="rate-change positive">+0.32%</div>
+                <div class="rate-value">20.3493</div>
+                <div class="rate-change positive">+0.41%</div>
             </div>
-            <div class="rate-card" data-currency="JPY" data-rate="0.9788" data-change="+0.15%">
+            <div class="rate-card" data-currency="JPY" data-rate="0.9769" data-change="-0.19%">
                 <h3>JPY/ETB</h3>
-                <div class="rate-value">0.9788</div>
-                <div class="rate-change positive">+0.15%</div>
+                <div class="rate-value">0.9769</div>
+                <div class="rate-change negative">-0.19%</div>
             </div>
-            <div class="rate-card" data-currency="INR" data-rate="1.6379" data-change="-0.08%">
+            <div class="rate-card" data-currency="INR" data-rate="1.6344" data-change="-0.21%">
                 <h3>INR/ETB</h3>
-                <div class="rate-value">1.6379</div>
-                <div class="rate-change negative">-0.08%</div>
+                <div class="rate-value">1.6344</div>
+                <div class="rate-change negative">-0.21%</div>
             </div>
         </section>
-        <!-- Charts Section -->
+
         <section class="charts-section">
             <div class="chart-container">
                 <h3>Major Currencies Against ETB</h3>
@@ -775,7 +757,7 @@
                 <canvas id="trendChart"></canvas>
             </div>
         </section>
-        <!-- Historical Data Section -->
+
         <section class="exchange-rates">
             <h3 class="section-title" style="color: var(--primary-accent); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
                 <i class="fas fa-history" style="margin-right: 0.5rem; color: var(--secondary-accent);"></i> Historical Exchange Rates (USD/ETB)
@@ -793,52 +775,53 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2025-09-17</td>
+                            <td>2025-09-26</td>
+                            <td>144.32</td>
+                            <td>144.3492</td>
+                            <td>144.3346</td>
+                            <td class="positive">+0.50%</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-19</td>
                             <td>143.617</td>
                             <td>143.6171</td>
                             <td>143.6171</td>
                             <td class="positive">+0.25%</td>
                         </tr>
                         <tr>
-                            <td>2025-09-10</td>
+                            <td>2025-09-12</td>
                             <td>143.258</td>
                             <td>143.2581</td>
                             <td>143.2581</td>
                             <td class="positive">+0.18%</td>
                         </tr>
                         <tr>
-                            <td>2025-09-03</td>
+                            <td>2025-09-05</td>
                             <td>142.999</td>
                             <td>142.9991</td>
                             <td>142.9991</td>
                             <td class="negative">-0.05%</td>
                         </tr>
                         <tr>
-                            <td>2025-08-27</td>
+                            <td>2025-08-29</td>
                             <td>143.071</td>
                             <td>143.0711</td>
                             <td>143.0711</td>
                             <td class="positive">+0.12%</td>
                         </tr>
                         <tr>
-                            <td>2025-08-20</td>
+                            <td>2025-08-22</td>
                             <td>142.899</td>
                             <td>142.8991</td>
                             <td>142.8991</td>
                             <td class="positive">+0.21%</td>
-                        </tr>
-                        <tr>
-                            <td>2025-08-13</td>
-                            <td>142.599</td>
-                            <td>142.5991</td>
-                            <td>142.5991</td>
-                            <td class="negative">-0.10%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -851,7 +834,7 @@
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
                     <a href="agricultural.html">Agricultural Data</a> 
-                    <a href="ai-chat.html">AI Chat</a> <!-- ✅ ADDED -->
+                    <a href="ai-chat.html">AI Chat</a>
                     <a href="exchange.html">Exchange Rates</a>
                 </div>
                 <div class="footer-section">
@@ -866,26 +849,31 @@
             </div>
         </div>
     </footer>
+
     <script>
         const exchangeRates = {
             "ETB": 1,
-            "USD": 143.6171,
-            "EUR": 168.8721,
-            "GBP": 195.372,
-            "JPY": 0.9788,
-            "CNY": 20.2661,
-            "AED": 39.293,
-            "CAD": 104.1454,
-            "CHF": 180.9164,
-            "KWD": 472.4087,
-            "SAR": 38.4709,
-            "INR": 1.6379,
-            "ZAR": 8.2172,
-            "SGD": 108.79,
-            "MYR": 31.41,
-            "THB": 4.07,
-            "TRY": 4.88
+            "USD": 144.3346,
+            "EUR": 170.4239,
+            "GBP": 195.1245,
+            "JPY": 0.9769,
+            "CNY": 20.3493,
+            "AED": 39.4865,
+            "CAD": 104.527,
+            "CHF": 182.4652,
+            "KWD": 475.9395,
+            "SAR": 38.6675,
+            "INR": 1.6344,
+            "ZAR": 8.371,
+            "AUD": 95.7565,
+            "DKK": 22.834,
+            "NOK": 14.5754,
+            "SEK": 15.4464,
+            "DJF": 0.8204,
+            "KES": 1.1321,
+            "XDR": 199.2727
         };
+
         const amountInput = document.getElementById('amount');
         const fromCurrencySelect = document.getElementById('fromCurrency');
         const toCurrencySelect = document.getElementById('toCurrency');
@@ -893,11 +881,13 @@
         const calculateButton = document.getElementById('calculateButton');
         const resultBox = document.getElementById('resultBox');
         const resultText = document.getElementById('resultText');
+
         swapButton.addEventListener('click', () => {
             const temp = fromCurrencySelect.value;
             fromCurrencySelect.value = toCurrencySelect.value;
             toCurrencySelect.value = temp;
         });
+
         calculateButton.addEventListener('click', () => {
             const amount = parseFloat(amountInput.value);
             if (isNaN(amount) || amount <= 0) {
@@ -911,7 +901,8 @@
             resultText.textContent = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(4)} ${toCurrency}`;
             resultBox.style.display = 'block';
         });
-        // Major Currencies Chart
+
+        // Major Currencies Chart - FIXED
         const majorCurrenciesCtx = document.getElementById('majorCurrenciesChart').getContext('2d');
         const majorCurrenciesChart = new Chart(majorCurrenciesCtx, {
             type: 'bar',
@@ -919,7 +910,7 @@
                 labels: ['USD', 'EUR', 'GBP', 'CNY', 'JPY', 'CAD', 'INR', 'ZAR'],
                 datasets: [{
                     label: 'Buying Rate (ETB)',
-                     [143.617, 168.0319, 194.4, 20.1653, 0.9739, 103.6272, 1.6297, 8.1763],
+                    data: [144.32, 169.576, 194.1537, 20.248, 0.972, 104.0069, 1.6263, 8.3293],
                     backgroundColor: '#58A6FF',
                     borderColor: '#0D1117',
                     borderWidth: 1
@@ -933,6 +924,14 @@
                         title: {
                             display: true,
                             text: 'Ethiopian Birr (ETB)'
+                        },
+                        ticks: {
+                            color: '#C9D1D9'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#C9D1D9'
                         }
                     }
                 },
@@ -945,21 +944,22 @@
                 }
             }
         });
-        // Trend Chart
+
+        // Trend Chart - FIXED
         const trendCtx = document.getElementById('trendChart').getContext('2d');
         const trendChart = new Chart(trendCtx, {
             type: 'line',
-             {
-                labels: ['Aug 13', 'Aug 20', 'Aug 27', 'Sep 3', 'Sep 10', 'Today'],
+            data: {
+                labels: ['Aug 22', 'Aug 29', 'Sep 5', 'Sep 12', 'Sep 19', 'Today'],
                 datasets: [{
                     label: 'USD/ETB',
-                     [142.599, 142.899, 143.071, 142.999, 143.258, 143.617],
+                    data: [142.899, 143.071, 142.999, 143.258, 143.617, 144.3346],
                     borderColor: '#58A6FF',
                     tension: 0.3,
                     fill: false
                 }, {
                     label: 'EUR/ETB',
-                     [167.5, 167.9, 168.2, 168.0, 168.5, 168.872],
+                    data: [167.9, 168.2, 168.0, 168.5, 168.872, 170.4239],
                     borderColor: '#FF7B72',
                     tension: 0.3,
                     fill: false
@@ -993,6 +993,7 @@
                 }
             }
         });
+
         // === EXPORT FUNCTIONS ===
         function showExportOptions() {
             const modal = document.getElementById('exportModal');
@@ -1007,6 +1008,7 @@
                 }, 5000);
             }
         }
+
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -1018,7 +1020,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-        // 1. Export ALL tables as CSV
+
         function exportAllTablesToCSV() {
             let allCSV = '';
             const tables = [document.getElementById('currentRatesTable'), document.getElementById('historicalRatesTable')];
@@ -1045,7 +1047,7 @@
             downloadFile('ethiopia_exchange_rates.csv', allCSV, 'text/csv');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-        // 2. Export key rates as JSON
+
         function exportKeyRatesAsJSON() {
             const cards = document.querySelectorAll('.rate-card');
             const rates = [];
@@ -1061,7 +1063,7 @@
             downloadFile('exchange_key_rates.json', jsonString, 'application/json');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-        // 3. Export summary as TXT
+
         function exportSummaryAsText() {
             const date = document.getElementById('mainDateInfo').innerText.replace('Applicable on ', '');
             let report = `Ethiopian Exchange Rates Summary\n`;
@@ -1084,7 +1086,7 @@
             downloadFile('exchange_rates_summary.txt', report);
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-        // Close modal when clicking outside (desktop)
+
         document.addEventListener('click', (e) => {
             const modal = document.getElementById('exportModal');
             if (window.innerWidth > 768 && modal.style.display === 'block') {
@@ -1093,7 +1095,7 @@
                 }
             }
         });
-        // Mobile menu toggle
+
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         if (mobileMenuBtn && navLinks) {
