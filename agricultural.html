@@ -71,8 +71,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            /* Prevent overflow */
             flex-wrap: wrap;
-            gap: 10px;
         }
         .logo {
             display: flex;
@@ -92,12 +92,12 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
             margin: 0;
             padding: 0;
+            /* Prevent drifting */
             flex-wrap: wrap;
-            max-width: calc(100vw - 200px);
         }
         .nav-links a {
             color: var(--text-light);
@@ -161,12 +161,8 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
+            margin-left: 1rem;
             white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            box-sizing: border-box;
         }
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
@@ -314,7 +310,7 @@
             border-top: 1px solid rgba(88, 166, 255, 0.2);
         }
         /* Responsive Design */
-        @media (max-width: 1024px) {
+        @media (max-width: 900px) {
             .nav-links {
                 display: none;
                 position: absolute;
@@ -326,7 +322,6 @@
                 padding: 1.5rem;
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
                 border-top: 1px solid rgba(88, 166, 255, 0.3);
-                z-index: 100;
             }
             .nav-links.active {
                 display: flex;
@@ -339,6 +334,18 @@
             }
             .hero p {
                 font-size: 1rem;
+            }
+
+            /* ✅ MOBILE-ONLY STYLES (previously applied globally) */
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+            .nav-links .btn {
+                display: block;
+                margin: 1rem auto 0;
+                max-width: 200px;
             }
         }
         @media (max-width: 600px) {
@@ -465,17 +472,6 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-        /* Mobile menu improvements */
-        .nav-links li {
-            width: 100%;
-            text-align: center;
-            padding: 0.5rem 0;
-        }
-        .nav-links .btn {
-            display: block;
-            margin: 1rem auto 0;
-            max-width: 200px;
-        }
     </style>
 </head>
 <body>
@@ -484,7 +480,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedatas Logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Fine data Logo">
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
