@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== GLOBAL STYLES (MATCH economic.html) ===== */
+    /* ===== GLOBAL STYLES ===== */
     :root {
       --bg-color: #0D1117;
       --card-bg: #161B22;
@@ -17,9 +17,7 @@
       --text-color: #C9D1D9;
       --border-color: #30363D;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
       --success-color: #3FB950;
-      --warning-color: #D29922;
     }
     * {
       margin: 0;
@@ -35,10 +33,6 @@
       display: flex;
       flex-direction: column;
     }
-    h1, h2, h3, h4 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-    }
     .container {
       width: 90%;
       max-width: 1200px;
@@ -46,7 +40,7 @@
       padding: 0 15px;
     }
 
-    /* ===== HEADER & NAV (MATCH economic.html) ===== */
+    /* ===== COMPACT HEADER ===== */
     header {
       background-color: var(--card-bg);
       box-shadow: var(--shadow);
@@ -54,36 +48,38 @@
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border-color);
+      padding: 0.5rem 0;
     }
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
     }
     .logo {
       display: flex;
       align-items: center;
     }
     .logo img {
-      height: 40px;
-      margin-right: 10px;
+      height: 35px;
+      margin-right: 8px;
     }
     .logo h1 {
       color: var(--primary-color);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
     .nav-links {
       display: flex;
       list-style: none;
     }
     .nav-links li {
-      margin-left: 1.5rem;
+      margin-left: 1.2rem;
     }
     .nav-links a {
       text-decoration: none;
       color: var(--text-color);
       font-weight: 500;
+      font-size: 0.9rem;
       transition: color 0.3s;
     }
     .nav-links a:hover, .nav-links a.active {
@@ -92,75 +88,73 @@
     .btn {
       background-color: var(--primary-color);
       color: var(--bg-color);
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      background-color: var(--secondary-color);
-      color: #FFFFFF;
-      box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
+      font-size: 0.9rem;
     }
     .mobile-menu-btn {
       display: none;
       background: none;
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       cursor: pointer;
       color: var(--primary-color);
     }
 
-    /* ===== CHAT CONTAINER - IMPROVED ===== */
+    /* ===== EXPANDED CHAT CONTAINER ===== */
     .chat-container {
-      max-width: 1000px;
-      margin: 2rem auto;
+      max-width: 1200px;
+      margin: 1rem auto;
       background: var(--card-bg);
-      border-radius: 20px;
+      border-radius: 15px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 75vh;
+      height: 85vh; /* Increased height */
       border: 1px solid var(--border-color);
+      flex: 1;
     }
 
+    /* ===== COMPACT CHAT HEADER ===== */
     .chat-header {
       background: linear-gradient(135deg, var(--primary-color), #1f6feb);
       color: white;
-      padding: 20px 25px;
+      padding: 15px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-color);
+      min-height: 70px;
     }
 
     .chat-header-content h2 {
-      font-size: 1.4rem;
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+      margin-bottom: 2px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .chat-header-content p {
       opacity: 0.9;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
     .ai-status {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(255, 255, 255, 0.1);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: 0.75rem;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--success-color);
       animation: pulse 2s infinite;
@@ -171,47 +165,46 @@
       50% { opacity: 0.5; }
     }
 
+    /* ===== COMPACT LANGUAGE SELECTOR ===== */
     .language-selector {
-      padding: 15px 25px;
+      padding: 10px 20px;
       background: var(--bg-color);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
+      min-height: 50px;
     }
 
     .language-controls {
       display: flex;
       align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .language-selector select {
-      padding: 8px 16px;
+      padding: 6px 12px;
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
       background: var(--card-bg);
       color: var(--text-color);
-      min-width: 150px;
+      min-width: 140px;
     }
 
     .quick-actions {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .quick-action {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      padding: 6px 12px;
-      border-radius: 15px;
-      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -219,33 +212,33 @@
     .quick-action:hover {
       background: var(--primary-color);
       color: var(--bg-color);
-      border-color: var(--primary-color);
     }
 
+    /* ===== EXPANDED CHAT MESSAGES AREA ===== */
     .chat-messages {
       flex: 1;
-      padding: 20px;
+      padding: 15px;
       overflow-y: auto;
       background: var(--bg-color);
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
+      min-height: 0; /* Important for flex growth */
     }
 
     .message {
-      max-width: 85%;
-      padding: 16px 20px;
-      margin-bottom: 5px;
-      border-radius: 18px;
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 15px;
       line-height: 1.5;
       position: relative;
-      animation: fadeIn 0.4s ease;
+      animation: fadeIn 0.3s ease;
       word-wrap: break-word;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -253,7 +246,7 @@
       background: linear-gradient(135deg, var(--primary-color), #1f6feb);
       color: white;
       align-self: flex-end;
-      border-bottom-right-radius: 6px;
+      border-bottom-right-radius: 5px;
       margin-left: auto;
     }
 
@@ -261,15 +254,14 @@
       background: var(--card-bg);
       color: var(--text-color);
       align-self: flex-start;
-      border-bottom-left-radius: 6px;
+      border-bottom-left-radius: 5px;
       border: 1px solid var(--border-color);
     }
 
     .message-time {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       opacity: 0.7;
-      margin-top: 5px;
-      text-align: right;
+      margin-top: 4px;
     }
 
     .ai-message .message-time {
@@ -278,58 +270,68 @@
 
     .ai-message.amharic {
       font-family: 'Noto Sans Ethiopic', sans-serif;
-      font-size: 17px;
-      line-height: 1.8;
+      font-size: 16px;
+      line-height: 1.7;
     }
 
     .ai-message.oromo {
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
     }
 
+    /* ===== COMPACT WELCOME MESSAGE ===== */
     .welcome-message {
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px 15px;
       background: var(--card-bg);
-      border-radius: 15px;
+      border-radius: 12px;
       border: 1px solid var(--border-color);
-      margin: 20px 0;
+      margin: 10px 0;
     }
 
     .welcome-message h3 {
       color: var(--primary-color);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .welcome-message p {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
     }
 
     .example-questions {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 10px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+      margin-top: 15px;
     }
 
     .example-question {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
-      padding: 12px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      line-height: 1.4;
     }
 
     .example-question:hover {
       border-color: var(--primary-color);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
     }
 
+    /* ===== COMPACT INPUT AREA ===== */
     .chat-input-area {
-      padding: 20px;
+      padding: 15px;
       background: var(--card-bg);
       border-top: 1px solid var(--border-color);
       display: flex;
-      gap: 15px;
+      gap: 12px;
       align-items: flex-end;
+      min-height: 70px;
     }
 
     .input-container {
@@ -339,13 +341,13 @@
 
     .chat-input-area textarea {
       width: 100%;
-      padding: 16px 50px 16px 20px;
+      padding: 12px 45px 12px 15px;
       border: 2px solid var(--border-color);
-      border-radius: 25px;
+      border-radius: 20px;
       resize: none;
-      font-size: 15px;
-      min-height: 50px;
-      max-height: 120px;
+      font-size: 14px;
+      min-height: 45px;
+      max-height: 100px;
       font-family: 'Inter', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
@@ -359,10 +361,10 @@
 
     .input-actions {
       position: absolute;
-      right: 15px;
-      bottom: 15px;
+      right: 12px;
+      bottom: 12px;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
 
@@ -372,68 +374,61 @@
       color: var(--text-color);
       cursor: pointer;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
-      padding: 5px;
-    }
-
-    .mic-button:hover, .attach-button:hover {
-      opacity: 1;
-      color: var(--primary-color);
+      padding: 3px;
+      font-size: 0.9rem;
     }
 
     .send-button {
       background: linear-gradient(135deg, var(--primary-color), #1f6feb);
       color: white;
       border: none;
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
     }
 
-    .send-button:hover {
+    .send-button:hover:not(:disabled) {
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(88, 166, 255, 0.5);
     }
 
     .send-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      transform: none;
     }
 
+    /* ===== TYPING INDICATOR ===== */
     .typing-indicator {
       display: none;
       align-self: flex-start;
       background: var(--card-bg);
-      padding: 15px 20px;
-      border-radius: 18px;
-      border-bottom-left-radius: 6px;
+      padding: 12px 16px;
+      border-radius: 15px;
+      border-bottom-left-radius: 5px;
       color: #8B949E;
       border: 1px solid var(--border-color);
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     .typing-content {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .typing-dots {
       display: flex;
-      gap: 4px;
+      gap: 3px;
     }
 
     .typing-dots span {
-      height: 8px;
-      width: 8px;
+      height: 6px;
+      width: 6px;
       background-color: var(--primary-color);
       display: block;
       border-radius: 50%;
@@ -449,43 +444,36 @@
       40% { transform: scale(1.2); opacity: 1; }
     }
 
-    /* ===== FOOTER (MATCH economic.html) ===== */
+    /* ===== COMPACT FOOTER ===== */
     footer {
       background-color: var(--card-bg);
       color: var(--text-color);
-      padding: 3rem 0 1.5rem;
+      padding: 2rem 0 1rem;
       margin-top: auto;
       border-top: 1px solid var(--border-color);
     }
     .footer-content {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
     .footer-section h3 {
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
     }
     .footer-section p, .footer-section a {
-      margin-bottom: 0.5rem;
-      color: #8B949E;
-    }
-    .footer-section a {
-      display: block;
-      text-decoration: none;
-    }
-    .footer-section a:hover {
-      color: var(--primary-color);
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
     }
     .footer-bottom {
       text-align: center;
-      padding-top: 1.5rem;
+      padding-top: 1rem;
       border-top: 1px solid var(--border-color);
+      font-size: 0.9rem;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== RESPONSIVE DESIGN ===== */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -495,46 +483,72 @@
         left: 0;
         width: 100%;
         background-color: var(--card-bg);
-        box-shadow: var(--shadow);
-        padding: 1rem 0;
-        border-top: 1px solid var(--border-color);
+        padding: 0.5rem 0;
       }
       .nav-links.active {
         display: flex;
       }
       .nav-links li {
-        margin: 0.5rem 1.5rem;
+        margin: 0.3rem 1rem;
       }
       .mobile-menu-btn {
         display: block;
       }
+      
       .chat-container {
-        height: 80vh;
-        margin: 1rem;
-        border-radius: 15px;
+        height: 90vh;
+        margin: 0.5rem;
+        border-radius: 10px;
       }
-      .message {
-        max-width: 95%;
-      }
+      
       .chat-header {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-      .language-selector {
         padding: 10px 15px;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
+        text-align: center;
       }
+      
+      .language-selector {
+        padding: 8px 12px;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
       .quick-actions {
         justify-content: center;
+        flex-wrap: wrap;
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+      
+      .example-questions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .chat-container {
+        height: 92vh;
+      }
+      .chat-header {
+        padding: 10px 15px;
+        min-height: 60px;
+      }
+      .language-selector {
+        padding: 8px 15px;
+        min-height: 45px;
+      }
+      .chat-input-area {
+        padding: 10px 15px;
+        min-height: 60px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- Compact Header -->
   <header>
     <div class="container">
       <nav>
@@ -560,35 +574,35 @@
     </div>
   </header>
 
-  <main>
+  <main style="flex: 1; display: flex; flex-direction: column;">
     <div class="chat-container">
       <div class="chat-header">
         <div class="chat-header-content">
           <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
-          <p>Ask me anything about Ethiopia's economy, agriculture, weather, and more</p>
+          <p>Ask me anything about Ethiopia - Economy, Agriculture, Weather, News</p>
         </div>
         <div class="ai-status">
           <div class="status-dot"></div>
-          <span>AI Online</span>
+          <span>Online</span>
         </div>
       </div>
 
       <div class="language-selector">
         <div class="language-controls">
-          <label for="language">Language:</label>
+          <label for="language" style="font-size: 0.85rem;">Language:</label>
           <select id="language">
             <option value="en">🌐 English</option>
-            <option value="am">🇪🇹 Amharic (አማርኛ)</option>
-            <option value="om">🇪🇹 Oromo (Afaan Oromoo)</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="ar">🇸🇦 العربية</option>
+            <option value="am">🇪🇹 Amharic</option>
+            <option value="om">🇪🇹 Oromo</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="ar">🇸🇦 Arabic</option>
           </select>
         </div>
         <div class="quick-actions">
-          <div class="quick-action" onclick="insertExample('What is the current weather in Addis Ababa?')">🌤️ Weather</div>
-          <div class="quick-action" onclick="insertExample('Tell me about Ethiopian agriculture')">🌾 Agriculture</div>
-          <div class="quick-action" onclick="insertExample('Current economic situation in Ethiopia')">💼 Economy</div>
+          <div class="quick-action" onclick="insertExample('Current weather in Addis Ababa')">🌤️ Weather</div>
+          <div class="quick-action" onclick="insertExample('Ethiopian agriculture updates')">🌾 Agriculture</div>
+          <div class="quick-action" onclick="insertExample('Ethiopia economy news')">💼 Economy</div>
           <div class="quick-action" onclick="clearChat()">🗑️ Clear</div>
         </div>
       </div>
@@ -596,19 +610,19 @@
       <div class="chat-messages" id="chatMessages">
         <div class="welcome-message">
           <h3>Welcome to Ethiopian AI Assistant! 🇪🇹</h3>
-          <p>I can help you with information about Ethiopia's economy, agriculture, demographics, weather, and current affairs.</p>
+          <p>I can help you with real-time information about Ethiopia</p>
           <div class="example-questions">
-            <div class="example-question" onclick="insertExample('What is the population of Ethiopia?')">
-              "What is the population of Ethiopia?"
+            <div class="example-question" onclick="insertExample('What is the current population of Ethiopia?')">
+              "Current population of Ethiopia?"
             </div>
-            <div class="example-question" onclick="insertExample('Best crops to grow in Jimma region')">
-              "Best crops to grow in Jimma region"
+            <div class="example-question" onclick="insertExample('Agriculture in Jimma region')">
+              "Agriculture in Jimma region"
             </div>
-            <div class="example-question" onclick="insertExample('Current exchange rate for ETB to USD')">
-              "Current exchange rate for ETB to USD"
+            <div class="example-question" onclick="insertExample('ETB to USD exchange rate today')">
+              "ETB to USD exchange rate"
             </div>
-            <div class="example-question" onclick="insertExample('የአዲስ አበባ የአየር ሁኔታ ምን ይመስላል?')">
-              "የአዲስ አበባ የአየር ሁኔታ ምን ይመስላል?"
+            <div class="example-question" onclick="insertExample('የኢትዮጵያ የአየር ሁኔታ ምን ይመስላል?')">
+              "የኢትዮጵያ የአየር ሁኔታ"
             </div>
           </div>
         </div>
@@ -629,7 +643,7 @@
         <div class="input-container">
           <textarea 
             id="userInput" 
-            placeholder="Ask me anything about Ethiopia... (Press Enter to send)"
+            placeholder="Ask about Ethiopia... (Enter to send)"
             rows="1"
           ></textarea>
           <div class="input-actions">
@@ -648,27 +662,24 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Compact Footer -->
   <footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>About Finedatas</h3>
-          <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+          <h3>Finedatas Ethiopia</h3>
+          <p>Your AI-powered data assistant for Ethiopia</p>
         </div>
         <div class="footer-section">
           <h3>Quick Links</h3>
           <a href="economic.html">Economic Data</a>
-          <a href="demographic.html">Demographic Data</a>
-          <a href="agricultural.html">Agricultural Data</a>
-          <a href="weather.html">For Farmers</a>
-          <a href="ai-chat.html">AI Chat</a>
+          <a href="agricultural.html">Agriculture</a>
+          <a href="ai-chat.html">AI Assistant</a>
         </div>
         <div class="footer-section">
-          <h3>Contact Us</h3>
-          <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
-          <p><i class="fas fa-phone"></i> +251991168917</p>
-          <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+          <h3>Contact</h3>
+          <p>gabrielmulugeta1@gmail.com</p>
+          <p>+251991168917</p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -697,7 +708,7 @@
     // Auto-resize textarea
     userInput.addEventListener('input', function() {
       this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
     });
 
     // Send on Enter (without Shift)
@@ -708,7 +719,6 @@
       }
     });
 
-    // Add timestamp
     function getCurrentTime() {
       return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
@@ -746,6 +756,8 @@
     function insertExample(text) {
       userInput.value = text;
       userInput.focus();
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
     }
 
     function clearChat() {
@@ -762,7 +774,6 @@
       const text = userInput.value.trim();
       if (!text) return;
 
-      // Disable send button during request
       sendButton.disabled = true;
       sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
@@ -787,20 +798,18 @@
         typingIndicator.style.display = 'none';
         
         if (data.error) {
-          addMessage("❌ Error: " + data.error);
+          addMessage("❌ " + data.error);
         } else if (data.answer) {
           addMessage(data.answer);
         } else if (data.answer_translated) {
           addMessage(data.answer_translated);
         } else {
-          addMessage("❌ No response received from server");
+          addMessage("❌ No response received");
         }
       } catch (err) {
         typingIndicator.style.display = 'none';
-        addMessage("❌ Network error: Please check your connection and try again.");
-        console.error('Error:', err);
+        addMessage("❌ Network error. Please try again.");
       } finally {
-        // Re-enable send button
         sendButton.disabled = false;
         sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
       }
