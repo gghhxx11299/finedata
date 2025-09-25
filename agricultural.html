@@ -71,8 +71,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-            /* ✅ FIXED: Prevent overflow */
             flex-wrap: wrap;
+            gap: 10px;
         }
         .logo {
             display: flex;
@@ -87,17 +87,17 @@
         .logo h1 {
             font-size: 1.5rem;
             margin: 0;
-            color: var(--primary-color); /* Kept blue as in original */
+            color: var(--primary-color);
         }
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 1rem;
             align-items: center;
-            /* ✅ FIXED: Prevent drifting */
             margin: 0;
             padding: 0;
             flex-wrap: wrap;
+            max-width: calc(100vw - 200px);
         }
         .nav-links a {
             color: var(--text-light);
@@ -134,7 +134,7 @@
             border-radius: 6px;
             font-weight: 600;
             transition: var(--transition);
-            white-space: nowrap; /* Prevent button wrap */
+            white-space: nowrap;
         }
         .btn:hover {
             background-color: var(--coral-red);
@@ -149,7 +149,7 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-        /* Export Button - NEW */
+        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--electric-blue);
@@ -161,8 +161,12 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
-            margin-left: 1rem;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            box-sizing: border-box;
         }
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
@@ -188,7 +192,7 @@
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-color); /* Kept blue as in original */
+            color: var(--primary-color);
         }
         .hero p {
             font-size: 1.2rem;
@@ -310,7 +314,7 @@
             border-top: 1px solid rgba(88, 166, 255, 0.2);
         }
         /* Responsive Design */
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .nav-links {
                 display: none;
                 position: absolute;
@@ -322,6 +326,7 @@
                 padding: 1.5rem;
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
                 border-top: 1px solid rgba(88, 166, 255, 0.3);
+                z-index: 100;
             }
             .nav-links.active {
                 display: flex;
@@ -479,7 +484,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Fine data Logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedatas Logo">
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
@@ -487,14 +492,13 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html" class="active">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ ADDED -->
+                    <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <!-- Export Button Added Here -->
                     <li>
                         <button class="export-btn" onclick="exportAgriculturalData()">
                             <i class="fas fa-download"></i> Export Data
@@ -508,6 +512,7 @@
             </nav>
         </div>
     </header>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -515,6 +520,7 @@
             <p>Comprehensive data and analytics on Ethiopia's agricultural sector, including crop production, livestock statistics, market trends, and climate impact analysis.</p>
         </div>
     </section>
+
     <!-- Main Content -->
     <main class="container">
         <!-- Key Metrics Section -->
@@ -554,7 +560,6 @@
                         <span>3.7% from previous year</span>
                     </div>
                 </div>
-                <!-- New metrics -->
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Irrigated Land</h4>
@@ -590,6 +595,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Regional Production Data -->
         <section class="simple-data-section">
             <h3>Regional Crop Production (2023)</h3>
@@ -650,7 +656,6 @@
                     <span class="data-value positive-change">+5.8%</span>
                 </div>
             </div>
-            <!-- New regions -->
             <div class="data-highlight">
                 <h3>Tigray Region</h3>
                 <div class="data-item">
@@ -690,6 +695,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Livestock Statistics -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-cow"></i> Livestock Statistics (2023)</h3>
@@ -785,6 +791,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Market Trends -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-chart-bar"></i> Agricultural Market Trends</h3>
@@ -831,6 +838,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Climate Impact -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Climate Impact on Agriculture</h3>
@@ -873,6 +881,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Detailed Crop Production Table -->
         <section class="table-section">
             <h3>Detailed Crop Production Data (2023)</h3>
@@ -936,7 +945,6 @@
                         <td class="positive-change">+6.2%</td>
                         <td>48.30</td>
                     </tr>
-                    <!-- New rows -->
                     <tr>
                         <td>Tea</td>
                         <td>SNNPR</td>
@@ -975,6 +983,7 @@
                 </tbody>
             </table>
         </section>
+
         <!-- Agricultural Inputs -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-tools"></i> Agricultural Inputs (2023)</h3>
@@ -1027,6 +1036,7 @@
             </div>
         </section>
     </main>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1040,7 +1050,7 @@
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
                     <a href="agricultural.html">Agricultural Data</a>
-                    <a href="ai-chat.html">AI Chat</a> <!-- ✅ ADDED -->
+                    <a href="ai-chat.html">AI Chat</a>
                     <a href="news.html">News</a>
                 </div>
                 <div class="footer-section">
@@ -1055,6 +1065,7 @@
             </div>
         </div>
     </footer>
+
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
@@ -1066,8 +1077,8 @@
                 document.querySelector('.nav-links').classList.remove('active');
             });
         });
+
         // =============== EXPORT FUNCTIONALITY ===============
-        // Utility: Download text as file
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -1079,7 +1090,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-        // Export the main crop production table as CSV
+
         function exportTableToCSV() {
             const table = document.querySelector('.table-section .data-table');
             if (!table) return "Table not found";
@@ -1097,7 +1108,7 @@
             });
             return csv.join('\n');
         }
-        // Export key metrics from cards
+
         function exportKeyMetricsAsJSON() {
             const cards = document.querySelectorAll('.card');
             const metrics = [];
@@ -1109,7 +1120,7 @@
             });
             return JSON.stringify(metrics, null, 2);
         }
-        // Main export function
+
         function exportAgriculturalData() {
             const format = prompt("Choose export format:\n- Type 'csv' for crop table\n- Type 'json' for key metrics\n- Type 'txt' for full summary\nLeave blank or cancel for CSV (default)");
             if (format === null || format === "" || format.toLowerCase() === "csv") {
@@ -1122,7 +1133,7 @@
             }
             else if (format.toLowerCase() === "txt") {
                 let report = `Ethiopian Agricultural Data Summary (2023)\nGenerated by Finedatas\n`;
-                report += "=== KEY METRICS ===\n";
+                report += "\n=== KEY METRICS ===\n";
                 document.querySelectorAll('.card').forEach(card => {
                     const title = card.querySelector('.card-title')?.innerText;
                     const value = card.querySelector('.card-value')?.innerText;
@@ -1132,6 +1143,7 @@
                 report += "\n=== REGIONAL DATA ===\n";
                 document.querySelectorAll('.data-highlight').forEach(region => {
                     const name = region.querySelector('h3')?.innerText;
+                    if (!name) return;
                     report += `\n${name}:\n`;
                     region.querySelectorAll('.data-item').forEach(item => {
                         const label = item.querySelector('.data-label')?.innerText;
