@@ -1,1 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Ethiopia Agricultural Intelligence Dashboard - Real-time crop, weather, and soil analytics">
+    <title>Ethiopia Agricultural Intelligence Dashboard</title>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* =============== GLOBAL STYLES FROM SUPPORT.HTML =============== */
+        :root {
+            --background-color: #0D1117;
+            --primary-accent: #58A6FF;
+            --secondary-accent: #FF7B72;
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* =============== HEADER / NAV =============== */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-accent);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .logo h1 {
+            color: var(--primary-accent);
+            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-accent);
+        }
+
+        /* =============== DASHBOARD STYLING ADJUSTMENTS =============== */
+        #app {
+            display: flex;
+            height: calc(100vh - 80px); /* Account for header */
+            margin-top: 20px;
+            position: relative;
+        }
+
+        #sidebar {
+            width: 420px;
+            background: var(--card-bg);
+            overflow-y: auto;
+            box-shadow: 3px 0 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+            border: 1px solid var(--primary-accent);
+        }
+
+        #sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        #header {
+            padding: 20px;
+            background: linear-gradient(135deg, #0d47a1 0%, #1B5E20 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        #header h1 {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #controls {
+            padding: 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .control-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .control-group h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--primary-accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 11px 15px;
+            margin: 7px 0;
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: rgba(88, 166, 255, 0.1);
+            transform: translateX(3px);
+            border-left: 4px solid var(--primary-accent);
+        }
+
+        .btn.active,
+        .btn.weather-active {
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--primary-accent);
+            border-left: 4px solid var(--primary-accent);
+            font-weight: 700;
+        }
+
+        #data-panel {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .region-info {
+            background: var(--background-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .region-info h4 {
+            color: var(--primary-accent);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-item {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #8B949E;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--primary-accent);
+        }
+
+        .stat-value.danger { color: var(--secondary-accent); }
+        .stat-value.warning { color: #FFA500; }
+        .stat-value.success { color: #3FB950; }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #status {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(13, 17, 23, 0.9);
+            color: var(--text-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            z-index: 1000;
+            max-width: 320px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 280px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        .legend h4 {
+            margin-bottom: 12px;
+            color: var(--primary-accent);
+            font-size: 1.1em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        #timeline-controls {
+            position: absolute;
+            bottom: 120px;
+            left: 25px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 280px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        #timeline-controls h4 {
+            margin-bottom: 10px;
+            color: var(--primary-accent);
+            font-size: 1.1em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        #timeSlider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        #dateDisplay {
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-accent);
+        }
+
+        #menu-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            color: var(--primary-accent);
+            border: 1px solid var(--primary-accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 1100;
+            display: none;
+            cursor: pointer;
+        }
+
+        .chart-container {
+            height: 200px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 900px) {
+            #app { height: calc(100vh - 120px); }
+            #sidebar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 45vh;
+                z-index: 100;
+            }
+            #map-container { height: 55vh; }
+            .stat-grid { grid-template-columns: 1fr; }
+            #menu-toggle { display: block; }
+            #timeline-controls { width: 220px; left: 15px; bottom: 100px; }
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(13, 17, 23, 0.9);
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--primary-accent);
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-accent);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* =============== FOOTER =============== */
+        footer {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--primary-accent);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .footer-section a {
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-accent);
+            box-shadow: 0 0 10px var(--primary-accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                padding: 1rem 0;
+                border-top: 1px solid var(--primary-accent);
+                border-bottom: 1px solid var(--primary-accent);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                margin: 0.5rem 1.5rem;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <h1>Finedatas</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="exchange.html">Exchange Rates</a></li>
+                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="weather.html">For Farmers</a></li>
+                    <li><a href="globe.html" class="active">Weather Data</a></li>
+                    <li><a href="insights.html">Get Forecasts</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="app">
+            <div id="sidebar">
+                <div id="header">
+                    <h1><i class="fas fa-seedling"></i> Ethiopia Agricultural Intelligence</h1>
+                    <p>Real-time Crop, Weather & Soil Analytics</p>
+                    <div id="last-updated">Last updated: <span id="update-time">Today</span></div>
+                </div>
+                <div id="controls">
+                    <div class="control-group">
+                        <h3><i class="fas fa-cloud"></i> Working Weather Layers</h3>
+                        <button id="btnNone" class="btn weather-active">
+                            <i class="fas fa-ban"></i> None
+                        </button>
+                        <button id="btnClouds" class="btn">
+                            <i class="fas fa-cloud"></i> Cloud Cover (MODIS)
+                        </button>
+                        <button id="btnRain" class="btn">
+                            <i class="fas fa-cloud-rain"></i> Rainfall (GPM)
+                        </button>
+                        <button id="btnTemp" class="btn">
+                            <i class="fas fa-temperature-high"></i> Land Temperature
+                        </button>
+                        <button id="btnPrecip" class="btn">
+                            <i class="fas fa-tint"></i> Precipitation Rate
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-leaf"></i> Crop Focus</h3>
+                        <button class="btn crop-btn active" data-crop="all">
+                            <i class="fas fa-globe-africa"></i> All Crops
+                        </button>
+                        <button class="btn crop-btn" data-crop="teff">
+                            <i class="fas fa-wheat-alt"></i> Teff
+                        </button>
+                        <button class="btn crop-btn" data-crop="maize">
+                            <i class="fas fa-corn"></i> Maize
+                        </button>
+                        <button class="btn crop-btn" data-crop="wheat">
+                            <i class="fas fa-wheat-awn"></i> Wheat
+                        </button>
+                        <button class="btn crop-btn" data-crop="sorghum">
+                            <i class="fas fa-seedling"></i> Sorghum
+                        </button>
+                        <button class="btn crop-btn" data-crop="enset">
+                            <i class="fas fa-tree"></i> Enset
+                        </button>
+                        <button class="btn crop-btn" data-crop="coffee">
+                            <i class="fas fa-mug-hot"></i> Coffee
+                        </button>
+                        <button class="btn crop-btn" data-crop="sesame">
+                            <i class="fas fa-seedling"></i> Sesame
+                        </button>
+                        <button class="btn crop-btn" data-crop="beans">
+                            <i class="fas fa-pepper-hot"></i> Beans
+                        </button>
+                        <button class="btn crop-btn" data-crop="barley">
+                            <i class="fas fa-beer"></i> Barley
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                        <button id="btnExport" class="btn">
+                            <i class="fas fa-file-csv"></i> Export Full Report (CSV)
+                        </button>
+                        <button id="btnReset" class="btn">
+                            <i class="fas fa-redo"></i> Reset Dashboard
+                        </button>
+                    </div>
+                </div>
+                <div id="data-panel">
+                    <div class="region-info">
+                        <h4><i class="fas fa-chart-pie"></i> 🇪🇹 National Agricultural Summary</h4>
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Total Arable Land</div>
+                                <div class="stat-value">15.2M ha</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg. Crop Yield</div>
+                                <div class="stat-value">2.8 tons/ha</div>
+                            </div>
+                            <!-- ... other stats remain unchanged ... -->
+                        </div>
+                    </div>
+                    <div id="selected-region" class="region-info" style="display:none;">
+                        <h4 id="region-name"><i class="fas fa-map-marker-alt"></i> Region Agricultural Profile</h4>
+                        <div id="region-stats" class="stat-grid"></div>
+                        <div id="yield-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-line"></i> Yield Trend (2020-2024)</h4>
+                            <div class="chart-container">
+                                <canvas id="trendChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="price-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-bar"></i> Market Price Trend</h4>
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map-container">
+                <div id="map"></div>
+                <div id="status">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading Ethiopia Dashboard...</span>
+                </div>
+                <div class="legend">
+                    <h4>Yield Classification (tons/ha)</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#1B5E20;"></div>
+                        <span>Excellent (≥ 4.0)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#2E7D32;"></div>
+                        <span>Good (3.0 – 3.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#4CAF50;"></div>
+                        <span>Fair (2.0 – 2.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#81C784;"></div>
+                        <span>Poor (< 2.0)</span>
+                    </div>
+                </div>
+                <div id="timeline-controls">
+                    <h4><i class="fas fa-calendar-alt"></i> Time Series Animation</h4>
+                    <input type="range" id="timeSlider" min="0" max="364" value="182">
+                    <div id="dateDisplay">2024-06-30</div>
+                </div>
+                <button id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <div>Loading Ethiopia Agricultural Intelligence Dashboard...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Finedatas</h3>
+                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="economic.html">Economic Data</a>
+                    <a href="demographic.html">Demographic Data</a>
+                    <a href="agricultural.html">Agricultural Data</a>
+                    <a href="exchange.html">Exchange Rates</a>
+                    <a href="news.html">News</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +251 991 168 917</p>
+                    <p><i class="fas fa-phone"></i> +251 701 327 186</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ======================
+        // YOUR EXISTING JAVASCRIPT CODE FROM THE ORIGINAL FILE GOES HERE
+        // (Keep everything from the original <script> tag unchanged)
+        // ======================
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // ======================
+        // PASTE THE ENTIRE ORIGINAL SCRIPT HERE (from "const ETHIOPIA_REGIONS..." to the end)
+        // ======================
+    </script>
+</body>
+</html>
