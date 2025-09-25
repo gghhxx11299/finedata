@@ -53,6 +53,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            /* ✅ FIXED: Prevent overflow */
+            flex-wrap: wrap;
         }
         .logo {
             display: flex;
@@ -69,6 +71,11 @@
         .nav-links {
             display: flex;
             list-style: none;
+            /* ✅ FIXED: Prevent drifting */
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+            align-items: center;
         }
         .nav-links li {
             margin-left: 1.5rem;
@@ -89,6 +96,7 @@
             border-radius: 6px;
             font-weight: 600;
             transition: all 0.3s ease;
+            white-space: nowrap; /* Prevent button wrap */
         }
         .btn:hover {
             background-color: var(--secondary-color);
@@ -114,6 +122,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-left: 1rem;
+            white-space: nowrap; /* Prevent text wrap */
         }
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
@@ -347,12 +356,15 @@
                 box-shadow: var(--shadow);
                 padding: 1rem 0;
                 border-top: 1px solid var(--border-color);
+                align-items: flex-start;
             }
             .nav-links.active {
                 display: flex;
             }
             .nav-links li {
                 margin: 0.5rem 1.5rem;
+                width: 100%;
+                text-align: left;
             }
             .mobile-menu-btn {
                 display: block;
@@ -368,6 +380,14 @@
             .data-table {
                 display: block;
                 overflow-x: auto;
+            }
+            /* Stack nav items vertically */
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .logo {
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -386,7 +406,7 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html" class="active">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
                     <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
@@ -406,7 +426,6 @@
             </nav>
         </div>
     </header>
-
     <!-- Export Modal -->
     <div id="exportModal">
         <h4><i class="fas fa-file-export"></i> Export Options</h4>
@@ -417,7 +436,6 @@
             <i class="fas fa-times"></i> Close
         </button>
     </div>
-
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -428,7 +446,6 @@
             </ul>
         </div>
     </div>
-
     <div class="container">
         <!-- Population Growth Section -->
         <section class="demographic-section" id="population-growth">
@@ -484,7 +501,6 @@
                 </tbody>
             </table>
         </section>
-
         <!-- Population Density by Region -->
         <section class="demographic-section" id="population-density">
             <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Population Density by Region (2024)</h3>
@@ -533,7 +549,6 @@
             </table>
             <p class="source-note">Source: Central Statistical Agency of Ethiopia, 2024 estimates</p>
         </section>
-
         <!-- Urban vs Rural Section -->
         <section class="demographic-section" id="urban-rural">
             <h3 class="section-title"><i class="fas fa-city"></i> Urban vs Rural Population</h3>
@@ -589,7 +604,6 @@
             </table>
             <p class="source-note">Source: UN Population Division, CIA World Factbook</p>
         </section>
-
         <!-- Age and Sex Structure Section -->
         <section class="demographic-section" id="age-sex">
             <h3 class="section-title"><i class="fas fa-user-friends"></i> Age and Sex Structure</h3>
@@ -644,7 +658,6 @@
             </table>
             <p class="source-note">Source: Worldometer/UN data, CIA World Factbook</p>
         </section>
-
         <!-- Fertility and Family Planning -->
         <section class="demographic-section" id="fertility">
             <h3 class="section-title"><i class="fas fa-heart-pulse"></i> Fertility Trends and Family Planning</h3>
@@ -691,7 +704,6 @@
             </table>
             <p class="source-note">Source: EDHS, WHO, UNFPA</p>
         </section>
-
         <!-- Literacy and Education Section -->
         <section class="demographic-section" id="education">
             <h3 class="section-title"><i class="fas fa-book-open"></i> Literacy and Education</h3>
@@ -760,7 +772,6 @@
             </table>
             <p class="source-note">Source: UNESCO/World Bank data</p>
         </section>
-
         <!-- Health and Life Expectancy Section -->
         <section class="demographic-section" id="health">
             <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health and Life Expectancy</h3>
@@ -815,7 +826,6 @@
             </table>
             <p class="source-note">Source: WHO, UNICEF, World Bank</p>
         </section>
-
         <!-- Labor Force Section -->
         <section class="demographic-section" id="labor">
             <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force and Employment</h3>
@@ -870,7 +880,6 @@
             </table>
             <p class="source-note">Source: ILO/World Bank estimates, Ethiopian Labour Survey (ESS)</p>
         </section>
-
         <!-- Household and Income Section -->
         <section class="demographic-section" id="household">
             <h3 class="section-title"><i class="fas fa-home"></i> Household and Income Characteristics</h3>
@@ -925,7 +934,6 @@
             </table>
             <p class="source-note">Source: World Bank, Central Statistical Agency of Ethiopia</p>
         </section>
-
         <!-- Ethnic and Linguistic Composition Section -->
         <section class="demographic-section" id="ethnic">
             <h3 class="section-title"><i class="fas fa-globe-africa"></i> Ethnic and Linguistic Composition</h3>
@@ -971,7 +979,6 @@
             </div>
             <p class="source-note">Source: CIA World Factbook (2007 census and later estimates)</p>
         </section>
-
         <!-- Migration and Displacement Section -->
         <section class="demographic-section" id="migration">
             <h3 class="section-title"><i class="fas fa-people-carry"></i> Migration and Displacement</h3>
@@ -1026,7 +1033,6 @@
             </table>
             <p class="source-note">Source: UNHCR, IOM, Internal Displacement Monitoring Centre</p>
         </section>
-
         <!-- Data Sources Section -->
         <section class="demographic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -1047,7 +1053,6 @@
             <p>We strive to provide the most accurate and up-to-date information available.</p>
         </section>
     </div>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1061,6 +1066,7 @@
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
                     <a href="agricultural.html">Agricultural Data</a>
+                    <a href="ai-chat.html">AI Chat</a> <!-- ✅ ADDED -->
                     <a href="news.html">News</a>
                 </div>
                 <div class="footer-section">
@@ -1075,7 +1081,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1089,16 +1094,13 @@
                 navLinks.classList.remove('active');
             }
         });
-
         // Show export modal
         function showExportOptions() {
             const modal = document.getElementById('exportModal');
             if (window.innerWidth <= 768) {
                 modal.style.display = modal.style.display === 'none' ? 'block' : 'none';
             } else {
-                // On desktop, you could show a dropdown or keep modal
                 modal.style.display = 'block';
-                // Auto-hide after 5 seconds on desktop for UX
                 setTimeout(() => {
                     if (window.innerWidth > 768) {
                         modal.style.display = 'none';
@@ -1106,7 +1108,6 @@
                 }, 5000);
             }
         }
-
         // Utility: Download file
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
@@ -1119,13 +1120,12 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
         // 1. Export ALL tables as CSV (concatenated)
         function exportAllTablesToCSV() {
             let allCSV = '';
             const tables = document.querySelectorAll('.data-table');
             tables.forEach((table, index) => {
-                if (index > 0) allCSV += '\n\n';
+                if (index > 0) allCSV += '\n';
                 const sectionTitle = table.closest('.demographic-section').querySelector('.section-title').innerText.trim();
                 allCSV += `# ${sectionTitle}\n`;
                 let csv = [];
@@ -1147,7 +1147,6 @@
             downloadFile('ethiopia_demographic_data_all_tables.csv', allCSV, 'text/csv');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-
         // 2. Export key metrics from data cards as JSON
         function exportKeyMetricsAsJSON() {
             const cards = document.querySelectorAll('.data-card');
@@ -1164,13 +1163,11 @@
             downloadFile('demographic_key_metrics.json', jsonString, 'application/json');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-
         // 3. Export summary report as TXT
         function exportSummaryAsText() {
             let report = `Ethiopian Demographic Data Summary\n`;
             report += `Generated by Finedatas - ${new Date().toLocaleDateString('en-ET', { timeZone: 'Africa/Addis_Ababa' })}\n`;
-            report += `========================================\n\n`;
-
+            report += `========================================\n`;
             // Key sections
             const sections = [
                 { id: 'population-growth', title: 'Population Growth' },
@@ -1180,7 +1177,6 @@
                 { id: 'health', title: 'Health' },
                 { id: 'labor', title: 'Labor Force' }
             ];
-
             sections.forEach(sec => {
                 const section = document.getElementById(sec.id);
                 if (section) {
@@ -1196,11 +1192,9 @@
                     report += '\n';
                 }
             });
-
             downloadFile('demographic_summary_report.txt', report);
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-
         // Close modal when clicking outside (desktop)
         document.addEventListener('click', (e) => {
             const modal = document.getElementById('exportModal');
