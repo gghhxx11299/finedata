@@ -15,7 +15,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* =============== GLOBAL STYLES FROM SUPPORT.HTML =============== */
+        /* =============== GLOBAL STYLES =============== */
         :root {
             --background-color: #0D1117;
             --primary-accent: #58A6FF;
@@ -59,6 +59,10 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
         }
         .logo img {
             height: 40px;
@@ -164,6 +168,7 @@
             align-items: center;
             gap: 10px;
             font-size: 0.95em;
+            transition: all 0.2s ease;
         }
         .btn:hover {
             background: rgba(88, 166, 255, 0.1);
@@ -271,6 +276,18 @@
             height: 180px;
             margin-top: 12px;
         }
+        /* Legend Styles */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
         /* Footer */
         footer {
             background-color: var(--card-bg);
@@ -306,7 +323,7 @@
             border-top: 1px solid var(--border-color);
             font-size: 0.9em;
         }
-        /* Mobile Responsive — FIXED */
+        /* Mobile Responsive */
         @media (max-width: 992px) {
             #sidebar {
                 position: fixed;
@@ -325,10 +342,10 @@
             }
             #app {
                 flex-direction: column;
-                height: auto; /* ✅ FIXED: removed 60vh */
+                height: auto;
             }
             #map-container {
-                height: calc(100vh - 120px); /* header + minimal footer space */
+                height: calc(100vh - 120px);
             }
         }
         @media (max-width: 768px) {
@@ -363,7 +380,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <img src="https://via.placeholder.com/40x40/1B5E20/FFFFFF?text=FD" alt="Finedata Logo">
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
@@ -974,6 +991,10 @@
                     document.getElementById('sidebar').classList.remove('visible');
                 }
             });
+            // Update status after loading
+            setTimeout(() => {
+                document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
+            }, 1500);
         });
         // ======================
         // UPDATE ETHIOPIA LAYER
@@ -1008,11 +1029,12 @@
             }).addTo(map);
         }
         // ======================
-        // GET REGION STYLE
+        // GET REGION STYLE (FIXED)
         // ======================
         function getRegionStyle(feature) {
             const crop = feature.properties.crop;
-            const yield = feature.properties.yield;
+            const cropYield = feature.properties.yield; // Fixed: renamed from 'yield'
+            
             if (currentCropFilter !== 'all' && crop !== currentCropFilter) {
                 return {
                     fillOpacity: 0,
@@ -1021,9 +1043,9 @@
                 };
             }
             let color;
-            if (yield >= 4) color = '#1B5E20';
-            else if (yield >= 3) color = '#2E7D32';
-            else if (yield >= 2) color = '#4CAF50';
+            if (cropYield >= 4) color = '#1B5E20';
+            else if (cropYield >= 3) color = '#2E7D32';
+            else if (cropYield >= 2) color = '#4CAF50';
             else color = '#81C784';
             return {
                 fillColor: color,
