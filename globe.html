@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ethiopia Agricultural Intelligence Dashboard - Real-time crop, weather, and soil analytics">
     <title>Ethiopia Agricultural Intelligence Dashboard</title>
     <!-- Leaflet -->
@@ -52,7 +52,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
             border-bottom: 1px solid var(--primary-accent);
         }
 
@@ -127,7 +127,8 @@
             display: flex;
             flex-direction: column;
             color: var(--text-color);
-            border: 1px solid var(--primary-accent);
+            border-right: 1px solid var(--primary-accent);
+            transition: transform 0.3s ease;
         }
 
         #sidebar.collapsed {
@@ -381,53 +382,6 @@
             margin-top: 15px;
         }
 
-        @media (max-width: 900px) {
-            #app { height: calc(100vh - 120px); }
-            #sidebar {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 45vh;
-                z-index: 100;
-            }
-            #map-container { height: 55vh; }
-            .stat-grid { grid-template-columns: 1fr; }
-            #menu-toggle { display: block; }
-            #timeline-controls { width: 220px; left: 15px; bottom: 100px; }
-        }
-
-        .loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(13, 17, 23, 0.9);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--primary-accent);
-        }
-
-        .spinner {
-            border: 4px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-accent);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* =============== FOOTER =============== */
         footer {
             background-color: var(--card-bg);
@@ -495,6 +449,21 @@
             border-top: 1px solid var(--border-color);
         }
 
+        /* =============== RESPONSIVE =============== */
+        @media (max-width: 992px) {
+            #sidebar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 320px;
+                height: 100%;
+                z-index: 1000;
+            }
+            #menu-toggle {
+                display: block;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -517,6 +486,26 @@
             }
             .mobile-menu-btn {
                 display: block;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            #timeline-controls {
+                width: 220px;
+                left: 15px;
+                bottom: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #sidebar {
+                width: 100%;
+            }
+            .btn span {
+                display: none;
+            }
+            .btn i {
+                margin: 0 auto;
             }
         }
     </style>
@@ -552,7 +541,7 @@
         </div>
     </header>
 
-    <!-- DASHBOARD (NOT in container) -->
+    <!-- Dashboard -->
     <div id="app">
         <div id="sidebar">
             <div id="header">
@@ -712,10 +701,6 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <div>Loading Ethiopia Agricultural Intelligence Dashboard...</div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -772,7 +757,7 @@
         });
 
         // ======================
-        // ETHIOPIA REGION DATA (FROM KNOWLEDGE BASE)
+        // ETHIOPIA REGION DATA
         // ======================
         const ETHIOPIA_REGIONS = {
             "type": "FeatureCollection",
@@ -1118,7 +1103,7 @@
         const baseDate = new Date(today.getFullYear(), 0, 1);
 
         // ======================
-        // INIT
+        // INITIALIZE DASHBOARD
         // ======================
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('update-time').textContent = new Date().toLocaleDateString('en-US', {
@@ -1135,21 +1120,18 @@
             updateEthiopiaLayer();
             setupEventListeners();
 
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
-            }, 1500);
-
-            document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('menu-toggle').addEventListener('click', function() {
                 document.getElementById('sidebar').classList.toggle('collapsed');
             });
         });
 
         // ======================
-        // CORE FUNCTIONS (FROM KNOWLEDGE BASE)
+        // UPDATE ETHIOPIA LAYER
         // ======================
         function updateEthiopiaLayer() {
-            if (ethiopiaLayer) map.removeLayer(ethiopiaLayer);
+            if (ethiopiaLayer) {
+                map.removeLayer(ethiopiaLayer);
+            }
             ethiopiaLayer = L.geoJSON(ETHIOPIA_REGIONS, {
                 style: getRegionStyle,
                 onEachFeature: function(feature, layer) {
@@ -1169,16 +1151,25 @@
                         </div>
                     `;
                     layer.bindPopup(popupContent);
-                    layer.on('click', () => showRegionDetails(props));
+                    layer.on('click', function() {
+                        showRegionDetails(props);
+                    });
                 }
             }).addTo(map);
         }
 
+        // ======================
+        // GET REGION STYLE
+        // ======================
         function getRegionStyle(feature) {
             const crop = feature.properties.crop;
             const yield = feature.properties.yield;
             if (currentCropFilter !== 'all' && crop !== currentCropFilter) {
-                return { fillOpacity: 0, stroke: false, interactive: false };
+                return {
+                    fillOpacity: 0,
+                    stroke: false,
+                    interactive: false
+                };
             }
             let color;
             if (yield >= 4) color = '#1B5E20';
@@ -1194,6 +1185,9 @@
             };
         }
 
+        // ======================
+        // SET WEATHER LAYER
+        // ======================
         function setWeatherLayer(layerType) {
             Object.values(weatherLayers).forEach(layer => {
                 if (layer) map.removeLayer(layer);
@@ -1256,6 +1250,9 @@
             }
         }
 
+        // ======================
+        // TIME SERIES FUNCTIONS
+        // ======================
         function getSelectedDate() {
             const days = parseInt(document.getElementById('timeSlider').value);
             const date = new Date(baseDate);
@@ -1274,6 +1271,9 @@
             });
         }
 
+        // ======================
+        // SHOW REGION DETAILS
+        // ======================
         function showRegionDetails(props) {
             document.getElementById('selected-region').style.display = 'block';
             document.getElementById('region-name').textContent = `${props.region} Agricultural Profile`;
@@ -1399,6 +1399,9 @@
             });
         }
 
+        // ======================
+        // EVENT LISTENERS
+        // ======================
         function setupEventListeners() {
             ['None', 'Clouds', 'Rain', 'Temp', 'Precip'].forEach(name => {
                 const id = `btn${name}`;
@@ -1423,19 +1426,27 @@
             document.getElementById('btnReset').addEventListener('click', resetDashboard);
 
             const timeSlider = document.getElementById('timeSlider');
-            timeSlider.addEventListener('input', () => {
+            timeSlider.addEventListener('input', function() {
                 updateDateDisplay();
-                if (currentWeather !== 'none') setWeatherLayer(currentWeather);
+                if (currentWeather !== 'none') {
+                    setWeatherLayer(currentWeather);
+                }
             });
             updateDateDisplay();
         }
 
+        // ======================
+        // SET CROP FILTER
+        // ======================
         function setCropFilter(cropType) {
             currentCropFilter = cropType;
             updateEthiopiaLayer();
             document.getElementById('status').innerHTML = `<i class="fas fa-filter"></i> <span>Filtered by: ${cropType === 'all' ? 'All Crops' : cropType.charAt(0).toUpperCase() + cropType.slice(1)}</span>`;
         }
 
+        // ======================
+        // HELPER FUNCTIONS
+        // ======================
         function getRainfallForRegion(region) {
             const map = {
                 'Amhara': 1200, 'Oromia - Maize Belt': 1100, 'Oromia - Coffee Zone': 1800,
@@ -1463,6 +1474,9 @@
             return map[region] || 68;
         }
 
+        // ======================
+        // EXPORT DATA
+        // ======================
         function exportData() {
             const headers = [
                 'Region', 'Main Crop', 'Crop', 'Yield (tons/ha)', 'Area (ha)', 
@@ -1496,6 +1510,9 @@
             }, 3000);
         }
 
+        // ======================
+        // RESET DASHBOARD
+        // ======================
         function resetDashboard() {
             currentCropFilter = 'all';
             currentWeather = 'none';
