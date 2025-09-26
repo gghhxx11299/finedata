@@ -1,284 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-    <meta charset="UTF-8">
+<head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finedatas Ethiopia - Weather & Crop Recommendations</title>
+    <meta name="description" content="Ethiopia Agricultural Intelligence Dashboard - Real-time crop, weather, and soil analytics">
+    <title>Ethiopia Agricultural Intelligence Dashboard</title>
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <!-- PDF Export Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
+        /* =============== GLOBAL STYLES FROM SUPPORT.HTML =============== */
         :root {
-            --bg-primary: #0D1117;
-            --bg-secondary: #161B22;
-            --bg-card: #161B22;
+            --background-color: #0D1117;
             --primary-accent: #58A6FF;
             --secondary-accent: #FF7B72;
-            --text-primary: #C9D1D9;
-            --text-secondary: #8B949E;
-            --border-color: #30363D;
-            --success-color: #3FB950;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.7);
+            --text-color: #C9D1D9;
+            --card-bg: #161B22;
+            --border-color: #30363d;
         }
-        * {margin:0;padding:0;box-sizing:border-box;}
-        body {font-family:'Inter','Segoe UI',sans-serif;line-height:1.6;color:var(--text-primary);background-color:var(--bg-primary);}
-        .container {width:90%;max-width:1200px;margin:0 auto;padding:0 15px;}
-        header {background-color:var(--bg-secondary);box-shadow:var(--shadow);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border-color);}
-        nav {display:flex;justify-content:space-between;align-items:center;padding:1rem 0;}
-        .logo {display:flex;align-items:center;}
-        .logo img {height:40px;margin-right:10px;border-radius:4px;}
-        .logo h1 {color:var(--primary-accent);font-size:1.5rem;font-weight:700;font-family:'Montserrat',sans-serif;}
-        .nav-links {display:flex;list-style:none;}
-        .nav-links li {margin-left:1.5rem;}
-        .nav-links a {text-decoration:none;color:var(--text-primary);font-weight:500;transition:color 0.3s;padding:0.5rem 0;position:relative;}
-        .nav-links a:not(.btn):after {content:'';position:absolute;width:0;height:2px;bottom:0;left:0;background-color:var(--primary-accent);transition:width 0.3s;}
-        .nav-links a:hover:after {width:100%;}
-        .nav-links a:hover {color:var(--primary-accent);}
-        .mobile-menu-btn {display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--primary-accent);}
-        .hero {background:linear-gradient(rgba(13,17,23,0.85),rgba(13,17,23,0.95)),url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');color:var(--text-primary);padding:5rem 0;text-align:center;margin-bottom:3rem;border-bottom:1px solid var(--border-color);}
-        .hero h2 {font-size:2.8rem;margin-bottom:1rem;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--text-primary);}
-        .hero p {font-size:1.2rem;max-width:800px;margin:0 auto 2rem;color:var(--text-secondary);}
-        .btn {display:inline-block;background-color:var(--primary-accent);color:var(--bg-primary);padding:0.8rem 1.5rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.3s ease;border:none;cursor:pointer;}
-        .btn:hover {background-color:var(--secondary-accent);color:var(--text-primary);box-shadow:0 0 10px var(--secondary-accent),0 0 20px rgba(255,123,114,0.3);transform:translateY(-2px);}
-        .weather-section, .soil-section, .recommendation-section {padding:3rem 0;}
-        .section-title {text-align:center;color:var(--primary-accent);margin-bottom:3rem;font-size:2.2rem;font-family:'Montserrat',sans-serif;font-weight:700;}
-        .city-selector {display:flex;justify-content:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
-        .city-btn {background-color:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color);padding:0.5rem 1rem;border-radius:6px;cursor:pointer;transition:all 0.3s;}
-        .city-btn:hover, .city-btn.active {background-color:var(--primary-accent);color:var(--bg-primary);}
-        .weather-container {display:grid;grid-template-columns:1fr 2fr;gap:2rem;margin-bottom:3rem;}
-        @media(max-width:768px){
-            .weather-container{grid-template-columns:1fr;}
-            .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background-color:var(--bg-secondary);box-shadow:var(--shadow);padding:1rem 0;border-top:1px solid var(--border-color);}
-            .nav-links.active{display:flex;}
-            .nav-links li{margin:0.5rem 1.5rem;}
-            .mobile-menu-btn{display:block;}
-            .hero h2{font-size:2rem;}
-            .forecast-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
-            .soil-grid, .calendar-grid {grid-template-columns: 1fr;}
-            .recommendation-container {grid-template-columns: 1fr;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .current-weather, .forecast, .soil-card, .crop-card, .alerts-list, .calendar-grid {
-            background-color:var(--bg-card);
-            border-radius:12px;
-            padding:2rem;
-            box-shadow:var(--shadow);
-            border:1px solid var(--border-color);
-        }
-        .current-weather h3, .forecast h3, .soil-card h3, .crop-card h3, .alerts-list h3, .calendar-grid h3 {
-            color:var(--primary-accent);
-            margin-bottom:1rem;
-            font-family:'Montserrat',sans-serif;
-            border-bottom:1px solid var(--border-color);
-            padding-bottom:0.5rem;
-        }
-        .weather-detail {display:flex;justify-content:space-between;margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border-color);}
-        .weather-detail:last-child {border-bottom:none;}
-        .weather-detail .label {color:var(--text-secondary);}
-        .weather-detail .value {color:var(--text-primary);font-weight:600;}
-        .forecast-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem;}
-        .forecast-day {background-color:rgba(255,255,255,0.05);border-radius:8px;padding:1rem;text-align:center;border:1px solid var(--border-color);transition:transform 0.3s;}
-        .forecast-day:hover {transform:translateY(-3px);border-color:var(--primary-accent);}
-        .forecast-date {font-weight:600;margin-bottom:0.5rem;color:var(--primary-accent);}
-        .forecast-temp {display:flex;justify-content:space-around;margin:0.5rem 0;}
-        .temp-min, .temp-max {display:flex;flex-direction:column;}
-        .temp-min .label, .temp-max .label {font-size:0.8rem;color:var(--text-secondary);}
-        .temp-min .value {color:#58A6FF;}
-        .temp-max .value {color:#FF7B72;}
-        .forecast-weather {margin:0.5rem 0;font-size:0.9rem;}
-        .forecast-precipitation, .forecast-wind {font-size:0.8rem;color:var(--text-secondary);}
-        footer {background-color:var(--bg-secondary);color:var(--text-primary);padding:3rem 0 1.5rem;border-top:1px solid var(--border-color);}
-        .footer-content {display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:2rem;}
-        .footer-section h3 {margin-bottom:1rem;font-size:1.2rem;color:var(--primary-accent);font-family:'Montserrat',sans-serif;}
-        .footer-section p, .footer-section a {margin-bottom:0.5rem;color:var(--text-secondary);}
-        .footer-section a {display:block;text-decoration:none;transition:color 0.3s;}
-        .footer-section a:hover {color:var(--primary-accent);}
-        .social-links {display:flex;gap:1rem;margin-top:1rem;}
-        .social-links a {display:inline-block;color:var(--text-primary);background-color:rgba(255,255,255,0.1);width:40px;height:40px;border-radius:50%;text-align:center;line-height:40px;transition:all 0.3s;}
-        .social-links a:hover {background-color:var(--primary-accent);color:var(--bg-primary);transform:translateY(-3px);}
-        .footer-bottom {text-align:center;padding-top:1.5rem;border-top:1px solid var(--border-color);color:var(--text-secondary);}
-        .loading {text-align:center;padding:2rem;color:var(--text-secondary);}
-        .error {text-align:center;padding:2rem;color:var(--secondary-accent);}
-
-        /* Soil Section Styles */
-        .soil-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 2rem;
-        }
-
-        .soil-card h4 {
-            color: var(--primary-accent);
-            margin-bottom: 12px;
-            font-size: 1.3rem;
-        }
-
-        .soil-detail {
-            margin-bottom: 10px;
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-
-        .soil-detail .label {
-            color: var(--text-secondary);
-            min-width: 120px;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            border-bottom: 1px solid var(--primary-accent);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        .logo h1 {
+            color: var(--primary-accent);
+            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 1rem;
+        }
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
             font-weight: 500;
         }
-
-        .soil-detail .value {
-            color: var(--text-primary);
-        }
-
-        /* Crop Recommendation Section */
-        .recommendation-section {
-            background-color: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .recommendation-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .crop-card h4 {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--primary-accent);
-            margin-bottom: 12px;
-            font-size: 1.4rem;
         }
-
-        .crop-detail {
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        /* Dashboard Wrapper */
+        #app-wrapper {
+            flex: 1;
             display: flex;
-            margin-bottom: 8px;
+            flex-direction: column;
+            position: relative;
         }
-
-        .crop-detail .label {
-            color: var(--text-secondary);
-            min-width: 140px;
-            font-weight: 500;
-        }
-
-        .crop-detail .value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .alerts-list .alert-item {
+        #app {
             display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+            flex: 1;
+            position: relative;
         }
-
-        .alerts-list .alert-item:last-child {
-            border-bottom: none;
+        #sidebar {
+            width: 380px;
+            background: var(--card-bg);
+            overflow-y: auto;
+            box-shadow: 3px 0 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-color);
+            border-right: 1px solid var(--primary-accent);
+            transition: transform 0.3s ease;
         }
-
-        .alerts-list i {
-            color: var(--success-color);
-            font-size: 1.2rem;
-            min-width: 24px;
-            margin-top: 4px;
+        #sidebar.collapsed {
+            transform: translateX(-100%);
         }
-
-        .seasonal-calendar {
-            margin-top: 2rem;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 1rem;
-        }
-
-        .calendar-item {
-            background: rgba(88, 166, 255, 0.1);
-            border-radius: 8px;
-            padding: 12px;
+        #header {
+            padding: 20px;
+            background: linear-gradient(135deg, #0d47a1 0%, #1B5E20 100%);
+            color: white;
             text-align: center;
+        }
+        #controls {
+            padding: 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .control-group {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .control-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .control-group h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            margin: 6px 0;
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+        }
+        .btn:hover {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--primary-accent);
+        }
+        .btn.active, .btn.weather-active {
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--primary-accent);
+            border-left: 4px solid var(--primary-accent);
+            font-weight: 700;
+        }
+        #data-panel {
+            padding: 20px;
+            flex: 1;
+        }
+        .region-info {
+            background: var(--background-color);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
             border: 1px solid var(--border-color);
         }
-
-        .calendar-item h5 {
+        .region-info h4 {
             color: var(--primary-accent);
-            margin-bottom: 6px;
-            font-size: 1.1rem;
-        }
-
-        .calendar-item .window {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* Export Button */
-        .export-section {
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .btn-export {
-            background-color: var(--success-color);
-            color: var(--bg-primary);
-            padding: 0.7rem 1.4rem;
-            border-radius: 6px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        .btn-export:hover {
-            background-color: #2ea043;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.4);
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
-
-        .btn-export:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Hidden export content for PDF */
-        #pdf-content {
-            position: fixed;
-            left: -9999px;
-            top: -9999px;
-            width: 800px;
-            background: white;
-            color: black;
-            padding: 30px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        #pdf-content h1, #pdf-content h2, #pdf-content h3 {
-            color: #0d1117;
-        }
-
-        #pdf-content .weather-detail, #pdf-content .crop-detail {
-            display: flex;
-            justify-content: space-between;
-            margin: 8px 0;
-        }
-
-        #pdf-content .section {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ddd;
+        .stat-item {
+            background: var(--card-bg);
+            padding: 10px;
             border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .stat-label { font-size: 0.8em; color: #8B949E; }
+        .stat-value { font-size: 1em; font-weight: 700; color: var(--primary-accent); }
+        .stat-value.danger { color: var(--secondary-accent); }
+        .stat-value.warning { color: #FFA500; }
+        .stat-value.success { color: #3FB950; }
+        #map-container {
+            flex: 1;
+            position: relative;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        #status {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(13, 17, 23, 0.9);
+            color: var(--text-color);
+            padding: 10px 14px;
+            border-radius: 8px;
+            z-index: 1000;
+            max-width: 280px;
+            border: 1px solid var(--primary-accent);
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend, #timeline-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 260px;
+            border: 1px solid var(--primary-accent);
+            font-size: 0.9em;
+        }
+        #timeline-controls {
+            bottom: 100px;
+        }
+        #menu-toggle {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--card-bg);
+            color: var(--primary-accent);
+            border: 1px solid var(--primary-accent);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1.1em;
+            z-index: 1100;
+            display: none;
+            cursor: pointer;
+        }
+        .chart-container {
+            height: 180px;
+            margin-top: 12px;
+        }
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 2rem 0 1rem;
+            margin-top: auto;
+            border-top: 1px solid var(--primary-accent);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .footer-section a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+        }
+        .footer-section a:hover {
+            color: var(--primary-accent);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+        }
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 320px;
+                z-index: 2000;
+                transform: translateX(-100%);
+            }
+            #sidebar.visible {
+                transform: translateX(0);
+            }
+            #menu-toggle {
+                display: block;
+            }
+            #app {
+                flex-direction: column;
+            }
+            #map-container {
+                height: 100vh;
+                flex: 1;
+            }
+            body {
+                overflow: hidden;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-top: 1px solid var(--primary-accent);
+            }
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 0.5rem 1.5rem; }
+            .mobile-menu-btn { display: block; }
+            .stat-grid { grid-template-columns: 1fr; }
+            .legend, #timeline-controls { max-width: 220px; font-size: 0.85em; }
+            #timeline-controls { bottom: 80px; }
+        }
+        @media (max-width: 480px) {
+            #sidebar { width: 100%; }
+            .btn span { display: none; }
+            .btn i { margin: 0 auto; }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container">
             <nav>
@@ -291,15 +374,15 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
-                    <li><a href="news.html" >News</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
-                    <li><a href="weather.html"  class="active">For Farmers</a></li>
-                    <li><a href="globe.html">weather data</a></li>
+                    <li><a href="weather.html">For Farmers</a></li>
+                    <li><a href="globe.html" class="active">Weather Data</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <li><a href="donate.html" class="btn">Donate</a></li>
+                    <li><a href="donate.html">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -307,277 +390,196 @@
             </nav>
         </div>
     </header>
-
-    <section class="hero">
-        <div class="container">
-            <h2>Ethiopia Weather & Crop Recommendations</h2>
-            <p>Access real-time weather, soil data, and smart planting advice to maximize your harvest</p>
-            <div style="margin-top: 1.5rem;">
-                <a href="#weather-data" class="btn" style="margin-right: 1rem;">View Weather Data</a>
-                <button id="exportBtnHero" class="btn-export">
-                    <i class="fas fa-file-pdf"></i> Export Report (PDF)
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <section id="weather-data" class="weather-section">
-        <div class="container">
-            <h2 class="section-title">Weather Information</h2>
-            <div class="city-selector">
-                <button class="city-btn active" data-city="Addis Ababa">Addis Ababa</button>
-                <button class="city-btn" data-city="Mekelle">Mekelle</button>
-                <button class="city-btn" data-city="Bahir Dar">Bahir Dar</button>
-                <button class="city-btn" data-city="Hawassa">Hawassa</button>
-                <button class="city-btn" data-city="Dire Dawa">Dire Dawa</button>
-                <button class="city-btn" data-city="Jijiga">Jijiga</button>
-                <button class="city-btn" data-city="Gambela">Gambela</button>
-                <button class="city-btn" data-city="Asosa">Asosa</button>
-                <button class="city-btn" data-city="Semera">Semera</button>
-                <button class="city-btn" data-city="Jimma">Jimma</button>
-                <button class="city-btn" data-city="Nekemte">Nekemte</button>
-                <button class="city-btn" data-city="Bale Robe">Bale Robe</button>
-                <button class="city-btn" data-city="Shashemene">Shashemene</button>
-                <button class="city-btn" data-city="Dilla">Dilla</button>
-                <button class="city-btn" data-city="Bonga">Bonga</button>
-                <button class="city-btn" data-city="Arba Minch">Arba Minch</button>
-                <button class="city-btn" data-city="Hosaena">Hosaena</button>
-                <button class="city-btn" data-city="Debre Markos">Debre Markos</button>
-                <button class="city-btn" data-city="Debre Birhan">Debre Birhan</button>
-                <button class="city-btn" data-city="Metu">Metu</button>
-                <button class="city-btn" data-city="Adigrat">Adigrat</button>
-                <button class="city-btn" data-city="Goba">Goba</button>
-            </div>
-
-            <div class="weather-container">
-                <div class="current-weather">
-                    <h3>Current Weather</h3>
-                    <div class="weather-detail"><span class="label">Temperature</span><span class="value" id="temp">--</span></div>
-                    <div class="weather-detail"><span class="label">Humidity</span><span class="value" id="humidity">--</span></div>
-                    <div class="weather-detail"><span class="label">Conditions</span><span class="value" id="conditions">--</span></div>
-                    <div class="weather-detail"><span class="label">Wind Speed</span><span class="value" id="wind">--</span></div>
-                    <div class="weather-detail"><span class="label">Last Updated</span><span class="value" id="updated">--</span></div>
+    <!-- Dashboard -->
+    <div id="app-wrapper">
+        <div id="app">
+            <div id="sidebar">
+                <div id="header">
+                    <h1><i class="fas fa-seedling"></i> Ethiopia Agricultural Intelligence</h1>
+                    <p>Real-time Crop, Weather & Soil Analytics</p>
+                    <div id="last-updated">Last updated: <span id="update-time">Today</span></div>
                 </div>
-
-                <div class="forecast">
-                    <h3>14-Day Forecast</h3>
-                    <div class="forecast-grid" id="forecast-container">
-                        <div class="loading">Loading weather data...</div>
+                <div id="controls">
+                    <div class="control-group">
+                        <h3><i class="fas fa-cloud"></i> Working Weather Layers</h3>
+                        <button id="btnNone" class="btn weather-active">
+                            <i class="fas fa-ban"></i> None
+                        </button>
+                        <button id="btnClouds" class="btn">
+                            <i class="fas fa-cloud"></i> Cloud Cover (MODIS)
+                        </button>
+                        <button id="btnRain" class="btn">
+                            <i class="fas fa-cloud-rain"></i> Rainfall (GPM)
+                        </button>
+                        <button id="btnTemp" class="btn">
+                            <i class="fas fa-temperature-high"></i> Land Temperature
+                        </button>
+                        <button id="btnPrecip" class="btn">
+                            <i class="fas fa-tint"></i> Precipitation Rate
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-leaf"></i> Crop Focus</h3>
+                        <button class="btn crop-btn active" data-crop="all">
+                            <i class="fas fa-globe-africa"></i> All Crops
+                        </button>
+                        <button class="btn crop-btn" data-crop="teff">
+                            <i class="fas fa-wheat-alt"></i> Teff
+                        </button>
+                        <button class="btn crop-btn" data-crop="maize">
+                            <i class="fas fa-corn"></i> Maize
+                        </button>
+                        <button class="btn crop-btn" data-crop="wheat">
+                            <i class="fas fa-wheat-awn"></i> Wheat
+                        </button>
+                        <button class="btn crop-btn" data-crop="sorghum">
+                            <i class="fas fa-seedling"></i> Sorghum
+                        </button>
+                        <button class="btn crop-btn" data-crop="enset">
+                            <i class="fas fa-tree"></i> Enset
+                        </button>
+                        <button class="btn crop-btn" data-crop="coffee">
+                            <i class="fas fa-mug-hot"></i> Coffee
+                        </button>
+                        <button class="btn crop-btn" data-crop="sesame">
+                            <i class="fas fa-seedling"></i> Sesame
+                        </button>
+                        <button class="btn crop-btn" data-crop="beans">
+                            <i class="fas fa-pepper-hot"></i> Beans
+                        </button>
+                        <button class="btn crop-btn" data-crop="barley">
+                            <i class="fas fa-beer"></i> Barley
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                        <button id="btnExport" class="btn">
+                            <i class="fas fa-file-csv"></i> Export Full Report (CSV)
+                        </button>
+                        <button id="btnReset" class="btn">
+                            <i class="fas fa-redo"></i> Reset Dashboard
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Soil & Crop Guidance Section -->
-    <section class="soil-section">
-        <div class="container">
-            <h2 class="section-title">Soil Requirements for Key Crops</h2>
-            <p style="text-align:center; color:var(--text-secondary); margin-bottom:2rem;">
-                Based on CIMMYT, FAO, and Ethiopian Institute of Agricultural Research (EIAR) recommendations
-            </p>
-            <div class="soil-grid">
-                <!-- Maize -->
-                <div class="soil-card">
-                    <h4>Maize</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loamy, well-drained</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 7.0</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 2%</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, K</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Avoid waterlogged soils; drought-tolerant varieties available</span></div>
-                </div>
-
-                <!-- Teff -->
-                <div class="soil-card">
-                    <h4>Teff</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Clay-loam, heavy soils</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 7.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Moderate</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Thrives in water-retentive soils; shallow root system</span></div>
-                </div>
-
-                <!-- Wheat -->
-                <div class="soil-card">
-                    <h4>Wheat</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loam to clay-loam</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 7.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 1.5%</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, S, Zn</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Sensitive to waterlogging; requires good drainage</span></div>
-                </div>
-
-                <!-- Sorghum -->
-                <div class="soil-card">
-                    <h4>Sorghum</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam to clay</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 8.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Low to moderate</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Highly drought-tolerant; grows in marginal soils</span></div>
-                </div>
-
-                <!-- Coffee (Arabica) -->
-                <div class="soil-card">
-                    <h4>Coffee (Arabica)</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Volcanic, well-drained loam</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 6.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">High (≥ 3%)</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, K, Mg, B</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Requires shade; sensitive to water stress</span></div>
-                </div>
-
-                <!-- Enset -->
-                <div class="soil-card">
-                    <h4>Enset</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Deep, moist, fertile loam</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 6.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Very high</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">K, Ca, Mg</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Needs consistent moisture; traditional composting essential</span></div>
-                </div>
-
-                <!-- Barley -->
-                <div class="soil-card">
-                    <h4>Barley</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Loam, tolerates lighter soils</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 7.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">≥ 1.2%</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Cold-tolerant; suitable for highlands</span></div>
-                </div>
-
-                <!-- Chickpea -->
-                <div class="soil-card">
-                    <h4>Chickpea</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam, well-drained</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">6.0 – 9.0</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Low to moderate</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">P, S, Zn</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Fixes nitrogen; avoid acidic or waterlogged soils</span></div>
-                </div>
-
-                <!-- Sesame -->
-                <div class="soil-card">
-                    <h4>Sesame</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam to loam</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.5 – 8.0</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">Moderate</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">N, P, K</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Drought-tolerant; sensitive to waterlogging</span></div>
-                </div>
-
-                <!-- Potato -->
-                <div class="soil-card">
-                    <h4>Potato</h4>
-                    <div class="soil-detail"><span class="label">Soil Type:</span><span class="value">Sandy loam, loose, well-drained</span></div>
-                    <div class="soil-detail"><span class="label">pH Range:</span><span class="value">5.0 – 6.5</span></div>
-                    <div class="soil-detail"><span class="label">Organic Matter:</span><span class="value">High</span></div>
-                    <div class="soil-detail"><span class="label">Key Nutrients:</span><span class="value">K, P, Mg</span></div>
-                    <div class="soil-detail"><span class="label">Notes:</span><span class="value">Acidic soils reduce scab; rotate crops</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Crop Recommendation Section -->
-    <section class="recommendation-section">
-        <div class="container">
-            <h2 class="section-title">Smart Crop Recommendations</h2>
-            <p style="text-align:center; color:var(--text-secondary); margin-bottom:2rem;">
-                Personalized planting advice based on current weather, soil, and seasonal cycles in your region
-            </p>
-
-            <div class="export-section">
-                <button id="exportBtnRec" class="btn-export">
-                    <i class="fas fa-file-pdf"></i> Export This Report as PDF
-                </button>
-            </div>
-
-            <div class="recommendation-container">
-                <div class="current-recommendation">
-                    <h3>Recommended Crop to Plant Now</h3>
-                    <div class="crop-card" id="recommended-crop">
-                        <div class="loading">Analyzing conditions for <span id="rec-city">Addis Ababa</span>...</div>
-                    </div>
-                </div>
-
-                <div class="harvest-alerts">
-                    <h3>Upcoming Harvest Alerts</h3>
-                    <div class="alerts-list" id="harvest-alerts">
-                        <div class="alert-item">
-                            <i class="fas fa-seedling"></i>
-                            <div>
-                                <strong>Maize</strong> planted in early August will be ready to harvest in <strong>2 weeks</strong>.
+                <div id="data-panel">
+                    <div class="region-info">
+                        <h4><i class="fas fa-chart-pie"></i> 🇪🇹 National Agricultural Summary</h4>
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Total Arable Land</div>
+                                <div class="stat-value">15.2M ha</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg. Crop Yield</div>
+                                <div class="stat-value">2.8 tons/ha</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Main Crop</div>
+                                <div class="stat-value">Teff</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Irrigation Coverage</div>
+                                <div class="stat-value">5.2%</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg. Rainfall (Annual)</div>
+                                <div class="stat-value">850 mm</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Drought Risk</div>
+                                <div class="stat-value warning">Moderate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Soil Fertility</div>
+                                <div class="stat-value success">Good</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Food Security Index</div>
+                                <div class="stat-value warning">68/100</div>
                             </div>
                         </div>
-                        <div class="alert-item">
-                            <i class="fas fa-wheat-alt"></i>
-                            <div>
-                                <strong>Teff</strong> harvest window opens next week in highland zones.
+                    </div>
+                    <div id="selected-region" class="region-info" style="display:none;">
+                        <h4 id="region-name"><i class="fas fa-map-marker-alt"></i> Region Agricultural Profile</h4>
+                        <div id="region-stats" class="stat-grid"></div>
+                        <div id="yield-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-line"></i> Yield Trend (2020-2024)</h4>
+                            <div class="chart-container">
+                                <canvas id="trendChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="price-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-bar"></i> Market Price Trend</h4>
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="seasonal-calendar">
-                <h3>Regional Planting Calendar</h3>
-                <p style="text-align:center; color:var(--text-secondary); margin:1rem 0;">
-                    Optimal planting windows for <span id="calendar-city">Addis Ababa</span>
-                </p>
-                <div class="calendar-grid" id="planting-calendar">
-                    <!-- Dynamically populated -->
+            <div id="map-container">
+                <div id="map"></div>
+                <div id="status">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading Ethiopia Dashboard...</span>
                 </div>
+                <div class="legend">
+                    <h4>Yield Classification (tons/ha)</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#1B5E20;"></div>
+                        <span>Excellent (≥ 4.0)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#2E7D32;"></div>
+                        <span>Good (3.0 – 3.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#4CAF50;"></div>
+                        <span>Fair (2.0 – 2.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#81C784;"></div>
+                        <span>Poor (< 2.0)</span>
+                    </div>
+                </div>
+                <div id="timeline-controls">
+                    <h4><i class="fas fa-calendar-alt"></i> Time Series Animation</h4>
+                    <input type="range" id="timeSlider" min="0" max="364" value="182">
+                    <div id="dateDisplay">2024-06-30</div>
+                </div>
+                <button id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
-    </section>
-
-    <!-- Hidden div for PDF generation -->
-    <div id="pdf-content">
-        <h1>Finedatas Ethiopia</h1>
-        <h2>Farming Advisory Report</h2>
-        <p id="pdf-city">Addis Ababa</p>
-        <p id="pdf-date">Generated on: <span id="pdf-timestamp"></span></p>
-
-        <div class="section">
-            <h3>Current Weather</h3>
-            <div class="weather-detail"><span>Temperature:</span><span id="pdf-temp">--</span></div>
-            <div class="weather-detail"><span>Humidity:</span><span id="pdf-humidity">--</span></div>
-            <div class="weather-detail"><span>Conditions:</span><span id="pdf-conditions">--</span></div>
-            <div class="weather-detail"><span>Wind Speed:</span><span id="pdf-wind">--</span></div>
-        </div>
-
-        <div class="section">
-            <h3>Recommended Crop</h3>
-            <div class="crop-detail"><span>Crop:</span><span id="pdf-crop">--</span></div>
-            <div class="crop-detail"><span>Why:</span><span id="pdf-reason">--</span></div>
-            <div class="crop-detail"><span>Planting Window:</span><span id="pdf-window">--</span></div>
-        </div>
-
-        <p style="margin-top: 30px; font-size: 0.9em; color: #666;">
-            Powered by Finedatas Ethiopia • Data based on EIAR, FAO, and real-time weather
-        </p>
     </div>
-
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>About Finedatas</h3>
                     <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <a href="economic.html">Economic Data</a>
                     <a href="demographic.html">Demographic Data</a>
-                    <a href="agricultural.html">Agricultural Data</a> 
+                    <a href="agricultural.html">Agricultural Data</a>
                     <a href="exchange.html">Exchange Rates</a>
+                    <a href="news.html">News</a>
                 </div>
                 <div class="footer-section">
                     <h3>Contact Us</h3>
                     <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +251991168917</p>
+                    <p><i class="fas fa-phone"></i> +251 991 168 917</p>
+                    <p><i class="fas fa-phone"></i> +251 701 327 186</p>
                     <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
                 </div>
             </div>
@@ -586,443 +588,785 @@
             </div>
         </div>
     </footer>
-
     <script>
-        // Make jsPDF available globally
-        const { jsPDF } = window.jspdf;
-
-        // Sample data to use if the JSON file is not found
-        const sampleData = {
-            "metadata": {
-                "generated_at": "2025-09-17T10:34:19.412939",
-                "locations_count": 22,
-                "failed_locations": []
-            },
-            "weather_data": [
+        // ======================
+        // MOBILE MENU TOGGLE
+        // ======================
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                navLinks.classList.remove('active');
+            }
+        });
+        // ======================
+        // SIDEBAR TOGGLE FOR MOBILE
+        // ======================
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('visible');
+        });
+        // ======================
+        // ETHIOPIA REGION DATA
+        // ======================
+        const ETHIOPIA_REGIONS = {
+            "type": "FeatureCollection",
+            "features": [
                 {
-                    "location": "Addis Ababa",
-                    "timestamp": "2025-09-17T10:33:40.923561",
-                    "current": {
-                        "temperature": 18.4,
-                        "humidity": 73,
-                        "weather": "Partly cloudy",
-                        "wind_speed": 3.6,
-                        "timestamp": "2025-09-17 10:30"
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Amhara",
+                        "main_crop": "Teff",
+                        "crop": "teff",
+                        "yield": 2.1,
+                        "area_ha": 1200000,
+                        "soil_moisture_proxy": 0.65,
+                        "crop_health_index": 0.72,
+                        "drought_risk": "Moderate",
+                        "irrigation_pct": 8.5,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "Medium",
+                        "market_price_index": 1.2,
+                        "labor_availability": "High",
+                        "storage_facilities": "Limited",
+                        "extension_services": "Available",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.68,
+                        "yield_history": [1.9, 2.0, 2.1, 2.2, 2.1],
+                        "price_history": [2200, 2300, 2400, 2500, 2600]
                     },
-                    "forecast": [
-                        {
-                            "date": "2025-09-17",
-                            "temp_min": 10.4,
-                            "temp_max": 20.3,
-                            "weather": "Moderate rain",
-                            "precipitation": 95,
-                            "wind_speed": 8.6
-                        },
-                        {
-                            "date": "2025-09-18",
-                            "temp_min": 11.3,
-                            "temp_max": 19.8,
-                            "weather": "Moderate rain",
-                            "precipitation": 87,
-                            "wind_speed": 10.4
-                        },
-                        {
-                            "date": "2025-09-19",
-                            "temp_min": 11.3,
-                            "temp_max": 18.6,
-                            "weather": "Moderate rain",
-                            "precipitation": 85,
-                            "wind_speed": 10.1
-                        },
-                        {
-                            "date": "2025-09-20",
-                            "temp_min": 12.6,
-                            "temp_max": 17.4,
-                            "weather": "Moderate rain",
-                            "precipitation": 89,
-                            "wind_speed": 8.6
-                        },
-                        {
-                            "date": "2025-09-21",
-                            "temp_min": 12.6,
-                            "temp_max": 19.6,
-                            "weather": "Heavy rain",
-                            "precipitation": 89,
-                            "wind_speed": 7.2
-                        },
-                        {
-                            "date": "2025-09-22",
-                            "temp_min": 11.8,
-                            "temp_max": 17.6,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 85,
-                            "wind_speed": 7.6
-                        },
-                        {
-                            "date": "2025-09-23",
-                            "temp_min": 11.0,
-                            "temp_max": 18.5,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 82,
-                            "wind_speed": 16.9
-                        }
-                    ]
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [37.0, 13.8], [39.9, 13.8], [39.9, 13.2], [40.2, 12.8], 
+                            [40.1, 12.2], [39.8, 11.8], [39.5, 11.2], [39.2, 10.8],
+                            [38.8, 10.5], [38.2, 10.2], [37.5, 10.0], [37.0, 10.2],
+                            [36.8, 10.5], [36.7, 11.0], [36.8, 11.8], [37.0, 12.5],
+                            [37.0, 13.8]
+                        ]]
+                    }
                 },
                 {
-                    "location": "Mekelle",
-                    "timestamp": "2025-09-17T10:33:42.428994",
-                    "current": {
-                        "temperature": 18.3,
-                        "humidity": 61,
-                        "weather": "Patchy rain nearby",
-                        "wind_speed": 4.0,
-                        "timestamp": "2025-09-17 10:30"
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Oromia - Maize Belt",
+                        "main_crop": "Maize",
+                        "crop": "maize",
+                        "yield": 3.8,
+                        "area_ha": 1500000,
+                        "soil_moisture_proxy": 0.78,
+                        "crop_health_index": 0.85,
+                        "drought_risk": "Low",
+                        "irrigation_pct": 6.2,
+                        "fertilizer_use": "High",
+                        "pest_pressure": "High",
+                        "market_price_index": 1.0,
+                        "labor_availability": "Very High",
+                        "storage_facilities": "Good",
+                        "extension_services": "Extensive",
+                        "climate_resilience": "High",
+                        "biodiversity_score": 0.82,
+                        "yield_history": [3.5, 3.6, 3.7, 3.8, 3.8],
+                        "price_history": [1800, 1850, 1900, 1950, 2000]
                     },
-                    "forecast": [
-                        {
-                            "date": "2025-09-17",
-                            "temp_min": 16.4,
-                            "temp_max": 21.9,
-                            "weather": "Moderate rain",
-                            "precipitation": 89,
-                            "wind_speed": 13.0
-                        },
-                        {
-                            "date": "2025-09-18",
-                            "temp_min": 15.9,
-                            "temp_max": 22.1,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 89,
-                            "wind_speed": 15.1
-                        },
-                        {
-                            "date": "2025-09-19",
-                            "temp_min": 15.8,
-                            "temp_max": 22.6,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 87,
-                            "wind_speed": 14.0
-                        },
-                        {
-                            "date": "2025-09-20",
-                            "temp_min": 15.8,
-                            "temp_max": 22.9,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 85,
-                            "wind_speed": 14.0
-                        },
-                        {
-                            "date": "2025-09-21",
-                            "temp_min": 15.8,
-                            "temp_max": 22.8,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 87,
-                            "wind_speed": 13.3
-                        },
-                        {
-                            "date": "2025-09-22",
-                            "temp_min": 15.9,
-                            "temp_max": 22.5,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 87,
-                            "wind_speed": 13.7
-                        },
-                        {
-                            "date": "2025-09-23",
-                            "temp_min": 15.8,
-                            "temp_max": 22.5,
-                            "weather": "Patchy rain nearby",
-                            "precipitation": 85,
-                            "wind_speed": 13.3
-                        }
-                    ]
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [36.6, 9.6], [39.0, 9.6], [39.0, 9.0], [39.2, 8.5], 
+                            [39.1, 8.0], [38.8, 7.5], [38.5, 7.2], [38.0, 7.0],
+                            [37.5, 6.8], [37.0, 6.7], [36.5, 6.8], [36.2, 7.0],
+                            [36.0, 7.5], [36.1, 8.0], [36.3, 8.5], [36.6, 9.0],
+                            [36.6, 9.6]
+                        ]]
+                    }
                 },
                 {
-                    "location": "Jimma",
-                    "timestamp": "2025-09-17T10:33:42.428994",
-                    "current": {
-                        "temperature": 22.1,
-                        "humidity": 85,
-                        "weather": "Heavy rain",
-                        "wind_speed": 5.2,
-                        "timestamp": "2025-09-17 10:30"
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Oromia - Coffee Zone",
+                        "main_crop": "Coffee",
+                        "crop": "coffee",
+                        "yield": 0.6,
+                        "area_ha": 420000,
+                        "soil_moisture_proxy": 0.82,
+                        "crop_health_index": 0.75,
+                        "drought_risk": "Low",
+                        "irrigation_pct": 1.5,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "Medium",
+                        "market_price_index": 1.5,
+                        "labor_availability": "High",
+                        "storage_facilities": "Good",
+                        "extension_services": "Available",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.88,
+                        "yield_history": [0.55, 0.58, 0.60, 0.62, 0.60],
+                        "price_history": [85000, 90000, 95000, 100000, 105000]
                     },
-                    "forecast": []
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [34.8, 7.8], [37.0, 7.8], [37.0, 7.2], [36.8, 6.8],
+                            [36.5, 6.5], [36.0, 6.3], [35.5, 6.2], [35.0, 6.3],
+                            [34.7, 6.5], [34.5, 6.8], [34.6, 7.2], [34.8, 7.8]
+                        ]]
+                    }
                 },
                 {
-                    "location": "Gambela",
-                    "timestamp": "2025-09-17T10:33:42.428994",
-                    "current": {
-                        "temperature": 26.3,
-                        "humidity": 88,
-                        "weather": "Heavy rain",
-                        "wind_speed": 4.8,
-                        "timestamp": "2025-09-17 10:30"
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Tigray",
+                        "main_crop": "Wheat",
+                        "crop": "wheat",
+                        "yield": 1.9,
+                        "area_ha": 850000,
+                        "soil_moisture_proxy": 0.42,
+                        "crop_health_index": 0.58,
+                        "drought_risk": "High",
+                        "irrigation_pct": 18.0,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "Low",
+                        "market_price_index": 1.3,
+                        "labor_availability": "Medium",
+                        "storage_facilities": "Poor",
+                        "extension_services": "Limited",
+                        "climate_resilience": "Low",
+                        "biodiversity_score": 0.45,
+                        "yield_history": [1.7, 1.8, 1.8, 1.9, 1.9],
+                        "price_history": [2400, 2500, 2600, 2700, 2800]
                     },
-                    "forecast": []
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [37.6, 14.8], [39.8, 14.8], [39.8, 14.0], [39.6, 13.5],
+                            [39.3, 13.0], [39.0, 12.7], [38.5, 12.5], [38.0, 12.6],
+                            [37.7, 12.8], [37.5, 13.2], [37.4, 13.8], [37.6, 14.8]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Afar",
+                        "main_crop": "Sorghum",
+                        "crop": "sorghum",
+                        "yield": 0.9,
+                        "area_ha": 180000,
+                        "soil_moisture_proxy": 0.25,
+                        "crop_health_index": 0.45,
+                        "drought_risk": "Very High",
+                        "irrigation_pct": 12.0,
+                        "fertilizer_use": "Very Low",
+                        "pest_pressure": "Low",
+                        "market_price_index": 0.8,
+                        "labor_availability": "Low",
+                        "storage_facilities": "Very Poor",
+                        "extension_services": "Very Limited",
+                        "climate_resilience": "Very Low",
+                        "biodiversity_score": 0.30,
+                        "yield_history": [0.8, 0.85, 0.9, 0.85, 0.9],
+                        "price_history": [1600, 1650, 1700, 1750, 1800]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [39.5, 14.2], [41.0, 14.2], [41.0, 12.0], [40.8, 10.0],
+                            [40.5, 8.5], [40.0, 8.0], [39.5, 8.2], [39.2, 8.5],
+                            [39.0, 9.0], [39.1, 10.0], [39.3, 12.0], [39.5, 14.2]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Sidama",
+                        "main_crop": "Enset",
+                        "crop": "enset",
+                        "yield": 4.2,
+                        "area_ha": 180000,
+                        "soil_moisture_proxy": 0.75,
+                        "crop_health_index": 0.88,
+                        "drought_risk": "Low",
+                        "irrigation_pct": 3.0,
+                        "fertilizer_use": "Low",
+                        "pest_pressure": "Low",
+                        "market_price_index": 1.1,
+                        "labor_availability": "High",
+                        "storage_facilities": "Good",
+                        "extension_services": "Available",
+                        "climate_resilience": "High",
+                        "biodiversity_score": 0.85,
+                        "yield_history": [4.0, 4.1, 4.2, 4.3, 4.2],
+                        "price_history": [1200, 1250, 1300, 1350, 1400]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [37.8, 6.9], [38.8, 6.9], [38.8, 6.5], [38.6, 6.2],
+                            [38.3, 6.0], [38.0, 6.1], [37.8, 6.3], [37.7, 6.6],
+                            [37.8, 6.9]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Benishangul-Gumuz",
+                        "main_crop": "Sesame",
+                        "crop": "sesame",
+                        "yield": 0.8,
+                        "area_ha": 210000,
+                        "soil_moisture_proxy": 0.68,
+                        "crop_health_index": 0.70,
+                        "drought_risk": "Moderate",
+                        "irrigation_pct": 5.0,
+                        "fertilizer_use": "Low",
+                        "pest_pressure": "Medium",
+                        "market_price_index": 1.4,
+                        "labor_availability": "Medium",
+                        "storage_facilities": "Limited",
+                        "extension_services": "Limited",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.70,
+                        "yield_history": [0.75, 0.78, 0.80, 0.82, 0.80],
+                        "price_history": [35000, 36000, 37000, 38000, 39000]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [34.5, 11.8], [36.5, 11.8], [36.5, 11.0], [36.3, 10.5],
+                            [36.0, 10.0], [35.5, 9.7], [35.0, 9.5], [34.7, 9.6],
+                            [34.5, 10.0], [34.4, 10.5], [34.5, 11.0], [34.5, 11.8]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "SNNPR",
+                        "main_crop": "Beans",
+                        "crop": "beans",
+                        "yield": 1.2,
+                        "area_ha": 320000,
+                        "soil_moisture_proxy": 0.72,
+                        "crop_health_index": 0.78,
+                        "drought_risk": "Low",
+                        "irrigation_pct": 4.0,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "Medium",
+                        "market_price_index": 1.2,
+                        "labor_availability": "High",
+                        "storage_facilities": "Good",
+                        "extension_services": "Available",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.75,
+                        "yield_history": [1.1, 1.15, 1.2, 1.25, 1.2],
+                        "price_history": [2800, 2900, 3000, 3100, 3200]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [35.8, 7.8], [38.5, 7.8], [38.5, 7.0], [38.2, 6.5],
+                            [37.8, 6.0], [37.2, 5.7], [36.5, 5.5], [36.0, 5.6],
+                            [35.7, 5.8], [35.6, 6.2], [35.7, 6.8], [35.8, 7.8]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Amhara Highlands",
+                        "main_crop": "Barley",
+                        "crop": "barley",
+                        "yield": 1.8,
+                        "area_ha": 280000,
+                        "soil_moisture_proxy": 0.58,
+                        "crop_health_index": 0.65,
+                        "drought_risk": "Moderate",
+                        "irrigation_pct": 10.0,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "Low",
+                        "market_price_index": 1.1,
+                        "labor_availability": "Medium",
+                        "storage_facilities": "Limited",
+                        "extension_services": "Available",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.60,
+                        "yield_history": [1.6, 1.7, 1.75, 1.8, 1.8],
+                        "price_history": [2000, 2100, 2200, 2300, 2400]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [37.5, 13.2], [39.2, 13.2], [39.2, 12.8], [39.0, 12.5],
+                            [38.7, 12.2], [38.3, 12.0], [37.8, 11.9], [37.5, 12.0],
+                            [37.3, 12.2], [37.2, 12.5], [37.3, 12.8], [37.5, 13.2]
+                        ]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "region": "Gambela",
+                        "main_crop": "Maize",
+                        "crop": "maize",
+                        "yield": 2.8,
+                        "area_ha": 95000,
+                        "soil_moisture_proxy": 0.85,
+                        "crop_health_index": 0.82,
+                        "drought_risk": "Low",
+                        "irrigation_pct": 2.0,
+                        "fertilizer_use": "Medium",
+                        "pest_pressure": "High",
+                        "market_price_index": 0.9,
+                        "labor_availability": "Medium",
+                        "storage_facilities": "Limited",
+                        "extension_services": "Limited",
+                        "climate_resilience": "Medium",
+                        "biodiversity_score": 0.80,
+                        "yield_history": [2.6, 2.7, 2.75, 2.8, 2.8],
+                        "price_history": [1700, 1750, 1800, 1850, 1900]
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [33.8, 8.5], [35.0, 8.5], [35.0, 8.0], [34.8, 7.7],
+                            [34.5, 7.5], [34.2, 7.4], [34.0, 7.5], [33.9, 7.7],
+                            [33.8, 8.0], [33.8, 8.5]
+                        ]]
+                    }
                 }
             ]
         };
-
-        async function fetchWeatherData() {
-            try {
-                const response = await fetch('data.json');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data.json, using sample data');
-                }
-                return await response.json();
-            } catch (err) {
-                console.error('Failed to load data.json, using sample data:', err);
-                return sampleData;
-            }
-        }
-
-        function updateWeatherDisplay(data, city) {
-            const cityData = data.weather_data.find(item => item.location === city);
-            
-            if (!cityData) {
-                document.getElementById('forecast-container').innerHTML = 
-                    '<div class="error">Weather data not available for ' + city + '</div>';
-                return;
-            }
-
-            document.getElementById('temp').textContent = cityData.current.temperature + '°C';
-            document.getElementById('humidity').textContent = cityData.current.humidity + '%';
-            document.getElementById('conditions').textContent = cityData.current.weather;
-            document.getElementById('wind').textContent = cityData.current.wind_speed + ' km/h';
-            document.getElementById('updated').textContent = cityData.current.timestamp;
-
-            const forecastContainer = document.getElementById('forecast-container');
-            forecastContainer.innerHTML = '';
-            
-            cityData.forecast.forEach(day => {
-                const forecastDay = document.createElement('div');
-                forecastDay.className = 'forecast-day';
-                forecastDay.innerHTML = `
-                    <div class="forecast-date">${formatDate(day.date)}</div>
-                    <div class="forecast-temp">
-                        <div class="temp-min"><span class="label">Min</span><span class="value">${day.temp_min}°C</span></div>
-                        <div class="temp-max"><span class="label">Max</span><span class="value">${day.temp_max}°C</span></div>
-                    </div>
-                    <div class="forecast-weather">${day.weather}</div>
-                    <div class="forecast-precipitation">Precip: ${day.precipitation}%</div>
-                    <div class="forecast-wind">Wind: ${day.wind_speed} km/h</div>
-                `;
-                forecastContainer.appendChild(forecastDay);
+        // ======================
+        // GLOBAL STATE
+        // ======================
+        let map = null;
+        let ethiopiaLayer = null;
+        let weatherLayers = {};
+        let currentWeather = 'none';
+        let currentCropFilter = 'all';
+        let trendChart = null;
+        let priceChart = null;
+        const today = new Date();
+        const baseDate = new Date(today.getFullYear(), 0, 1);
+        // ======================
+        // INITIALIZE DASHBOARD
+        // ======================
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('update-time').textContent = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
             });
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        }
-
-        // Crop recommendation logic
-        function getRecommendation(city, weatherData) {
-            const current = weatherData;
-            const today = new Date();
-            const month = today.getMonth();
-
-            let crop = "Teff";
-            let reason = "Optimal soil moisture and temperature for teff planting.";
-            let window = "Now – 2 weeks";
-
-            if (city.includes("Jimma") || city.includes("Bonga") || city.includes("Gambela") || city.includes("Metu")) {
-                if (month >= 3 && month <= 6) {
-                    crop = "Maize";
-                    reason = "Heavy rains support maize growth in lowlands.";
-                    window = "This week";
-                } else if (month >= 9 && month <= 11) {
-                    crop = "Coffee";
-                    reason = "Dry season ideal for coffee flowering.";
-                    window = "Not planting – monitor flowering";
-                } else {
-                    crop = "Enset";
-                    reason = "Consistent moisture supports enset development.";
-                    window = "Year-round (with compost)";
-                }
-            } else if (city.includes("Mekelle") || city.includes("Adigrat") || city.includes("Semera") || city.includes("Dire Dawa")) {
-                crop = "Sorghum";
-                reason = "Highly drought-tolerant; suitable for current dry conditions.";
-                window = "Next 10 days";
-            } else if (month >= 6 && month <= 8) {
-                crop = "Teff or Wheat";
-                reason = "Peak Kiremt rains – ideal for cereal planting.";
-                window = "Now – 3 weeks";
-            } else if (month >= 2 && month <= 4) {
-                crop = "Barley or Chickpea";
-                reason = "Short rains support cool-season crops.";
-                window = "Now – 2 weeks";
-            }
-
-            return { crop, reason, window };
-        }
-
-        function updateRecommendations(city, weatherData) {
-            document.getElementById('rec-city').textContent = city;
-            document.getElementById('calendar-city').textContent = city;
-
-            const rec = getRecommendation(city, weatherData);
-            const cropCard = document.getElementById('recommended-crop');
-            cropCard.innerHTML = `
-                <h4>${rec.crop}</h4>
-                <div class="crop-detail"><span class="label">Why:</span><span class="value">${rec.reason}</span></div>
-                <div class="crop-detail"><span class="label">Planting Window:</span><span class="value">${rec.window}</span></div>
-                <div class="crop-detail"><span class="label">Soil Match:</span><span class="value">✅ High</span></div>
-            `;
-
-            // Update calendar
-            const calendarGrid = document.getElementById('planting-calendar');
-            if (city.includes("Jimma") || city.includes("Gambela")) {
-                calendarGrid.innerHTML = `
-                    <div class="calendar-item">
-                        <h5>Maize</h5>
-                        <div class="window">Apr – Jul</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Coffee</h5>
-                        <div class="window">Sep – Nov</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Enset</h5>
-                        <div class="window">Year-round</div>
-                    </div>
-                `;
-            } else if (city.includes("Mekelle") || city.includes("Semera")) {
-                calendarGrid.innerHTML = `
-                    <div class="calendar-item">
-                        <h5>Sorghum</h5>
-                        <div class="window">May – Aug</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Sesame</h5>
-                        <div class="window">Jun – Sep</div>
-                    </div>
-                `;
-            } else {
-                calendarGrid.innerHTML = `
-                    <div class="calendar-item">
-                        <h5>Maize</h5>
-                        <div class="window">Jun – Sep</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Teff</h5>
-                        <div class="window">Jul – Oct</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Wheat</h5>
-                        <div class="window">Jul – Nov</div>
-                    </div>
-                    <div class="calendar-item">
-                        <h5>Barley</h5>
-                        <div class="window">Mar – May</div>
-                    </div>
-                `;
-            }
-        }
-
-        // PDF Export Function
-        async function exportToPDF() {
-            const exportBtn = document.getElementById('exportBtnHero');
-            const exportBtnRec = document.getElementById('exportBtnRec');
-            exportBtn.disabled = true;
-            exportBtnRec.disabled = true;
-            exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-            exportBtnRec.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-
-            try {
-                // Get current city
-                const activeCityBtn = document.querySelector('.city-btn.active');
-                const city = activeCityBtn ? activeCityBtn.getAttribute('data-city') : 'Addis Ababa';
-
-                // Update hidden PDF content
-                document.getElementById('pdf-city').textContent = city;
-                document.getElementById('pdf-timestamp').textContent = new Date().toLocaleString('en-ET', { timeZone: 'Africa/Addis_Ababa' });
-
-                // Weather
-                document.getElementById('pdf-temp').textContent = document.getElementById('temp').textContent;
-                document.getElementById('pdf-humidity').textContent = document.getElementById('humidity').textContent;
-                document.getElementById('pdf-conditions').textContent = document.getElementById('conditions').textContent;
-                document.getElementById('pdf-wind').textContent = document.getElementById('wind').textContent;
-
-                // Crop
-                const cropCard = document.getElementById('recommended-crop');
-                const cropTitle = cropCard.querySelector('h4')?.textContent || '--';
-                const reasonEl = cropCard.querySelector('.crop-detail .value')?.textContent || '--';
-                const windowEl = cropCard.querySelectorAll('.crop-detail .value')[1]?.textContent || '--';
-
-                document.getElementById('pdf-crop').textContent = cropTitle;
-                document.getElementById('pdf-reason').textContent = reasonEl;
-                document.getElementById('pdf-window').textContent = windowEl;
-
-                // Generate PDF
-                const pdfContent = document.getElementById('pdf-content');
-                const canvas = await html2canvas(pdfContent, {
-                    scale: 2,
-                    backgroundColor: '#ffffff'
-                });
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const imgWidth = 210; // A4 width in mm
-                const pageHeight = 297; // A4 height in mm
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                let heightLeft = imgHeight;
-                let position = 0;
-
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-
-                pdf.save(`Finedatas_Farming_Report_${city.replace(/\s+/g, '_')}.pdf`);
-            } catch (error) {
-                console.error('PDF generation failed:', error);
-                alert('Failed to generate PDF. Please try again.');
-            } finally {
-                exportBtn.disabled = false;
-                exportBtnRec.disabled = false;
-                exportBtn.innerHTML = '<i class="fas fa-file-pdf"></i> Export Report (PDF)';
-                exportBtnRec.innerHTML = '<i class="fas fa-file-pdf"></i> Export This Report as PDF';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            const cityButtons = document.querySelectorAll('.city-btn');
-            const data = await fetchWeatherData();
-
-            cityButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    cityButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const city = btn.getAttribute('data-city');
-                    updateWeatherDisplay(data, city);
-                    const cityData = data.weather_data.find(item => item.location === city);
-                    if (cityData) {
-                        updateRecommendations(city, cityData.current);
-                    }
-                });
+            map = L.map('map', { zoomControl: false }).setView([9.145, 40.489], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+            updateEthiopiaLayer();
+            setupEventListeners();
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('visible');
             });
-
-            // Initial load
-            updateWeatherDisplay(data, 'Addis Ababa');
-            const initialCityData = data.weather_data.find(item => item.location === 'Addis Ababa');
-            if (initialCityData) {
-                updateRecommendations('Addis Ababa', initialCityData.current);
-            }
-
-            // Export buttons
-            document.getElementById('exportBtnHero').addEventListener('click', exportToPDF);
-            document.getElementById('exportBtnRec').addEventListener('click', exportToPDF);
-
-            document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-                document.querySelector('.nav-links').classList.toggle('active');
+            // Close sidebar on map click (mobile)
+            document.getElementById('map').addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    document.getElementById('sidebar').classList.remove('visible');
+                }
             });
         });
+        // ======================
+        // UPDATE ETHIOPIA LAYER
+        // ======================
+        function updateEthiopiaLayer() {
+            if (ethiopiaLayer) {
+                map.removeLayer(ethiopiaLayer);
+            }
+            ethiopiaLayer = L.geoJSON(ETHIOPIA_REGIONS, {
+                style: getRegionStyle,
+                onEachFeature: function(feature, layer) {
+                    const props = feature.properties;
+                    const popupContent = `
+                        <div style="min-width: 250px;">
+                            <h3 style="color:#58A6FF; margin-bottom:10px;">${props.region}</h3>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.9em;">
+                                <div><b>Main Crop:</b> ${props.main_crop}</div>
+                                <div><b>Yield:</b> ${props.yield} tons/ha</div>
+                                <div><b>Rainfall:</b> ${getRainfallForRegion(props.region)} mm</div>
+                                <div><b>Temp:</b> ${getTemperatureForRegion(props.region)}°C</div>
+                                <div><b>Drought Risk:</b> ${props.drought_risk}</div>
+                                <div><b>Food Security:</b> ${getFoodSecurityForRegion(props.region)}/100</div>
+                                <div><b>Irrigation:</b> ${props.irrigation_pct}%</div>
+                            </div>
+                        </div>
+                    `;
+                    layer.bindPopup(popupContent);
+                    layer.on('click', function() {
+                        showRegionDetails(props);
+                    });
+                }
+            }).addTo(map);
+        }
+        // ======================
+        // GET REGION STYLE
+        // ======================
+        function getRegionStyle(feature) {
+            const crop = feature.properties.crop;
+            const yield = feature.properties.yield;
+            if (currentCropFilter !== 'all' && crop !== currentCropFilter) {
+                return {
+                    fillOpacity: 0,
+                    stroke: false,
+                    interactive: false
+                };
+            }
+            let color;
+            if (yield >= 4) color = '#1B5E20';
+            else if (yield >= 3) color = '#2E7D32';
+            else if (yield >= 2) color = '#4CAF50';
+            else color = '#81C784';
+            return {
+                fillColor: color,
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                fillOpacity: 0.75
+            };
+        }
+        // ======================
+        // SET WEATHER LAYER
+        // ======================
+        function setWeatherLayer(layerType) {
+            Object.values(weatherLayers).forEach(layer => {
+                if (layer) map.removeLayer(layer);
+            });
+            weatherLayers = {};
+            if (layerType === 'none') {
+                currentWeather = 'none';
+                return;
+            }
+            currentWeather = layerType;
+            let wmsLayer;
+            switch(layerType) {
+                case 'clouds':
+                    wmsLayer = L.tileLayer.wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi", {
+                        layers: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+                        format: 'image/jpeg',
+                        transparent: false,
+                        opacity: 0.85,
+                        time: getSelectedDate(),
+                        attribution: "NASA GIBS"
+                    });
+                    break;
+                case 'rain':
+                    wmsLayer = L.tileLayer.wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi", {
+                        layers: 'GPM_3IMERGDF_06_Daily',
+                        format: 'image/png',
+                        transparent: true,
+                        opacity: 0.8,
+                        time: getSelectedDate(),
+                        attribution: "NASA GIBS"
+                    });
+                    break;
+                case 'temp':
+                    wmsLayer = L.tileLayer.wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi", {
+                        layers: 'MODIS_Terra_Land_Surface_Temp_Day',
+                        format: 'image/png',
+                        transparent: true,
+                        opacity: 0.75,
+                        time: getSelectedDate(),
+                        attribution: "NASA GIBS"
+                    });
+                    break;
+                case 'precip':
+                    wmsLayer = L.tileLayer.wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi", {
+                        layers: 'GPM_3IMERGDE_06_Hourly',
+                        format: 'image/png',
+                        transparent: true,
+                        opacity: 0.8,
+                        time: getSelectedDate(),
+                        attribution: "NASA GIBS"
+                    });
+                    break;
+            }
+            if (wmsLayer) {
+                wmsLayer.addTo(map);
+                weatherLayers[layerType] = wmsLayer;
+                document.getElementById('status').innerHTML = `<i class="fas fa-check-circle"></i> <span>${layerType.charAt(0).toUpperCase() + layerType.slice(1)} layer loaded!</span>`;
+            } else {
+                document.getElementById('status').innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>${layerType} layer failed to load</span>`;
+            }
+        }
+        // ======================
+        // TIME SERIES FUNCTIONS
+        // ======================
+        function getSelectedDate() {
+            const days = parseInt(document.getElementById('timeSlider').value);
+            const date = new Date(baseDate);
+            date.setDate(date.getDate() + days);
+            return date.toISOString().split('T')[0];
+        }
+        function updateDateDisplay() {
+            const days = parseInt(document.getElementById('timeSlider').value);
+            const date = new Date(baseDate);
+            date.setDate(date.getDate() + days);
+            document.getElementById('dateDisplay').textContent = date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+        // ======================
+        // SHOW REGION DETAILS
+        // ======================
+        function showRegionDetails(props) {
+            document.getElementById('selected-region').style.display = 'block';
+            document.getElementById('region-name').textContent = `${props.region} Agricultural Profile`;
+            const droughtClass = props.drought_risk === "Very High" ? 'danger' : 
+                               props.drought_risk === "High" ? 'danger' : 
+                               props.drought_risk === "Moderate" ? 'warning' : 'success';
+            const healthClass = props.crop_health_index < 0.6 ? 'danger' : 
+                              props.crop_health_index < 0.8 ? 'warning' : 'success';
+            const moistureClass = props.soil_moisture_proxy < 0.5 ? 'danger' : 
+                                props.soil_moisture_proxy < 0.7 ? 'warning' : 'success';
+            const statsHtml = `
+                <div class="stat-item">
+                    <div class="stat-label">Region Type</div>
+                    <div class="stat-value">${props.region.includes('Highlands') ? 'Highlands' : props.region.includes('Belt') ? 'Lowlands' : 'Mixed'}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Main Crop</div>
+                    <div class="stat-value">${props.main_crop}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Crop Yield</div>
+                    <div class="stat-value ${healthClass}">${props.yield} tons/ha</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Cultivated Area</div>
+                    <div class="stat-value">${props.area_ha.toLocaleString()} ha</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Soil Moisture Proxy</div>
+                    <div class="stat-value ${moistureClass}">${(props.soil_moisture_proxy * 100).toFixed(1)}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Crop Health Index</div>
+                    <div class="stat-value ${healthClass}">${(props.crop_health_index * 100).toFixed(1)}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Drought Risk</div>
+                    <div class="stat-value ${droughtClass}">${props.drought_risk}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Irrigation Coverage</div>
+                    <div class="stat-value">${props.irrigation_pct}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Fertilizer Use</div>
+                    <div class="stat-value">${props.fertilizer_use}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pest Pressure</div>
+                    <div class="stat-value">${props.pest_pressure}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Market Price Index</div>
+                    <div class="stat-value">${props.market_price_index}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Labor Availability</div>
+                    <div class="stat-value">${props.labor_availability}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Storage Facilities</div>
+                    <div class="stat-value">${props.storage_facilities}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Extension Services</div>
+                    <div class="stat-value">${props.extension_services}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Climate Resilience</div>
+                    <div class="stat-value">${props.climate_resilience}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Biodiversity Score</div>
+                    <div class="stat-value">${(props.biodiversity_score * 100).toFixed(1)}%</div>
+                </div>
+            `;
+            document.getElementById('region-stats').innerHTML = statsHtml;
+            document.getElementById('yield-trend').style.display = 'block';
+            document.getElementById('price-trend').style.display = 'block';
+            if (trendChart) trendChart.destroy();
+            trendChart = new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024'],
+                    datasets: [{
+                        label: `${props.main_crop} Yield (tons/ha)`,
+                        data: props.yield_history,
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: { 
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            if (priceChart) priceChart.destroy();
+            priceChart = new Chart(document.getElementById('priceChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024'],
+                    datasets: [{
+                        label: `${props.main_crop} Price`,
+                        data: props.price_history,
+                        backgroundColor: '#2196F3'
+                    }]
+                },
+                options: { 
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        // ======================
+        // EVENT LISTENERS
+        // ======================
+        function setupEventListeners() {
+            ['None', 'Clouds', 'Rain', 'Temp', 'Precip'].forEach(name => {
+                const id = `btn${name}`;
+                const type = name === 'None' ? 'none' : name.toLowerCase();
+                document.getElementById(id).addEventListener('click', () => {
+                    setWeatherLayer(type);
+                    document.querySelectorAll('.btn').forEach(b => b.classList.remove('weather-active'));
+                    document.getElementById(id).classList.add('weather-active');
+                });
+            });
+            document.querySelectorAll('.crop-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const crop = btn.getAttribute('data-crop');
+                    setCropFilter(crop);
+                    document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+            document.getElementById('btnExport').addEventListener('click', exportData);
+            document.getElementById('btnReset').addEventListener('click', resetDashboard);
+            const timeSlider = document.getElementById('timeSlider');
+            timeSlider.addEventListener('input', function() {
+                updateDateDisplay();
+                if (currentWeather !== 'none') {
+                    setWeatherLayer(currentWeather);
+                }
+            });
+            updateDateDisplay();
+        }
+        // ======================
+        // SET CROP FILTER
+        // ======================
+        function setCropFilter(cropType) {
+            currentCropFilter = cropType;
+            updateEthiopiaLayer();
+            document.getElementById('status').innerHTML = `<i class="fas fa-filter"></i> <span>Filtered by: ${cropType === 'all' ? 'All Crops' : cropType.charAt(0).toUpperCase() + cropType.slice(1)}</span>`;
+        }
+        // ======================
+        // HELPER FUNCTIONS
+        // ======================
+        function getRainfallForRegion(region) {
+            const map = {
+                'Amhara': 1200, 'Oromia - Maize Belt': 1100, 'Oromia - Coffee Zone': 1800,
+                'Tigray': 600, 'Afar': 200, 'Sidama': 1300, 'Benishangul-Gumuz': 1000,
+                'SNNPR': 1500, 'Amhara Highlands': 1150, 'Gambela': 1500
+            };
+            return map[region] || 850;
+        }
+        function getTemperatureForRegion(region) {
+            const map = {
+                'Amhara': 19.8, 'Oromia - Maize Belt': 21.5, 'Oromia - Coffee Zone': 23.4,
+                'Tigray': 22.7, 'Afar': 31.2, 'Sidama': 20.1, 'Benishangul-Gumuz': 25.4,
+                'SNNPR': 22.0, 'Amhara Highlands': 18.5, 'Gambela': 27.6
+            };
+            return map[region] || 22.0;
+        }
+        function getFoodSecurityForRegion(region) {
+            const map = {
+                'Amhara': 65, 'Oromia - Maize Belt': 72, 'Oromia - Coffee Zone': 70,
+                'Tigray': 58, 'Afar': 42, 'Sidama': 78, 'Benishangul-Gumuz': 68,
+                'SNNPR': 75, 'Amhara Highlands': 67, 'Gambela': 70
+            };
+            return map[region] || 68;
+        }
+        // ======================
+        // EXPORT DATA
+        // ======================
+        function exportData() {
+            const headers = [
+                'Region', 'Main Crop', 'Crop', 'Yield (tons/ha)', 'Area (ha)', 
+                'Soil Moisture Proxy', 'Crop Health Index', 'Drought Risk',
+                'Irrigation (%)', 'Fertilizer Use', 'Pest Pressure', 'Market Price Index',
+                'Labor Availability', 'Storage Facilities', 'Extension Services',
+                'Climate Resilience', 'Biodiversity Score'
+            ];
+            const rows = ETHIOPIA_REGIONS.features.map(f => {
+                const p = f.properties;
+                return [
+                    p.region, p.main_crop, p.crop, p.yield, p.area_ha,
+                    p.soil_moisture_proxy, p.crop_health_index, p.drought_risk,
+                    p.irrigation_pct, p.fertilizer_use, p.pest_pressure, p.market_price_index,
+                    p.labor_availability, p.storage_facilities, p.extension_services,
+                    p.climate_resilience, p.biodiversity_score
+                ];
+            });
+            const csv = [headers, ...rows].map(r => r.map(f => `"${f}"`).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ethiopia_agricultural_data_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            document.getElementById('status').innerHTML = '<i class="fas fa-file-csv"></i> <span>Full report exported successfully!</span>';
+            setTimeout(() => {
+                document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
+            }, 3000);
+        }
+        // ======================
+        // RESET DASHBOARD
+        // ======================
+        function resetDashboard() {
+            currentCropFilter = 'all';
+            currentWeather = 'none';
+            document.querySelectorAll('.crop-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-crop') === 'all');
+            });
+            document.querySelectorAll('.btn').forEach(btn => {
+                if (btn.id === 'btnNone') btn.classList.add('weather-active');
+                else if (btn.id.startsWith('btn') && ['Clouds','Rain','Temp','Precip'].some(s => btn.id.includes(s))) {
+                    btn.classList.remove('weather-active');
+                }
+            });
+            updateEthiopiaLayer();
+            setWeatherLayer('none');
+            document.getElementById('selected-region').style.display = 'none';
+            document.getElementById('status').innerHTML = '<i class="fas fa-sync-alt"></i> <span>Dashboard reset to default view.</span>';
+            setTimeout(() => {
+                document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
+            }, 2000);
+        }
     </script>
 </body>
 </html>
