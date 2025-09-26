@@ -46,13 +46,13 @@
             padding: 0 15px;
         }
 
-        /* =============== HEADER / NAV =============== */
+        /* Header */
         header {
             background-color: var(--card-bg);
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             position: sticky;
             top: 0;
-            z-index: 2000;
+            z-index: 3000;
             border-bottom: 1px solid var(--primary-accent);
         }
 
@@ -61,11 +61,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
         }
 
         .logo img {
@@ -86,18 +81,16 @@
         }
 
         .nav-links li {
-            margin-left: 1.5rem;
+            margin-left: 1rem;
         }
 
         .nav-links a {
-            text-decoration: none;
             color: var(--text-color);
+            text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--primary-accent);
         }
 
@@ -105,21 +98,25 @@
             display: none;
             background: none;
             border: none;
+            color: var(--primary-accent);
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--primary-accent);
         }
 
-        /* =============== DASHBOARD STYLING =============== */
+        /* Dashboard Wrapper */
+        #app-wrapper {
+            min-height: calc(100vh - 160px); /* header + footer */
+            position: relative;
+        }
+
         #app {
             display: flex;
-            height: calc(100vh - 80px);
+            height: 100%;
             position: relative;
-            background: var(--background-color);
         }
 
         #sidebar {
-            width: 420px;
+            width: 380px;
             background: var(--card-bg);
             overflow-y: auto;
             box-shadow: 3px 0 15px rgba(0,0,0,0.3);
@@ -140,17 +137,6 @@
             background: linear-gradient(135deg, #0d47a1 0%, #1B5E20 100%);
             color: white;
             text-align: center;
-            position: relative;
-        }
-
-        #header h1 {
-            font-size: 1.6em;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-family: 'Montserrat', sans-serif;
         }
 
         #controls {
@@ -174,17 +160,17 @@
             font-size: 1.2em;
             margin-bottom: 15px;
             color: var(--primary-accent);
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Montserrat', sans-serif;
         }
 
         .btn {
             display: block;
             width: 100%;
-            padding: 11px 15px;
-            margin: 7px 0;
+            padding: 10px 12px;
+            margin: 6px 0;
             background: var(--background-color);
             color: var(--text-color);
             border: 1px solid var(--border-color);
@@ -192,20 +178,18 @@
             cursor: pointer;
             font-weight: 600;
             text-align: left;
-            transition: all 0.25s;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.95em;
         }
 
         .btn:hover {
             background: rgba(88, 166, 255, 0.1);
-            transform: translateX(3px);
             border-left: 4px solid var(--primary-accent);
         }
 
-        .btn.active,
-        .btn.weather-active {
+        .btn.active, .btn.weather-active {
             background: rgba(88, 166, 255, 0.2);
             color: var(--primary-accent);
             border-left: 4px solid var(--primary-accent);
@@ -220,50 +204,36 @@
         .region-info {
             background: var(--background-color);
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            padding: 18px;
+            margin-bottom: 20px;
             border: 1px solid var(--border-color);
         }
 
         .region-info h4 {
             color: var(--primary-accent);
-            margin-bottom: 15px;
-            font-size: 1.3em;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-family: 'Montserrat', sans-serif;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-family: 'Montserrat', sans-serif;
+            gap: 8px;
         }
 
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .stat-item {
             background: var(--card-bg);
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             border: 1px solid var(--border-color);
         }
 
-        .stat-label {
-            font-size: 0.85em;
-            color: #8B949E;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: var(--primary-accent);
-        }
-
+        .stat-label { font-size: 0.8em; color: #8B949E; }
+        .stat-value { font-size: 1em; font-weight: 700; color: var(--primary-accent); }
         .stat-value.danger { color: var(--secondary-accent); }
         .stat-value.warning { color: #FFA500; }
         .stat-value.success { color: #3FB950; }
@@ -271,6 +241,7 @@
         #map-container {
             flex: 1;
             position: relative;
+            height: 100%;
         }
 
         #map {
@@ -280,233 +251,150 @@
 
         #status {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             background: rgba(13, 17, 23, 0.9);
             color: var(--text-color);
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: 8px;
-            z-index: 1000;
-            max-width: 320px;
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--primary-accent);
-        }
-
-        .legend {
-            position: absolute;
-            bottom: 25px;
-            left: 25px;
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             z-index: 1000;
             max-width: 280px;
             border: 1px solid var(--primary-accent);
-        }
-
-        .legend h4 {
-            margin-bottom: 12px;
-            color: var(--primary-accent);
-            font-size: 1.1em;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .legend-item {
+            font-size: 0.9em;
             display: flex;
             align-items: center;
-            margin: 6px 0;
+            gap: 8px;
         }
 
-        .legend-color {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        #timeline-controls {
+        .legend, #timeline-controls {
             position: absolute;
-            bottom: 120px;
-            left: 25px;
+            bottom: 15px;
+            left: 15px;
             background: var(--card-bg);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             z-index: 1000;
-            width: 280px;
+            max-width: 260px;
             border: 1px solid var(--primary-accent);
+            font-size: 0.9em;
         }
 
-        #timeline-controls h4 {
-            margin-bottom: 10px;
-            color: var(--primary-accent);
-            font-size: 1.1em;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        #timeSlider {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        #dateDisplay {
-            text-align: center;
-            font-weight: bold;
-            color: var(--primary-accent);
+        #timeline-controls {
+            bottom: 100px;
         }
 
         #menu-toggle {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             background: var(--card-bg);
             color: var(--primary-accent);
             border: 1px solid var(--primary-accent);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2em;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            width: 36px;
+            height: 36px;
+            font-size: 1.1em;
             z-index: 1100;
             display: none;
             cursor: pointer;
         }
 
         .chart-container {
-            height: 200px;
-            margin-top: 15px;
+            height: 180px;
+            margin-top: 12px;
         }
 
-        /* =============== FOOTER =============== */
+        /* Footer */
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
-            padding: 3rem 0 1.5rem;
-            margin-top: 3rem;
+            padding: 2rem 0 1rem;
+            margin-top: 2rem;
             border-top: 1px solid var(--primary-accent);
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .footer-section h3 {
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--primary-accent);
             font-family: 'Montserrat', sans-serif;
         }
 
-        .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
         .footer-section a {
             display: block;
+            color: var(--text-color);
             text-decoration: none;
-            transition: color 0.3s;
+            margin-bottom: 0.4rem;
         }
 
         .footer-section a:hover {
             color: var(--primary-accent);
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-accent);
-            box-shadow: 0 0 10px var(--primary-accent);
-        }
-
         .footer-bottom {
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
         }
 
-        /* =============== RESPONSIVE =============== */
+        /* Mobile Responsive */
         @media (max-width: 992px) {
             #sidebar {
-                position: absolute;
+                position: fixed;
                 top: 0;
                 left: 0;
+                height: 100vh;
                 width: 320px;
-                height: 100%;
-                z-index: 1000;
+                z-index: 2000;
+                transform: translateX(-100%);
             }
-            #menu-toggle {
-                display: block;
+            #sidebar.visible {
+                transform: translateX(0);
+            }
+            #menu-toggle { display: block; }
+            #app {
+                flex-direction: column;
+                height: 60vh;
+            }
+            #map-container {
+                height: 100%;
             }
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-                flex-direction: column;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: var(--card-bg);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                background: var(--card-bg);
+                flex-direction: column;
                 padding: 1rem 0;
                 border-top: 1px solid var(--primary-accent);
-                border-bottom: 1px solid var(--primary-accent);
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links li {
-                margin: 0.5rem 1.5rem;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .stat-grid {
-                grid-template-columns: 1fr;
-            }
-            #timeline-controls {
-                width: 220px;
-                left: 15px;
-                bottom: 100px;
-            }
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 0.5rem 1.5rem; }
+            .mobile-menu-btn { display: block; }
+
+            .stat-grid { grid-template-columns: 1fr; }
+            .legend, #timeline-controls { max-width: 220px; font-size: 0.85em; }
+            #timeline-controls { bottom: 80px; }
         }
 
         @media (max-width: 480px) {
-            #sidebar {
-                width: 100%;
-            }
-            .btn span {
-                display: none;
-            }
-            .btn i {
-                margin: 0 auto;
-            }
+            #sidebar { width: 100%; }
+            .btn span { display: none; }
+            .btn i { margin: 0 auto; }
         }
     </style>
 </head>
@@ -532,7 +420,7 @@
                     <li><a href="globe.html" class="active">Weather Data</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="support.html">Support</a></li>
-                    <li><a href="donate.html" class="btn">Donate</a></li>
+                    <li><a href="donate.html">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -542,164 +430,166 @@
     </header>
 
     <!-- Dashboard -->
-    <div id="app">
-        <div id="sidebar">
-            <div id="header">
-                <h1><i class="fas fa-seedling"></i> Ethiopia Agricultural Intelligence</h1>
-                <p>Real-time Crop, Weather & Soil Analytics</p>
-                <div id="last-updated">Last updated: <span id="update-time">Today</span></div>
-            </div>
-            <div id="controls">
-                <div class="control-group">
-                    <h3><i class="fas fa-cloud"></i> Working Weather Layers</h3>
-                    <button id="btnNone" class="btn weather-active">
-                        <i class="fas fa-ban"></i> None
-                    </button>
-                    <button id="btnClouds" class="btn">
-                        <i class="fas fa-cloud"></i> Cloud Cover (MODIS)
-                    </button>
-                    <button id="btnRain" class="btn">
-                        <i class="fas fa-cloud-rain"></i> Rainfall (GPM)
-                    </button>
-                    <button id="btnTemp" class="btn">
-                        <i class="fas fa-temperature-high"></i> Land Temperature
-                    </button>
-                    <button id="btnPrecip" class="btn">
-                        <i class="fas fa-tint"></i> Precipitation Rate
-                    </button>
+    <div id="app-wrapper">
+        <div id="app">
+            <div id="sidebar">
+                <div id="header">
+                    <h1><i class="fas fa-seedling"></i> Ethiopia Agricultural Intelligence</h1>
+                    <p>Real-time Crop, Weather & Soil Analytics</p>
+                    <div id="last-updated">Last updated: <span id="update-time">Today</span></div>
                 </div>
-                <div class="control-group">
-                    <h3><i class="fas fa-leaf"></i> Crop Focus</h3>
-                    <button class="btn crop-btn active" data-crop="all">
-                        <i class="fas fa-globe-africa"></i> All Crops
-                    </button>
-                    <button class="btn crop-btn" data-crop="teff">
-                        <i class="fas fa-wheat-alt"></i> Teff
-                    </button>
-                    <button class="btn crop-btn" data-crop="maize">
-                        <i class="fas fa-corn"></i> Maize
-                    </button>
-                    <button class="btn crop-btn" data-crop="wheat">
-                        <i class="fas fa-wheat-awn"></i> Wheat
-                    </button>
-                    <button class="btn crop-btn" data-crop="sorghum">
-                        <i class="fas fa-seedling"></i> Sorghum
-                    </button>
-                    <button class="btn crop-btn" data-crop="enset">
-                        <i class="fas fa-tree"></i> Enset
-                    </button>
-                    <button class="btn crop-btn" data-crop="coffee">
-                        <i class="fas fa-mug-hot"></i> Coffee
-                    </button>
-                    <button class="btn crop-btn" data-crop="sesame">
-                        <i class="fas fa-seedling"></i> Sesame
-                    </button>
-                    <button class="btn crop-btn" data-crop="beans">
-                        <i class="fas fa-pepper-hot"></i> Beans
-                    </button>
-                    <button class="btn crop-btn" data-crop="barley">
-                        <i class="fas fa-beer"></i> Barley
-                    </button>
+                <div id="controls">
+                    <div class="control-group">
+                        <h3><i class="fas fa-cloud"></i> Working Weather Layers</h3>
+                        <button id="btnNone" class="btn weather-active">
+                            <i class="fas fa-ban"></i> None
+                        </button>
+                        <button id="btnClouds" class="btn">
+                            <i class="fas fa-cloud"></i> Cloud Cover (MODIS)
+                        </button>
+                        <button id="btnRain" class="btn">
+                            <i class="fas fa-cloud-rain"></i> Rainfall (GPM)
+                        </button>
+                        <button id="btnTemp" class="btn">
+                            <i class="fas fa-temperature-high"></i> Land Temperature
+                        </button>
+                        <button id="btnPrecip" class="btn">
+                            <i class="fas fa-tint"></i> Precipitation Rate
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-leaf"></i> Crop Focus</h3>
+                        <button class="btn crop-btn active" data-crop="all">
+                            <i class="fas fa-globe-africa"></i> All Crops
+                        </button>
+                        <button class="btn crop-btn" data-crop="teff">
+                            <i class="fas fa-wheat-alt"></i> Teff
+                        </button>
+                        <button class="btn crop-btn" data-crop="maize">
+                            <i class="fas fa-corn"></i> Maize
+                        </button>
+                        <button class="btn crop-btn" data-crop="wheat">
+                            <i class="fas fa-wheat-awn"></i> Wheat
+                        </button>
+                        <button class="btn crop-btn" data-crop="sorghum">
+                            <i class="fas fa-seedling"></i> Sorghum
+                        </button>
+                        <button class="btn crop-btn" data-crop="enset">
+                            <i class="fas fa-tree"></i> Enset
+                        </button>
+                        <button class="btn crop-btn" data-crop="coffee">
+                            <i class="fas fa-mug-hot"></i> Coffee
+                        </button>
+                        <button class="btn crop-btn" data-crop="sesame">
+                            <i class="fas fa-seedling"></i> Sesame
+                        </button>
+                        <button class="btn crop-btn" data-crop="beans">
+                            <i class="fas fa-pepper-hot"></i> Beans
+                        </button>
+                        <button class="btn crop-btn" data-crop="barley">
+                            <i class="fas fa-beer"></i> Barley
+                        </button>
+                    </div>
+                    <div class="control-group">
+                        <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                        <button id="btnExport" class="btn">
+                            <i class="fas fa-file-csv"></i> Export Full Report (CSV)
+                        </button>
+                        <button id="btnReset" class="btn">
+                            <i class="fas fa-redo"></i> Reset Dashboard
+                        </button>
+                    </div>
                 </div>
-                <div class="control-group">
-                    <h3><i class="fas fa-chart-line"></i> Analytics</h3>
-                    <button id="btnExport" class="btn">
-                        <i class="fas fa-file-csv"></i> Export Full Report (CSV)
-                    </button>
-                    <button id="btnReset" class="btn">
-                        <i class="fas fa-redo"></i> Reset Dashboard
-                    </button>
-                </div>
-            </div>
-            <div id="data-panel">
-                <div class="region-info">
-                    <h4><i class="fas fa-chart-pie"></i> 🇪🇹 National Agricultural Summary</h4>
-                    <div class="stat-grid">
-                        <div class="stat-item">
-                            <div class="stat-label">Total Arable Land</div>
-                            <div class="stat-value">15.2M ha</div>
+                <div id="data-panel">
+                    <div class="region-info">
+                        <h4><i class="fas fa-chart-pie"></i> 🇪🇹 National Agricultural Summary</h4>
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Total Arable Land</div>
+                                <div class="stat-value">15.2M ha</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg. Crop Yield</div>
+                                <div class="stat-value">2.8 tons/ha</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Main Crop</div>
+                                <div class="stat-value">Teff</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Irrigation Coverage</div>
+                                <div class="stat-value">5.2%</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg. Rainfall (Annual)</div>
+                                <div class="stat-value">850 mm</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Drought Risk</div>
+                                <div class="stat-value warning">Moderate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Soil Fertility</div>
+                                <div class="stat-value success">Good</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Food Security Index</div>
+                                <div class="stat-value warning">68/100</div>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Avg. Crop Yield</div>
-                            <div class="stat-value">2.8 tons/ha</div>
+                    </div>
+                    <div id="selected-region" class="region-info" style="display:none;">
+                        <h4 id="region-name"><i class="fas fa-map-marker-alt"></i> Region Agricultural Profile</h4>
+                        <div id="region-stats" class="stat-grid"></div>
+                        <div id="yield-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-line"></i> Yield Trend (2020-2024)</h4>
+                            <div class="chart-container">
+                                <canvas id="trendChart"></canvas>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Main Crop</div>
-                            <div class="stat-value">Teff</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Irrigation Coverage</div>
-                            <div class="stat-value">5.2%</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Avg. Rainfall (Annual)</div>
-                            <div class="stat-value">850 mm</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Drought Risk</div>
-                            <div class="stat-value warning">Moderate</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Soil Fertility</div>
-                            <div class="stat-value success">Good</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Food Security Index</div>
-                            <div class="stat-value warning">68/100</div>
+                        <div id="price-trend" class="region-info" style="display:none; margin-top: 15px;">
+                            <h4><i class="fas fa-chart-bar"></i> Market Price Trend</h4>
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="selected-region" class="region-info" style="display:none;">
-                    <h4 id="region-name"><i class="fas fa-map-marker-alt"></i> Region Agricultural Profile</h4>
-                    <div id="region-stats" class="stat-grid"></div>
-                    <div id="yield-trend" class="region-info" style="display:none; margin-top: 15px;">
-                        <h4><i class="fas fa-chart-line"></i> Yield Trend (2020-2024)</h4>
-                        <div class="chart-container">
-                            <canvas id="trendChart"></canvas>
-                        </div>
+            </div>
+            <div id="map-container">
+                <div id="map"></div>
+                <div id="status">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading Ethiopia Dashboard...</span>
+                </div>
+                <div class="legend">
+                    <h4>Yield Classification (tons/ha)</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#1B5E20;"></div>
+                        <span>Excellent (≥ 4.0)</span>
                     </div>
-                    <div id="price-trend" class="region-info" style="display:none; margin-top: 15px;">
-                        <h4><i class="fas fa-chart-bar"></i> Market Price Trend</h4>
-                        <div class="chart-container">
-                            <canvas id="priceChart"></canvas>
-                        </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#2E7D32;"></div>
+                        <span>Good (3.0 – 3.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#4CAF50;"></div>
+                        <span>Fair (2.0 – 2.9)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#81C784;"></div>
+                        <span>Poor (< 2.0)</span>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="map-container">
-            <div id="map"></div>
-            <div id="status">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Loading Ethiopia Dashboard...</span>
-            </div>
-            <div class="legend">
-                <h4>Yield Classification (tons/ha)</h4>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#1B5E20;"></div>
-                    <span>Excellent (≥ 4.0)</span>
+                <div id="timeline-controls">
+                    <h4><i class="fas fa-calendar-alt"></i> Time Series Animation</h4>
+                    <input type="range" id="timeSlider" min="0" max="364" value="182">
+                    <div id="dateDisplay">2024-06-30</div>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#2E7D32;"></div>
-                    <span>Good (3.0 – 3.9)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#4CAF50;"></div>
-                    <span>Fair (2.0 – 2.9)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#81C784;"></div>
-                    <span>Poor (< 2.0)</span>
-                </div>
+                <button id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <div id="timeline-controls">
-                <h4><i class="fas fa-calendar-alt"></i> Time Series Animation</h4>
-                <input type="range" id="timeSlider" min="0" max="364" value="182">
-                <div id="dateDisplay">2024-06-30</div>
-            </div>
-            <button id="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </div>
 
@@ -754,6 +644,13 @@
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
             }
+        });
+
+        // ======================
+        // SIDEBAR TOGGLE FOR MOBILE
+        // ======================
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('visible');
         });
 
         // ======================
@@ -1112,16 +1009,25 @@
                 day: 'numeric'
             });
 
-            map = L.map('map').setView([9.145, 40.489], 6);
+            map = L.map('map', { zoomControl: false }).setView([9.145, 40.489], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
 
             updateEthiopiaLayer();
             setupEventListeners();
 
             document.getElementById('menu-toggle').addEventListener('click', function() {
-                document.getElementById('sidebar').classList.toggle('collapsed');
+                document.getElementById('sidebar').classList.toggle('visible');
+            });
+
+            // Close sidebar on map click (mobile)
+            document.getElementById('map').addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    document.getElementById('sidebar').classList.remove('visible');
+                }
             });
         });
 
