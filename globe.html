@@ -15,7 +15,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* =============== YOUR EXACT CSS — UNCHANGED =============== */
+        /* =============== GLOBAL STYLES FROM SUPPORT.HTML =============== */
         :root {
             --background-color: #0D1117;
             --primary-accent: #58A6FF;
@@ -35,6 +35,9 @@
             color: var(--text-color);
             background-color: var(--background-color);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .container {
             width: 90%;
@@ -92,12 +95,13 @@
         }
         /* Dashboard Wrapper */
         #app-wrapper {
-            min-height: calc(100vh - 160px); /* header + footer */
-            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         #app {
             display: flex;
-            height: 100%;
+            flex: 1;
             position: relative;
         }
         #sidebar {
@@ -272,7 +276,7 @@
             background-color: var(--card-bg);
             color: var(--text-color);
             padding: 2rem 0 1rem;
-            margin-top: 2rem;
+            margin-top: auto;
             border-top: 1px solid var(--primary-accent);
         }
         .footer-content {
@@ -304,26 +308,6 @@
         }
         /* Mobile Responsive — FIXED */
         @media (max-width: 992px) {
-            body {
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            header, footer {
-                flex-shrink: 0;
-            }
-            #app-wrapper {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                min-height: 0;
-                height: auto;
-            }
-            #app {
-                flex: 1;
-                flex-direction: column;
-                height: auto;
-            }
             #sidebar {
                 position: fixed;
                 top: 0;
@@ -339,9 +323,12 @@
             #menu-toggle {
                 display: block;
             }
+            #app {
+                flex-direction: column;
+                height: auto; /* ✅ FIXED: removed 60vh */
+            }
             #map-container {
-                flex: 1;
-                height: 100%;
+                height: calc(100vh - 120px); /* header + minimal footer space */
             }
         }
         @media (max-width: 768px) {
@@ -563,14 +550,19 @@
             </div>
         </div>
     </div>
-    <!-- Footer — EXACTLY AS YOU HAD IT -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>About Finedatas</h3>
                     <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
-                    
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -612,9 +604,6 @@
         // ======================
         document.getElementById('menu-toggle').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('visible');
-            if (typeof map !== 'undefined' && map) {
-                setTimeout(() => map.invalidateSize(), 300);
-            }
         });
         // ======================
         // ETHIOPIA REGION DATA
@@ -978,13 +967,11 @@
             setupEventListeners();
             document.getElementById('menu-toggle').addEventListener('click', function() {
                 document.getElementById('sidebar').classList.toggle('visible');
-                if (map) setTimeout(() => map.invalidateSize(), 300);
             });
             // Close sidebar on map click (mobile)
             document.getElementById('map').addEventListener('click', () => {
                 if (window.innerWidth <= 992) {
                     document.getElementById('sidebar').classList.remove('visible');
-                    if (map) map.invalidateSize();
                 }
             });
         });
