@@ -98,7 +98,6 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
         #app {
             display: flex;
@@ -313,7 +312,7 @@
                 top: 0;
                 left: 0;
                 height: 100vh;
-                width: 320px;
+                width: 300px;
                 z-index: 2000;
                 transform: translateX(-100%);
             }
@@ -327,11 +326,7 @@
                 flex-direction: column;
             }
             #map-container {
-                height: 100vh;
-                flex: 1;
-            }
-            body {
-                overflow: hidden;
+                height: calc(100vh - 120px); /* Account for header + minimal footer space */
             }
         }
         @media (max-width: 768px) {
@@ -350,8 +345,8 @@
             .nav-links li { margin: 0.5rem 1.5rem; }
             .mobile-menu-btn { display: block; }
             .stat-grid { grid-template-columns: 1fr; }
-            .legend, #timeline-controls { max-width: 220px; font-size: 0.85em; }
-            #timeline-controls { bottom: 80px; }
+            .legend, #timeline-controls { max-width: 200px; font-size: 0.8em; }
+            #timeline-controls { bottom: 70px; }
         }
         @media (max-width: 480px) {
             #sidebar { width: 100%; }
@@ -525,26 +520,26 @@
                 </div>
                 <div class="legend">
                     <h4>Yield Classification (tons/ha)</h4>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#1B5E20;"></div>
+                    <div style="display:flex; align-items:center; margin:4px 0;">
+                        <div style="width:20px; height:12px; background:#1B5E20; margin-right:8px;"></div>
                         <span>Excellent (≥ 4.0)</span>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#2E7D32;"></div>
+                    <div style="display:flex; align-items:center; margin:4px 0;">
+                        <div style="width:20px; height:12px; background:#2E7D32; margin-right:8px;"></div>
                         <span>Good (3.0 – 3.9)</span>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#4CAF50;"></div>
+                    <div style="display:flex; align-items:center; margin:4px 0;">
+                        <div style="width:20px; height:12px; background:#4CAF50; margin-right:8px;"></div>
                         <span>Fair (2.0 – 2.9)</span>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#81C784;"></div>
+                    <div style="display:flex; align-items:center; margin:4px 0;">
+                        <div style="width:20px; height:12px; background:#81C784; margin-right:8px;"></div>
                         <span>Poor (< 2.0)</span>
                     </div>
                 </div>
                 <div id="timeline-controls">
-                    <h4><i class="fas fa-calendar-alt"></i> Time Series Animation</h4>
-                    <input type="range" id="timeSlider" min="0" max="364" value="182">
+                    <h4><i class="fas fa-calendar-alt"></i> Time Series</h4>
+                    <input type="range" id="timeSlider" min="0" max="364" value="182" style="width:100%;">
                     <div id="dateDisplay">2024-06-30</div>
                 </div>
                 <button id="menu-toggle">
@@ -602,12 +597,27 @@
                 navLinks.classList.remove('active');
             }
         });
+
         // ======================
-        // SIDEBAR TOGGLE FOR MOBILE
+        // SIDEBAR & MAP FIXES
         // ======================
-        document.getElementById('menu-toggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('visible');
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        let map = null;
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('visible');
+            if (map) setTimeout(() => map.invalidateSize(), 300);
         });
+
+        // Close sidebar on map click (mobile)
+        document.getElementById('map').addEventListener('click', () => {
+            if (window.innerWidth <= 992 && sidebar.classList.contains('visible')) {
+                sidebar.classList.remove('visible');
+                if (map) map.invalidateSize();
+            }
+        });
+
         // ======================
         // ETHIOPIA REGION DATA
         // ======================
@@ -940,10 +950,10 @@
                 }
             ]
         };
+
         // ======================
         // GLOBAL STATE
         // ======================
-        let map = null;
         let ethiopiaLayer = null;
         let weatherLayers = {};
         let currentWeather = 'none';
@@ -952,6 +962,7 @@
         let priceChart = null;
         const today = new Date();
         const baseDate = new Date(today.getFullYear(), 0, 1);
+
         // ======================
         // INITIALIZE DASHBOARD
         // ======================
@@ -961,23 +972,23 @@
                 month: 'short',
                 day: 'numeric'
             });
+
             map = L.map('map', { zoomControl: false }).setView([9.145, 40.489], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
             L.control.zoom({ position: 'bottomright' }).addTo(map);
+
             updateEthiopiaLayer();
             setupEventListeners();
-            document.getElementById('menu-toggle').addEventListener('click', function() {
-                document.getElementById('sidebar').classList.toggle('visible');
-            });
-            // Close sidebar on map click (mobile)
-            document.getElementById('map').addEventListener('click', () => {
-                if (window.innerWidth <= 992) {
-                    document.getElementById('sidebar').classList.remove('visible');
-                }
-            });
+            document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for details.</span>';
+
+            // Ensure map renders correctly on load
+            setTimeout(() => {
+                if (map) map.invalidateSize();
+            }, 500);
         });
+
         // ======================
         // UPDATE ETHIOPIA LAYER
         // ======================
@@ -1010,6 +1021,7 @@
                 }
             }).addTo(map);
         }
+
         // ======================
         // GET REGION STYLE
         // ======================
@@ -1036,6 +1048,7 @@
                 fillOpacity: 0.75
             };
         }
+
         // ======================
         // SET WEATHER LAYER
         // ======================
@@ -1100,6 +1113,7 @@
                 document.getElementById('status').innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>${layerType} layer failed to load</span>`;
             }
         }
+
         // ======================
         // TIME SERIES FUNCTIONS
         // ======================
@@ -1119,6 +1133,7 @@
                 day: '2-digit'
             });
         }
+
         // ======================
         // SHOW REGION DETAILS
         // ======================
@@ -1242,6 +1257,7 @@
                 }
             });
         }
+
         // ======================
         // EVENT LISTENERS
         // ======================
@@ -1274,6 +1290,7 @@
             });
             updateDateDisplay();
         }
+
         // ======================
         // SET CROP FILTER
         // ======================
@@ -1282,6 +1299,7 @@
             updateEthiopiaLayer();
             document.getElementById('status').innerHTML = `<i class="fas fa-filter"></i> <span>Filtered by: ${cropType === 'all' ? 'All Crops' : cropType.charAt(0).toUpperCase() + cropType.slice(1)}</span>`;
         }
+
         // ======================
         // HELPER FUNCTIONS
         // ======================
@@ -1309,6 +1327,7 @@
             };
             return map[region] || 68;
         }
+
         // ======================
         // EXPORT DATA
         // ======================
@@ -1344,6 +1363,7 @@
                 document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
             }, 3000);
         }
+
         // ======================
         // RESET DASHBOARD
         // ======================
@@ -1367,6 +1387,13 @@
                 document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> <span>Dashboard Ready! Click a region for detailed metrics.</span>';
             }, 2000);
         }
+
+        // ======================
+        // HANDLE RESIZE FOR LEAFLET
+        // ======================
+        window.addEventListener('resize', () => {
+            if (map) map.invalidateSize();
+        });
     </script>
 </body>
 </html>
