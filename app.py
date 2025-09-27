@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION (Buttondown - Simple & Free)
+# EMAIL SUBSCRIPTION (Buttondown - Free & Simple)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -65,7 +65,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     try:
         # Detect language
         detect_resp = requests.post(
-            "https://libretranslate.de/detect  ",
+            "https://libretranslate.de/detect",
             json={"q": text[:100]},
             timeout=5
         )
@@ -78,7 +78,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         # Translate to English if needed
         if detected != "en":
             trans_resp = requests.post(
-                "https://libretranslate.de/translate  ",
+                "https://libretranslate.de/translate",
                 json={"q": text, "source": detected, "target": "en"},
                 timeout=8
             )
@@ -98,7 +98,7 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
     try:
         resp = requests.post(
-            "https://libretranslate.de/translate  ",
+            "https://libretranslate.de/translate",
             json={"q": text, "source": "en", "target": target_lang},
             timeout=8
         )
@@ -133,13 +133,13 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions  ",
+            "https://api.groq.com/openai/v1/chat/completions",
             headers={
                 "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama-3.3-70b-versatile",  # ✅ CORRECT, SUPPORTED MODEL
+                "model": "llama-3.3-70b-versatile",
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -163,7 +163,7 @@ def ask_groq_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:  # ✅ FIXED: complete condition
+    if not data:
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
