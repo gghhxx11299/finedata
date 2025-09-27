@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION (Buttondown - CORRECTED)
+# EMAIL SUBSCRIPTION (Buttondown - CORRECT AUTH)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -29,14 +29,14 @@ def subscribe():
 
     api_key = os.getenv("BUTTONDOWN_API_KEY")
     if not api_key:
-        logger.error("Buttondown API key missing")
+        logger.error("BUTTONDOWN_API_KEY is missing in environment variables")
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
         response = requests.post(
             "https://api.buttondown.email/v1/subscribers",
             headers={
-                "Authorization": f"Bearer {api_key}",  # ✅ CORRECT: "Bearer", not "Token"
+                "Authorization": f"Bearer {api_key}",  # ✅ MUST be "Bearer"
                 "Content-Type": "application/json"
             },
             json={"email": email},
@@ -47,7 +47,7 @@ def subscribe():
         elif response.status_code == 400 and "already exists" in response.text:
             return jsonify({"error": "Email already subscribed"}), 422
         else:
-            logger.error(f"Buttondown error {response.status_code}: {response.text}")
+            logger.error(f"Buttondown API error {response.status_code}: {response.text}")
             return jsonify({"error": "Subscription failed"}), 500
     except Exception as e:
         logger.exception("Buttondown request failed")
@@ -201,6 +201,16 @@ def static_files(filename):
 def home():
     return send_from_directory('.', 'index.html')
 
+# ======================
+# STARTUP VALIDATION (optional but helpful)
+# ======================
+
 if __name__ == '__main__':
+    # Log missing keys at startup for easier debugging on Render
+    if not os.getenv("BUTTONDOWN_API_KEY"):
+        logger.warning("BUTTONDOWN_API_KEY is not set — email subscription will fail.")
+    if not os.getenv("GROQ_API_KEY"):
+        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
+
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
