@@ -17,6 +17,47 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
+# EMAIL SUBSCRIPTION
+# ======================
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    data = request.get_json()
+    email = data.get("email", "").strip() if data else ""
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    mailtrap_token = os.getenv("MAILTRAP_TOKEN")
+    if not mailtrap_token:
+        return jsonify({"error": "Email service not configured"}), 500
+
+    # Mailtrap API v2 endpoint for adding contacts to a list
+    mailtrap_list_id = os.getenv("MAILTRAP_LIST_ID")
+    if not mailtrap_list_id:
+        return jsonify({"error": "Email list not configured"}), 500
+
+    try:
+        response = requests.post(
+            f"https://api.mailtrap.io/api/send/v2/{mailtrap_list_id}/contacts",
+            headers={
+                "Authorization": f"Bearer {mailtrap_token}",
+                "Content-Type": "application/json"
+            },
+            json={"email": email},
+            timeout=10
+        )
+        if response.status_code in (200, 201, 202):
+            return jsonify({"message": "Subscribed successfully!"})
+        elif response.status_code == 422:
+            return jsonify({"error": "Email already subscribed"}), 422
+        else:
+            logger.error(f"Mailtrap error {response.status_code}: {response.text}")
+            return jsonify({"error": "Subscription failed"}), 500
+    except Exception as e:
+        logger.exception("Mailtrap request failed")
+        return jsonify({"error": "Email service unavailable"}), 500
+
+# ======================
 # TRANSLATION FUNCTIONS
 # ======================
 
@@ -28,7 +69,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     try:
         # Detect language
         detect_resp = requests.post(
-            "https://libretranslate.de/detect",
+            "https://libretranslate.de/detect  ",
             json={"q": text[:100]},
             timeout=5
         )
@@ -41,7 +82,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         # Translate to English if needed
         if detected != "en":
             trans_resp = requests.post(
-                "https://libretranslate.de/translate",
+                "https://libretranslate.de/translate  ",
                 json={"q": text, "source": detected, "target": "en"},
                 timeout=8
             )
@@ -61,7 +102,7 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
     try:
         resp = requests.post(
-            "https://libretranslate.de/translate",
+            "https://libretranslate.de/translate  ",
             json={"q": text, "source": "en", "target": target_lang},
             timeout=8
         )
@@ -96,7 +137,7 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            "https://api.groq.com/openai/v1/chat/completions  ",
             headers={
                 "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
