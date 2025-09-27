@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION
+# EMAIL SUBSCRIPTION (Buttondown - Simple & Free)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -27,34 +27,30 @@ def subscribe():
     if not email:
         return jsonify({"error": "Email is required"}), 400
 
-    mailtrap_token = os.getenv("MAILTRAP_TOKEN")
-    if not mailtrap_token:
-        return jsonify({"error": "Email service not configured"}), 500
-
-    # Mailtrap API v2 endpoint for adding contacts to a list
-    mailtrap_list_id = os.getenv("MAILTRAP_LIST_ID")
-    if not mailtrap_list_id:
-        return jsonify({"error": "Email list not configured"}), 500
+    api_key = os.getenv("BUTTONDOWN_API_KEY")
+    if not api_key:
+        logger.error("Buttondown API key missing")
+        return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
         response = requests.post(
-            f"https://api.mailtrap.io/api/send/v2/{mailtrap_list_id}/contacts",
+            "https://api.buttondown.email/v1/subscribers",
             headers={
-                "Authorization": f"Bearer {mailtrap_token}",
+                "Authorization": f"Token {api_key}",
                 "Content-Type": "application/json"
             },
             json={"email": email},
             timeout=10
         )
-        if response.status_code in (200, 201, 202):
+        if response.status_code == 201:
             return jsonify({"message": "Subscribed successfully!"})
-        elif response.status_code == 422:
+        elif response.status_code == 400 and "already exists" in response.text:
             return jsonify({"error": "Email already subscribed"}), 422
         else:
-            logger.error(f"Mailtrap error {response.status_code}: {response.text}")
+            logger.error(f"Buttondown error {response.status_code}: {response.text}")
             return jsonify({"error": "Subscription failed"}), 500
     except Exception as e:
-        logger.exception("Mailtrap request failed")
+        logger.exception("Buttondown request failed")
         return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
