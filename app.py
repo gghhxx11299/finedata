@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION (Buttondown - Free & Simple)
+# EMAIL SUBSCRIPTION (Buttondown - Fixed)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -63,7 +63,6 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         return "", "en"
     
     try:
-        # Detect language
         detect_resp = requests.post(
             "https://libretranslate.de/detect",
             json={"q": text[:100]},
@@ -75,7 +74,6 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
             if isinstance(data, list) and len(data) > 0:
                 detected = data[0].get("language", "en")
         
-        # Translate to English if needed
         if detected != "en":
             trans_resp = requests.post(
                 "https://libretranslate.de/translate",
@@ -174,13 +172,8 @@ def ask_ai():
     if target_lang not in SUPPORTED_LANGUAGES:
         target_lang = "en"
 
-    # Step 1: Translate input to English
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-
-    # Step 2: Ask Groq AI
     answer_en = ask_groq_ai(english_question)
-
-    # Step 3: Translate answer to user's language
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
@@ -210,4 +203,4 @@ def home():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, host='0.0.0.0', port=port) 
+    app.run(debug=False, host='0.0.0.0', port=port)
