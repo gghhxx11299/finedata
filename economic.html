@@ -28,6 +28,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
@@ -78,9 +81,16 @@
             color: var(--text-color);
             font-weight: 500;
             transition: color 0.3s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary-color);
+        }
+        .btn, .export-btn {
+            min-height: 44px;
+            padding: 10px 16px;
         }
         .btn {
             background-color: var(--primary-color);
@@ -102,9 +112,13 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary-color);
+            min-height: 44px;
+            width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        /* Export Button - NEW */
+        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--primary-color);
@@ -122,18 +136,17 @@
             background-color: rgba(88, 166, 255, 0.1);
             color: var(--text-color);
         }
-
         /* Page Header */
         .page-header {
             background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1569511163066-4686d38ce9d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             color: var(--text-color);
-            padding: 3rem 0;
+            padding: 2rem 0;
             text-align: center;
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border-color);
         }
         .page-header h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
@@ -141,6 +154,7 @@
             display: flex;
             justify-content: center;
             list-style: none;
+            flex-wrap: wrap;
         }
         .breadcrumb li {
             margin: 0 0.5rem;
@@ -161,8 +175,8 @@
         .economic-section {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
@@ -170,9 +184,10 @@
             color: var(--primary-color);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
+            font-size: 1.4rem;
         }
         .section-title i {
             margin-right: 0.5rem;
@@ -180,62 +195,64 @@
         }
         .data-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
         }
         .data-card {
             background-color: var(--bg-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             transition: transform 0.3s ease;
             border: 1px solid var(--border-color);
         }
         .data-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
             border-color: var(--primary-color);
         }
         .data-card h4 {
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
+            font-size: 1.25rem;
         }
         .data-card h4 i {
             margin-right: 0.5rem;
             color: var(--secondary-color);
         }
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
-            margin: 0.5rem 0;
+            margin: 0.4rem 0;
         }
         .stat-detail {
-            margin: 0.5rem 0;
-            line-height: 1.6;
+            margin: 0.4rem 0;
+            line-height: 1.5;
             color: var(--text-color);
+            font-size: 0.95rem;
         }
         .source-note {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #8B949E;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
             font-style: italic;
         }
         /* Chart Container */
         .chart-container {
             background-color: var(--card-bg);
             border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
         .chart-placeholder {
             background-color: var(--bg-color);
-            height: 300px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -243,11 +260,11 @@
             color: #8B949E;
             border: 1px solid var(--border-color);
         }
-        /* New styles for enhanced content */
+        /* Enhanced Content */
         .stat-trend {
             display: inline-block;
             margin-left: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .trend-up {
             color: #3FB950;
@@ -265,16 +282,22 @@
             margin: 1rem 0;
             border-radius: 0 4px 4px 0;
             color: var(--text-color);
+            font-size: 0.95rem;
         }
         .data-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
         }
         .data-table th, .data-table td {
-            padding: 0.75rem;
+            padding: 0.6rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            min-width: 80px;
         }
         .data-table th {
             background-color: var(--bg-color);
@@ -292,9 +315,9 @@
         .year-box {
             flex: 1;
             text-align: center;
-            padding: 1rem;
+            padding: 0.8rem;
             background-color: var(--bg-color);
-            margin: 0 0.5rem;
+            margin: 0 0.3rem;
             border-radius: 4px;
             border: 1px solid var(--border-color);
         }
@@ -305,7 +328,7 @@
             margin-right: 0;
         }
         .year-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--primary-color);
         }
@@ -313,24 +336,25 @@
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
-            padding: 3rem 0 1.5rem;
-            margin-top: 3rem;
+            padding: 2rem 0 1.5rem;
+            margin-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
         .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
             color: var(--primary-color);
         }
         .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: #8B949E;
+            font-size: 0.9rem;
         }
         .footer-section a {
             display: block;
@@ -341,19 +365,20 @@
         }
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 1rem;
         }
         .social-links a {
             display: inline-block;
             color: var(--text-color);
             background-color: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             text-align: center;
-            line-height: 40px;
+            line-height: 36px;
             transition: background-color 0.3s;
+            font-size: 0.9rem;
         }
         .social-links a:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -361,8 +386,9 @@
         }
         .footer-bottom {
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -377,24 +403,53 @@
                 box-shadow: var(--shadow);
                 padding: 1rem 0;
                 border-top: 1px solid var(--border-color);
+                z-index: 99;
             }
             .nav-links.active {
                 display: flex;
             }
             .nav-links li {
-                margin: 0.5rem 1.5rem;
+                margin: 0.75rem 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links a, .export-btn, .btn {
+                display: inline-block;
+                width: auto;
+                padding: 12px 20px;
+                min-height: 48px;
+                margin: 0.25rem 0;
             }
             .mobile-menu-btn {
-                display: block;
+                display: flex;
             }
             .page-header h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .data-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
             .year-comparison {
                 flex-direction: column;
             }
             .year-box {
                 margin: 0.5rem 0;
+            }
+            .economic-section {
+                padding: 1.25rem;
+            }
+            .data-card {
+                padding: 1rem;
+            }
+            .stat-value {
+                font-size: 1.4rem;
+            }
+            .container {
+                width: 95%;
             }
         }
     </style>
@@ -413,12 +468,12 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
-                    <li><a href="news.html" >News</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
-                    <li><a href="globe.html">weather data</a></li>
+                    <li><a href="globe.html">Weather Data</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="support.html">Support</a></li>
                     <li>
@@ -426,7 +481,7 @@
                             <i class="fas fa-download"></i> Export Data
                         </button>
                     </li>
-                    <li><a href="donate.html" class="btn" class="active">Donate</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -434,6 +489,7 @@
             </nav>
         </div>
     </header>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -444,6 +500,7 @@
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Key Economic Indicators Section -->
         <section class="economic-section">
@@ -508,6 +565,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Manufacturing and Industry Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-industry"></i> Manufacturing and Industry</h3>
@@ -582,6 +640,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Tourism Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-umbrella-beach"></i> Tourism</h3>
@@ -634,6 +693,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Digital Economy Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-laptop-code"></i> Digital Economy</h3>
@@ -681,6 +741,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Public Finance Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-landmark"></i> Public Finance</h3>
@@ -717,6 +778,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Trade and Investment Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-handshake"></i> Trade and Investment</h3>
@@ -751,6 +813,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Infrastructure Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-road"></i> Infrastructure</h3>
@@ -804,6 +867,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Poverty and Living Standards Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Poverty and Living Standards</h3>
@@ -866,6 +930,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Business and Entrepreneurship Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-business-time"></i> Business and Entrepreneurship</h3>
@@ -916,6 +981,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Data Sources Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -934,6 +1000,7 @@
             <p>We strive to provide the most accurate and up-to-date information available. Last updated: August 2025.</p>
         </section>
     </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -962,11 +1029,13 @@
             </div>
         </div>
     </footer>
+
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
         });
         // Close mobile menu when clicking outside
@@ -993,7 +1062,7 @@
             let allCSV = '';
             const tables = document.querySelectorAll('.data-table');
             tables.forEach((table, idx) => {
-                if (idx > 0) allCSV += '\n\n';
+                if (idx > 0) allCSV += '\n';
                 let csv = [];
                 const rows = table.querySelectorAll('tr');
                 for (let i = 0; i < rows.length; i++) {
@@ -1024,8 +1093,7 @@
         }
 
         function exportEconomicData() {
-            const format = prompt("Choose export format:\n- 'csv' for all tables\n- 'json' for key metrics\n- 'txt' for summary report\n\nLeave blank for CSV (default)");
-            
+            const format = prompt("Choose export format:\n- 'csv' for all tables\n- 'json' for key metrics\n- 'txt' for summary report\nLeave blank for CSV (default)");
             if (format === null || format === "" || format.toLowerCase() === "csv") {
                 const csv = exportAllTablesToCSV();
                 downloadFile('ethiopia_economic_data_tables.csv', csv, 'text/csv');
@@ -1035,10 +1103,12 @@
                 downloadFile('economic_key_metrics.json', json, 'application/json');
             }
             else if (format.toLowerCase() === "txt") {
-                let report = `Ethiopian Economic Data Summary (2025)\nGenerated by Finedatas\n\n`;
+                let report = `Ethiopian Economic Data Summary (2025)
+Generated by Finedatas
+`;
                 document.querySelectorAll('.economic-section').forEach(section => {
                     const title = section.querySelector('.section-title')?.innerText.trim();
-                    if (title) report += `\n=== ${title} ===\n\n`;
+                    if (title) report += `\n=== ${title} ===\n`;
                     section.querySelectorAll('.data-card').forEach(card => {
                         const cardTitle = card.querySelector('h4')?.innerText.trim();
                         if (cardTitle) {
