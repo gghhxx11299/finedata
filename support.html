@@ -264,7 +264,7 @@
             max-height: 500px;
         }
 
-        /* Form Styles */
+        /* Form Styles (kept for consistency, though not used) */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -434,7 +434,6 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <!-- Fixed image URL with no extra spaces -->
                     <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
                     <h1>Finedatas</h1>
                 </div>
@@ -573,35 +572,12 @@
             <p>Our business hours are Monday to Friday, 9:00 AM to 5:00 PM Ethiopia Time (EAT).</p>
         </section>
 
-        <!-- Contact Form Section -->
+        <!-- ✅ NEW SECTION: Community Insights -->
         <section class="support-section">
-            <h3 class="section-title"><i class="fas fa-envelope-open-text"></i> Send Us a Message</h3>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <select id="subject" name="subject" required>
-                        <option value="">Select a subject</option>
-                        <option value="data-request">Data Request</option>
-                        <option value="technical-issue">Technical Issue</option>
-                        <option value="partnership">Partnership Inquiry</option>
-                        <option value="feedback">General Feedback</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
+            <h3 class="section-title"><i class="fas fa-lightbulb"></i> Add Your Unique Insights</h3>
+            <p>Help shape the future of data in Ethiopia! Share your perspective, local knowledge, or ideas with our growing community of researchers, farmers, economists, and changemakers.</p>
+            <p><strong>Be a part of the community</strong> — your voice matters.</p>
+            <a href="https://tally.so/r/mRp1gj" target="_blank" class="btn" style="margin-top: 1.5rem; display: inline-block;">Share Your Insights</a>
         </section>
     </div>
 
@@ -671,15 +647,7 @@
             });
         });
 
-        // Form submission
-        const form = document.getElementById('contactForm');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your message! In a real application, this would send your message to our support team.');
-                form.reset();
-            });
-        }
+        // ✅ No form submission script needed anymore
     </script>
 </body>
 </html>
