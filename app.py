@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION (Buttondown - Fixed)
+# EMAIL SUBSCRIPTION (Buttondown - CORRECTED)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -36,7 +36,7 @@ def subscribe():
         response = requests.post(
             "https://api.buttondown.email/v1/subscribers",
             headers={
-                "Authorization": f"Token {api_key}",
+                "Authorization": f"Bearer {api_key}",  # ✅ CORRECT: "Bearer", not "Token"
                 "Content-Type": "application/json"
             },
             json={"email": email},
