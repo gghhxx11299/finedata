@@ -390,8 +390,8 @@
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
                     <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li> <!-- ✅ CONFIRMED PRESENT -->
-                    <li><a href="news.html" >News</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
@@ -475,7 +475,7 @@
         </div>
     </section>
 
-    <!-- ===== NEW AI SECTION ===== -->
+    <!-- AI Section -->
     <section class="ai-section">
         <div class="container">
             <div class="ai-content">
@@ -590,6 +590,31 @@
         </div>
     </section>
 
+    <!-- ✅ EMAIL SUBSCRIPTION SECTION -->
+    <section class="sources-section" style="background: var(--card-bg); border-radius: 16px; padding: 3rem 0; margin: 3rem 0;">
+        <div class="container">
+            <h2 class="section-title">📬 Stay Updated</h2>
+            <div class="why-content" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <p>
+                    Get monthly updates on Ethiopia’s latest economic trends, agricultural forecasts, and AI insights — straight to your inbox.
+                </p>
+                <form id="subscribe-form" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                    <input 
+                        type="email" 
+                        id="email-input" 
+                        placeholder="your@email.com" 
+                        required
+                        style="width: 100%; max-width: 400px; padding: 0.8rem 1.2rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem;"
+                    >
+                    <button type="submit" class="btn" style="width: 100%; max-width: 250px;">
+                        <i class="fas fa-paper-plane"></i> Subscribe
+                    </button>
+                </form>
+                <p id="subscribe-message" style="margin-top: 1rem; min-height: 1.5rem; font-size: 0.95rem;"></p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -620,7 +645,7 @@
     </footer>
 
     <script>
-        // ===== FIXED MOBILE MENU - Like AI Chat Page =====
+        // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         
@@ -630,19 +655,65 @@
             });
         }
 
-        // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 navLinks.classList.remove('active');
             }
         });
+
+        // Email subscription handler
+        const form = document.getElementById('subscribe-form');
+        const emailInput = document.getElementById('email-input');
+        const messageEl = document.getElementById('subscribe-message');
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = emailInput.value.trim();
+
+                if (!email) {
+                    showMessage('Please enter your email.', 'error');
+                    return;
+                }
+
+                if (!/^\S+@\S+\.\S+$/.test(email)) {
+                    showMessage('Please enter a valid email.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showMessage('✅ Thank you! You’re subscribed.', 'success');
+                        emailInput.value = '';
+                    } else if (response.status === 422) {
+                        showMessage('📧 This email is already subscribed.', 'error');
+                    } else {
+                        showMessage('❌ Subscription failed. Please try again.', 'error');
+                    }
+                } catch (err) {
+                    showMessage('⚠️ Unable to connect. Check your internet.', 'error');
+                }
+            });
+        }
+
+        function showMessage(text, type) {
+            messageEl.textContent = text;
+            messageEl.style.color = type === 'success' ? '#3FB950' : '#FF7B72';
+        }
     </script>
 </body>
 </html>
