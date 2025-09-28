@@ -35,16 +35,18 @@ def subscribe():
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        # ✅ api_key goes in URL query, NOT in JSON body (per EmailOctopus docs)
+        # ✅ api_key goes in URL query, body must be form-encoded
         url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
             url,
-            json={
+            data={
                 "email_address": email,
-                "status": "subscribed"
+                "status": "SUBSCRIBED"
             },
             timeout=10
         )
+
+        logger.info(f"EmailOctopus response {response.status_code}: {response.text}")
 
         if response.status_code == 201:
             return jsonify({"message": "Subscribed successfully!"})
@@ -228,3 +230,4 @@ if __name__ == '__main__':
 
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
+
