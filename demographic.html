@@ -197,6 +197,38 @@
             color: var(--primary-color);
         }
         
+        /* Quick Stats Section */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .quick-stat-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .quick-stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--primary-color);
+        }
+        .quick-stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.4rem 0;
+        }
+        .quick-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
         /* Demographic Sections */
         .demographic-section {
             background-color: var(--card-bg);
@@ -329,6 +361,40 @@
             margin-bottom: 0.8rem;
             line-height: 1.5;
             font-size: 0.95rem;
+        }
+        
+        /* Tabs */
+        .tab-container {
+            margin: 1.2rem 0;
+        }
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        .tab-button {
+            padding: 0.8rem 1.2rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .tab-button:hover:not(.active) {
+            color: var(--primary-color);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
         }
         
         /* Export Modal for Mobile */
@@ -495,6 +561,16 @@
                 margin: 0 0.5rem;
                 font-size: 1rem;
             }
+            .quick-stats {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+            .quick-stat-card {
+                padding: 1.5rem;
+            }
+            .quick-stat-value {
+                font-size: 2rem;
+            }
             .demographic-section {
                 padding: 2rem;
                 margin-bottom: 2rem;
@@ -623,6 +699,30 @@
     </div>
 
     <div class="container">
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">135.49M</div>
+                <div class="quick-stat-label">2025 Population</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">2.55%</div>
+                <div class="quick-stat-label">Annual Growth</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">67.8</div>
+                <div class="quick-stat-label">Life Expectancy</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">4.0</div>
+                <div class="quick-stat-label">Fertility Rate</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">22.5%</div>
+                <div class="quick-stat-label">Urban Population</div>
+            </div>
+        </div>
+
         <!-- Population Growth Section -->
         <section class="demographic-section" id="population-growth">
             <h3 class="section-title"><i class="fas fa-users"></i> Population Growth (2020-2030)</h3>
@@ -712,7 +812,355 @@
             <p class="source-note">Source: Central Statistical Agency of Ethiopia, 2025 projections</p>
         </section>
 
-        <!-- Additional sections would follow the same pattern -->
+        <!-- Age Structure Section -->
+        <section class="demographic-section" id="age-structure">
+            <h3 class="section-title"><i class="fas fa-child"></i> Age Structure (2025)</h3>
+            
+            <div class="data-insights">
+                <h4><i class="fas fa-users"></i> Age Distribution Insights</h4>
+                <p>Ethiopia continues to have a very young population, with <strong>43.2%</strong> of its population under the age of 15. This youthful demographic profile presents both opportunities and challenges for the country's development.</p>
+                <p>The working-age population (15-64) constitutes <strong>53.5%</strong> of the total, while the elderly population (65+) remains relatively small at <strong>3.3%</strong>. This demographic dividend could boost economic growth if properly harnessed through education and employment opportunities.</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="ageChart"></canvas>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-baby"></i> Youth Population (0-14)</h4>
+                    <div class="stat-value">43.2%</div>
+                    <div class="stat-detail">58.5 million people under age 15</div>
+                    <div class="stat-detail">Median age: 19.7 years</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-user"></i> Working Age (15-64)</h4>
+                    <div class="stat-value">53.5%</div>
+                    <div class="stat-detail">72.5 million people in productive age group</div>
+                    <div class="stat-detail">Dependency ratio: 86.9%</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-user-tie"></i> Elderly Population (65+)</h4>
+                    <div class="stat-value">3.3%</div>
+                    <div class="stat-detail">4.5 million people aged 65 and above</div>
+                    <div class="stat-detail">Life expectancy at birth: 67.8 years</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.2rem 0 0.8rem;">Age Structure Breakdown (2025)</h4>
+            <div class="table-container">
+                <table class="data-table" id="table-age">
+                    <thead>
+                        <tr>
+                            <th>Age Group</th>
+                            <th>Population (M)</th>
+                            <th>Percentage</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0-4</td><td>19.2</td><td>14.2%</td><td>9.8</td><td>9.4</td></tr>
+                        <tr><td>5-9</td><td>18.5</td><td>13.7%</td><td>9.4</td><td>9.1</td></tr>
+                        <tr><td>10-14</td><td>17.3</td><td>12.8%</td><td>8.8</td><td>8.5</td></tr>
+                        <tr><td>15-19</td><td>15.8</td><td>11.7%</td><td>8.0</td><td>7.8</td></tr>
+                        <tr><td>20-24</td><td>13.9</td><td>10.3%</td><td>7.0</td><td>6.9</td></tr>
+                        <tr><td>25-29</td><td>11.8</td><td>8.7%</td><td>5.9</td><td>5.9</td></tr>
+                        <tr><td>30-34</td><td>9.7</td><td>7.2%</td><td>4.8</td><td>4.9</td></tr>
+                        <tr><td>35-39</td><td>8.1</td><td>6.0%</td><td>4.0</td><td>4.1</td></tr>
+                        <tr><td>40-44</td><td>6.5</td><td>4.8%</td><td>3.2</td><td>3.3</td></tr>
+                        <tr><td>45-49</td><td>5.2</td><td>3.8%</td><td>2.6</td><td>2.6</td></tr>
+                        <tr><td>50-54</td><td>4.1</td><td>3.0%</td><td>2.0</td><td>2.1</td></tr>
+                        <tr><td>55-59</td><td>3.2</td><td>2.4%</td><td>1.6</td><td>1.6</td></tr>
+                        <tr><td>60-64</td><td>2.4</td><td>1.8%</td><td>1.2</td><td>1.2</td></tr>
+                        <tr><td>65+</td><td>4.5</td><td>3.3%</td><td>2.1</td><td>2.4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">Source: UN World Population Prospects, 2025 projections</p>
+        </section>
+
+        <!-- Education and Literacy Section -->
+        <section class="demographic-section" id="education">
+            <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Education & Literacy (2025)</h3>
+            
+            <div class="data-insights">
+                <h4><i class="fas fa-book"></i> Educational Attainment Insights</h4>
+                <p>Ethiopia has made significant progress in education, with the literacy rate reaching <strong>54.2%</strong> in 2025. However, substantial gender and regional disparities persist, with male literacy at <strong>59.8%</strong> compared to female literacy at <strong>48.7%</strong>.</p>
+                <p>Primary school enrollment has improved dramatically, reaching <strong>95%</strong> net enrollment rate, but secondary and tertiary education enrollment rates remain lower at <strong>42%</strong> and <strong>12%</strong> respectively.</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="educationChart"></canvas>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-book-reader"></i> Literacy Rate</h4>
+                    <div class="stat-value">54.2%</div>
+                    <div class="stat-detail">Male: 59.8% | Female: 48.7%</div>
+                    <div class="stat-detail">Urban: 82.3% | Rural: 45.1%</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-school"></i> Primary Enrollment</h4>
+                    <div class="stat-value">95%</div>
+                    <div class="stat-detail">Net enrollment rate (ages 6-12)</div>
+                    <div class="stat-detail">Gender parity index: 0.94</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-university"></i> Tertiary Education</h4>
+                    <div class="stat-value">12%</div>
+                    <div class="stat-detail">Gross enrollment ratio</div>
+                    <div class="stat-detail">48 universities nationwide</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.2rem 0 0.8rem;">Educational Attainment by Level (Population 25+, 2025)</h4>
+            <div class="table-container">
+                <table class="data-table" id="table-education">
+                    <thead>
+                        <tr>
+                            <th>Education Level</th>
+                            <th>Percentage</th>
+                            <th>Male</th>
+                            <th>Female</th>
+                            <th>Urban</th>
+                            <th>Rural</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>No Formal Education</td><td>38.2%</td><td>32.5%</td><td>43.8%</td><td>8.7%</td><td>45.3%</td></tr>
+                        <tr><td>Primary Education</td><td>42.5%</td><td>44.1%</td><td>40.9%</td><td>35.2%</td><td>44.1%</td></tr>
+                        <tr><td>Secondary Education</td><td>15.3%</td><td>17.8%</td><td>12.8%</td><td>38.5%</td><td>9.2%</td></tr>
+                        <tr><td>Tertiary Education</td><td>4.0%</td><td>5.6%</td><td>2.5%</td><td>17.6%</td><td>1.4%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">Source: UNESCO/World Bank literacy statistics, 2025 projections</p>
+        </section>
+
+        <!-- Labor Force Section -->
+        <section class="demographic-section" id="labor">
+            <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force (2025)</h3>
+            
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="openTab(event, 'labor-overview')">Overview</button>
+                    <button class="tab-button" onclick="openTab(event, 'labor-sector')">By Sector</button>
+                    <button class="tab-button" onclick="openTab(event, 'labor-region')">By Region</button>
+                </div>
+                
+                <div id="labor-overview" class="tab-content active">
+                    <div class="data-insights">
+                        <h4><i class="fas fa-chart-bar"></i> Labor Market Insights</h4>
+                        <p>Ethiopia's labor force is estimated at <strong>58.3 million</strong> in 2025, with an unemployment rate of <strong>19.2%</strong>. Youth unemployment remains particularly high at <strong>25.7%</strong>, presenting a significant challenge for the country's development.</p>
+                        <p>The informal sector continues to dominate employment, accounting for approximately <strong>85%</strong> of total employment. Agriculture remains the largest employer at <strong>68%</strong> of the workforce, though this share has been gradually declining.</p>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="laborChart"></canvas>
+                    </div>
+                    
+                    <div class="data-grid">
+                        <div class="data-card">
+                            <h4><i class="fas fa-users"></i> Labor Force</h4>
+                            <div class="stat-value">58.3M</div>
+                            <div class="stat-detail">Labor force participation: 79.2%</div>
+                            <div class="stat-detail">Male: 83.5% | Female: 75.1%</div>
+                        </div>
+                        <div class="data-card">
+                            <h4><i class="fas fa-user-times"></i> Unemployment</h4>
+                            <div class="stat-value">19.2%</div>
+                            <div class="stat-detail">Youth unemployment: 25.7%</div>
+                            <div class="stat-detail">Urban: 22.8% | Rural: 17.5%</div>
+                        </div>
+                        <div class="data-card">
+                            <h4><i class="fas fa-industry"></i> Informal Employment</h4>
+                            <div class="stat-value">85%</div>
+                            <div class="stat-detail">Percentage of total employment</div>
+                            <div class="stat-detail">Limited social protection</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="labor-sector" class="tab-content">
+                    <h4 style="margin: 1.2rem 0 0.8rem;">Employment by Economic Sector (2025)</h4>
+                    <div class="table-container">
+                        <table class="data-table" id="table-sector">
+                            <thead>
+                                <tr>
+                                    <th>Sector</th>
+                                    <th>Employment (%)</th>
+                                    <th>Employment (M)</th>
+                                    <th>Growth (2020-25)</th>
+                                    <th>Average Wage (ETB)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Agriculture</td><td>68.0%</td><td>33.2</td><td>+1.8%</td><td>1,250</td></tr>
+                                <tr><td>Services</td><td>20.5%</td><td>10.0</td><td>+4.2%</td><td>3,800</td></tr>
+                                <tr><td>Industry</td><td>11.5%</td><td>5.6</td><td>+5.7%</td><td>4,200</td></tr>
+                                <tr><td>Construction</td><td>7.2%</td><td>3.5</td><td>+6.3%</td><td>3,500</td></tr>
+                                <tr><td>Manufacturing</td><td>4.3%</td><td>2.1</td><td>+4.8%</td><td>4,800</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="labor-region" class="tab-content">
+                    <h4 style="margin: 1.2rem 0 0.8rem;">Labor Force by Region (2025)</h4>
+                    <div class="table-container">
+                        <table class="data-table" id="table-region">
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>Labor Force (M)</th>
+                                    <th>Unemployment</th>
+                                    <th>Youth Unemployment</th>
+                                    <th>Informal Employment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Oromia</td><td>22.5</td><td>18.5%</td><td>24.2%</td><td>87.2%</td></tr>
+                                <tr><td>Amhara</td><td>17.2</td><td>17.8%</td><td>23.5%</td><td>85.8%</td></tr>
+                                <tr><td>SNNPR</td><td>13.8</td><td>19.3%</td><td>26.1%</td><td>88.5%</td></tr>
+                                <tr><td>Tigray</td><td>3.8</td><td>21.5%</td><td>28.3%</td><td>82.7%</td></tr>
+                                <tr><td>Addis Ababa</td><td>2.9</td><td>23.8%</td><td>31.2%</td><td>65.3%</td></tr>
+                                <tr><td>Somali</td><td>3.2</td><td>20.1%</td><td>27.5%</td><td>91.2%</td></tr>
+                                <tr><td>Other Regions</td><td>4.9</td><td>18.9%</td><td>25.8%</td><td>89.4%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p class="source-note">Source: ILO/World Bank labor estimates, Ethiopian Labour Survey (ESS)</p>
+        </section>
+
+        <!-- Health and Mortality Section -->
+        <section class="demographic-section" id="health">
+            <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health & Mortality (2025)</h3>
+            
+            <div class="data-insights">
+                <h4><i class="fas fa-stethoscope"></i> Health Indicators Insights</h4>
+                <p>Ethiopia has made significant improvements in health outcomes, with life expectancy reaching <strong>67.8 years</strong> in 2025 (up from 64.8 in 2015). However, challenges remain, particularly in maternal and child health.</p>
+                <p>The under-five mortality rate has declined to <strong>48 deaths per 1,000 live births</strong>, while maternal mortality remains high at <strong>412 deaths per 100,000 live births</strong>. Access to healthcare has improved, with <strong>87%</strong> of the population living within 10km of a health facility.</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="healthChart"></canvas>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-heart"></i> Life Expectancy</h4>
+                    <div class="stat-value">67.8</div>
+                    <div class="stat-detail">Male: 65.9 | Female: 69.7</div>
+                    <div class="stat-detail">Increase of 3 years since 2015</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-baby"></i> Infant Mortality</h4>
+                    <div class="stat-value">33</div>
+                    <div class="stat-detail">Deaths per 1,000 live births</div>
+                    <div class="stat-detail">Under-5 mortality: 48/1,000</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-female"></i> Maternal Mortality</h4>
+                    <div class="stat-value">412</div>
+                    <div class="stat-detail">Deaths per 100,000 live births</div>
+                    <div class="stat-detail">Skilled birth attendance: 74%</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.2rem 0 0.8rem;">Key Health Indicators (2025)</h4>
+            <div class="table-container">
+                <table class="data-table" id="table-health">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Value</th>
+                            <th>Urban</th>
+                            <th>Rural</th>
+                            <th>Trend (2015-25)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Life Expectancy</td><td>67.8</td><td>71.2</td><td>66.5</td><td>+3.0 years</td></tr>
+                        <tr><td>Infant Mortality</td><td>33/1,000</td><td>21/1,000</td><td>37/1,000</td><td>-12/1,000</td></tr>
+                        <tr><td>Under-5 Mortality</td><td>48/1,000</td><td>31/1,000</td><td>53/1,000</td><td>-18/1,000</td></tr>
+                        <tr><td>Maternal Mortality</td><td>412/100k</td><td>198/100k</td><td>485/100k</td><td>-188/100k</td></tr>
+                        <tr><td>HIV Prevalence</td><td>0.9%</td><td>1.8%</td><td>0.6%</td><td>-0.3%</td></tr>
+                        <tr><td>Malaria Incidence</td><td>12.5%</td><td>3.2%</td><td>15.8%</td><td>-8.5%</td></tr>
+                        <tr><td>Stunting (Under-5)</td><td>36%</td><td>22%</td><td>41%</td><td>-11%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">Source: World Health Organization (WHO), UNICEF, Ethiopia Demographic and Health Survey (EDHS)</p>
+        </section>
+
+        <!-- Migration and Urbanization Section -->
+        <section class="demographic-section" id="migration">
+            <h3 class="section-title"><i class="fas fa-plane-departure"></i> Migration & Urbanization (2025)</h3>
+            
+            <div class="data-insights">
+                <h4><i class="fas fa-city"></i> Urbanization Trends</h4>
+                <p>Ethiopia is urbanizing rapidly, with the urban population projected to reach <strong>30.5 million</strong> (22.5% of total) in 2025. Addis Ababa remains the largest urban center with <strong>5.4 million</strong> residents, followed by Dire Dawa, Mekelle, and Adama.</p>
+                <p>Internal migration continues to be dominated by rural-to-urban movement, with an estimated <strong>1.2 million</strong> people moving to urban areas annually. International migration shows a net outflow, with approximately <strong>700,000</strong> Ethiopians living abroad, primarily in the Middle East, North America, and Europe.</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="migrationChart"></canvas>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-city"></i> Urban Population</h4>
+                    <div class="stat-value">22.5%</div>
+                    <div class="stat-detail">30.5 million urban residents</div>
+                    <div class="stat-detail">Annual urban growth: 4.2%</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-tractor"></i> Rural Population</h4>
+                    <div class="stat-value">77.5%</div>
+                    <div class="stat-detail">105.0 million rural residents</div>
+                    <div class="stat-detail">Annual rural growth: 1.8%</div>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-exchange-alt"></i> Net Migration</h4>
+                    <div class="stat-value">-0.7</div>
+                    <div class="stat-detail">Net migrants per 1,000 people</div>
+                    <div class="stat-detail">Primarily to Middle East</div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 1.2rem 0 0.8rem;">Major Urban Centers (2025)</h4>
+            <div class="table-container">
+                <table class="data-table" id="table-urban">
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>Population</th>
+                            <th>Growth Rate</th>
+                            <th>Region</th>
+                            <th>Density (per km²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Addis Ababa</td><td>5,400,000</td><td>3.8%</td><td>Addis Ababa</td><td>7,100</td></tr>
+                        <tr><td>Dire Dawa</td><td>640,000</td><td>2.9%</td><td>Dire Dawa</td><td>2,800</td></tr>
+                        <tr><td>Mekelle</td><td>520,000</td><td>4.2%</td><td>Tigray</td><td>5,200</td></tr>
+                        <tr><td>Adama</td><td>480,000</td><td>4.5%</td><td>Oromia</td><td>3,800</td></tr>
+                        <tr><td>Gondar</td><td>420,000</td><td>3.7%</td><td>Amhara</td><td>4,100</td></tr>
+                        <tr><td>Hawassa</td><td>380,000</td><td>4.8%</td><td>SNNPR</td><td>3,500</td></tr>
+                        <tr><td>Bahir Dar</td><td>350,000</td><td>4.0%</td><td>Amhara</td><td>3,900</td></tr>
+                        <tr><td>Jimma</td><td>280,000</td><td>3.5%</td><td>Oromia</td><td>3,200</td></tr>
+                        <tr><td>Jijiga</td><td>220,000</td><td>4.3%</td><td>Somali</td><td>2,900</td></tr>
+                        <tr><td>Arba Minch</td><td>180,000</td><td>4.1%</td><td>SNNPR</td><td>2,700</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="source-note">Source: Central Statistical Agency of Ethiopia, UNHCR, IOM</p>
+        </section>
+
         <!-- Data Sources Section -->
         <section class="demographic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -805,6 +1253,22 @@
             }
         });
         
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            const tabbuttons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
         // Utility: Download file
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
@@ -871,7 +1335,12 @@
             // Key sections
             const sections = [
                 { id: 'population-growth', title: 'Population Growth' },
-                { id: 'population-density', title: 'Population Density' }
+                { id: 'population-density', title: 'Population Density' },
+                { id: 'age-structure', title: 'Age Structure' },
+                { id: 'education', title: 'Education' },
+                { id: 'labor', title: 'Labor Force' },
+                { id: 'health', title: 'Health' },
+                { id: 'migration', title: 'Migration' }
             ];
             sections.forEach(sec => {
                 const section = document.getElementById(sec.id);
@@ -990,6 +1459,183 @@
                             title: {
                                 display: true,
                                 text: 'Density (persons/km²)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Age Structure Chart
+            const ageCtx = document.getElementById('ageChart').getContext('2d');
+            const ageChart = new Chart(ageCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['0-14 years', '15-64 years', '65+ years'],
+                    datasets: [{
+                        data: [43.2, 53.5, 3.3],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Education Chart
+            const educationCtx = document.getElementById('educationChart').getContext('2d');
+            const educationChart = new Chart(educationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['No Formal Education', 'Primary Education', 'Secondary Education', 'Tertiary Education'],
+                    datasets: [{
+                        label: 'Male',
+                        data: [32.5, 44.1, 17.8, 5.6],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Female',
+                        data: [43.8, 40.9, 12.8, 2.5],
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Percentage (%)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Labor Force Chart
+            const laborCtx = document.getElementById('laborChart').getContext('2d');
+            const laborChart = new Chart(laborCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Agriculture', 'Services', 'Industry'],
+                    datasets: [{
+                        data: [68.0, 20.5, 11.5],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 159, 64)',
+                            'rgb(153, 102, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Health Chart
+            const healthCtx = document.getElementById('healthChart').getContext('2d');
+            const healthChart = new Chart(healthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
+                    datasets: [{
+                        label: 'Life Expectancy',
+                        data: [64.8, 65.3, 65.9, 66.5, 67.2, 67.8],
+                        borderColor: '#58A6FF',
+                        backgroundColor: 'rgba(88, 166, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Infant Mortality (per 1000)',
+                        data: [45, 42, 39, 36, 34, 33],
+                        borderColor: '#FF7B72',
+                        backgroundColor: 'rgba(255, 123, 114, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Life Expectancy (Years)'
+                            }
+                        },
+                        y1: {
+                            position: 'right',
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Infant Mortality (per 1000)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Migration Chart
+            const migrationCtx = document.getElementById('migrationChart').getContext('2d');
+            const migrationChart = new Chart(migrationCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Addis Ababa', 'Dire Dawa', 'Mekelle', 'Adama', 'Gondar', 'Hawassa', 'Bahir Dar', 'Jimma', 'Jijiga', 'Arba Minch'],
+                    datasets: [{
+                        label: 'Population (Thousands)',
+                        data: [5400, 640, 520, 480, 420, 380, 350, 280, 220, 180],
+                        backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                        borderColor: 'rgb(153, 102, 255)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Population (Thousands)'
                             }
                         }
                     }
