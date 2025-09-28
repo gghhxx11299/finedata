@@ -48,7 +48,8 @@ def subscribe():
 
         logger.info(f"EmailOctopus response {response.status_code}: {response.text}")
 
-        if response.status_code == 201:
+        # ✅ Treat both 200 and 201 as success
+        if response.status_code in (200, 201):
             return jsonify({"message": "Subscribed successfully!"})
         elif response.status_code == 400:
             resp_json = response.json()
