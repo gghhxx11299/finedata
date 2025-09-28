@@ -115,7 +115,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0; /* ← critical: no padding */
+      padding: 0;
     }
 
     .chat-container {
@@ -206,7 +206,7 @@
       font-size: 0.85rem;
       background: var(--card-bg);
       color: var(--text-color);
-      min-width: 140px;
+      min-width: 160px;
     }
 
     .quick-actions {
@@ -280,17 +280,18 @@
       margin-top: 4px;
     }
 
-    .ai-message .message-time {
-      text-align: left;
-    }
-
-    .ai-message.amharic {
+    .ai-message.amharic,
+    .ai-message.tigrinya,
+    .ai-message.wolaytta {
       font-family: 'Noto Sans Ethiopic', sans-serif;
       font-size: 16px;
       line-height: 1.7;
     }
 
-    .ai-message.oromo {
+    .ai-message.oromo,
+    .ai-message.somali,
+    .ai-message.afar,
+    .ai-message.sidamo {
       font-family: 'Inter', sans-serif;
       font-size: 15px;
     }
@@ -476,7 +477,7 @@
       }
 
       .chat-container {
-        margin: 0; /* ← critical: no margin on mobile */
+        margin: 0;
         border-radius: 10px;
         width: calc(100% - 20px);
       }
@@ -565,6 +566,11 @@
             <option value="en">🌐 English</option>
             <option value="am">🇪🇹 Amharic</option>
             <option value="om">🇪🇹 Afaan Oromoo</option>
+            <option value="ti">🇪🇹 Tigrinya</option>
+            <option value="so">🇪🇹 Somali</option>
+            <option value="aa">🇪🇹 Afar</option>
+            <option value="sid">🇪🇹 Sidamo</option>
+            <option value="wal">🇪🇹 Wolaytta</option>
             <option value="fr">🇫🇷 French</option>
             <option value="es">🇪🇸 Spanish</option>
             <option value="ar">🇸🇦 Arabic</option>
@@ -688,10 +694,10 @@
       
       if (!isUser) {
         const lang = languageSelect.value;
-        if (lang === 'am') {
-          messageDiv.classList.add('amharic');
-        } else if (lang === 'om') {
-          messageDiv.classList.add('oromo');
+        if (lang === 'am' || lang === 'ti' || lang === 'wal') {
+          messageDiv.classList.add('amharic'); // Reuse same class for Ethiopic scripts
+        } else if (lang === 'om' || lang === 'so' || lang === 'aa' || lang === 'sid') {
+          messageDiv.classList.add('oromo'); // Latin-script languages
         }
         messageDiv.style.whiteSpace = 'pre-wrap';
       }
