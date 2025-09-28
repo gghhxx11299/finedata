@@ -17,7 +17,7 @@ CORS(app)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
-# EMAIL SUBSCRIPTION (Buttondown)
+# EMAIL SUBSCRIPTION (Mailjet)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -27,53 +27,61 @@ def subscribe():
     if not email:
         return jsonify({"error": "Email is required"}), 400
 
-    api_key = os.getenv("BUTTONDOWN_API_KEY")
-    if not api_key:
-        logger.error("BUTTONDOWN_API_KEY is missing in environment variables")
+    api_key = os.getenv("MJ_APIKEY_PUBLIC")
+    api_secret = os.getenv("MJ_APIKEY_PRIVATE")
+    list_id = os.getenv("MAILJET_LIST_ID")
+
+    if not api_key or not api_secret or not list_id:
+        logger.error("Mailjet credentials or LIST_ID missing in environment variables")
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        response = requests.post(
-            "https://api.buttondown.email/v1/subscribers",  # ✅ No trailing spaces
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json"
-            },
-            json={"email_address": email},  # ✅ CORRECT FIELD NAME
+        # Step 1: Add contact to Mailjet
+        contact_resp = requests.post(
+            "https://api.mailjet.com/v3/REST/contact",
+            auth=(api_key, api_secret),
+            json={"Email": email},
             timeout=10
         )
-        if response.status_code == 201:
-            return jsonify({"message": "Subscribed successfully!"})
-        elif response.status_code == 400:
-            try:
-                error_detail = response.json().get("detail", "")
-            except:
-                error_detail = ""
-            if "already exists" in str(error_detail).lower():
-                return jsonify({"error": "Email already subscribed"}), 422
-            else:
-                logger.warning(f"Buttondown validation error: {error_detail}")
-                return jsonify({"error": "Invalid email address"}), 400
-        else:
-            logger.error(f"Buttondown API error {response.status_code}: {response.text}")
-            return jsonify({"error": "Subscription failed. Please try again later."}), 500
 
-    except requests.exceptions.RequestException as e:
-        logger.exception("Buttondown request failed due to network issue")
-        return jsonify({"error": "Email service is currently unreachable"}), 500
+        if contact_resp.status_code not in (201, 400):  # 400 = already exists
+            logger.error(f"Mailjet contact error {contact_resp.status_code}: {contact_resp.text}")
+            return jsonify({"error": "Failed to add contact"}), 500
+
+        # Step 2: Add contact to your list
+        list_resp = requests.post(
+            f"https://api.mailjet.com/v3/REST/listrecipient",
+            auth=(api_key, api_secret),
+            json={
+                "ContactAlt": email,
+                "ListID": int(list_id),
+                "IsUnsubscribed": False
+            },
+            timeout=10
+        )
+
+        if list_resp.status_code == 201:
+            return jsonify({"message": "Subscribed successfully!"})
+        elif list_resp.status_code == 400 and "already exists" in list_resp.text.lower():
+            return jsonify({"error": "Email already subscribed"}), 422
+        else:
+            logger.error(f"Mailjet list error {list_resp.status_code}: {list_resp.text}")
+            return jsonify({"error": "Subscription failed"}), 500
+
+    except Exception as e:
+        logger.exception("Mailjet request failed")
+        return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
-# TRANSLATION FUNCTIONS
+# TRANSLATION FUNCTIONS (unchanged)
 # ======================
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
-    """Returns (english_text, detected_lang)"""
     if not text.strip():
         return "", "en"
-    
     try:
         detect_resp = requests.post(
-            "https://libretranslate.de/detect",  # ✅ No trailing spaces
+            "https://libretranslate.de/detect",
             json={"q": text[:100]},
             timeout=5
         )
@@ -82,10 +90,9 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
             data = detect_resp.json()
             if isinstance(data, list) and len(data) > 0:
                 detected = data[0].get("language", "en")
-        
         if detected != "en":
             trans_resp = requests.post(
-                "https://libretranslate.de/translate",  # ✅ No trailing spaces
+                "https://libretranslate.de/translate",
                 json={"q": text, "source": detected, "target": "en"},
                 timeout=8
             )
@@ -93,19 +100,17 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
                 trans_data = trans_resp.json()
                 if isinstance(trans_data, dict):
                     return trans_data.get("translatedText", text), detected
-        
         return text, detected
     except Exception as e:
         logger.warning(f"Translation fallback: {e}")
         return text, "en"
 
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate English text to target language"""
     if target_lang == "en" or not text:
         return text
     try:
         resp = requests.post(
-            "https://libretranslate.de/translate",  # ✅ No trailing spaces
+            "https://libretranslate.de/translate",
             json={"q": text, "source": "en", "target": target_lang},
             timeout=8
         )
@@ -117,14 +122,13 @@ def translate_text(text: str, target_lang: str) -> str:
     return text
 
 # ======================
-# GROQ AI FUNCTION
+# GROQ AI FUNCTION (unchanged)
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_key = os.getenv("GROQ_API_KEY")
     if not groq_key:
         return "AI is not configured. Please set GROQ_API_KEY."
-
     messages = [
         {
             "role": "system",
@@ -137,10 +141,9 @@ def ask_groq_ai(question: str) -> str:
         },
         {"role": "user", "content": question}
     ]
-
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",  # ✅ No trailing spaces
+            "https://api.groq.com/openai/v1/chat/completions",
             headers={
                 "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
@@ -164,27 +167,23 @@ def ask_groq_ai(question: str) -> str:
         return "AI service is temporarily unavailable."
 
 # ======================
-# MAIN ENDPOINT
+# MAIN ENDPOINT (unchanged)
 # ======================
 
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
-
     user_question = data.get("question", "").strip()
     target_lang = data.get("language", "en")
-
     if not user_question:
         return jsonify({"error": "Please ask a question."}), 400
     if target_lang not in SUPPORTED_LANGUAGES:
         target_lang = "en"
-
     english_question, detected_lang = detect_and_translate_to_english(user_question)
     answer_en = ask_groq_ai(english_question)
     answer_translated = translate_text(answer_en, target_lang)
-
     return jsonify({
         "question_original": user_question,
         "question_english": english_question,
@@ -215,8 +214,10 @@ def home():
 # ======================
 
 if __name__ == '__main__':
-    if not os.getenv("BUTTONDOWN_API_KEY"):
-        logger.warning("BUTTONDOWN_API_KEY is not set — email subscription will fail.")
+    if not os.getenv("MJ_APIKEY_PUBLIC") or not os.getenv("MJ_APIKEY_PRIVATE"):
+        logger.warning("Mailjet API keys not set — email subscription will fail.")
+    if not os.getenv("MAILJET_LIST_ID"):
+        logger.warning("MAILJET_LIST_ID not set — subscription list unknown.")
     if not os.getenv("GROQ_API_KEY"):
         logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
 
