@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-# Supported languages (LibreTranslate codes)
+# Supported languages (LibreTranslate ISO 639-1 codes)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
@@ -34,9 +34,9 @@ def subscribe():
 
     try:
         response = requests.post(
-            "https://api.buttondown.email/v1/subscribers",
+            "https://api.buttondown.email/v1/subscribers",  # ✅ No trailing spaces
             headers={
-                "Authorization": f"Bearer {api_key}",  # ✅ MUST be "Bearer"
+                "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json"
             },
             json={"email": email},
@@ -44,14 +44,23 @@ def subscribe():
         )
         if response.status_code == 201:
             return jsonify({"message": "Subscribed successfully!"})
-        elif response.status_code == 400 and "already exists" in response.text:
-            return jsonify({"error": "Email already subscribed"}), 422
+        elif response.status_code == 400:
+            try:
+                error_detail = response.json().get("detail", "")
+            except:
+                error_detail = ""
+            if "already exists" in str(error_detail).lower():
+                return jsonify({"error": "Email already subscribed"}), 422
+            else:
+                logger.warning(f"Buttondown validation error: {error_detail}")
+                return jsonify({"error": "Invalid email address"}), 400
         else:
             logger.error(f"Buttondown API error {response.status_code}: {response.text}")
-            return jsonify({"error": "Subscription failed"}), 500
-    except Exception as e:
-        logger.exception("Buttondown request failed")
-        return jsonify({"error": "Email service unavailable"}), 500
+            return jsonify({"error": "Subscription failed. Please try again later."}), 500
+
+    except requests.exceptions.RequestException as e:
+        logger.exception("Buttondown request failed due to network issue")
+        return jsonify({"error": "Email service is currently unreachable"}), 500
 
 # ======================
 # TRANSLATION FUNCTIONS
@@ -64,7 +73,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     
     try:
         detect_resp = requests.post(
-            "https://libretranslate.de/detect",
+            "https://libretranslate.de/detect",  # ✅ No trailing spaces
             json={"q": text[:100]},
             timeout=5
         )
@@ -76,7 +85,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         
         if detected != "en":
             trans_resp = requests.post(
-                "https://libretranslate.de/translate",
+                "https://libretranslate.de/translate",  # ✅ No trailing spaces
                 json={"q": text, "source": detected, "target": "en"},
                 timeout=8
             )
@@ -96,7 +105,7 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
     try:
         resp = requests.post(
-            "https://libretranslate.de/translate",
+            "https://libretranslate.de/translate",  # ✅ No trailing spaces
             json={"q": text, "source": "en", "target": target_lang},
             timeout=8
         )
@@ -131,7 +140,7 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            "https://api.groq.com/openai/v1/chat/completions",  # ✅ No trailing spaces
             headers={
                 "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
@@ -202,11 +211,10 @@ def home():
     return send_from_directory('.', 'index.html')
 
 # ======================
-# STARTUP VALIDATION (optional but helpful)
+# STARTUP VALIDATION
 # ======================
 
 if __name__ == '__main__':
-    # Log missing keys at startup for easier debugging on Render
     if not os.getenv("BUTTONDOWN_API_KEY"):
         logger.warning("BUTTONDOWN_API_KEY is not set — email subscription will fail.")
     if not os.getenv("GROQ_API_KEY"):
