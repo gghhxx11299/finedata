@@ -34,9 +34,9 @@ def subscribe():
 
     try:
         response = requests.post(
-            "https://api.buttondown.email/v1/subscribers",  # ✅ No trailing spaces
+            "https://api.buttondown.email/v1/subscribers",  # No trailing spaces
             headers={
-                "Authorization": f"Bearer {api_key}",
+                "Authorization": f"Token {api_key}",       # ✅ Correct: "Token", not "Bearer"
                 "Content-Type": "application/json"
             },
             json={"email": email},
@@ -73,7 +73,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     
     try:
         detect_resp = requests.post(
-            "https://libretranslate.de/detect",  # ✅ No trailing spaces
+            "https://libretranslate.de/detect",  # No trailing spaces
             json={"q": text[:100]},
             timeout=5
         )
@@ -85,7 +85,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         
         if detected != "en":
             trans_resp = requests.post(
-                "https://libretranslate.de/translate",  # ✅ No trailing spaces
+                "https://libretranslate.de/translate",  # No trailing spaces
                 json={"q": text, "source": detected, "target": "en"},
                 timeout=8
             )
@@ -105,7 +105,7 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
     try:
         resp = requests.post(
-            "https://libretranslate.de/translate",  # ✅ No trailing spaces
+            "https://libretranslate.de/translate",  # No trailing spaces
             json={"q": text, "source": "en", "target": target_lang},
             timeout=8
         )
@@ -140,7 +140,7 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",  # ✅ No trailing spaces
+            "https://api.groq.com/openai/v1/chat/completions",  # No trailing spaces
             headers={
                 "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
