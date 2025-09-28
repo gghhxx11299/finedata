@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-# Supported languages (LibreTranslate ISO 639-1 codes)
+# Supported languages (ISO 639-1 codes supported by LibreTranslate + Ethiopia-relevant)
 SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
 
 # ======================
@@ -35,11 +35,11 @@ def subscribe():
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        # Fixed URL: removed extra spaces
+        # ✅ api_key goes in URL query, NOT in JSON body (per EmailOctopus docs)
+        url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
-            f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts",
+            url,
             json={
-                "api_key": api_key,
                 "email_address": email,
                 "status": "subscribed"
             },
@@ -50,7 +50,8 @@ def subscribe():
             return jsonify({"message": "Subscribed successfully!"})
         elif response.status_code == 400:
             resp_json = response.json()
-            if resp_json.get("error", {}).get("code") == "MEMBER_EXISTS":
+            error_code = resp_json.get("error", {}).get("code")
+            if error_code == "MEMBER_EXISTS":
                 return jsonify({"error": "Email already subscribed"}), 422
             else:
                 logger.warning(f"EmailOctopus validation error: {resp_json}")
@@ -64,7 +65,7 @@ def subscribe():
         return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
-# TRANSLATION FUNCTIONS
+# TRANSLATION FUNCTIONS (LibreTranslate)
 # ======================
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
@@ -73,7 +74,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         return "", "en"
     
     try:
-        # Fixed URL: removed trailing space
+        # Detect language (first 100 chars for efficiency)
         detect_resp = requests.post(
             "https://libretranslate.de/detect",
             json={"q": text[:100]},
@@ -85,8 +86,8 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
             if isinstance(data, list) and len(data) > 0:
                 detected = data[0].get("language", "en")
         
+        # Translate to English if not already
         if detected != "en":
-            # Fixed URL: removed trailing space
             trans_resp = requests.post(
                 "https://libretranslate.de/translate",
                 json={"q": text, "source": detected, "target": "en"},
@@ -104,10 +105,9 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
 
 def translate_text(text: str, target_lang: str) -> str:
     """Translate English text to target language"""
-    if target_lang == "en" or not text:
+    if target_lang == "en" or not text.strip():
         return text
     try:
-        # Fixed URL: removed trailing space
         resp = requests.post(
             "https://libretranslate.de/translate",
             json={"q": text, "source": "en", "target": target_lang},
@@ -143,7 +143,6 @@ def ask_groq_ai(question: str) -> str:
     ]
 
     try:
-        # Fixed URL: removed trailing space
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             headers={
