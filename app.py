@@ -63,12 +63,14 @@ def subscribe():
         return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
-# TRANSLATION FUNCTIONS (unchanged)
+# TRANSLATION FUNCTIONS
 # ======================
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
+    """Returns (english_text, detected_lang)"""
     if not text.strip():
         return "", "en"
+    
     try:
         detect_resp = requests.post(
             "https://libretranslate.de/detect",
@@ -80,6 +82,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
             data = detect_resp.json()
             if isinstance(data, list) and len(data) > 0:
                 detected = data[0].get("language", "en")
+        
         if detected != "en":
             trans_resp = requests.post(
                 "https://libretranslate.de/translate",
@@ -90,12 +93,14 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
                 trans_data = trans_resp.json()
                 if isinstance(trans_data, dict):
                     return trans_data.get("translatedText", text), detected
+        
         return text, detected
     except Exception as e:
         logger.warning(f"Translation fallback: {e}")
         return text, "en"
 
 def translate_text(text: str, target_lang: str) -> str:
+    """Translate English text to target language"""
     if target_lang == "en" or not text:
         return text
     try:
@@ -112,13 +117,14 @@ def translate_text(text: str, target_lang: str) -> str:
     return text
 
 # ======================
-# GROQ AI FUNCTION (unchanged)
+# GROQ AI FUNCTION
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_key = os.getenv("GROQ_API_KEY")
     if not groq_key:
         return "AI is not configured. Please set GROQ_API_KEY."
+
     messages = [
         {
             "role": "system",
@@ -131,6 +137,7 @@ def ask_groq_ai(question: str) -> str:
         },
         {"role": "user", "content": question}
     ]
+
     try:
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
@@ -157,7 +164,7 @@ def ask_groq_ai(question: str) -> str:
         return "AI service is temporarily unavailable."
 
 # ======================
-# MAIN ENDPOINT (fixed syntax)
+# MAIN ENDPOINT
 # ======================
 
 @app.route('/ask-ai', methods=['POST'])
