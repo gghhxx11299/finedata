@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finedatas Ethiopia – All-in-One Data Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
     <style>
         :root {
             --bg: #0D1117;
@@ -31,7 +31,7 @@
             padding: 0 15px;
         }
         
-        /* ===== FIXED HEADER - Like AI Chat Page ===== */
+        /* Header */
         header {
             background-color: var(--card-bg);
             box-shadow: var(--shadow);
@@ -126,8 +126,8 @@
             gap: 1rem;
         }
 
-        /* Why Section */
-        .why-section {
+        /* Sections */
+        .why-section, .insights-section, .ai-section {
             background: var(--card-bg);
             padding: 3rem;
             border-radius: 16px;
@@ -155,8 +155,7 @@
             font-size: 1.1rem;
         }
 
-        /* Quick Access */
-        .quick-access {
+        .quick-access, .sources-section {
             padding: 3rem 0;
             margin-bottom: 3rem;
         }
@@ -193,20 +192,6 @@
             font-weight: 600;
         }
 
-        /* ===== NEW AI SECTION ===== */
-        .ai-section {
-            background: var(--card-bg);
-            padding: 4rem 3rem;
-            border-radius: 16px;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-        .ai-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
         .ai-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -242,15 +227,6 @@
             padding: 1rem 2rem;
         }
 
-        /* Insights / Recently Added */
-        .insights-section {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 16px;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
         .insight-item {
             display: flex;
             gap: 1.5rem;
@@ -278,11 +254,6 @@
             color: #3FB950;
         }
 
-        /* Open Source */
-        .sources-section {
-            padding: 3rem 0;
-            margin-bottom: 3rem;
-        }
         .sources-grid {
             display: flex;
             flex-wrap: wrap;
@@ -302,6 +273,14 @@
             background: rgba(88, 166, 255, 0.2);
             color: var(--primary);
             border-color: var(--primary);
+        }
+
+        /* Subscription Section */
+        .subscription-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 3rem 0;
+            margin: 3rem 0;
         }
 
         /* Footer */
@@ -337,7 +316,7 @@
             border-top: 1px solid var(--border);
         }
 
-        /* ===== FIXED MOBILE MENU - Like AI Chat Page ===== */
+        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -360,29 +339,22 @@
             .mobile-menu-btn { 
                 display: block; 
             }
-            
             .hero h1 { font-size: 2rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
             .hero-buttons .btn { width: 100%; max-width: 250px; }
             .insight-item { flex-direction: column; }
-            
-            .ai-section {
-                padding: 2rem 1.5rem;
-            }
-            .ai-features {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+            .ai-section { padding: 2rem 1.5rem; }
+            .ai-features { grid-template-columns: 1fr; gap: 1rem; }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-   <header>
+    <header>
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo" />
                     <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
@@ -558,7 +530,7 @@
     <section class="sources-section">
         <div class="container">
             <h2 class="section-title">Open Source & Community-Driven</h2>
-            <div class="why-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <div class="why-content">
                 <p>
                     Finedatas is built on open principles. Our code, data pipelines, and documentation are publicly available to promote transparency, collaboration, and trust.
                 </p>
@@ -589,11 +561,11 @@
         </div>
     </section>
 
-    <!-- ✅ EMAIL SUBSCRIPTION SECTION -->
-    <section class="sources-section" style="background: var(--card-bg); border-radius: 16px; padding: 3rem 0; margin: 3rem 0;">
+    <!-- Email Subscription -->
+    <section class="subscription-section">
         <div class="container">
             <h2 class="section-title">📬 Stay Updated</h2>
-            <div class="why-content" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <div class="why-content">
                 <p>
                     Get monthly updates on Ethiopia’s latest economic trends, agricultural forecasts, and AI insights — straight to your inbox.
                 </p>
@@ -604,7 +576,7 @@
                         placeholder="your@email.com" 
                         required
                         style="width: 100%; max-width: 400px; padding: 0.8rem 1.2rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem;"
-                    >
+                    />
                     <button type="submit" class="btn" style="width: 100%; max-width: 250px;">
                         <i class="fas fa-paper-plane"></i> Subscribe
                     </button>
@@ -644,7 +616,7 @@
     </footer>
 
     <script>
-        // Mobile menu toggle
+        // Mobile menu
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         
@@ -666,7 +638,7 @@
             }
         });
 
-        // Email subscription handler
+        // Email subscription
         const form = document.getElementById('subscribe-form');
         const emailInput = document.getElementById('email-input');
         const messageEl = document.getElementById('subscribe-message');
@@ -681,7 +653,9 @@
                     return;
                 }
 
-                if (!/^\S+@\S+\.\S+$/.test(email)) {
+                // Simple but effective email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
                     showMessage('Please enter a valid email.', 'error');
                     return;
                 }
