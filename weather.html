@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast - FineData Ethiopia</title>
+    <title>Weather Forecast - Finedatas Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* Global Styles — copied exactly from economic.html */
+        /* =============== COPY EXACTLY FROM KNOWLEDGE BASE =============== */
         :root {
             --bg-color: #0D1117;
             --card-bg: #161B22;
@@ -39,7 +39,6 @@
             margin: 0 auto;
             padding: 0 15px;
         }
-        /* Header Styles */
         header {
             background-color: var(--card-bg);
             box-shadow: var(--shadow);
@@ -103,7 +102,6 @@
             cursor: pointer;
             color: var(--primary-color);
         }
-        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--primary-color);
@@ -121,7 +119,6 @@
             background-color: rgba(88, 166, 255, 0.1);
             color: var(--text-color);
         }
-        /* Page Header */
         .page-header {
             background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             color: var(--text-color);
@@ -155,7 +152,6 @@
         .breadcrumb a:hover {
             color: var(--primary-color);
         }
-        /* Weather Section */
         .weather-section {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -260,7 +256,7 @@
             font-size: 0.85rem;
             color: #3FB950;
         }
-        /* Enhanced Crop Productivity Section */
+        /* Crop Productivity Section */
         .crop-productivity {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -336,7 +332,6 @@
             color: var(--primary-color);
             font-weight: 600;
         }
-        /* Reuse economic-section style for tables */
         .economic-section {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -371,7 +366,6 @@
             border-radius: 0 4px 4px 0;
             color: var(--text-color);
         }
-        /* Footer */
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
@@ -426,7 +420,6 @@
             padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
         }
-        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -462,13 +455,13 @@
     </style>
 </head>
 <body>
-    <!-- Header — copied from economic.html -->
+    <!-- Header -->
     <header>
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo">
-                    <h1>FineData</h1>
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
+                    <h1>Finedatas</h1>
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
@@ -480,6 +473,7 @@
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="pdf.html">PDF Resources</a></li>
                     <li><a href="weather.html" class="active">For Farmers</a></li>
+                    <li><a href="globe.html">weather data</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li><a href="support.html">Support</a></li>
                     <li>
@@ -513,11 +507,33 @@
             <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Select Your City</h3>
             <div class="city-selector">
                 <select id="citySelect" onchange="loadWeather()">
-                    <option value="">Loading cities...</option>
+                    <option value="">Select a city</option>
+                    <option value="Addis Ababa">Addis Ababa</option>
+                    <option value="Mekelle">Mekelle</option>
+                    <option value="Bahir Dar">Bahir Dar</option>
+                    <option value="Hawassa">Hawassa</option>
+                    <option value="Dire Dawa">Dire Dawa</option>
+                    <option value="Jijiga">Jijiga</option>
+                    <option value="Gambela">Gambela</option>
+                    <option value="Asosa">Asosa</option>
+                    <option value="Semera">Semera</option>
+                    <option value="Jimma">Jimma</option>
+                    <option value="Nekemte">Nekemte</option>
+                    <option value="Bale Robe">Bale Robe</option>
+                    <option value="Shashemene">Shashemene</option>
+                    <option value="Dilla">Dilla</option>
+                    <option value="Bonga">Bonga</option>
+                    <option value="Arba Minch">Arba Minch</option>
+                    <option value="Hosaena">Hosaena</option>
+                    <option value="Debre Markos">Debre Markos</option>
+                    <option value="Debre Birhan">Debre Birhan</option>
+                    <option value="Metu">Metu</option>
+                    <option value="Adigrat">Adigrat</option>
+                    <option value="Goba">Goba</option>
                 </select>
             </div>
             <div id="weatherDisplay">
-                <p>Loading weather data from <code>data.json</code>...</p>
+                <p>Select a city to view the 14-day weather forecast.</p>
             </div>
         </section>
 
@@ -752,12 +768,12 @@
         </section>
     </div>
 
-    <!-- Footer — copied from economic.html -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About FineData</h3>
+                    <h3>About Finedatas</h3>
                     <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
                 </div>
                 <div class="footer-section">
@@ -776,7 +792,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 FineData. All rights reserved.</p>
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -794,44 +810,29 @@
             }
         });
 
-        // Load weather data from data.json
         let weatherData = null;
 
-        async function loadWeatherData() {
+        // Load data.json once on page load
+        async function initWeatherApp() {
             try {
                 const response = await fetch('data.json');
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                if (!response.ok) throw new Error('Failed to load data.json');
                 weatherData = await response.json();
-                populateCitySelector();
-                if (weatherData.weather_data.length > 0) {
-                    document.getElementById('citySelect').value = weatherData.weather_data[0].location;
-                    loadWeather();
-                }
             } catch (error) {
-                document.getElementById('weatherDisplay').innerHTML = 
-                    `<p style="color: var(--secondary-color);">❌ Failed to load <code>data.json</code>.<br>` +
-                    `Ensure the file exists in the same folder as this page.</p>`;
+                console.error('Error loading data.json:', error);
             }
-        }
-
-        function populateCitySelector() {
-            const select = document.getElementById('citySelect');
-            select.innerHTML = '';
-            weatherData.weather_data.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item.location;
-                option.textContent = item.location;
-                select.appendChild(option);
-            });
         }
 
         function loadWeather() {
             const cityName = document.getElementById('citySelect').value;
-            if (!cityName) return;
+            if (!cityName || !weatherData) {
+                document.getElementById('weatherDisplay').innerHTML = '<p>Select a city to view forecast.</p>';
+                return;
+            }
 
             const cityData = weatherData.weather_data.find(d => d.location === cityName);
             if (!cityData) {
-                document.getElementById('weatherDisplay').innerHTML = `<p>Data not available for ${cityName}.</p>`;
+                document.getElementById('weatherDisplay').innerHTML = `<p>No weather data available for ${cityName}.</p>`;
                 return;
             }
 
@@ -882,11 +883,10 @@
             document.getElementById('weatherDisplay').innerHTML = html;
         }
 
-        // Export functionality
         function exportWeatherData() {
             const cityName = document.getElementById('citySelect').value;
             if (!cityName || !weatherData) {
-                alert('No data to export.');
+                alert('Please select a city first.');
                 return;
             }
 
@@ -933,7 +933,7 @@
         }
 
         // Initialize
-        loadWeatherData();
+        initWeatherApp();
     </script>
 </body>
 </html>
