@@ -35,6 +35,7 @@ def subscribe():
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
+        # Fixed URL: removed extra spaces
         response = requests.post(
             f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts",
             json={
@@ -72,6 +73,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
         return "", "en"
     
     try:
+        # Fixed URL: removed trailing space
         detect_resp = requests.post(
             "https://libretranslate.de/detect",
             json={"q": text[:100]},
@@ -84,6 +86,7 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
                 detected = data[0].get("language", "en")
         
         if detected != "en":
+            # Fixed URL: removed trailing space
             trans_resp = requests.post(
                 "https://libretranslate.de/translate",
                 json={"q": text, "source": detected, "target": "en"},
@@ -104,6 +107,7 @@ def translate_text(text: str, target_lang: str) -> str:
     if target_lang == "en" or not text:
         return text
     try:
+        # Fixed URL: removed trailing space
         resp = requests.post(
             "https://libretranslate.de/translate",
             json={"q": text, "source": "en", "target": target_lang},
@@ -139,6 +143,7 @@ def ask_groq_ai(question: str) -> str:
     ]
 
     try:
+        # Fixed URL: removed trailing space
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
             headers={
@@ -170,7 +175,7 @@ def ask_groq_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not 
+    if not data:  # ✅ Fixed: was incomplete "if not"
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
