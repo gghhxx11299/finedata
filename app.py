@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
+from huggingface_hub import InferenceClient
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -13,8 +14,31 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-# Supported languages (ISO 639-1 codes supported by LibreTranslate + Ethiopia-relevant)
-SUPPORTED_LANGUAGES = {"en", "am", "om", "fr", "es", "ar"}
+# === NLLB SETUP ===
+HF_TOKEN = os.getenv("HF_API_KEY")
+if not HF_TOKEN:
+    logger.error("HF_API_KEY not set — NLLB translation will fail.")
+
+# Initialize Hugging Face client (lazy init; will error on use if token missing)
+try:
+    client = InferenceClient("facebook/nllb-200-distilled-600M", token=HF_TOKEN)
+except Exception as e:
+    client = None
+    logger.error(f"Failed to initialize Hugging Face client: {e}")
+
+# NLLB uses ISO 639-3 + script codes
+NLLB_LANG_MAP = {
+    "en": "eng_Latn",
+    "am": "amh_Ethi",   # Amharic
+    "om": "orm_Latn",   # Oromo (typically Latin script)
+    "ti": "tir_Ethi",   # Tigrinya
+    "so": "som_Latn",   # Somali
+    "aa": "aar_Latn",   # Afar
+    "sid": "sid_Latn",  # Sidamo
+    "wal": "wal_Ethi",  # Wolaytta
+}
+
+SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
 # EMAIL SUBSCRIPTION (EmailOctopus)
@@ -35,7 +59,6 @@ def subscribe():
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        # ✅ api_key goes in URL query, body must be form-encoded
         url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
             url,
@@ -48,7 +71,6 @@ def subscribe():
 
         logger.info(f"EmailOctopus response {response.status_code}: {response.text}")
 
-        # ✅ Treat both 200 and 201 as success
         if response.status_code in (200, 201):
             return jsonify({"message": "Subscribed successfully!"})
         elif response.status_code == 400:
@@ -68,60 +90,60 @@ def subscribe():
         return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
-# TRANSLATION FUNCTIONS (LibreTranslate)
+# NLLB TRANSLATION FUNCTIONS
 # ======================
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
-    """Returns (english_text, detected_lang)"""
+    """Heuristic language detection + translate to English using NLLB."""
     if not text.strip():
         return "", "en"
     
-    try:
-        # Detect language (first 100 chars for efficiency)
-        detect_resp = requests.post(
-            "https://libretranslate.de/detect",
-            json={"q": text[:100]},
-            timeout=5
-        )
-        detected = "en"
-        if detect_resp.status_code == 200:
-            data = detect_resp.json()
-            if isinstance(data, list) and len(data) > 0:
-                detected = data[0].get("language", "en")
-        
-        # Translate to English if not already
-        if detected != "en":
-            trans_resp = requests.post(
-                "https://libretranslate.de/translate",
-                json={"q": text, "source": detected, "target": "en"},
-                timeout=8
-            )
-            if trans_resp.status_code == 200:
-                trans_data = trans_resp.json()
-                if isinstance(trans_data, dict):
-                    return trans_data.get("translatedText", text), detected
-        
-        return text, detected
-    except Exception as e:
-        logger.warning(f"Translation fallback: {e}")
+    if client is None:
         return text, "en"
 
+    # Prioritize Ethiopian languages + English
+    candidate_langs = ["am", "om", "ti", "so", "aa", "sid", "wal", "en"]
+    
+    for lang_code in candidate_langs:
+        if lang_code == "en":
+            return text, "en"
+        
+        try:
+            src_nllb = NLLB_LANG_MAP[lang_code]
+            translated = client.translation(
+                text,
+                src_lang=src_nllb,
+                tgt_lang="eng_Latn"
+            )
+            # If translation is different, assume it worked
+            if translated.strip() != text.strip():
+                return translated.strip(), lang_code
+        except Exception:
+            continue  # Try next language
+    
+    # Fallback: assume English
+    return text, "en"
+
+
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate English text to target language"""
-    if target_lang == "en" or not text.strip():
+    """Translate English text to target language using NLLB."""
+    if target_lang == "en" or not text.strip() or client is None:
         return text
+
+    if target_lang not in NLLB_LANG_MAP:
+        logger.warning(f"Unsupported target language: {target_lang}")
+        return text
+
     try:
-        resp = requests.post(
-            "https://libretranslate.de/translate",
-            json={"q": text, "source": "en", "target": target_lang},
-            timeout=8
+        result = client.translation(
+            text,
+            src_lang="eng_Latn",
+            tgt_lang=NLLB_LANG_MAP[target_lang]
         )
-        if resp.status_code == 200:
-            data = resp.json()
-            return data.get("translatedText", text) if isinstance(data, dict) else text
+        return result.strip()
     except Exception as e:
-        logger.warning(f"Translation to {target_lang} failed: {e}")
-    return text
+        logger.warning(f"NLLB translation to {target_lang} failed: {e}")
+        return text
 
 # ======================
 # GROQ AI FUNCTION
@@ -177,7 +199,7 @@ def ask_groq_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:  # ✅ Fixed: was incomplete "if not"
+    if not data:
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -228,7 +250,8 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
     if not os.getenv("GROQ_API_KEY"):
         logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
+    if not os.getenv("HF_API_KEY"):
+        logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
-
