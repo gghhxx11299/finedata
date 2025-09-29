@@ -146,13 +146,13 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# DEEPSEEK AI FUNCTION
+# OPENROUTER (DEEPSEEK) AI FUNCTION
 # ======================
 
 def ask_deepseek_ai(question: str) -> str:
-    deepseek_key = os.getenv("DEEPSEEK_API_KEY")
-    if not deepseek_key:
-        return "AI is not configured. Please set DEEPSEEK_API_KEY."
+    openrouter_key = os.getenv("OPENROUTER_API_KEY")
+    if not openrouter_key:
+        return "AI is not configured. Please set OPENROUTER_API_KEY."
 
     messages = [
         {
@@ -169,13 +169,15 @@ def ask_deepseek_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.deepseek.com/chat/completions",
+            "https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {deepseek_key}",
+                "Authorization": f"Bearer {openrouter_key}",
+                "HTTP-Referer": "http://localhost:5000",  # Required by OpenRouter
+                "X-Title": "Finedata Ethiopia AI",         # Optional but recommended
                 "Content-Type": "application/json"
             },
             json={
-                "model": "deepseek-chat",
+                "model": "deepseek/deepseek-chat",  # OpenRouter's model ID for DeepSeek
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -186,10 +188,10 @@ def ask_deepseek_ai(question: str) -> str:
             data = response.json()
             return data["choices"][0]["message"]["content"].strip()
         else:
-            logger.error(f"DeepSeek error {response.status_code}: {response.text}")
+            logger.error(f"OpenRouter error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
     except Exception as e:
-        logger.exception("DeepSeek request failed")
+        logger.exception("OpenRouter request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -248,8 +250,8 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("DEEPSEEK_API_KEY"):
-        logger.warning("DEEPSEEK_API_KEY is not set — AI will be disabled.")
+    if not os.getenv("OPENROUTER_API_KEY"):
+        logger.warning("OPENROUTER_API_KEY is not set — AI will be disabled.")
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
