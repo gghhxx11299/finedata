@@ -146,13 +146,13 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION
+# DEEPSEEK AI FUNCTION
 # ======================
 
-def ask_groq_ai(question: str) -> str:
-    groq_key = os.getenv("GROQ_API_KEY")
-    if not groq_key:
-        return "AI is not configured. Please set GROQ_API_KEY."
+def ask_deepseek_ai(question: str) -> str:
+    deepseek_key = os.getenv("DEEPSEEK_API_KEY")
+    if not deepseek_key:
+        return "AI is not configured. Please set DEEPSEEK_API_KEY."
 
     messages = [
         {
@@ -169,13 +169,13 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            "https://api.deepseek.com/chat/completions",
             headers={
-                "Authorization": f"Bearer {groq_key}",
+                "Authorization": f"Bearer {deepseek_key}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama-3.3-70b-versatile",
+                "model": "deepseek-chat",
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -186,10 +186,10 @@ def ask_groq_ai(question: str) -> str:
             data = response.json()
             return data["choices"][0]["message"]["content"].strip()
         else:
-            logger.error(f"Groq error {response.status_code}: {response.text}")
+            logger.error(f"DeepSeek error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
     except Exception as e:
-        logger.exception("Groq request failed")
+        logger.exception("DeepSeek request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -211,7 +211,7 @@ def ask_ai():
         target_lang = "en"
 
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_groq_ai(english_question)
+    answer_en = ask_deepseek_ai(english_question)
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
@@ -248,8 +248,8 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("GROQ_API_KEY"):
-        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
+    if not os.getenv("DEEPSEEK_API_KEY"):
+        logger.warning("DEEPSEEK_API_KEY is not set — AI will be disabled.")
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
