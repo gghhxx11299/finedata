@@ -451,6 +451,59 @@
             .crop-grid {
                 grid-template-columns: 1fr;
             }
+            .current-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .current-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            .city-selector select {
+                max-width: 100%;
+            }
+            .data-table {
+                font-size: 0.85rem;
+            }
+            .data-table th, .data-table td {
+                padding: 0.5rem;
+            }
+            .crop-card {
+                padding: 1rem;
+            }
+            .harvest-highlight, .yield-info {
+                font-size: 0.85rem;
+            }
+            .nav-links .btn, .nav-links .export-btn {
+                width: 100%;
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+            .export-btn {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .current-stats {
+                grid-template-columns: 1fr;
+            }
+            .page-header h2 {
+                font-size: 1.5rem;
+            }
+            .logo h1 {
+                font-size: 1.25rem;
+            }
+            .logo img {
+                height: 32px;
+            }
+            .nav-links li {
+                margin: 0.25rem 1rem;
+            }
         }
     </style>
 </head>
@@ -534,7 +587,7 @@
         <section class="crop-productivity">
             <h3 class="section-title"><i class="fas fa-seedling"></i> Ethiopian Crop Productivity, Seasons & Harvest Intelligence</h3>
             <div class="data-highlight">
-                <p>Ethiopia’s farming calendar is governed by three agro-climatic seasons: <strong>Kiremt</strong> (June–Sept, main rains), <strong>Belg</strong> (Feb–May, short rains), and <strong>Bega</strong> (Oct–Jan, dry). Success depends on aligning planting, input use, and harvest with local rainfall patterns and soil types.</p>
+                <p>Ethiopia's farming calendar is governed by three agro-climatic seasons: <strong>Kiremt</strong> (June–Sept, main rains), <strong>Belg</strong> (Feb–May, short rains), and <strong>Bega</strong> (Oct–Jan, dry). Success depends on aligning planting, input use, and harvest with local rainfall patterns and soil types.</p>
             </div>
 
             <div class="crop-grid">
