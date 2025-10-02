@@ -46,7 +46,7 @@ Technical Details
 Installation
 ------------
 1. Clone the repository:
-   git clone https://github.com/yourusername/finedata.git
+   git clone https://github.com/gghhxx11299/finedata.git
    cd finedata
 
 2. Install dependencies:
