@@ -486,6 +486,16 @@
                 margin-left: 0;
                 margin-top: 0.5rem;
             }
+            
+            /* FIX FOR TABLE OVERFLOW - ONLY CHANGE MADE */
+            .economic-section {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .data-table {
+                min-width: 600px;
+                width: auto;
+            }
         }
         
         @media (max-width: 480px) {
@@ -503,6 +513,19 @@
             }
             .nav-links li {
                 margin: 0.25rem 1rem;
+            }
+            
+            /* FIX FOR TABLE OVERFLOW ON SMALLER SCREENS */
+            .economic-section {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .data-table {
+                min-width: 550px;
+                font-size: 0.75rem;
+            }
+            .data-table th, .data-table td {
+                padding: 0.4rem;
             }
         }
     </style>
