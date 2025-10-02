@@ -44,7 +44,6 @@
             margin: 0 auto;
             padding: 0 15px;
         }
-        
         /* Header Styles - Mobile First */
         header {
             background-color: var(--card-bg);
@@ -90,6 +89,7 @@
             z-index: 99;
             max-height: 80vh;
             overflow-y: auto;
+            list-style: none !important; /* ✅ FIX: Prevents bullet points ("dots") */
         }
         .nav-links.active {
             display: flex;
@@ -158,7 +158,6 @@
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
         }
-        
         /* Page Header */
         .page-header {
             background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1571835782488-179d2c6eecb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
@@ -196,7 +195,6 @@
         .breadcrumb a:hover {
             color: var(--primary-color);
         }
-        
         /* Quick Stats Section */
         .quick-stats {
             display: grid;
@@ -228,7 +226,6 @@
             font-size: 0.9rem;
             color: var(--text-color);
         }
-        
         /* Demographic Sections */
         .demographic-section {
             background-color: var(--card-bg);
@@ -301,7 +298,6 @@
             margin-top: 0.8rem;
             font-style: italic;
         }
-        
         /* Table Styles for Mobile */
         .table-container {
             overflow-x: auto;
@@ -330,7 +326,6 @@
         .data-table tr:hover {
             background-color: rgba(88, 166, 255, 0.05);
         }
-        
         /* Chart Container */
         .chart-container {
             background-color: var(--bg-color);
@@ -342,7 +337,6 @@
             position: relative;
             height: 300px;
         }
-        
         /* Data Insights */
         .data-insights {
             background-color: var(--bg-color);
@@ -362,7 +356,6 @@
             line-height: 1.5;
             font-size: 0.95rem;
         }
-        
         /* Tabs */
         .tab-container {
             margin: 1.2rem 0;
@@ -396,7 +389,6 @@
         .tab-content.active {
             display: block;
         }
-        
         /* Export Modal for Mobile */
         #exportModal {
             display: none;
@@ -442,7 +434,6 @@
             margin-top: 0.6rem;
             text-align: center;
         }
-        
         /* Footer */
         footer {
             background-color: var(--card-bg);
@@ -501,7 +492,6 @@
             border-top: 1px solid var(--border-color);
             font-size: 0.9rem;
         }
-        
         /* Responsive Design for Larger Screens */
         @media (min-width: 768px) {
             html {
@@ -534,6 +524,7 @@
                 padding: 0;
                 max-height: none;
                 overflow-y: visible;
+                list-style: none !important; /* Still needed for consistency */
             }
             .nav-links li {
                 margin: 0 0.8rem;
@@ -612,13 +603,11 @@
                 border-top: 1px solid var(--primary-color);
             }
         }
-        
         @media (min-width: 992px) {
             .container {
                 width: 90%;
             }
         }
-        
         /* Additional Mobile Optimizations */
         @media (max-width: 480px) {
             .container {
@@ -659,7 +648,6 @@
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    
                     <li>
                         <button class="export-btn" onclick="showExportOptions()">
                             <i class="fas fa-download"></i> Export Data
@@ -670,7 +658,6 @@
             </nav>
         </div>
     </header>
-
     <!-- Export Modal -->
     <div id="exportModal">
         <h4><i class="fas fa-file-export"></i> Export Options</h4>
@@ -681,7 +668,6 @@
             <i class="fas fa-times"></i> Close
         </button>
     </div>
-
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -692,7 +678,6 @@
             </ul>
         </div>
     </div>
-
     <div class="container">
         <!-- Quick Stats -->
         <div class="quick-stats">
@@ -717,21 +702,17 @@
                 <div class="quick-stat-label">Urban Population</div>
             </div>
         </div>
-
         <!-- Population Growth Section -->
         <section class="demographic-section" id="population-growth">
             <h3 class="section-title"><i class="fas fa-users"></i> Population Growth (2020-2030)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-chart-line"></i> 2025 Population Insights</h4>
                 <p>Ethiopia's population is projected to reach <strong>135.49 million</strong> in 2025, with an annual growth rate of <strong>2.55%</strong>. This represents a significant increase from 2020's population of 118.92 million, showing a consistent upward trend despite a gradual slowdown in growth rate.</p>
                 <p>The country's demographic transition continues with declining fertility rates (projected at 4.0 births per woman in 2025) and improving life expectancy (67.8 years in 2025). Urbanization is accelerating, with the urban population expected to reach 22.5% of the total by 2025.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="populationChart"></canvas>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Population Trends (2020-2030)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-population">
@@ -762,21 +743,17 @@
             </div>
             <p class="source-note">Source: World Bank/UN estimates via FRED</p>
         </section>
-
         <!-- Population Density by Region -->
         <section class="demographic-section" id="population-density">
             <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Population Density by Region (2025)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-map"></i> 2025 Regional Distribution Insights</h4>
                 <p>Ethiopia's population distribution remains highly uneven, with significant concentration in the highland regions. Oromia continues to be the most populous region with an estimated <strong>43.5 million people</strong> in 2025, followed by Amhara with <strong>33.2 million</strong>.</p>
                 <p>Addis Ababa maintains the highest population density at approximately <strong>7,100 persons/km²</strong> in 2025, while the Somali and Afar regions continue to have the lowest densities due to arid conditions. Regional development disparities remain a significant challenge for balanced national growth.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="densityChart"></canvas>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Regional Population Density (2025 Projections)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-density">
@@ -806,21 +783,17 @@
             </div>
             <p class="source-note">Source: Central Statistical Agency of Ethiopia, 2025 projections</p>
         </section>
-
         <!-- Age Structure Section -->
         <section class="demographic-section" id="age-structure">
             <h3 class="section-title"><i class="fas fa-child"></i> Age Structure (2025)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-users"></i> Age Distribution Insights</h4>
                 <p>Ethiopia continues to have a very young population, with <strong>43.2%</strong> of its population under the age of 15. This youthful demographic profile presents both opportunities and challenges for the country's development.</p>
                 <p>The working-age population (15-64) constitutes <strong>53.5%</strong> of the total, while the elderly population (65+) remains relatively small at <strong>3.3%</strong>. This demographic dividend could boost economic growth if properly harnessed through education and employment opportunities.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="ageChart"></canvas>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-baby"></i> Youth Population (0-14)</h4>
@@ -841,7 +814,6 @@
                     <div class="stat-detail">Life expectancy at birth: 67.8 years</div>
                 </div>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Age Structure Breakdown (2025)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-age">
@@ -874,21 +846,17 @@
             </div>
             <p class="source-note">Source: UN World Population Prospects, 2025 projections</p>
         </section>
-
         <!-- Education and Literacy Section -->
         <section class="demographic-section" id="education">
             <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Education & Literacy (2025)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-book"></i> Educational Attainment Insights</h4>
                 <p>Ethiopia has made significant progress in education, with the literacy rate reaching <strong>54.2%</strong> in 2025. However, substantial gender and regional disparities persist, with male literacy at <strong>59.8%</strong> compared to female literacy at <strong>48.7%</strong>.</p>
                 <p>Primary school enrollment has improved dramatically, reaching <strong>95%</strong> net enrollment rate, but secondary and tertiary education enrollment rates remain lower at <strong>42%</strong> and <strong>12%</strong> respectively.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="educationChart"></canvas>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-book-reader"></i> Literacy Rate</h4>
@@ -909,7 +877,6 @@
                     <div class="stat-detail">48 universities nationwide</div>
                 </div>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Educational Attainment by Level (Population 25+, 2025)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-education">
@@ -933,29 +900,24 @@
             </div>
             <p class="source-note">Source: UNESCO/World Bank literacy statistics, 2025 projections</p>
         </section>
-
         <!-- Labor Force Section -->
         <section class="demographic-section" id="labor">
             <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force (2025)</h3>
-            
             <div class="tab-container">
                 <div class="tab-buttons">
                     <button class="tab-button active" onclick="openTab(event, 'labor-overview')">Overview</button>
                     <button class="tab-button" onclick="openTab(event, 'labor-sector')">By Sector</button>
                     <button class="tab-button" onclick="openTab(event, 'labor-region')">By Region</button>
                 </div>
-                
                 <div id="labor-overview" class="tab-content active">
                     <div class="data-insights">
                         <h4><i class="fas fa-chart-bar"></i> Labor Market Insights</h4>
                         <p>Ethiopia's labor force is estimated at <strong>58.3 million</strong> in 2025, with an unemployment rate of <strong>19.2%</strong>. Youth unemployment remains particularly high at <strong>25.7%</strong>, presenting a significant challenge for the country's development.</p>
                         <p>The informal sector continues to dominate employment, accounting for approximately <strong>85%</strong> of total employment. Agriculture remains the largest employer at <strong>68%</strong> of the workforce, though this share has been gradually declining.</p>
                     </div>
-                    
                     <div class="chart-container">
                         <canvas id="laborChart"></canvas>
                     </div>
-                    
                     <div class="data-grid">
                         <div class="data-card">
                             <h4><i class="fas fa-users"></i> Labor Force</h4>
@@ -977,7 +939,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="labor-sector" class="tab-content">
                     <h4 style="margin: 1.2rem 0 0.8rem;">Employment by Economic Sector (2025)</h4>
                     <div class="table-container">
@@ -1001,7 +962,6 @@
                         </table>
                     </div>
                 </div>
-                
                 <div id="labor-region" class="tab-content">
                     <h4 style="margin: 1.2rem 0 0.8rem;">Labor Force by Region (2025)</h4>
                     <div class="table-container">
@@ -1030,21 +990,17 @@
             </div>
             <p class="source-note">Source: ILO/World Bank labor estimates, Ethiopian Labour Survey (ESS)</p>
         </section>
-
         <!-- Health and Mortality Section -->
         <section class="demographic-section" id="health">
             <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health & Mortality (2025)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-stethoscope"></i> Health Indicators Insights</h4>
                 <p>Ethiopia has made significant improvements in health outcomes, with life expectancy reaching <strong>67.8 years</strong> in 2025 (up from 64.8 in 2015). However, challenges remain, particularly in maternal and child health.</p>
                 <p>The under-five mortality rate has declined to <strong>48 deaths per 1,000 live births</strong>, while maternal mortality remains high at <strong>412 deaths per 100,000 live births</strong>. Access to healthcare has improved, with <strong>87%</strong> of the population living within 10km of a health facility.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="healthChart"></canvas>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-heart"></i> Life Expectancy</h4>
@@ -1065,7 +1021,6 @@
                     <div class="stat-detail">Skilled birth attendance: 74%</div>
                 </div>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Key Health Indicators (2025)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-health">
@@ -1091,21 +1046,17 @@
             </div>
             <p class="source-note">Source: World Health Organization (WHO), UNICEF, Ethiopia Demographic and Health Survey (EDHS)</p>
         </section>
-
         <!-- Migration and Urbanization Section -->
         <section class="demographic-section" id="migration">
             <h3 class="section-title"><i class="fas fa-plane-departure"></i> Migration & Urbanization (2025)</h3>
-            
             <div class="data-insights">
                 <h4><i class="fas fa-city"></i> Urbanization Trends</h4>
                 <p>Ethiopia is urbanizing rapidly, with the urban population projected to reach <strong>30.5 million</strong> (22.5% of total) in 2025. Addis Ababa remains the largest urban center with <strong>5.4 million</strong> residents, followed by Dire Dawa, Mekelle, and Adama.</p>
                 <p>Internal migration continues to be dominated by rural-to-urban movement, with an estimated <strong>1.2 million</strong> people moving to urban areas annually. International migration shows a net outflow, with approximately <strong>700,000</strong> Ethiopians living abroad, primarily in the Middle East, North America, and Europe.</p>
             </div>
-            
             <div class="chart-container">
                 <canvas id="migrationChart"></canvas>
             </div>
-            
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-city"></i> Urban Population</h4>
@@ -1126,7 +1077,6 @@
                     <div class="stat-detail">Primarily to Middle East</div>
                 </div>
             </div>
-            
             <h4 style="margin: 1.2rem 0 0.8rem;">Major Urban Centers (2025)</h4>
             <div class="table-container">
                 <table class="data-table" id="table-urban">
@@ -1155,7 +1105,6 @@
             </div>
             <p class="source-note">Source: Central Statistical Agency of Ethiopia, UNHCR, IOM</p>
         </section>
-
         <!-- Data Sources Section -->
         <section class="demographic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -1176,7 +1125,6 @@
             <p>We strive to provide the most accurate and up-to-date information available.</p>
         </section>
     </div>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1205,7 +1153,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1213,14 +1160,12 @@
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-        
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
             }
         });
-        
         // Show export modal
         function showExportOptions() {
             const modal = document.getElementById('exportModal');
@@ -1237,7 +1182,6 @@
                 }, 5000);
             }
         }
-        
         // Close modal when clicking outside (desktop)
         document.addEventListener('click', (e) => {
             const modal = document.getElementById('exportModal');
@@ -1247,23 +1191,19 @@
                 }
             }
         });
-        
         // Tab functionality
         function openTab(evt, tabName) {
             const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].classList.remove("active");
             }
-            
             const tabbuttons = document.getElementsByClassName("tab-button");
             for (let i = 0; i < tabbuttons.length; i++) {
                 tabbuttons[i].classList.remove("active");
             }
-            
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
-        
         // Utility: Download file
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
@@ -1276,7 +1216,6 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-        
         // 1. Export ALL tables as CSV (concatenated)
         function exportAllTablesToCSV() {
             let allCSV = '';
@@ -1304,7 +1243,6 @@
             downloadFile('ethiopia_demographic_data_all_tables.csv', allCSV, 'text/csv');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-        
         // 2. Export key metrics from data cards as JSON
         function exportKeyMetricsAsJSON() {
             const cards = document.querySelectorAll('.data-card');
@@ -1321,7 +1259,6 @@
             downloadFile('demographic_key_metrics.json', jsonString, 'application/json');
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-        
         // 3. Export summary report as TXT
         function exportSummaryAsText() {
             let report = `Ethiopian Demographic Data Summary\n`;
@@ -1342,7 +1279,7 @@
                 if (section) {
                     report += `${sec.title}:\n`;
                     section.querySelectorAll('.data-card').forEach(card => {
-                        const title = card.querySelector('h4').innerText.replace(/[\s\S]*?>/g, '').trim();
+                        const title = card.querySelector('h4').innerText.replace(/<[^>]*>/g, '').trim();
                         const value = card.querySelector('.stat-value')?.innerText || 'N/A';
                         const details = Array.from(card.querySelectorAll('.stat-detail'))
                             .map(el => el.innerText)
@@ -1355,7 +1292,6 @@
             downloadFile('demographic_summary_report.txt', report);
             if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
         }
-
         // Charts
         document.addEventListener('DOMContentLoaded', function() {
             // Population Growth Chart
@@ -1406,7 +1342,6 @@
                     }
                 }
             });
-
             // Population Density Chart
             const densityCtx = document.getElementById('densityChart').getContext('2d');
             const densityChart = new Chart(densityCtx, {
@@ -1459,7 +1394,6 @@
                     }
                 }
             });
-
             // Age Structure Chart
             const ageCtx = document.getElementById('ageChart').getContext('2d');
             const ageChart = new Chart(ageCtx, {
@@ -1491,7 +1425,6 @@
                     }
                 }
             });
-
             // Education Chart
             const educationCtx = document.getElementById('educationChart').getContext('2d');
             const educationChart = new Chart(educationCtx, {
@@ -1526,7 +1459,6 @@
                     }
                 }
             });
-
             // Labor Force Chart
             const laborCtx = document.getElementById('laborChart').getContext('2d');
             const laborChart = new Chart(laborCtx, {
@@ -1558,7 +1490,6 @@
                     }
                 }
             });
-
             // Health Chart
             const healthCtx = document.getElementById('healthChart').getContext('2d');
             const healthChart = new Chart(healthCtx, {
@@ -1607,7 +1538,6 @@
                     }
                 }
             });
-
             // Migration Chart
             const migrationCtx = document.getElementById('migrationChart').getContext('2d');
             const migrationChart = new Chart(migrationCtx, {
