@@ -146,13 +146,13 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# OPENROUTER (DEEPSEEK) AI FUNCTION
+# GROQ AI FUNCTION
 # ======================
 
-def ask_deepseek_ai(question: str) -> str:
-    openrouter_key = os.getenv("OPENROUTER_API_KEY")
-    if not openrouter_key:
-        return "AI is not configured. Please set OPENROUTER_API_KEY."
+def ask_groq_ai(question: str) -> str:
+    groq_key = os.getenv("GROQ_API_KEY")
+    if not groq_key:
+        return "AI is not configured. Please set GROQ_API_KEY."
 
     messages = [
         {
@@ -169,15 +169,13 @@ def ask_deepseek_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
+            "https://api.groq.com/openai/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {openrouter_key}",
-                "HTTP-Referer": "http://localhost:5000",  # Required by OpenRouter
-                "X-Title": "Finedata Ethiopia AI",         # Optional but recommended
+                "Authorization": f"Bearer {groq_key}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": "deepseek/deepseek-chat",  # OpenRouter's model ID for DeepSeek
+                "model": "mixtral-8x7b-32768",
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -188,10 +186,10 @@ def ask_deepseek_ai(question: str) -> str:
             data = response.json()
             return data["choices"][0]["message"]["content"].strip()
         else:
-            logger.error(f"OpenRouter error {response.status_code}: {response.text}")
+            logger.error(f"Groq AI error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
     except Exception as e:
-        logger.exception("OpenRouter request failed")
+        logger.exception("Groq AI request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -213,7 +211,7 @@ def ask_ai():
         target_lang = "en"
 
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_deepseek_ai(english_question)
+    answer_en = ask_groq_ai(english_question)
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
@@ -250,8 +248,8 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("OPENROUTER_API_KEY"):
-        logger.warning("OPENROUTER_API_KEY is not set — AI will be disabled.")
+    if not os.getenv("GROQ_API_KEY"):
+        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
