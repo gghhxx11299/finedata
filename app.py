@@ -175,7 +175,7 @@ def ask_groq_ai(question: str) -> str:
                 "Content-Type": "application/json"
             },
             json={
-                "model": "mixtral-8x7b-32768",
+                "model": "llama-3.1-8b-instant",
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -254,4 +254,4 @@ if __name__ == '__main__':
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, host='0.0.0.0', port=port) 
+    app.run(debug=False, host='0.0.0.0', port=port)
