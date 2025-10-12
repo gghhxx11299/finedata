@@ -151,42 +151,50 @@ def translate_text(text: str, target_lang: str) -> str:
 
 def ask_poe_ai(question: str) -> str:
     poe_token = os.getenv("POE_API_KEY")
+    bot_name = os.getenv("POE_BOT_NAME", "Assistant")
+    
     if not poe_token:
         return "AI is not configured. Please set POE_API_KEY."
 
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are Finedata AI, Ethiopia's expert assistant. "
-                "Answer ONLY about Ethiopia: economy, agriculture, weather, demographics, culture, history, cities, crops, languages, etc. do not mention anything about your time cutoff just answer when you know and say i dont have thag information when it is beyond what you have. "
-                "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
-                "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
-            )
-        },
-        {"role": "user", "content": question}
-    ]
-
     try:
+        # Poe API requires different endpoint structure
         response = requests.post(
-            "https://api.poe.com/bot/finedata-ai/chat",
+            "https://api.poe.com/bot/fetch_reply",
             headers={
                 "Authorization": f"Bearer {poe_token}",
                 "Content-Type": "application/json"
             },
             json={
-                "messages": messages,
+                "bot_name": bot_name,
+                "message": question,
                 "temperature": 0.3,
-                "max_tokens": 300
+                "max_tokens": 300,
+                "system_prompt": (
+                    "You are Finedata AI, Ethiopia's expert assistant. "
+                    "Answer ONLY about Ethiopia: economy, agriculture, weather, demographics, culture, history, cities, crops, languages, etc. do not mention anything about your time cutoff just answer when you know and say i dont have that information when it is beyond what you have. "
+                    "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
+                    "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
+                )
             },
             timeout=20
         )
+        
         if response.status_code == 200:
             data = response.json()
-            return data["choices"][0]["message"]["content"].strip()
+            # Poe API response structure may vary - adjust based on actual response
+            if "text" in data:
+                return data["text"].strip()
+            elif "response" in data:
+                return data["response"].strip()
+            elif "message" in data:
+                return data["message"].strip()
+            else:
+                logger.warning(f"Unexpected Poe API response structure: {data}")
+                return "I received your question but had trouble formatting the response."
         else:
             logger.error(f"Poe AI error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
+            
     except Exception as e:
         logger.exception("Poe AI request failed")
         return "AI service is temporarily unavailable."
