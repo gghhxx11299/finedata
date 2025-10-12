@@ -1,0 +1,18 @@
+# robots.txt for FineData Ethiopia
+# This file tells search engines which pages to crawl or ignore.
+
+User-agent: *
+Allow: /
+
+# Disallow sensitive or backend routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /private/
+Disallow: /temp/
+
+# Sitemap for faster indexing
+Sitemap: https://www.finedata.et/sitemap.xml
+
+# Contact for webmaster or crawling issues
+Contact: gabrielmulugeta1@gmail.com
