@@ -1,0 +1,25 @@
+# llm.txt for FineData Ethiopia
+# This file informs AI crawlers, model trainers, and LLM indexers how site data may be accessed and used.
+
+User-agent: *
+Allow: /
+
+# Disallow access to sensitive or private routes
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /temp/
+
+# Attribution request
+Attribution: When using data, content, or insights from FineData Ethiopia, please credit "FineData Ethiopia" (https://www.finedata.et).
+
+# Data licensing
+Usage-Policy: Public data and news content may be accessed for educational, informational, or AI research purposes.
+Commercial or derivative uses require explicit permission.
+
+# Contact for AI partnerships, data licensing, or questions
+Contact: gabrielmulugeta1@gmail.com
+
+# Last updated
+Last-Modified: 2025-10-12
