@@ -146,19 +146,20 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# POE AI FUNCTION
+# POE AI FUNCTION (Updated to use OpenAI-compatible endpoint with GPT-4o)
 # ======================
 
 def ask_poe_ai(question: str) -> str:
     poe_token = os.getenv("POE_API_KEY")
-    bot_name = os.getenv("POE_BOT_NAME", "Assistant")
+    # Model name is set to GPT-4o
+    model_name = "gpt-4o"
     
     if not poe_token:
         return "AI is not configured. Please set POE_API_KEY."
 
     try:
-        # 🔧 FIXED: Removed trailing spaces in URL
-        url = "https://api.poe.com/bot/fetch_reply"
+        # Use the OpenAI-compatible endpoint provided by Poe
+        url = "https://api.poe.com/v1/chat/completions"
         response = requests.post(
             url,
             headers={
@@ -166,41 +167,46 @@ def ask_poe_ai(question: str) -> str:
                 "Content-Type": "application/json"
             },
             json={
-                "bot_name": bot_name,
-                "message": question,
+                "model": model_name, # Specify the model to use
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are Finedata AI, Ethiopia's expert assistant. "
+                            "Answer ONLY about Ethiopia: economy, agriculture, weather, demographics, culture, history, cities, crops, languages, etc. do not mention anything about your time cutoff just answer when you know and say i dont have that information when it is beyond what you have. "
+                            "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
+                            "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
+                        )
+                    },
+                    {
+                        "role": "user",
+                        "content": question
+                    }
+                ],
                 "temperature": 0.3,
                 "max_tokens": 300,
-                "system_prompt": (
-                    "You are Finedata AI, Ethiopia's expert assistant. "
-                    "Answer ONLY about Ethiopia: economy, agriculture, weather, demographics, culture, history, cities, crops, languages, etc. do not mention anything about your time cutoff just answer when you know and say i dont have that information when it is beyond what you have. "
-                    "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
-                    "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
-                )
+                # Note: 'system_prompt' is not a standard OpenAI API parameter,
+                # it's included in the 'messages' array as shown above.
             },
-            timeout=20
+            timeout=30 # Increased timeout for potential processing
         )
         
-        logger.info(f"Poe API request sent. Status: {response.status_code}")
-        logger.debug(f"Poe API response body: {response.text}")
-        
+        logger.info(f"Poe OpenAI-compatible API request sent. Status: {response.status_code}")
         if response.status_code == 200:
             data = response.json()
-            # Poe API response structure may vary - adjust based on actual response
-            if "text" in data:
-                return data["text"].strip()
-            elif "response" in data:
-                return data["response"].strip()
-            elif "message" in data:
-                return data["message"].strip()
+            if "choices" in data and len(data["choices"]) > 0:
+                # Extract the content of the first choice
+                content = data["choices"][0]["message"]["content"]
+                return content.strip()
             else:
-                logger.warning(f"Unexpected Poe API response structure: {data}")
+                logger.warning(f"Poe API response had no choices: {data}")
                 return "I received your question but had trouble formatting the response."
         else:
-            logger.error(f"Poe AI error {response.status_code}: {response.text}")
+            logger.error(f"Poe OpenAI-compatible AI error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
             
     except Exception as e:
-        logger.exception("Poe AI request failed")
+        logger.exception("Poe OpenAI-compatible AI request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -210,7 +216,7 @@ def ask_poe_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data:
+    if not 
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -261,6 +267,7 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
     if not os.getenv("POE_API_KEY"):
         logger.warning("POE_API_KEY is not set — AI will be disabled.")
+    # Model is hardcoded to GPT-4o now, so no warning needed for POE_MODEL_NAME
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
