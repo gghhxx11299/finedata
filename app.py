@@ -216,7 +216,7 @@ def ask_poe_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not 
+    if not data: # Corrected syntax error here
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
