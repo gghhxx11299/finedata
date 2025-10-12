@@ -146,13 +146,13 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION
+# POE AI FUNCTION
 # ======================
 
-def ask_groq_ai(question: str) -> str:
-    groq_key = os.getenv("GROQ_API_KEY")
-    if not groq_key:
-        return "AI is not configured. Please set GROQ_API_KEY."
+def ask_poe_ai(question: str) -> str:
+    poe_token = os.getenv("POE_API_KEY")
+    if not poe_token:
+        return "AI is not configured. Please set POE_API_KEY."
 
     messages = [
         {
@@ -169,13 +169,12 @@ def ask_groq_ai(question: str) -> str:
 
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            "https://api.poe.com/bot/finedata-ai/chat",
             headers={
-                "Authorization": f"Bearer {groq_key}",
+                "Authorization": f"Bearer {poe_token}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama-3.1-8b-instant",
                 "messages": messages,
                 "temperature": 0.3,
                 "max_tokens": 300
@@ -186,10 +185,10 @@ def ask_groq_ai(question: str) -> str:
             data = response.json()
             return data["choices"][0]["message"]["content"].strip()
         else:
-            logger.error(f"Groq AI error {response.status_code}: {response.text}")
+            logger.error(f"Poe AI error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
     except Exception as e:
-        logger.exception("Groq AI request failed")
+        logger.exception("Poe AI request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -211,7 +210,7 @@ def ask_ai():
         target_lang = "en"
 
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_groq_ai(english_question)
+    answer_en = ask_poe_ai(english_question)
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
@@ -248,8 +247,8 @@ if __name__ == '__main__':
         logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("GROQ_API_KEY"):
-        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
+    if not os.getenv("POE_API_KEY"):
+        logger.warning("POE_API_KEY is not set — AI will be disabled.")
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
