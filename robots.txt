@@ -1,18 +1,38 @@
-# robots.txt for FineData Ethiopia
-# This file tells search engines which pages to crawl or ignore.
+# robots.txt for FineData (https://finedata.et)
+# Controls search-engine and AI crawler access
 
 User-agent: *
 Allow: /
+Disallow: /app.py
+Disallow: /data.json
+Disallow: /requirements.txt
+Disallow: /LICENSE
+Disallow: /README.md
+Disallow: /robots.txt
+Disallow: /llm.txt
 
-# Disallow sensitive or backend routes
-Disallow: /admin/
-Disallow: /api/
-Disallow: /dashboard/
-Disallow: /private/
-Disallow: /temp/
+# Sitemap
+Sitemap: https://finedata.et/sitemap.xml
 
-# Sitemap for faster indexing
-Sitemap: https://www.finedata.et/sitemap.xml
+# AI Crawlers
+User-agent: GPTBot
+Allow: /
 
-# Contact for webmaster or crawling issues
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Contact and Host Information
+Host: finedata.et
 Contact: gabrielmulugeta1@gmail.com
