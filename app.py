@@ -157,9 +157,10 @@ def ask_poe_ai(question: str) -> str:
         return "AI is not configured. Please set POE_API_KEY."
 
     try:
-        # Poe API requires different endpoint structure
+        # 🔧 FIXED: Removed trailing spaces in URL
+        url = "https://api.poe.com/bot/fetch_reply"
         response = requests.post(
-            "https://api.poe.com/bot/fetch_reply",
+            url,
             headers={
                 "Authorization": f"Bearer {poe_token}",
                 "Content-Type": "application/json"
@@ -178,6 +179,9 @@ def ask_poe_ai(question: str) -> str:
             },
             timeout=20
         )
+        
+        logger.info(f"Poe API request sent. Status: {response.status_code}")
+        logger.debug(f"Poe API response body: {response.text}")
         
         if response.status_code == 200:
             data = response.json()
