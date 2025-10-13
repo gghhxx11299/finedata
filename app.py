@@ -52,7 +52,7 @@ def subscribe():
         return jsonify({"error": "Email is required"}), 400
 
     api_key = os.getenv("EMAILOCTOPUS_API_KEY")
-    list_id = os.getenv("EMAILOCTOPUS_LIST_ID")
+    list_id = os.getenv("EMAILOCTUS_LIST_ID")
 
     if not api_key or not list_id:
         logger.error("EmailOctopus API_KEY or LIST_ID missing in environment variables")
@@ -146,28 +146,28 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# POE AI FUNCTION (Updated to use OpenAI-compatible endpoint with GPT-4o)
+# GROQ AI FUNCTION (Updated to use Groq-compatible endpoint)
 # ======================
 
-def ask_poe_ai(question: str) -> str:
-    poe_token = os.getenv("POE_API_KEY")
-    # Model name is set to GPT-4o
-    model_name = "gpt-4o"
+def ask_groq_ai(question: str) -> str:
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    # Using an active model as of Oct 11, 2025: llama-3.3-70b-versatile
+    model_name = "llama-3.3-70b-versatile"
     
-    if not poe_token:
-        return "AI is not configured. Please set POE_API_KEY."
+    if not groq_api_key:
+        return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # Use the OpenAI-compatible endpoint provided by Poe
-        url = "https://api.poe.com/v1/chat/completions"
+        # Use the Groq API endpoint
+        url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
             headers={
-                "Authorization": f"Bearer {poe_token}",
+                "Authorization": f"Bearer {groq_api_key}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": model_name, # Specify the model to use
+                "model": model_name,
                 "messages": [
                     {
                         "role": "system",
@@ -185,13 +185,11 @@ def ask_poe_ai(question: str) -> str:
                 ],
                 "temperature": 0.3,
                 "max_tokens": 300,
-                # Note: 'system_prompt' is not a standard OpenAI API parameter,
-                # it's included in the 'messages' array as shown above.
             },
-            timeout=30 # Increased timeout for potential processing
+            timeout=30
         )
         
-        logger.info(f"Poe OpenAI-compatible API request sent. Status: {response.status_code}")
+        logger.info(f"Groq API request sent. Status: {response.status_code}")
         if response.status_code == 200:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
@@ -199,14 +197,14 @@ def ask_poe_ai(question: str) -> str:
                 content = data["choices"][0]["message"]["content"]
                 return content.strip()
             else:
-                logger.warning(f"Poe API response had no choices: {data}")
+                logger.warning(f"Groq API response had no choices: {data}")
                 return "I received your question but had trouble formatting the response."
         else:
-            logger.error(f"Poe OpenAI-compatible AI error {response.status_code}: {response.text}")
+            logger.error(f"Groq AI error {response.status_code}: {response.text}")
             return "I'm having trouble thinking right now. Try again?"
             
     except Exception as e:
-        logger.exception("Poe OpenAI-compatible AI request failed")
+        logger.exception("Groq AI request failed")
         return "AI service is temporarily unavailable."
 
 # ======================
@@ -228,7 +226,7 @@ def ask_ai():
         target_lang = "en"
 
     english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_poe_ai(english_question)
+    answer_en = ask_groq_ai(english_question)
     answer_translated = translate_text(answer_en, target_lang)
 
     return jsonify({
@@ -262,12 +260,11 @@ def home():
 
 if __name__ == '__main__':
     if not os.getenv("EMAILOCTOPUS_API_KEY"):
-        logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
+        logger.warning("EMAILOCTUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("POE_API_KEY"):
-        logger.warning("POE_API_KEY is not set — AI will be disabled.")
-    # Model is hardcoded to GPT-4o now, so no warning needed for POE_MODEL_NAME
+    if not os.getenv("GROQ_API_KEY"):
+        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
