@@ -669,7 +669,11 @@
                     let data = null;
                     const contentType = response.headers.get('content-type');
                     if (contentType && contentType.includes('application/json')) {
-                        data = await response.json().catch(() => null);
+                        try {
+                            data = await response.json();
+                        } catch (parseError) {
+                            console.warn('JSON parse failed:', parseError);
+                        }
                     }
 
                     if (response.ok) {
