@@ -39,7 +39,7 @@ NLLB_LANG_MAP = {
 SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
-# EMAIL SUBSCRIPTION (EmailOctopus API v2 - CORRECTED)
+# EMAIL SUBSCRIPTION (EmailOctopus API v2 - CORRECT)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -60,13 +60,15 @@ def subscribe():
             logger.error("EmailOctopus API_KEY or LIST_ID missing")
             return jsonify({"error": "Subscription service not configured"}), 500
 
-        # ✅ CORRECT v2 API USAGE: query param + /api/2.0/
-        url = f"https://emailoctopus.com/api/2.0/lists/{list_id}/contacts"
+        # ✅ CORRECT v2 API: Bearer auth + api.emailoctopus.com/v2/
+        url = f"https://api.emailoctopus.com/v2/lists/{list_id}/contacts"
         response = requests.post(
             url,
-            params={"api_key": api_key},  # ← API key as query param
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
             json={"email_address": email, "status": "SUBSCRIBED"},
-            headers={"Content-Type": "application/json"},
             timeout=10
         )
 
@@ -84,7 +86,7 @@ def subscribe():
                         detail = (err.get("detail") or "").lower()
                         if "blank" in detail:
                             return jsonify({"error": "Email cannot be empty"}), 400
-                        if "invalid" in detail or "valid" in detail:
+                        if "invalid" in detail:
                             return jsonify({"error": "Invalid email address"}), 400
                 return jsonify({"error": "Invalid subscription data"}), 422
             except Exception:
@@ -96,7 +98,7 @@ def subscribe():
             return jsonify({"error": "Email already subscribed"}), 422
 
         elif response.status_code == 401:
-            logger.error("EmailOctopus: Invalid API key (must be v2 key)")
+            logger.error("EmailOctopus: Invalid or missing v2 API key")
             return jsonify({"error": "Subscription service misconfigured"}), 500
 
         elif response.status_code == 404:
