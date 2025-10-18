@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,36 +16,44 @@
             --primary-color: #58A6FF;
             --secondary-color: #FF7B72;
             --text-color: #C9D1D9;
+            --text-muted: #8B949E;
             --border-color: #30363D;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            --hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            --success-color: #3FB950;
+            --warning-color: #F0B72F;
+            --info-color: #58A6FF;
+            --danger-color: #FF7B72;
+            --hover-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
         }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        html {
-            font-size: 16px;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
             background-color: var(--bg-color);
-            overflow-x: hidden;
+            color: var(--text-color);
+            line-height: 1.6;
         }
-        h1, h2, h3, h4 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            color: var(--primary-color);
         }
         .container {
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
         }
-        /* Header Styles - Mobile First */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        a:hover {
+            color: var(--secondary-color);
+        }
+        /* Header */
         header {
             background-color: var(--card-bg);
             box-shadow: var(--shadow);
@@ -73,10 +82,9 @@
         .logo h1 {
             color: var(--primary-color);
             font-size: 1.3rem;
-            white-space: nowrap;
         }
         .nav-links {
-            display: none;
+            display: none; /* Hidden by default for mobile */
             flex-direction: column;
             position: absolute;
             top: 100%;
@@ -86,37 +94,43 @@
             box-shadow: var(--shadow);
             padding: 1rem 0;
             border-top: 1px solid var(--border-color);
-            z-index: 99;
-            max-height: 80vh;
-            overflow-y: auto;
-            list-style: none !important; /* ✅ FIX: Prevents bullet points ("dots") */
         }
         .nav-links.active {
             display: flex;
         }
         .nav-links li {
-            margin: 0.3rem 1.5rem;
-            width: calc(100% - 3rem);
+            margin: 0.3rem 1rem; /* Adjusted for mobile */
         }
         .nav-links a {
-            text-decoration: none;
             color: var(--text-color);
             font-weight: 500;
-            transition: color 0.3s;
-            display: block;
+            position: relative;
             padding: 0.5rem 0;
-            font-size: 0.95rem;
         }
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary-color);
         }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
         .btn {
             background-color: var(--primary-color);
             color: var(--bg-color);
-            padding: 8px 16px;
+            padding: 0.6rem 1.2rem;
             border-radius: 6px;
             font-weight: 600;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             white-space: nowrap;
             font-size: 0.9rem;
             display: inline-block;
@@ -130,7 +144,7 @@
             box-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color);
         }
         .mobile-menu-btn {
-            display: block;
+            display: block; /* Always visible on mobile */
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -160,7 +174,7 @@
         }
         /* Page Header */
         .page-header {
-            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1571835782488-179d2c6eecb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(rgba(13,17,23,0.9), rgba(13,17,23,0.9)), url('https://images.unsplash.com/photo-1571835782488-179d2c6eecb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             color: var(--text-color);
             padding: 2rem 0;
             text-align: center;
@@ -251,7 +265,7 @@
         }
         .data-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* Mobile first */
             gap: 1rem;
             margin-top: 1.2rem;
         }
@@ -294,7 +308,7 @@
         }
         .source-note {
             font-size: 0.8rem;
-            color: #8B949E;
+            color: var(--text-muted);
             margin-top: 0.8rem;
             font-style: italic;
         }
@@ -320,7 +334,7 @@
             background-color: var(--bg-color);
             font-weight: 600;
             color: var(--primary-color);
-            position: sticky;
+            position: sticky; /* Sticky header */
             left: 0;
         }
         .data-table tr:hover {
@@ -335,7 +349,7 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             position: relative;
-            height: 300px;
+            height: 300px; /* Fixed height for consistency */
         }
         /* Data Insights */
         .data-insights {
@@ -356,83 +370,91 @@
             line-height: 1.5;
             font-size: 0.95rem;
         }
-        /* Tabs */
-        .tab-container {
-            margin: 1.2rem 0;
+        /* NEW: Section for 2025 Demographic Data */
+        .section-2025 {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: rgba(88, 166, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
         }
-        .tab-buttons {
+        .section-2025 h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
             display: flex;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 1rem;
+            align-items: center;
+            gap: 10px;
         }
-        .tab-button {
-            padding: 0.8rem 1.2rem;
-            background: none;
-            border: none;
+        .section-2025 h3 i {
+            color: var(--secondary-color);
+        }
+        .data-subsection {
+            margin-bottom: 1.5rem;
+        }
+        .data-subsection h4 {
             color: var(--text-color);
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
         }
-        .tab-button.active {
+        .data-point {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--primary-color);
+        }
+        .data-point strong {
             color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
         }
-        .tab-button:hover:not(.active) {
-            color: var(--primary-color);
+        /* NEW: Visualizations for 2025 Data */
+        .visualizations-container {
+            display: grid; /* Mobile first */
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
         }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        /* Export Modal for Mobile */
-        #exportModal {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card-bg);
-            border-top: 1px solid var(--primary-color);
-            border-radius: 10px 10px 0 0;
+        .viz-card {
+            background-color: var(--bg-color);
+            border-radius: 10px;
             padding: 1rem;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.5);
-            z-index: 1000;
-            max-height: 70vh;
-            overflow-y: auto;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
         }
-        #exportModal h4 {
-            margin: 0 0 0.8rem;
+        .viz-card h5 {
             color: var(--primary-color);
-            font-size: 1.1rem;
-            text-align: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
         }
-        #exportModal button {
+        .viz-chart {
+            height: 200px;
+            margin: 0 auto; /* Center the chart */
+            width: 100%; /* Ensure full width within card */
+        }
+        /* NEW: Enhanced Card Style for 2025 Data Points */
+        .data-point-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        .data-point-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--primary-color);
+        }
+        .data-point-card strong {
+            color: var(--primary-color);
             display: block;
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.4rem 0;
-            background: rgba(88,166,255,0.1);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .data-point-card span {
             color: var(--text-color);
-            border: 1px solid var(--primary-color);
-            border-radius: 5px;
-            cursor: pointer;
+            display: block;
             font-size: 0.95rem;
-            text-align: left;
-        }
-        #exportModal button:hover {
-            background: rgba(88,166,255,0.2);
-        }
-        #exportModal .close-btn {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            margin-top: 0.6rem;
-            text-align: center;
         }
         /* Footer */
         footer {
@@ -443,7 +465,7 @@
             border-top: 1px solid var(--border-color);
         }
         .footer-content {
-            display: grid;
+            display: grid; /* Mobile first */
             grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-bottom: 1.5rem;
@@ -454,36 +476,13 @@
             color: var(--primary-color);
         }
         .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
-            color: #8B949E;
-            font-size: 0.9rem;
-        }
-        .footer-section a {
-            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--text-color);
             text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
         }
         .footer-section a:hover {
-            color: var(--primary-color);
-        }
-        .social-links {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 0.8rem;
-        }
-        .social-links a {
-            display: inline-block;
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 35px;
-            transition: background-color 0.3s;
-            font-size: 0.9rem;
-        }
-        .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
             color: var(--primary-color);
         }
         .footer-bottom {
@@ -514,7 +513,7 @@
                 font-size: 1.5rem;
             }
             .nav-links {
-                display: flex;
+                display: flex; /* Show on desktop */
                 flex-direction: row;
                 position: static;
                 width: auto;
@@ -524,7 +523,7 @@
                 padding: 0;
                 max-height: none;
                 overflow-y: visible;
-                list-style: none !important; /* Still needed for consistency */
+                list-style: none !important;
             }
             .nav-links li {
                 margin: 0 0.8rem;
@@ -540,7 +539,7 @@
                 margin: 0;
             }
             .mobile-menu-btn {
-                display: none;
+                display: none; /* Hide on desktop */
             }
             .page-header {
                 padding: 3rem 0;
@@ -590,42 +589,19 @@
                 padding: 1.5rem;
                 border-radius: 12px;
             }
+            .visualizations-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            .viz-card {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+            .data-point-card {
+                padding: 1.2rem;
+            }
             .footer-content {
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: 2rem;
-            }
-            #exportModal {
-                bottom: 20px;
-                right: 20px;
-                left: auto;
-                max-width: 300px;
-                border-radius: 10px;
-                border-top: 1px solid var(--primary-color);
-            }
-        }
-        @media (min-width: 992px) {
-            .container {
-                width: 90%;
-            }
-        }
-        /* Additional Mobile Optimizations */
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 10px;
-            }
-            .demographic-section {
-                padding: 1rem;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-            .chart-container {
-                height: 250px;
-                padding: 1rem;
-            }
-            .data-table th, .data-table td {
-                padding: 0.5rem;
-                font-size: 0.85rem;
             }
         }
     </style>
@@ -636,12 +612,9 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Fine data Logo">
                     <h1>FineData</h1>
                 </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="ai-chat.html">AI Chat</a></li>
@@ -649,26 +622,15 @@
                     <li><a href="news.html">News</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li>
-                        <button class="export-btn" onclick="showExportOptions()">
-                            <i class="fas fa-download"></i> Export Data
-                        </button>
-                    </li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </nav>
         </div>
     </header>
-    <!-- Export Modal -->
-    <div id="exportModal">
-        <h4><i class="fas fa-file-export"></i> Export Options</h4>
-        <button onclick="exportAllTablesToCSV()"><i class="fas fa-table"></i> All Tables (CSV)</button>
-        <button onclick="exportKeyMetricsAsJSON()"><i class="fas fa-code"></i> Key Metrics (JSON)</button>
-        <button onclick="exportSummaryAsText()"><i class="fas fa-file-alt"></i> Summary Report (TXT)</button>
-        <button class="close-btn" onclick="document.getElementById('exportModal').style.display='none'">
-            <i class="fas fa-times"></i> Close
-        </button>
-    </div>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -679,37 +641,268 @@
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Quick Stats -->
         <div class="quick-stats">
             <div class="quick-stat-card">
-                <div class="quick-stat-value">135.49M</div>
+                <div class="quick-stat-value">135.5M</div>
                 <div class="quick-stat-label">2025 Population</div>
-            </div>
-            <div class="quick-stat-card">
-                <div class="quick-stat-value">2.55%</div>
-                <div class="quick-stat-label">Annual Growth</div>
-            </div>
-            <div class="quick-stat-card">
-                <div class="quick-stat-value">67.8</div>
-                <div class="quick-stat-label">Life Expectancy</div>
-            </div>
-            <div class="quick-stat-card">
-                <div class="quick-stat-value">4.0</div>
-                <div class="quick-stat-label">Fertility Rate</div>
             </div>
             <div class="quick-stat-card">
                 <div class="quick-stat-value">22.5%</div>
                 <div class="quick-stat-label">Urban Population</div>
             </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">18.0</div>
+                <div class="quick-stat-label">Median Age</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">52.0%</div>
+                <div class="quick-stat-label">Adult Literacy</div>
+            </div>
+            <div class="quick-stat-card">
+                <div class="quick-stat-value">3.7</div>
+                <div class="quick-stat-label">Fertility Rate</div>
+            </div>
         </div>
+
+        <!-- NEW: 2025 Demographic Data Section with Visualizations -->
+        <section class="section-2025">
+            <h3><i class="fas fa-calendar-alt"></i> Comprehensive Demographic and Socioeconomic Data for Ethiopia 2025</h3>
+
+            <div class="data-subsection">
+                <h4>Basic Population Statistics</h4>
+                <div class="data-point-card">
+                    <strong>Population (2025)</strong>
+                    <span>Ethiopia’s population is projected at about 135–136 million.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Population Density</strong>
+                    <span>Roughly 120–135 people per km².</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Age Distribution</strong>
+                    <span>Very young population with median age around 18 years. Roughly 60% under age 25, and only ~3–4% are 65+.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Gender Distribution</strong>
+                    <span>Nearly even sex ratio (~0.99 men per woman).</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Households</strong>
+                    <span>Average household size ~4.6 persons.</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Basic Stats -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Age Distribution (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="ageDistChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Gender Ratio</h5>
+                    <div class="viz-chart">
+                        <canvas id="genderRatioChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Household Size Distribution</h5>
+                    <div class="viz-chart">
+                        <canvas id="householdSizeChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Geographic & Regional Data</h4>
+                <div class="data-point-card">
+                    <strong>Urban vs. Rural</strong>
+                    <span>Only about 22–23% live in urban areas (2025 estimate), meaning roughly 75–78% are rural.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Regional Population</strong>
+                    <span>Oromia (~40.9 M) and Amhara (~23.2 M) are the most populous regions.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Migration Trends</strong>
+                    <span>Relatively low net migration rate ~–0.1 per 1,000 (slight net outflow).</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Regional Data -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Urban vs Rural (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="urbanRuralChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Top 5 Regional Populations (Millions)</h5>
+                    <div class="viz-chart">
+                        <canvas id="regionalPopChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Socioeconomic Data</h4>
+                <div class="data-point-card">
+                    <strong>Income Levels</strong>
+                    <span>Per capita GNI ~$1,020 (2023). ~32% live under the national poverty line (2021).</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Employment</strong>
+                    <span>~70% of workforce depends on agriculture. Total labor force ~50 million.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Education</strong>
+                    <span>Adult literacy ~52%. Gender gap: ~57% (men) vs ~44% (women).</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Primary School</strong>
+                    <span>~65–80% enrollment, implying ~20–35% out of school.</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Socioeconomic Data -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Literacy Rate by Gender (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="literacyGenderChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Employment by Sector (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="employmentChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Cultural & Social Data</h4>
+                <div class="data-point-card">
+                    <strong>Ethnic Groups</strong>
+                    <span>Oromo (~34–36%) and Amhara (~27%) are largest. Together account for over 60%.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Languages</strong>
+                    <span>Over 90 languages. Amharic (official federal language) and Oromo (most widely spoken native language) are dominant.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Religion</strong>
+                    <span>~63% Christian (mostly Ethiopian Orthodox), ~34% Muslim.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Fertility</strong>
+                    <span>Total fertility ~3.6–3.8 children per woman.</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Cultural Data -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Major Ethnic Groups (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="ethnicityChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Religion Distribution (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="religionChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Health & Well-being</h4>
+                <div class="data-point-card">
+                    <strong>Life Expectancy</strong>
+                    <span>~66–67 years (2025 est).</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Mortality</strong>
+                    <span>Crude birth rate ~27.5/1000, crude death rate ~5.8/1000 (2025). Under-5 mortality ~46/1000.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Healthcare Access</strong>
+                    <span>Limited infrastructure. Public health spending ~3% of GDP. Low doctor density.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Common Health Issues</strong>
+                    <span>Malaria, tuberculosis, HIV are leading problems. NCDs rising.</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Health Data -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Life Expectancy (Years)</h5>
+                    <div class="viz-chart">
+                        <canvas id="lifeExpChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Mortality Rates (per 1000)</h5>
+                    <div class="viz-chart">
+                        <canvas id="mortalityChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Lifestyle & Behavior Data</h4>
+                <div class="data-point-card">
+                    <strong>Housing</strong>
+                    <span>Traditional round huts (tukul) in rural, varied in urban.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Transport</strong>
+                    <span>Low car ownership (~10–20 per 1000 people). Walking, bicycles, minibuses common.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Technology</strong>
+                    <span>Mobile penetration ~33% (2024). Internet use ~19% (end-2024). Electricity access ~45%.</span>
+                </div>
+                <div class="data-point-card">
+                    <strong>Consumer Behavior</strong>
+                    <span>Focus on basics. Mobile money usage high (~60M accounts by 2024).</span>
+                </div>
+            </div>
+
+            <!-- NEW: Visualizations for Lifestyle Data -->
+            <div class="visualizations-container">
+                <div class="viz-card">
+                    <h5>Technology Adoption (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="techAdoptionChart2025"></canvas>
+                    </div>
+                </div>
+                <div class="viz-card">
+                    <h5>Electricity Access (%)</h5>
+                    <div class="viz-chart">
+                        <canvas id="electricityChart2025"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- End NEW: 2025 Demographic Data Section -->
+
         <!-- Population Growth Section -->
         <section class="demographic-section" id="population-growth">
             <h3 class="section-title"><i class="fas fa-users"></i> Population Growth (2020-2030)</h3>
             <div class="data-insights">
                 <h4><i class="fas fa-chart-line"></i> 2025 Population Insights</h4>
-                <p>Ethiopia's population is projected to reach <strong>135.49 million</strong> in 2025, with an annual growth rate of <strong>2.55%</strong>. This represents a significant increase from 2020's population of 118.92 million, showing a consistent upward trend despite a gradual slowdown in growth rate.</p>
-                <p>The country's demographic transition continues with declining fertility rates (projected at 4.0 births per woman in 2025) and improving life expectancy (67.8 years in 2025). Urbanization is accelerating, with the urban population expected to reach 22.5% of the total by 2025.</p>
+                <p>Ethiopia's population is projected to reach <strong>135.5 million</strong> in 2025, with an annual growth rate of <strong>2.55%</strong>. This represents a significant increase from 2020's population of 118.92 million, showing a consistent upward trend despite a gradual slowdown in growth rate.</p>
+                <p>The country's demographic transition continues with declining fertility rates (projected at 3.7 births per woman in 2025) and improving life expectancy (66.8 years in 2025). Urbanization is accelerating, with the urban population expected to reach 22.5% of the total by 2025.</p>
             </div>
             <div class="chart-container">
                 <canvas id="populationChart"></canvas>
@@ -730,26 +923,27 @@
                     <tbody>
                         <tr><td>2020</td><td>118.92</td><td>2.71</td><td>32.8</td><td>7.2</td><td>-0.5</td></tr>
                         <tr><td>2021</td><td>122.14</td><td>2.67</td><td>32.3</td><td>7.1</td><td>-0.5</td></tr>
-                        <tr><td>2022</td><td>125.38</td><td>2.62</td><td>32.0</td><td>7.0</td><td>-0.6</td></tr>
-                        <tr><td>2023</td><td>128.69</td><td>2.60</td><td>31.8</td><td>6.9</td><td>-0.6</td></tr>
-                        <tr><td>2024</td><td>132.06</td><td>2.58</td><td>31.5</td><td>6.8</td><td>-0.6</td></tr>
-                        <tr><td>2025</td><td>135.49</td><td>2.55</td><td>31.2</td><td>6.7</td><td>-0.7</td></tr>
-                        <tr><td>2026</td><td>138.98</td><td>2.52</td><td>30.9</td><td>6.6</td><td>-0.7</td></tr>
-                        <tr><td>2027</td><td>142.53</td><td>2.49</td><td>30.6</td><td>6.5</td><td>-0.8</td></tr>
-                        <tr><td>2028</td><td>146.14</td><td>2.46</td><td>30.3</td><td>6.4</td><td>-0.8</td></tr>
-                        <tr><td>2029</td><td>149.81</td><td>2.43</td><td>30.0</td><td>6.3</td><td>-0.9</td></tr>
-                        <tr><td>2030</td><td>153.54</td><td>2.40</td><td>29.7</td><td>6.2</td><td>-0.9</td></tr>
+                        <tr><td>2022</td><td>125.38</td><td>2.62</td><td>31.9</td><td>7.0</td><td>-0.5</td></tr>
+                        <tr><td>2023</td><td>128.69</td><td>2.60</td><td>31.5</td><td>6.9</td><td>-0.6</td></tr>
+                        <tr><td>2024</td><td>132.06</td><td>2.58</td><td>31.1</td><td>6.8</td><td>-0.7</td></tr>
+                        <tr><td>2025</td><td>135.50</td><td>2.55</td><td>30.7</td><td>6.7</td><td>-0.7</td></tr>
+                        <tr><td>2026</td><td>138.98</td><td>2.52</td><td>30.5</td><td>6.6</td><td>-0.7</td></tr>
+                        <tr><td>2027</td><td>142.53</td><td>2.49</td><td>30.2</td><td>6.5</td><td>-0.8</td></tr>
+                        <tr><td>2028</td><td>146.14</td><td>2.46</td><td>30.0</td><td>6.4</td><td>-0.8</td></tr>
+                        <tr><td>2029</td><td>149.81</td><td>2.43</td><td>29.7</td><td>6.3</td><td>-0.9</td></tr>
+                        <tr><td>2030</td><td>153.54</td><td>2.40</td><td>29.5</td><td>6.2</td><td>-0.9</td></tr>
                     </tbody>
                 </table>
             </div>
             <p class="source-note">Source: World Bank/UN estimates via FRED</p>
         </section>
+
         <!-- Population Density by Region -->
         <section class="demographic-section" id="population-density">
             <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Population Density by Region (2025)</h3>
             <div class="data-insights">
                 <h4><i class="fas fa-map"></i> 2025 Regional Distribution Insights</h4>
-                <p>Ethiopia's population distribution remains highly uneven, with significant concentration in the highland regions. Oromia continues to be the most populous region with an estimated <strong>43.5 million people</strong> in 2025, followed by Amhara with <strong>33.2 million</strong>.</p>
+                <p>Ethiopia's population distribution remains highly uneven, with significant concentration in the highland regions. Oromia continues to be the most populous region with an estimated <strong>40.9 million people</strong> in 2025, followed by Amhara with <strong>23.2 million</strong>.</p>
                 <p>Addis Ababa maintains the highest population density at approximately <strong>7,100 persons/km²</strong> in 2025, while the Somali and Afar regions continue to have the lowest densities due to arid conditions. Regional development disparities remain a significant challenge for balanced national growth.</p>
             </div>
             <div class="chart-container">
@@ -768,22 +962,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Addis Ababa</td><td>5.4</td><td>527</td><td>7,100</td><td>3.8%</td></tr>
-                        <tr><td>Dire Dawa</td><td>0.64</td><td>1,213</td><td>195</td><td>2.9%</td></tr>
-                        <tr><td>Oromia</td><td>43.5</td><td>284,538</td><td>153</td><td>2.8%</td></tr>
-                        <tr><td>Amhara</td><td>33.2</td><td>154,709</td><td>215</td><td>2.7%</td></tr>
-                        <tr><td>SNNPR</td><td>27.3</td><td>112,343</td><td>243</td><td>2.9%</td></tr>
-                        <tr><td>Tigray</td><td>7.6</td><td>50,079</td><td>152</td><td>2.6%</td></tr>
-                        <tr><td>Somali</td><td>7.0</td><td>327,068</td><td>21</td><td>2.9%</td></tr>
-                        <tr><td>Afar</td><td>2.2</td><td>72,000</td><td>31</td><td>2.4%</td></tr>
-                        <tr><td>Benishangul-Gumuz</td><td>1.4</td><td>50,699</td><td>28</td><td>2.7%</td></tr>
-                        <tr><td>Gambela</td><td>0.52</td><td>29,783</td><td>17</td><td>2.8%</td></tr>
-                        <tr><td>Harari</td><td>0.31</td><td>311</td><td>995</td><td>2.6%</td></tr>
+                        <tr><td>Oromia</td><td>40.9</td><td>284,538</td><td>144</td><td>2.8%</td></tr>
+                        <tr><td>Amhara</td><td>23.2</td><td>154,709</td><td>150</td><td>2.7%</td></tr>
+                        <tr><td>SNNPR</td><td>21.8</td><td>112,343</td><td>194</td><td>2.9%</td></tr>
+                        <tr><td>Tigray</td><td>5.8</td><td>50,079</td><td>116</td><td>2.6%</td></tr>
+                        <tr><td>Somali</td><td>6.7</td><td>350,000</td><td>19</td><td>2.4%</td></tr>
+                        <tr><td>Afar</td><td>2.1</td><td>72,795</td><td>29</td><td>2.5%</td></tr>
+                        <tr><td>Addis Ababa</td><td>3.95</td><td>527</td><td>7,495</td><td>3.8%</td></tr>
                     </tbody>
                 </table>
             </div>
-            <p class="source-note">Source: Central Statistical Agency of Ethiopia, 2025 projections</p>
+            <p class="source-note">Source: Central Statistical Agency of Ethiopia</p>
         </section>
+
         <!-- Age Structure Section -->
         <section class="demographic-section" id="age-structure">
             <h3 class="section-title"><i class="fas fa-child"></i> Age Structure (2025)</h3>
@@ -800,7 +991,7 @@
                     <h4><i class="fas fa-baby"></i> Youth Population (0-14)</h4>
                     <div class="stat-value">43.2%</div>
                     <div class="stat-detail">58.5 million people under age 15</div>
-                    <div class="stat-detail">Median age: 19.7 years</div>
+                    <div class="stat-detail">Median age: 18.0 years</div>
                 </div>
                 <div class="data-card">
                     <h4><i class="fas fa-user"></i> Working Age (15-64)</h4>
@@ -812,47 +1003,18 @@
                     <h4><i class="fas fa-user-tie"></i> Elderly Population (65+)</h4>
                     <div class="stat-value">3.3%</div>
                     <div class="stat-detail">4.5 million people aged 65 and above</div>
-                    <div class="stat-detail">Life expectancy at birth: 67.8 years</div>
+                    <div class="stat-detail">Life expectancy at birth: 66.8 years</div>
                 </div>
             </div>
-            <h4 style="margin: 1.2rem 0 0.8rem;">Age Structure Breakdown (2025)</h4>
-            <div class="table-container">
-                <table class="data-table" id="table-age">
-                    <thead>
-                        <tr>
-                            <th>Age Group</th>
-                            <th>Population (M)</th>
-                            <th>Percentage</th>
-                            <th>Male</th>
-                            <th>Female</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>0-4</td><td>19.2</td><td>14.2%</td><td>9.8</td><td>9.4</td></tr>
-                        <tr><td>5-9</td><td>18.5</td><td>13.7%</td><td>9.4</td><td>9.1</td></tr>
-                        <tr><td>10-14</td><td>17.3</td><td>12.8%</td><td>8.8</td><td>8.5</td></tr>
-                        <tr><td>15-19</td><td>15.8</td><td>11.7%</td><td>8.0</td><td>7.8</td></tr>
-                        <tr><td>20-24</td><td>13.9</td><td>10.3%</td><td>7.0</td><td>6.9</td></tr>
-                        <tr><td>25-29</td><td>11.8</td><td>8.7%</td><td>5.9</td><td>5.9</td></tr>
-                        <tr><td>30-34</td><td>9.7</td><td>7.2%</td><td>4.8</td><td>4.9</td></tr>
-                        <tr><td>35-39</td><td>8.1</td><td>6.0%</td><td>4.0</td><td>4.1</td></tr>
-                        <tr><td>40-44</td><td>6.5</td><td>4.8%</td><td>3.2</td><td>3.3</td></tr>
-                        <tr><td>45-49</td><td>5.2</td><td>3.8%</td><td>2.6</td><td>2.6</td></tr>
-                        <tr><td>50-54</td><td>4.1</td><td>3.0%</td><td>2.0</td><td>2.1</td></tr>
-                        <tr><td>55-59</td><td>3.2</td><td>2.4%</td><td>1.6</td><td>1.6</td></tr>
-                        <tr><td>60-64</td><td>2.4</td><td>1.8%</td><td>1.2</td><td>1.2</td></tr>
-                        <tr><td>65+</td><td>4.5</td><td>3.3%</td><td>2.1</td><td>2.4</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="source-note">Source: UN World Population Prospects, 2025 projections</p>
+            <p class="source-note">Source: World Bank/UN Population Division</p>
         </section>
-        <!-- Education and Literacy Section -->
+
+        <!-- Education Section -->
         <section class="demographic-section" id="education">
-            <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Education & Literacy (2025)</h3>
+            <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Education (2025)</h3>
             <div class="data-insights">
-                <h4><i class="fas fa-book"></i> Educational Attainment Insights</h4>
-                <p>Ethiopia has made significant progress in education, with the literacy rate reaching <strong>54.2%</strong> in 2025. However, substantial gender and regional disparities persist, with male literacy at <strong>59.8%</strong> compared to female literacy at <strong>48.7%</strong>.</p>
+                <h4><i class="fas fa-book-open"></i> Education Indicators Insights</h4>
+                <p>Ethiopia has made significant progress in education, with the literacy rate reaching <strong>52.0%</strong> in 2025. However, substantial gender and regional disparities persist, with male literacy at <strong>57.0%</strong> compared to female literacy at <strong>47.0%</strong>.</p>
                 <p>Primary school enrollment has improved dramatically, reaching <strong>95%</strong> net enrollment rate, but secondary and tertiary education enrollment rates remain lower at <strong>42%</strong> and <strong>12%</strong> respectively.</p>
             </div>
             <div class="chart-container">
@@ -860,144 +1022,63 @@
             </div>
             <div class="data-grid">
                 <div class="data-card">
-                    <h4><i class="fas fa-book-reader"></i> Literacy Rate</h4>
-                    <div class="stat-value">54.2%</div>
-                    <div class="stat-detail">Male: 59.8% | Female: 48.7%</div>
-                    <div class="stat-detail">Urban: 82.3% | Rural: 45.1%</div>
+                    <h4><i class="fas fa-font"></i> Adult Literacy Rate</h4>
+                    <div class="stat-value">52.0%</div>
+                    <div class="stat-detail">Male: 57.0%</div>
+                    <div class="stat-detail">Female: 47.0%</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-school"></i> Primary Enrollment</h4>
-                    <div class="stat-value">95%</div>
-                    <div class="stat-detail">Net enrollment rate (ages 6-12)</div>
-                    <div class="stat-detail">Gender parity index: 0.94</div>
+                    <h4><i class="fas fa-school"></i> Primary School Net Enrollment</h4>
+                    <div class="stat-value">95.0%</div>
+                    <div class="stat-detail">Achieved near universal enrollment</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-university"></i> Tertiary Education</h4>
-                    <div class="stat-value">12%</div>
-                    <div class="stat-detail">Gross enrollment ratio</div>
-                    <div class="stat-detail">48 universities nationwide</div>
+                    <h4><i class="fas fa-university"></i> Secondary School Net Enrollment</h4>
+                    <div class="stat-value">42.0%</div>
+                    <div class="stat-detail">Significant room for improvement</div>
                 </div>
             </div>
-            <h4 style="margin: 1.2rem 0 0.8rem;">Educational Attainment by Level (Population 25+, 2025)</h4>
-            <div class="table-container">
-                <table class="data-table" id="table-education">
-                    <thead>
-                        <tr>
-                            <th>Education Level</th>
-                            <th>Percentage</th>
-                            <th>Male</th>
-                            <th>Female</th>
-                            <th>Urban</th>
-                            <th>Rural</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>No Formal Education</td><td>38.2%</td><td>32.5%</td><td>43.8%</td><td>8.7%</td><td>45.3%</td></tr>
-                        <tr><td>Primary Education</td><td>42.5%</td><td>44.1%</td><td>40.9%</td><td>35.2%</td><td>44.1%</td></tr>
-                        <tr><td>Secondary Education</td><td>15.3%</td><td>17.8%</td><td>12.8%</td><td>38.5%</td><td>9.2%</td></tr>
-                        <tr><td>Tertiary Education</td><td>4.0%</td><td>5.6%</td><td>2.5%</td><td>17.6%</td><td>1.4%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="source-note">Source: UNESCO/World Bank literacy statistics, 2025 projections</p>
+            <p class="source-note">Source: UNESCO/World Bank literacy statistics</p>
         </section>
+
         <!-- Labor Force Section -->
         <section class="demographic-section" id="labor">
             <h3 class="section-title"><i class="fas fa-briefcase"></i> Labor Force (2025)</h3>
-            <div class="tab-container">
-                <div class="tab-buttons">
-                    <button class="tab-button active" onclick="openTab(event, 'labor-overview')">Overview</button>
-                    <button class="tab-button" onclick="openTab(event, 'labor-sector')">By Sector</button>
-                    <button class="tab-button" onclick="openTab(event, 'labor-region')">By Region</button>
+            <div class="data-insights">
+                <h4><i class="fas fa-chart-bar"></i> Labor Market Insights</h4>
+                <p>Ethiopia's labor force is estimated at <strong>50.0 million</strong> in 2025, with an unemployment rate of <strong>19.2%</strong>. Youth unemployment remains particularly high at <strong>25.7%</strong>, presenting a significant challenge for the country's development.</p>
+                <p>The informal sector continues to dominate employment, accounting for approximately <strong>85%</strong> of total employment. Agriculture remains the largest employer at <strong>70%</strong> of the workforce, though this share has been gradually declining.</p>
+            </div>
+            <div class="chart-container">
+                <canvas id="laborChart"></canvas>
+            </div>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-users"></i> Total Labor Force</h4>
+                    <div class="stat-value">50.0M</div>
+                    <div class="stat-detail">~2M youths entering annually</div>
                 </div>
-                <div id="labor-overview" class="tab-content active">
-                    <div class="data-insights">
-                        <h4><i class="fas fa-chart-bar"></i> Labor Market Insights</h4>
-                        <p>Ethiopia's labor force is estimated at <strong>58.3 million</strong> in 2025, with an unemployment rate of <strong>19.2%</strong>. Youth unemployment remains particularly high at <strong>25.7%</strong>, presenting a significant challenge for the country's development.</p>
-                        <p>The informal sector continues to dominate employment, accounting for approximately <strong>85%</strong> of total employment. Agriculture remains the largest employer at <strong>68%</strong> of the workforce, though this share has been gradually declining.</p>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="laborChart"></canvas>
-                    </div>
-                    <div class="data-grid">
-                        <div class="data-card">
-                            <h4><i class="fas fa-users"></i> Labor Force</h4>
-                            <div class="stat-value">58.3M</div>
-                            <div class="stat-detail">Labor force participation: 79.2%</div>
-                            <div class="stat-detail">Male: 83.5% | Female: 75.1%</div>
-                        </div>
-                        <div class="data-card">
-                            <h4><i class="fas fa-user-times"></i> Unemployment</h4>
-                            <div class="stat-value">19.2%</div>
-                            <div class="stat-detail">Youth unemployment: 25.7%</div>
-                            <div class="stat-detail">Urban: 22.8% | Rural: 17.5%</div>
-                        </div>
-                        <div class="data-card">
-                            <h4><i class="fas fa-industry"></i> Informal Employment</h4>
-                            <div class="stat-value">85%</div>
-                            <div class="stat-detail">Percentage of total employment</div>
-                            <div class="stat-detail">Limited social protection</div>
-                        </div>
-                    </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-percentage"></i> Unemployment Rate</h4>
+                    <div class="stat-value">19.2%</div>
+                    <div class="stat-detail">Youth unemployment: 25.7%</div>
                 </div>
-                <div id="labor-sector" class="tab-content">
-                    <h4 style="margin: 1.2rem 0 0.8rem;">Employment by Economic Sector (2025)</h4>
-                    <div class="table-container">
-                        <table class="data-table" id="table-sector">
-                            <thead>
-                                <tr>
-                                    <th>Sector</th>
-                                    <th>Employment (%)</th>
-                                    <th>Employment (M)</th>
-                                    <th>Growth (2020-25)</th>
-                                    <th>Average Wage (ETB)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Agriculture</td><td>68.0%</td><td>33.2</td><td>+1.8%</td><td>1,250</td></tr>
-                                <tr><td>Services</td><td>20.5%</td><td>10.0</td><td>+4.2%</td><td>3,800</td></tr>
-                                <tr><td>Industry</td><td>11.5%</td><td>5.6</td><td>+5.7%</td><td>4,200</td></tr>
-                                <tr><td>Construction</td><td>7.2%</td><td>3.5</td><td>+6.3%</td><td>3,500</td></tr>
-                                <tr><td>Manufacturing</td><td>4.3%</td><td>2.1</td><td>+4.8%</td><td>4,800</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div id="labor-region" class="tab-content">
-                    <h4 style="margin: 1.2rem 0 0.8rem;">Labor Force by Region (2025)</h4>
-                    <div class="table-container">
-                        <table class="data-table" id="table-region">
-                            <thead>
-                                <tr>
-                                    <th>Region</th>
-                                    <th>Labor Force (M)</th>
-                                    <th>Unemployment</th>
-                                    <th>Youth Unemployment</th>
-                                    <th>Informal Employment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Oromia</td><td>22.5</td><td>18.5%</td><td>24.2%</td><td>87.2%</td></tr>
-                                <tr><td>Amhara</td><td>17.2</td><td>17.8%</td><td>23.5%</td><td>85.8%</td></tr>
-                                <tr><td>SNNPR</td><td>13.8</td><td>19.3%</td><td>26.1%</td><td>88.5%</td></tr>
-                                <tr><td>Tigray</td><td>3.8</td><td>21.5%</td><td>28.3%</td><td>82.7%</td></tr>
-                                <tr><td>Addis Ababa</td><td>2.9</td><td>23.8%</td><td>31.2%</td><td>65.3%</td></tr>
-                                <tr><td>Somali</td><td>3.2</td><td>20.1%</td><td>27.5%</td><td>91.2%</td></tr>
-                                <tr><td>Other Regions</td><td>4.9</td><td>18.9%</td><td>25.8%</td><td>89.4%</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-industry"></i> Employment by Sector</h4>
+                    <div class="stat-value">70% / 15% / 15%</div>
+                    <div class="stat-detail">Agric / Industry / Services</div>
                 </div>
             </div>
             <p class="source-note">Source: ILO/World Bank labor estimates, Ethiopian Labour Survey (ESS)</p>
         </section>
+
         <!-- Health and Mortality Section -->
         <section class="demographic-section" id="health">
             <h3 class="section-title"><i class="fas fa-heartbeat"></i> Health & Mortality (2025)</h3>
             <div class="data-insights">
                 <h4><i class="fas fa-stethoscope"></i> Health Indicators Insights</h4>
-                <p>Ethiopia has made significant improvements in health outcomes, with life expectancy reaching <strong>67.8 years</strong> in 2025 (up from 64.8 in 2015). However, challenges remain, particularly in maternal and child health.</p>
-                <p>The under-five mortality rate has declined to <strong>48 deaths per 1,000 live births</strong>, while maternal mortality remains high at <strong>412 deaths per 100,000 live births</strong>. Access to healthcare has improved, with <strong>87%</strong> of the population living within 10km of a health facility.</p>
+                <p>Ethiopia has made significant improvements in health outcomes, with life expectancy reaching <strong>66.8 years</strong> in 2025 (up from 63.8 in 2015). However, challenges remain, particularly in maternal and child health.</p>
+                <p>The under-five mortality rate has declined to <strong>46 deaths per 1,000 live births</strong>, while maternal mortality remains high at <strong>320 deaths per 100,000 live births</strong>. Access to healthcare has improved, with <strong>85%</strong> of the population living within 10km of a health facility.</p>
             </div>
             <div class="chart-container">
                 <canvas id="healthChart"></canvas>
@@ -1005,54 +1086,30 @@
             <div class="data-grid">
                 <div class="data-card">
                     <h4><i class="fas fa-heart"></i> Life Expectancy</h4>
-                    <div class="stat-value">67.8</div>
-                    <div class="stat-detail">Male: 65.9 | Female: 69.7</div>
-                    <div class="stat-detail">Increase of 3 years since 2015</div>
+                    <div class="stat-value">66.8 years</div>
+                    <div class="stat-detail">Male: 64.2 years</div>
+                    <div class="stat-detail">Female: 68.8 years</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-baby"></i> Infant Mortality</h4>
-                    <div class="stat-value">33</div>
-                    <div class="stat-detail">Deaths per 1,000 live births</div>
-                    <div class="stat-detail">Under-5 mortality: 48/1,000</div>
+                    <h4><i class="fas fa-baby"></i> Under-5 Mortality Rate</h4>
+                    <div class="stat-value">46/1000</div>
+                    <div class="stat-detail">Infant mortality: 21.5/1000</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-female"></i> Maternal Mortality</h4>
-                    <div class="stat-value">412</div>
-                    <div class="stat-detail">Deaths per 100,000 live births</div>
-                    <div class="stat-detail">Skilled birth attendance: 74%</div>
+                    <h4><i class="fas fa-female"></i> Maternal Mortality Rate</h4>
+                    <div class="stat-value">320/100k</div>
+                    <div class="stat-detail">Per 100,000 live births</div>
                 </div>
-            </div>
-            <h4 style="margin: 1.2rem 0 0.8rem;">Key Health Indicators (2025)</h4>
-            <div class="table-container">
-                <table class="data-table" id="table-health">
-                    <thead>
-                        <tr>
-                            <th>Indicator</th>
-                            <th>Value</th>
-                            <th>Urban</th>
-                            <th>Rural</th>
-                            <th>Trend (2015-25)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Life Expectancy</td><td>67.8</td><td>71.2</td><td>66.5</td><td>+3.0 years</td></tr>
-                        <tr><td>Infant Mortality</td><td>33/1,000</td><td>21/1,000</td><td>37/1,000</td><td>-12/1,000</td></tr>
-                        <tr><td>Under-5 Mortality</td><td>48/1,000</td><td>31/1,000</td><td>53/1,000</td><td>-18/1,000</td></tr>
-                        <tr><td>Maternal Mortality</td><td>412/100k</td><td>198/100k</td><td>485/100k</td><td>-188/100k</td></tr>
-                        <tr><td>HIV Prevalence</td><td>0.9%</td><td>1.8%</td><td>0.6%</td><td>-0.3%</td></tr>
-                        <tr><td>Malaria Incidence</td><td>12.5%</td><td>3.2%</td><td>15.8%</td><td>-8.5%</td></tr>
-                        <tr><td>Stunting (Under-5)</td><td>36%</td><td>22%</td><td>41%</td><td>-11%</td></tr>
-                    </tbody>
-                </table>
             </div>
             <p class="source-note">Source: World Health Organization (WHO), UNICEF, Ethiopia Demographic and Health Survey (EDHS)</p>
         </section>
+
         <!-- Migration and Urbanization Section -->
         <section class="demographic-section" id="migration">
             <h3 class="section-title"><i class="fas fa-plane-departure"></i> Migration & Urbanization (2025)</h3>
             <div class="data-insights">
                 <h4><i class="fas fa-city"></i> Urbanization Trends</h4>
-                <p>Ethiopia is urbanizing rapidly, with the urban population projected to reach <strong>30.5 million</strong> (22.5% of total) in 2025. Addis Ababa remains the largest urban center with <strong>5.4 million</strong> residents, followed by Dire Dawa, Mekelle, and Adama.</p>
+                <p>Ethiopia is urbanizing rapidly, with the urban population projected to reach <strong>30.5 million</strong> (22.5% of total) in 2025. Addis Ababa remains the largest urban center with <strong>3.95 million</strong> residents, followed by Dire Dawa, Mekelle, and Adama.</p>
                 <p>Internal migration continues to be dominated by rural-to-urban movement, with an estimated <strong>1.2 million</strong> people moving to urban areas annually. International migration shows a net outflow, with approximately <strong>700,000</strong> Ethiopians living abroad, primarily in the Middle East, North America, and Europe.</p>
             </div>
             <div class="chart-container">
@@ -1073,9 +1130,9 @@
                 </div>
                 <div class="data-card">
                     <h4><i class="fas fa-exchange-alt"></i> Net Migration</h4>
-                    <div class="stat-value">-0.7</div>
+                    <div class="stat-value">-0.1</div>
                     <div class="stat-detail">Net migrants per 1,000 people</div>
-                    <div class="stat-detail">Primarily to Middle East</div>
+                    <div class="stat-detail">Slight net outflow</div>
                 </div>
             </div>
             <h4 style="margin: 1.2rem 0 0.8rem;">Major Urban Centers (2025)</h4>
@@ -1091,21 +1148,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Addis Ababa</td><td>5,400,000</td><td>3.8%</td><td>Addis Ababa</td><td>7,100</td></tr>
+                        <tr><td>Addis Ababa</td><td>3,950,000</td><td>3.8%</td><td>Addis Ababa</td><td>7,495</td></tr>
                         <tr><td>Dire Dawa</td><td>640,000</td><td>2.9%</td><td>Dire Dawa</td><td>2,800</td></tr>
                         <tr><td>Mekelle</td><td>520,000</td><td>4.2%</td><td>Tigray</td><td>5,200</td></tr>
-                        <tr><td>Adama</td><td>480,000</td><td>4.5%</td><td>Oromia</td><td>3,800</td></tr>
-                        <tr><td>Gondar</td><td>420,000</td><td>3.7%</td><td>Amhara</td><td>4,100</td></tr>
-                        <tr><td>Hawassa</td><td>380,000</td><td>4.8%</td><td>SNNPR</td><td>3,500</td></tr>
-                        <tr><td>Bahir Dar</td><td>350,000</td><td>4.0%</td><td>Amhara</td><td>3,900</td></tr>
-                        <tr><td>Jimma</td><td>280,000</td><td>3.5%</td><td>Oromia</td><td>3,200</td></tr>
-                        <tr><td>Jijiga</td><td>220,000</td><td>4.3%</td><td>Somali</td><td>2,900</td></tr>
-                        <tr><td>Arba Minch</td><td>180,000</td><td>4.1%</td><td>SNNPR</td><td>2,700</td></tr>
+                        <tr><td>Adama</td><td>480,000</td><td>3.5%</td><td>Oromia</td><td>4,800</td></tr>
+                        <tr><td>Gondar</td><td>420,000</td><td>3.1%</td><td>Amhara</td><td>4,200</td></tr>
                     </tbody>
                 </table>
             </div>
             <p class="source-note">Source: Central Statistical Agency of Ethiopia, UNHCR, IOM</p>
         </section>
+
         <!-- Data Sources Section -->
         <section class="demographic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -1126,6 +1179,7 @@
             <p>We strive to provide the most accurate and up-to-date information available.</p>
         </section>
     </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1154,163 +1208,37 @@
             </div>
         </div>
     </footer>
+
     <script>
         // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
-                navLinks.classList.remove('active');
-            }
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
         });
-        // Show export modal
-        function showExportOptions() {
-            const modal = document.getElementById('exportModal');
-            if (window.innerWidth <= 768) {
-                // Mobile: Show modal from bottom
-                modal.style.display = 'block';
-            } else {
-                // Desktop: Show modal in corner
-                modal.style.display = 'block';
-                setTimeout(() => {
-                    if (window.innerWidth > 768) {
-                        modal.style.display = 'none';
-                    }
-                }, 5000);
-            }
-        }
-        // Close modal when clicking outside (desktop)
-        document.addEventListener('click', (e) => {
-            const modal = document.getElementById('exportModal');
-            if (window.innerWidth > 768 && modal.style.display === 'block') {
-                if (!e.target.closest('#exportModal') && !e.target.closest('.export-btn')) {
-                    modal.style.display = 'none';
-                }
-            }
-        });
-        // Tab functionality
-        function openTab(evt, tabName) {
-            const tabcontent = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            const tabbuttons = document.getElementsByClassName("tab-button");
-            for (let i = 0; i < tabbuttons.length; i++) {
-                tabbuttons[i].classList.remove("active");
-            }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-        // Utility: Download file
-        function downloadFile(filename, text, mimeType = 'text/plain') {
-            const blob = new Blob([text], { type: mimeType });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-        // 1. Export ALL tables as CSV (concatenated)
-        function exportAllTablesToCSV() {
-            let allCSV = '';
-            const tables = document.querySelectorAll('.data-table');
-            tables.forEach((table, index) => {
-                if (index > 0) allCSV += '\n';
-                const sectionTitle = table.closest('.demographic-section').querySelector('.section-title').innerText.trim();
-                allCSV += `# ${sectionTitle}\n`;
-                let csv = [];
-                const rows = table.querySelectorAll('tr');
-                for (let i = 0; i < rows.length; i++) {
-                    const cols = rows[i].querySelectorAll('td, th');
-                    const row = [];
-                    for (let j = 0; j < cols.length; j++) {
-                        let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
-                        if (data.includes(',') || data.includes('"')) {
-                            data = `"${data}"`;
-                        }
-                        row.push(data);
-                    }
-                    csv.push(row.join(','));
-                }
-                allCSV += csv.join('\n');
-            });
-            downloadFile('ethiopia_demographic_data_all_tables.csv', allCSV, 'text/csv');
-            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
-        }
-        // 2. Export key metrics from data cards as JSON
-        function exportKeyMetricsAsJSON() {
-            const cards = document.querySelectorAll('.data-card');
-            const metrics = [];
-            cards.forEach(card => {
-                const metric = card.getAttribute('data-metric');
-                const value = card.getAttribute('data-value');
-                const detail = card.getAttribute('data-detail') || '';
-                if (metric) {
-                    metrics.push({ metric, value, detail });
-                }
-            });
-            const jsonString = JSON.stringify(metrics, null, 2);
-            downloadFile('demographic_key_metrics.json', jsonString, 'application/json');
-            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
-        }
-        // 3. Export summary report as TXT
-        function exportSummaryAsText() {
-            let report = `Ethiopian Demographic Data Summary\n`;
-            report += `Generated by Finedatas - ${new Date().toLocaleDateString('en-ET', { timeZone: 'Africa/Addis_Ababa' })}\n`;
-            report += `========================================\n`;
-            // Key sections
-            const sections = [
-                { id: 'population-growth', title: 'Population Growth' },
-                { id: 'population-density', title: 'Population Density' },
-                { id: 'age-structure', title: 'Age Structure' },
-                { id: 'education', title: 'Education' },
-                { id: 'labor', title: 'Labor Force' },
-                { id: 'health', title: 'Health' },
-                { id: 'migration', title: 'Migration' }
-            ];
-            sections.forEach(sec => {
-                const section = document.getElementById(sec.id);
-                if (section) {
-                    report += `${sec.title}:\n`;
-                    section.querySelectorAll('.data-card').forEach(card => {
-                        const title = card.querySelector('h4').innerText.replace(/<[^>]*>/g, '').trim();
-                        const value = card.querySelector('.stat-value')?.innerText || 'N/A';
-                        const details = Array.from(card.querySelectorAll('.stat-detail'))
-                            .map(el => el.innerText)
-                            .join('; ');
-                        report += `  • ${title}: ${value} (${details})\n`;
-                    });
-                    report += '\n';
-                }
-            });
-            downloadFile('demographic_summary_report.txt', report);
-            if (window.innerWidth <= 768) document.getElementById('exportModal').style.display = 'none';
-        }
-        // Charts
+
+        // Initialize Charts
         document.addEventListener('DOMContentLoaded', function() {
-            // Population Growth Chart
+            // Population Chart
             const populationCtx = document.getElementById('populationChart').getContext('2d');
-            const populationChart = new Chart(populationCtx, {
+            new Chart(populationCtx, {
                 type: 'line',
                 data: {
                     labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030'],
                     datasets: [{
                         label: 'Population (Millions)',
-                        data: [118.92, 122.14, 125.38, 128.69, 132.06, 135.49, 138.98, 142.53, 146.14, 149.81, 153.54],
+                         [118.92, 122.14, 125.38, 128.69, 132.06, 135.50, 138.98, 142.53, 146.14, 149.81, 153.54],
                         borderColor: '#58A6FF',
                         backgroundColor: 'rgba(88, 166, 255, 0.1)',
                         fill: true,
                         tension: 0.4
                     }, {
                         label: 'Growth Rate (%)',
-                        data: [2.71, 2.67, 2.62, 2.60, 2.58, 2.55, 2.52, 2.49, 2.46, 2.43, 2.40],
+                         [2.71, 2.67, 2.62, 2.60, 2.58, 2.55, 2.52, 2.49, 2.46, 2.43, 2.40],
                         borderColor: '#FF7B72',
                         backgroundColor: 'rgba(255, 123, 114, 0.1)',
                         fill: true,
@@ -1343,15 +1271,16 @@
                     }
                 }
             });
-            // Population Density Chart
+
+            // Density Chart
             const densityCtx = document.getElementById('densityChart').getContext('2d');
-            const densityChart = new Chart(densityCtx, {
+            new Chart(densityCtx, {
                 type: 'bar',
                 data: {
                     labels: ['Addis Ababa', 'Dire Dawa', 'Amhara', 'SNNPR', 'Oromia', 'Tigray', 'Afar', 'Somali', 'Benishangul-Gumuz', 'Gambela', 'Harari'],
                     datasets: [{
                         label: 'Population Density (persons/km²)',
-                        data: [7100, 195, 215, 243, 153, 152, 31, 21, 28, 17, 995],
+                         [7495, 2800, 150, 194, 144, 116, 29, 19, 28, 17, 995],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.7)',
                             'rgba(54, 162, 235, 0.7)',
@@ -1389,28 +1318,32 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Density (persons/km²)'
+                                text: 'Population Density (persons/km²)'
                             }
                         }
                     }
                 }
             });
+
             // Age Structure Chart
             const ageCtx = document.getElementById('ageChart').getContext('2d');
-            const ageChart = new Chart(ageCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['0-14 years', '15-64 years', '65+ years'],
+            new Chart(ageCtx, {
+                type: 'doughnut',
+                 {
+                    labels: ['0-14 years', '15-24 years', '25-64 years', '65+ years'],
                     datasets: [{
-                        data: [43.2, 53.5, 3.3],
+                        label: 'Population Share',
+                         [43.2, 19.0, 34.5, 3.3],
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.7)',
                             'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
                             'rgba(255, 159, 64, 0.7)'
                         ],
                         borderColor: [
                             'rgb(54, 162, 235)',
                             'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)',
                             'rgb(255, 159, 64)'
                         ],
                         borderWidth: 1
@@ -1421,28 +1354,33 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'right',
                         }
                     }
                 }
             });
+
             // Education Chart
             const educationCtx = document.getElementById('educationChart').getContext('2d');
-            const educationChart = new Chart(educationCtx, {
+            new Chart(educationCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['No Formal Education', 'Primary Education', 'Secondary Education', 'Tertiary Education'],
+                    labels: ['Literacy Rate', 'Primary Enrollment', 'Secondary Enrollment', 'Tertiary Enrollment'],
                     datasets: [{
-                        label: 'Male',
-                        data: [32.5, 44.1, 17.8, 5.6],
-                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                        borderColor: 'rgb(54, 162, 235)',
-                        borderWidth: 1
-                    }, {
-                        label: 'Female',
-                        data: [43.8, 40.9, 12.8, 2.5],
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                        borderColor: 'rgb(255, 99, 132)',
+                        label: 'Percentage (%)',
+                         [52.0, 95.0, 42.0, 12.0],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)',
+                            'rgb(255, 159, 64)'
+                        ],
                         borderWidth: 1
                     }]
                 },
@@ -1460,23 +1398,25 @@
                     }
                 }
             });
+
             // Labor Force Chart
             const laborCtx = document.getElementById('laborChart').getContext('2d');
-            const laborChart = new Chart(laborCtx, {
+            new Chart(laborCtx, {
                 type: 'doughnut',
-                data: {
-                    labels: ['Agriculture', 'Services', 'Industry'],
+                 {
+                    labels: ['Agriculture', 'Industry', 'Services'],
                     datasets: [{
-                        data: [68.0, 20.5, 11.5],
+                        label: 'Employment Share',
+                         [70, 15, 15],
                         backgroundColor: [
-                            'rgba(75, 192, 192, 0.7)',
-                            'rgba(255, 159, 64, 0.7)',
-                            'rgba(153, 102, 255, 0.7)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)'
                         ],
                         borderColor: [
-                            'rgb(75, 192, 192)',
-                            'rgb(255, 159, 64)',
-                            'rgb(153, 102, 255)'
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 206, 86)'
                         ],
                         borderWidth: 1
                     }]
@@ -1486,32 +1426,32 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'right',
                         }
                     }
                 }
             });
+
             // Health Chart
             const healthCtx = document.getElementById('healthChart').getContext('2d');
-            const healthChart = new Chart(healthCtx, {
-                type: 'line',
+            new Chart(healthCtx, {
+                type: 'bar',
                 data: {
-                    labels: ['2015', '2017', '2019', '2021', '2023', '2025'],
+                    labels: ['Life Expectancy', 'Under-5 Mortality', 'Maternal Mortality'],
                     datasets: [{
-                        label: 'Life Expectancy',
-                        data: [64.8, 65.3, 65.9, 66.5, 67.2, 67.8],
-                        borderColor: '#58A6FF',
-                        backgroundColor: 'rgba(88, 166, 255, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }, {
-                        label: 'Infant Mortality (per 1000)',
-                        data: [45, 42, 39, 36, 34, 33],
-                        borderColor: '#FF7B72',
-                        backgroundColor: 'rgba(255, 123, 114, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        yAxisID: 'y1'
+                        label: 'Value',
+                         [66.8, 46, 320],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderWidth: 1
                     }]
                 },
                 options: {
@@ -1519,35 +1459,25 @@
                     maintainAspectRatio: false,
                     scales: {
                         y: {
-                            beginAtZero: false,
+                            beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Life Expectancy (Years)'
-                            }
-                        },
-                        y1: {
-                            position: 'right',
-                            beginAtZero: false,
-                            title: {
-                                display: true,
-                                text: 'Infant Mortality (per 1000)'
-                            },
-                            grid: {
-                                drawOnChartArea: false
+                                text: 'Value'
                             }
                         }
                     }
                 }
             });
+
             // Migration Chart
             const migrationCtx = document.getElementById('migrationChart').getContext('2d');
-            const migrationChart = new Chart(migrationCtx, {
+            new Chart(migrationCtx, {
                 type: 'bar',
                 data: {
                     labels: ['Addis Ababa', 'Dire Dawa', 'Mekelle', 'Adama', 'Gondar', 'Hawassa', 'Bahir Dar', 'Jimma', 'Jijiga', 'Arba Minch'],
                     datasets: [{
                         label: 'Population (Thousands)',
-                        data: [5400, 640, 520, 480, 420, 380, 350, 280, 220, 180],
+                         [3950, 640, 520, 480, 420, 380, 350, 280, 220, 180],
                         backgroundColor: 'rgba(153, 102, 255, 0.7)',
                         borderColor: 'rgb(153, 102, 255)',
                         borderWidth: 1
@@ -1567,6 +1497,343 @@
                     }
                 }
             });
+
+            // NEW: Initialize 2025 Data Visualizations
+            // Age Distribution
+            const ageDistCtx = document.getElementById('ageDistChart2025').getContext('2d');
+            new Chart(ageDistCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Under 25 (60%)', '25-64 (37%)', '65+ (3%)'],
+                    datasets: [{
+                         [60, 37, 3],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Gender Ratio
+            const genderRatioCtx = document.getElementById('genderRatioChart2025').getContext('2d');
+            new Chart(genderRatioCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        label: 'Percentage',
+                         [50.1, 49.9],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 99, 132)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal bar chart
+                }
+            });
+
+            // Household Size Distribution (Estimated)
+            const householdSizeCtx = document.getElementById('householdSizeChart2025').getContext('2d');
+            new Chart(householdSizeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['1-2', '3-4', '5-6', '7+'],
+                    datasets: [{
+                        label: 'Percentage of Households',
+                         [10, 30, 35, 25], // Estimated based on 4.6 avg
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Urban vs Rural
+            const urbanRuralCtx = document.getElementById('urbanRuralChart2025').getContext('2d');
+            new Chart(urbanRuralCtx, {
+                type: 'doughnut',
+                 {
+                    labels: ['Urban (22.5%)', 'Rural (77.5%)'],
+                    datasets: [{
+                         [22.5, 77.5],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Regional Population
+            const regionalPopCtx = document.getElementById('regionalPopChart2025').getContext('2d');
+            new Chart(regionalPopCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Oromia', 'Amhara', 'SNNPR', 'Tigray', 'Somali'],
+                    datasets: [{
+                        label: 'Population (Millions)',
+                         [40.9, 23.2, 21.8, 5.8, 6.7],
+                        backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                        borderColor: 'rgb(153, 102, 255)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // Horizontal bar chart
+                }
+            });
+
+            // Literacy by Gender
+            const literacyGenderCtx = document.getElementById('literacyGenderChart2025').getContext('2d');
+            new Chart(literacyGenderCtx, {
+                type: 'bar',
+                 {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        label: 'Literacy Rate (%)',
+                         [57.0, 44.0],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 99, 132)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Employment by Sector
+            const employmentCtx = document.getElementById('employmentChart2025').getContext('2d');
+            new Chart(employmentCtx, {
+                type: 'doughnut',
+                 {
+                    labels: ['Agriculture (70%)', 'Services (15%)', 'Industry (15%)'],
+                    datasets: [{
+                         [70, 15, 15],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 159, 64)',
+                            'rgb(153, 102, 255)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Ethnic Groups
+            const ethnicityCtx = document.getElementById('ethnicityChart2025').getContext('2d');
+            new Chart(ethnicityCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Oromo (35%)', 'Amhara (27%)', 'Somali (6%)', 'Tigray (6%)', 'Others (26%)'],
+                    datasets: [{
+                         [35, 27, 6, 6, 26],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 99, 132)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Religion Distribution
+            const religionCtx = document.getElementById('religionChart2025').getContext('2d');
+            new Chart(religionCtx, {
+                type: 'doughnut',
+                 {
+                    labels: ['Christian (63%)', 'Muslim (34%)', 'Others (3%)'],
+                    datasets: [{
+                         [63, 34, 3],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 206, 86, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(153, 102, 255)',
+                            'rgb(255, 206, 86)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Life Expectancy
+            const lifeExpCtx = document.getElementById('lifeExpChart2025').getContext('2d');
+            new Chart(lifeExpCtx, {
+                type: 'bar',
+                 {
+                    labels: ['Overall', 'Male', 'Female'],
+                    datasets: [{
+                        label: 'Life Expectancy (Years)',
+                         [66.8, 64.2, 68.8],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 159, 64)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Mortality Rates
+            const mortalityCtx = document.getElementById('mortalityChart2025').getContext('2d');
+            new Chart(mortalityCtx, {
+                type: 'bar',
+                 {
+                    labels: ['Birth Rate', 'Death Rate', 'Under-5 Mortality'],
+                    datasets: [{
+                        label: 'Rate per 1000',
+                         [27.5, 5.8, 46],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(75, 192, 192)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Technology Adoption
+            const techAdoptionCtx = document.getElementById('techAdoptionChart2025').getContext('2d');
+            new Chart(techAdoptionCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Mobile Penetration', 'Internet Use', 'Mobile Money'],
+                    datasets: [{
+                        label: 'Adoption Rate (%)',
+                         [33, 19, 45], // 45% estimate based on 60M accounts / 135M pop
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        pointBackgroundColor: 'rgba(153, 102, 255, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(153, 102, 255, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Electricity Access
+            const electricityCtx = document.getElementById('electricityChart2025').getContext('2d');
+            new Chart(electricityCtx, {
+                type: 'doughnut',
+                 {
+                    labels: ['Access (45%)', 'No Access (55%)'],
+                    datasets: [{
+                         [45, 55],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 99, 132)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
         });
     </script>
 </body>
