@@ -8,19 +8,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== GLOBAL STYLES ===== */
+    /* ===== GLOBAL STYLES (MINOR TWEAKS) ===== */
     :root {
       --bg-color: #0D1117;
       --card-bg: #161B22;
       --primary-color: #58A6FF;
       --ethiopia-green: #078A43;
-      --ethiopia-yellow: #FCD116;
-      --ethiopia-red: #DA121A;
       --text-color: #C9D1D9;
       --border-color: #30363D;
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
       --success-color: #3FB950;
-      --ai-avatar-gradient: linear-gradient(135deg, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
     }
     * {
       margin: 0;
@@ -35,10 +32,6 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      margin: 0;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(7, 138, 67, 0.03) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(218, 18, 26, 0.03) 0%, transparent 20%);
     }
     .container {
       width: 90%;
@@ -47,7 +40,7 @@
       padding: 0 15px;
     }
 
-    /* ===== COMPACT HEADER ===== */
+    /* ===== HEADER (CLEANER) ===== */
     header {
       background-color: var(--card-bg);
       box-shadow: var(--shadow);
@@ -55,7 +48,6 @@
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border-color);
-      padding: 0.5rem 0;
     }
     nav {
       display: flex;
@@ -69,43 +61,29 @@
       align-items: center;
       gap: 10px;
     }
-    .logo-badge {
-      background: var(--ai-avatar-gradient);
-      width: 36px;
+    .logo img {
       height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: white;
-      font-size: 14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
     .logo h1 {
       color: var(--primary-color);
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
     }
     .nav-links {
       display: flex;
       list-style: none;
-      gap: 1.5rem;
-      align-items: center;
+      gap: 1.4rem;
       margin: 0;
       padding: 0;
       flex-wrap: wrap;
-      max-width: 100%;
-    }
-    .nav-links li {
-      margin-left: 1.2rem;
     }
     .nav-links a {
       text-decoration: none;
       color: var(--text-color);
       font-weight: 500;
-      font-size: 0.9rem;
-      transition: color 0.3s;
+      font-size: 0.92rem;
       position: relative;
     }
     .nav-links a:hover, .nav-links a.active {
@@ -114,15 +92,15 @@
     .nav-links a.active::after {
       content: '';
       position: absolute;
-      bottom: -8px;
+      bottom: -6px;
       left: 0;
       width: 100%;
       height: 2px;
-      background: var(--ethiopia-yellow);
+      background: var(--primary-color);
       border-radius: 2px;
     }
     .btn {
-      background: var(--ethiopia-green);
+      background-color: var(--ethiopia-green);
       color: white;
       padding: 6px 12px;
       border-radius: 6px;
@@ -130,11 +108,6 @@
       font-size: 0.9rem;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn:hover {
-      background: #067a3a;
-      transform: translateY(-1px);
     }
     .mobile-menu-btn {
       display: none;
@@ -145,7 +118,7 @@
       color: var(--primary-color);
     }
 
-    /* ===== CHAT CONTAINER — FULL HEIGHT ===== */
+    /* ===== CHAT CONTAINER ===== */
     main {
       flex: 1;
       display: flex;
@@ -155,12 +128,11 @@
 
     .chat-container {
       flex: 1;
-      min-height: 0;
       width: 90%;
       max-width: 1200px;
       margin: 0 auto;
       background: var(--card-bg);
-      border-radius: 20px;
+      border-radius: 18px;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: flex;
@@ -169,75 +141,56 @@
       position: relative;
     }
 
-    /* Ethiopian flag accent bar */
+    /* Ethiopian flag accent — subtle but proud */
     .chat-container::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(to right, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
+      height: 3px;
+      background: linear-gradient(to right, #078A43, #FCD116, #DA121A);
       z-index: 10;
     }
 
     /* ===== CHAT HEADER ===== */
     .chat-header {
-      background: linear-gradient(135deg, var(--ethiopia-green), #056b33);
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
       color: white;
-      padding: 18px 24px;
+      padding: 16px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      min-height: 80px;
-    }
-
-    .chat-header-content {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .ai-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--ai-avatar-gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border-color);
+      min-height: 72px;
     }
 
     .chat-header-content h2 {
-      font-size: 1.4rem;
-      margin-bottom: 4px;
-      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .chat-header-content p {
-      opacity: 0.9;
-      font-size: 0.9rem;
-      max-width: 500px;
+      opacity: 0.92;
+      font-size: 0.85rem;
     }
 
     .ai-status {
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--success-color);
       animation: pulse 2s infinite;
@@ -245,107 +198,87 @@
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      50% { opacity: 0.5; }
     }
 
     /* ===== LANGUAGE SELECTOR ===== */
     .language-selector {
-      padding: 14px 24px;
+      padding: 12px 22px;
       background: var(--bg-color);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
-      min-height: 60px;
+      gap: 12px;
+      min-height: 52px;
     }
 
     .language-controls {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .language-selector label {
-      font-weight: 600;
-      color: var(--text-color);
-      font-size: 0.95rem;
+      gap: 10px;
     }
 
     .language-selector select {
-      padding: 8px 14px;
+      padding: 7px 12px;
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 0.95rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
       background: var(--card-bg);
       color: var(--text-color);
-      min-width: 180px;
-      font-weight: 500;
-      transition: border-color 0.3s;
-    }
-
-    .language-selector select:focus {
-      outline: none;
-      border-color: var(--primary-color);
+      min-width: 160px;
     }
 
     .quick-actions {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .quick-action {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      padding: 6px 14px;
-      border-radius: 14px;
-      font-size: 0.85rem;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .quick-action:hover {
-      background: var(--ethiopia-green);
-      color: white;
-      border-color: var(--ethiopia-green);
+      background: var(--primary-color);
+      color: var(--bg-color);
+      border-color: var(--primary-color);
     }
 
-    /* ===== CHAT MESSAGES AREA ===== */
+    /* ===== CHAT MESSAGES ===== */
     .chat-messages {
       flex: 1;
-      padding: 20px;
+      padding: 18px;
       overflow-y: auto;
       background: var(--bg-color);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       min-height: 0;
     }
 
     .message {
-      max-width: 85%;
-      padding: 16px 20px;
-      border-radius: 18px;
-      line-height: 1.6;
+      max-width: 82%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      line-height: 1.55;
       position: relative;
-      animation: fadeIn 0.35s ease;
+      animation: fadeIn 0.3s ease;
       word-wrap: break-word;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s;
-    }
-
-    .message:hover {
-      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -364,19 +297,19 @@
       border-bottom-left-radius: 6px;
       border: 1px solid var(--border-color);
       display: flex;
-      gap: 14px;
+      gap: 12px;
     }
 
-    .ai-avatar-small {
-      width: 32px;
-      height: 32px;
+    .ai-avatar {
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      background: var(--ai-avatar-gradient);
+      background: linear-gradient(135deg, #078A43, #FCD116, #DA121A);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 12px;
       color: white;
     }
 
@@ -385,19 +318,18 @@
     }
 
     .message-time {
-      font-size: 0.7rem;
-      opacity: 0.7;
-      margin-top: 6px;
+      font-size: 0.68rem;
+      opacity: 0.75;
+      margin-top: 5px;
       display: block;
-      text-align: right;
     }
 
     .ai-message.amharic,
     .ai-message.tigrinya,
     .ai-message.wolaytta {
       font-family: 'Noto Sans Ethiopic', sans-serif;
-      font-size: 17px;
-      line-height: 1.8;
+      font-size: 16px;
+      line-height: 1.7;
     }
 
     .ai-message.oromo,
@@ -405,18 +337,18 @@
     .ai-message.afar,
     .ai-message.sidamo {
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     /* ===== INPUT AREA ===== */
     .chat-input-area {
-      padding: 20px;
+      padding: 16px;
       background: var(--card-bg);
       border-top: 1px solid var(--border-color);
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: flex-end;
-      min-height: 80px;
+      min-height: 72px;
     }
 
     .input-container {
@@ -426,33 +358,31 @@
 
     .chat-input-area textarea {
       width: 100%;
-      padding: 14px 50px 14px 18px;
+      padding: 12px 48px 12px 16px;
       border: 2px solid var(--border-color);
-      border-radius: 24px;
+      border-radius: 20px;
       resize: none;
-      font-size: 15px;
-      min-height: 52px;
-      max-height: 120px;
+      font-size: 14px;
+      min-height: 48px;
+      max-height: 100px;
       font-family: 'Inter', sans-serif;
       background: var(--bg-color);
       color: var(--text-color);
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: border-color 0.3s ease, box-shadow 0.3s;
     }
 
     .chat-input-area textarea:focus {
       outline: none;
       border-color: var(--primary-color);
-      box-shadow: 0 2px 10px rgba(88, 166, 255, 0.2);
+      box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
     }
 
     .input-actions {
       position: absolute;
-      right: 16px;
-      bottom: 14px;
+      right: 14px;
+      bottom: 12px;
       display: flex;
-      gap: 10px;
-      align-items: center;
+      gap: 8px;
     }
 
     .mic-button, .attach-button {
@@ -461,40 +391,32 @@
       color: var(--text-color);
       cursor: pointer;
       opacity: 0.7;
-      padding: 5px;
-      font-size: 1rem;
-      transition: opacity 0.2s;
-    }
-
-    .mic-button:hover, .attach-button:hover {
-      opacity: 1;
+      padding: 3px;
+      font-size: 0.95rem;
     }
 
     .send-button {
-      background: linear-gradient(135deg, var(--ethiopia-green), #056b33);
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
       color: white;
       border: none;
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(7, 138, 67, 0.3);
     }
 
     .send-button:hover:not(:disabled) {
-      transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 6px 16px rgba(7, 138, 67, 0.4);
+      transform: scale(1.06);
     }
 
     .send-button:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
-      transform: none;
     }
 
     /* ===== TYPING INDICATOR ===== */
@@ -502,34 +424,34 @@
       display: none;
       align-self: flex-start;
       background: var(--card-bg);
-      padding: 14px 20px;
-      border-radius: 18px;
+      padding: 14px 18px;
+      border-radius: 16px;
       border-bottom-left-radius: 6px;
       color: #8B949E;
       border: 1px solid var(--border-color);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
-      gap: 14px;
+      gap: 12px;
     }
 
     .typing-content {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .typing-dots {
       display: flex;
-      gap: 4px;
+      gap: 3px;
     }
 
     .typing-dots span {
-      height: 8px;
-      width: 8px;
-      background-color: var(--ethiopia-green);
+      height: 6px;
+      width: 6px;
+      background-color: var(--primary-color);
       display: block;
       border-radius: 50%;
-      opacity: 0.6;
+      opacity: 0.5;
       animation: typing 1.4s infinite ease-in-out;
     }
 
@@ -544,7 +466,7 @@
     /* ===== FOOTER ===== */
     footer {
       background-color: var(--card-bg);
-      color: var(--text-color);
+      color: #8B949E;
       padding: 2rem 0 1rem;
       margin-top: auto;
       border-top: 1px solid var(--border-color);
@@ -559,14 +481,11 @@
       margin-bottom: 0.8rem;
       font-size: 1.1rem;
       color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
     .footer-section p,
     .footer-section a {
       margin-bottom: 0.4rem;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: var(--text-color);
       text-decoration: none;
       display: block;
@@ -578,11 +497,10 @@
       text-align: center;
       padding-top: 1rem;
       border-top: 1px solid var(--border-color);
-      font-size: 0.9rem;
-      color: #8B949E;
+      font-size: 0.92rem;
     }
 
-    /* ===== RESPONSIVE DESIGN ===== */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -603,82 +521,23 @@
       .mobile-menu-btn {
         display: block;
       }
-
       .chat-container {
         margin: 0;
-        border-radius: 12px;
         width: calc(100% - 20px);
+        border-radius: 12px;
       }
-
-      .chat-header {
-        padding: 14px;
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
-        min-height: 100px;
-      }
-
-      .chat-header-content {
-        gap: 12px;
-      }
-
-      .ai-avatar {
-        width: 42px;
-        height: 42px;
-      }
-
-      .language-selector {
-        padding: 12px;
-        flex-direction: column;
-        gap: 12px;
-        min-height: auto;
-      }
-
-      .quick-actions {
-        justify-content: center;
-        width: 100%;
-      }
-
       .message {
-        max-width: 92%;
-      }
-
-      .chat-input-area {
-        padding: 16px;
-        min-height: 70px;
-      }
-
-      .chat-input-area textarea {
-        min-height: 48px;
-        padding: 12px 48px 12px 16px;
-      }
-
-      .send-button {
-        width: 48px;
-        height: 48px;
-      }
-    }
-
-    @media (max-height: 700px) {
-      .chat-header {
-        min-height: 70px;
-      }
-      .language-selector {
-        min-height: 50px;
-      }
-      .chat-input-area {
-        min-height: 70px;
+        max-width: 90%;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Compact Header -->
   <header>
     <div class="container">
       <nav>
         <div class="logo">
-          <div class="logo-badge">FD</div>
+          <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo">
           <h1>FineData</h1>
         </div>
         <ul class="nav-links">
@@ -697,28 +556,22 @@
     </div>
   </header>
 
-  <!-- Full-height Chat Area -->
   <main>
     <div class="chat-container">
       <div class="chat-header">
         <div class="chat-header-content">
-          <div class="ai-avatar">
-            <i class="fas fa-robot"></i>
-          </div>
-          <div>
-            <h2>Ethiopian AI Assistant</h2>
-            <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
-          </div>
+          <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
+          <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
         </div>
         <div class="ai-status">
           <div class="status-dot"></div>
-          <span>Online & Ready</span>
+          <span>Online</span>
         </div>
       </div>
 
       <div class="language-selector">
         <div class="language-controls">
-          <label for="language">Language:</label>
+          <label for="language" style="font-size: 0.88rem;">Language:</label>
           <select id="language">
             <option value="en">🌐 English</option>
             <option value="am">🇪🇹 Amharic</option>
@@ -751,19 +604,13 @@
 
       <div class="chat-messages" id="chatMessages">
         <div class="message ai-message">
-          <div class="ai-avatar-small">
-            <i class="fas fa-robot"></i>
-          </div>
-          <div class="message-content">
-            Hello! I’m your Ethiopian AI Assistant. How can I help you today?
-          </div>
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
           <div class="message-time">Now</div>
         </div>
         
         <div class="typing-indicator" id="typingIndicator">
-          <div class="ai-avatar-small">
-            <i class="fas fa-robot"></i>
-          </div>
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
           <div class="typing-content">
             <div class="typing-dots">
               <span></span>
@@ -779,7 +626,7 @@
         <div class="input-container">
           <textarea 
             id="userInput" 
-            placeholder="Ask about Ethiopia... (e.g., 'What's the teff forecast for Oromia?')"
+            placeholder="Ask about Ethiopia..."
             rows="1"
           ></textarea>
           <div class="input-actions">
@@ -798,31 +645,30 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3><i class="fas fa-info-circle"></i> About</h3>
+          <h3>About</h3>
           <a href="index.html">Home</a>
           <a href="support.html">Support</a>
           <a href="pdf.html">PDF Resources</a>
         </div>
         <div class="footer-section">
-          <h3><i class="fas fa-database"></i> Data</h3>
+          <h3>Data</h3>
           <a href="economic.html">Economic</a>
           <a href="demographic.html">Demographic</a>
           <a href="agricultural.html">Agricultural</a>
         </div>
         <div class="footer-section">
-          <h3><i class="fas fa-envelope"></i> Contact</h3>
+          <h3>Contact</h3>
           <p>gabrielmulugeta1@gmail.com</p>
           <p>+251 991168917</p>
           <p>Addis Ababa, Ethiopia</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 FineData. Built for Ethiopia with ❤️</p>
+        <p>&copy; 2025 FineData. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -835,7 +681,6 @@
     const languageSelect = document.getElementById('language');
     const sendButton = document.getElementById('sendButton');
 
-    // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
     if (mobileMenuBtn) {
@@ -844,13 +689,11 @@
       });
     }
 
-    // Auto-resize textarea
     userInput.addEventListener('input', function() {
       this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
     });
 
-    // Send on Enter (without Shift)
     userInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -884,7 +727,7 @@
       }
 
       const safeText = escapeHtml(text);
-      const time = getCurrentTime();
+      const time = isUser ? getCurrentTime() : "Now";
       
       if (isUser) {
         messageDiv.innerHTML = `
@@ -893,9 +736,7 @@
         `;
       } else {
         messageDiv.innerHTML = `
-          <div class="ai-avatar-small">
-            <i class="fas fa-robot"></i>
-          </div>
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
           <div class="message-content">${safeText}</div>
           <div class="message-time">${time}</div>
         `;
@@ -909,22 +750,18 @@
       userInput.value = text;
       userInput.focus();
       userInput.style.height = 'auto';
-      userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+      userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
     }
 
     function clearChat() {
       chatMessages.innerHTML = `
         <div class="message ai-message">
-          <div class="ai-avatar-small">
-            <i class="fas fa-robot"></i>
-          </div>
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
           <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
           <div class="message-time">Now</div>
         </div>
         <div class="typing-indicator" id="typingIndicator">
-          <div class="ai-avatar-small">
-            <i class="fas fa-robot"></i>
-          </div>
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
           <div class="typing-content">
             <div class="typing-dots">
               <span></span>
