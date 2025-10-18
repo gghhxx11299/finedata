@@ -633,7 +633,7 @@
             }
         });
 
-        // Email subscription
+        // Email subscription — FIXED
         const form = document.getElementById('subscribe-form');
         const emailInput = document.getElementById('email-input');
         const messageEl = document.getElementById('subscribe-message');
@@ -648,12 +648,16 @@
                     return;
                 }
 
-                // Simple but effective email validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
                     showMessage('Please enter a valid email.', 'error');
                     return;
                 }
+
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
 
                 try {
                     const response = await fetch('/subscribe', {
@@ -662,18 +666,30 @@
                         body: JSON.stringify({ email })
                     });
 
-                    const data = await response.json();
+                    let data = null;
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        data = await response.json().catch(() => null);
+                    }
 
                     if (response.ok) {
                         showMessage('✅ Thank you! You’re subscribed.', 'success');
                         emailInput.value = '';
                     } else if (response.status === 422) {
-                        showMessage('📧 This email is already subscribed.', 'error');
+                        const msg = data?.error || 'This email is already subscribed.';
+                        showMessage(`📧 ${msg}`, 'error');
+                    } else if (response.status === 400) {
+                        const msg = data?.error || 'Invalid email address.';
+                        showMessage(`❌ ${msg}`, 'error');
                     } else {
-                        showMessage('❌ Subscription failed. Please try again.', 'error');
+                        showMessage('❌ Subscription failed. Please try again later.', 'error');
                     }
                 } catch (err) {
+                    console.error('Network error:', err);
                     showMessage('⚠️ Unable to connect. Check your internet.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                 }
             });
         }
