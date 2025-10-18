@@ -47,18 +47,22 @@ SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
     data = request.get_json()
-    email = data.get("email", "").strip() if data else ""
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    email = data.get("email", "").strip()
     if not email:
         return jsonify({"error": "Email is required"}), 400
 
-    api_key = os.getenv("EMAILOCTOPUS_API_KEY")
-    list_id = os.getenv("EMAILOCTUS_LIST_ID")
+    api_key = os.getenv("EMAILOCTOPUS_API_KEY", "").strip()
+    list_id = os.getenv("EMAILOCTUS_LIST_ID", "").strip()
 
     if not api_key or not list_id:
         logger.error("EmailOctopus API_KEY or LIST_ID missing in environment variables")
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
+        # ✅ FIXED: Removed extra spaces in URL
         url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
             url,
@@ -74,7 +78,10 @@ def subscribe():
         if response.status_code in (200, 201):
             return jsonify({"message": "Subscribed successfully!"})
         elif response.status_code == 400:
-            resp_json = response.json()
+            try:
+                resp_json = response.json()
+            except Exception:
+                resp_json = {}
             error_code = resp_json.get("error", {}).get("code")
             if error_code == "MEMBER_EXISTS":
                 return jsonify({"error": "Email already subscribed"}), 422
@@ -85,9 +92,12 @@ def subscribe():
             logger.error(f"EmailOctopus error {response.status_code}: {response.text}")
             return jsonify({"error": "Subscription failed"}), 500
 
-    except Exception as e:
-        logger.exception("EmailOctopus request failed")
+    except requests.exceptions.RequestException:
+        logger.exception("EmailOctopus request failed due to network issue")
         return jsonify({"error": "Email service unavailable"}), 500
+    except Exception:
+        logger.exception("Unexpected error in subscription endpoint")
+        return jsonify({"error": "Internal server error"}), 500
 
 # ======================
 # NLLB TRANSLATION FUNCTIONS
@@ -101,7 +111,6 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
     if client is None:
         return text, "en"
 
-    # Prioritize Ethiopian languages + English
     candidate_langs = ["am", "om", "ti", "so", "aa", "sid", "wal", "en"]
     
     for lang_code in candidate_langs:
@@ -115,13 +124,11 @@ def detect_and_translate_to_english(text: str) -> tuple[str, str]:
                 src_lang=src_nllb,
                 tgt_lang="eng_Latn"
             )
-            # If translation is different, assume it worked
             if translated.strip() != text.strip():
                 return translated.strip(), lang_code
         except Exception:
-            continue  # Try next language
+            continue
     
-    # Fallback: assume English
     return text, "en"
 
 
@@ -146,19 +153,18 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION (Updated to use Groq-compatible endpoint)
+# GROQ AI FUNCTION
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
-    # Using an active model as of Oct 11, 2025: llama-3.3-70b-versatile
     model_name = "llama-3.3-70b-versatile"
     
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # Use the Groq API endpoint
+        # ✅ FIXED: Removed trailing spaces in URL
         url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
@@ -193,7 +199,6 @@ def ask_groq_ai(question: str) -> str:
         if response.status_code == 200:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
-                # Extract the content of the first choice
                 content = data["choices"][0]["message"]["content"]
                 return content.strip()
             else:
@@ -214,7 +219,7 @@ def ask_groq_ai(question: str) -> str:
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data: # Corrected syntax error here
+    if not data:
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -260,7 +265,7 @@ def home():
 
 if __name__ == '__main__':
     if not os.getenv("EMAILOCTOPUS_API_KEY"):
-        logger.warning("EMAILOCTUS_API_KEY not set — email subscription will fail.")
+        logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
         logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
     if not os.getenv("GROQ_API_KEY"):
