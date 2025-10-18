@@ -39,7 +39,7 @@ NLLB_LANG_MAP = {
 SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
-# EMAIL SUBSCRIPTION (EmailOctopus v1.6)
+# EMAIL SUBSCRIPTION (EmailOctopus API v2)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -52,44 +52,70 @@ def subscribe():
     if not email:
         return jsonify({"error": "Email is required"}), 400
 
-    # ✅ CORRECTED: "EMAILOCTOPUS" (with "P") — was misspelled as "EMAILOCTUS"
     api_key = os.getenv("EMAILOCTOPUS_API_KEY", "").strip()
     list_id = os.getenv("EMAILOCTOPUS_LIST_ID", "").strip()
 
     if not api_key or not list_id:
-        logger.error("EmailOctopus API_KEY or LIST_ID missing or empty")
+        logger.error("EmailOctopus API_KEY or LIST_ID missing")
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        # ✅ CORRECT EmailOctopus v1.6 URL — no extra spaces
-        url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
-        logger.debug(f"Sending subscription request to: {url.replace(api_key, '***')}")
-
+        url = f"https://api.emailoctopus.com/v2/lists/{list_id}/contacts"
         response = requests.post(
             url,
-            data={
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
                 "email_address": email,
                 "status": "SUBSCRIBED"
             },
             timeout=10
         )
 
-        logger.info(f"EmailOctopus response {response.status_code}: {response.text}")
+        logger.info(f"EmailOctopus v2 response {response.status_code}: {response.text}")
 
         if response.status_code in (200, 201):
             return jsonify({"message": "Subscribed successfully!"})
-        elif response.status_code == 400:
+
+        elif response.status_code == 422:
+            # Handle validation errors per RFC 9457
             try:
-                resp_json = response.json()
+                resp = response.json()
+                errors = resp.get("errors", [])
+                for err in errors:
+                    ptr = err.get("pointer", "")
+                    detail = err.get("detail", "").lower()
+                    if ptr == "/email_address":
+                        if "blank" in detail:
+                            return jsonify({"error": "Email cannot be empty"}), 400
+                        if "invalid" in detail or "valid" in detail:
+                            return jsonify({"error": "Invalid email address"}), 400
+                return jsonify({"error": "Invalid subscription data"}), 422
             except Exception:
-                resp_json = {}
-            error_code = resp_json.get("error", {}).get("code")
-            if error_code == "MEMBER_EXISTS":
-                return jsonify({"error": "Email already subscribed"}), 422
-            else:
-                return jsonify({"error": "Invalid email address"}), 400
+                return jsonify({"error": "Invalid email format"}), 400
+
+        elif response.status_code == 409 or response.status_code == 400:
+            # Handle "already exists" (may appear as 409 Conflict or 400 with message)
+            try:
+                resp_text = response.text.lower()
+                if "already exists" in resp_text or "duplicate" in resp_text:
+                    return jsonify({"error": "Email already subscribed"}), 422
+            except Exception:
+                pass
+            return jsonify({"error": "Subscription request rejected"}), 400
+
+        elif response.status_code == 401:
+            logger.error("EmailOctopus: Unauthorized – invalid or missing API key")
+            return jsonify({"error": "Subscription service misconfigured"}), 500
+
+        elif response.status_code == 404:
+            logger.error("EmailOctopus: List ID not found – check EMAILOCTOPUS_LIST_ID")
+            return jsonify({"error": "Invalid subscription list"}), 500
+
         else:
-            logger.error(f"EmailOctopus unexpected error {response.status_code}: {response.text}")
+            logger.error(f"EmailOctopus v2 unexpected error {response.status_code}: {response.text}")
             return jsonify({"error": "Subscription failed"}), 500
 
     except requests.exceptions.Timeout:
@@ -99,7 +125,7 @@ def subscribe():
         logger.exception("EmailOctopus network error")
         return jsonify({"error": "Email service unavailable"}), 500
     except Exception:
-        logger.exception("Unexpected error in subscription")
+        logger.exception("Unexpected error in subscription endpoint")
         return jsonify({"error": "Internal server error"}), 500
 
 # ======================
@@ -150,7 +176,6 @@ def ask_groq_ai(question: str) -> str:
         return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # ✅ Fixed: removed trailing spaces in URL
         url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
@@ -248,7 +273,6 @@ def home():
 # ======================
 
 if __name__ == '__main__':
-    # ✅ CORRECTED: use "EMAILOCTOPUS" consistently
     if not os.getenv("EMAILOCTOPUS_API_KEY"):
         logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
     if not os.getenv("EMAILOCTOPUS_LIST_ID"):
