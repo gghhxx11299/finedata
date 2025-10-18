@@ -39,7 +39,7 @@ NLLB_LANG_MAP = {
 SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
-# EMAIL SUBSCRIPTION (EmailOctopus API v2)
+# EMAIL SUBSCRIPTION (EmailOctopus API v2 - CORRECTED)
 # ======================
 
 @app.route('/subscribe', methods=['POST'])
@@ -60,14 +60,13 @@ def subscribe():
             logger.error("EmailOctopus API_KEY or LIST_ID missing")
             return jsonify({"error": "Subscription service not configured"}), 500
 
-        url = f"https://api.emailoctopus.com/v2/lists/{list_id}/contacts"
+        # ✅ CORRECT v2 API USAGE: query param + /api/2.0/
+        url = f"https://emailoctopus.com/api/2.0/lists/{list_id}/contacts"
         response = requests.post(
             url,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json"
-            },
+            params={"api_key": api_key},  # ← API key as query param
             json={"email_address": email, "status": "SUBSCRIBED"},
+            headers={"Content-Type": "application/json"},
             timeout=10
         )
 
@@ -97,11 +96,11 @@ def subscribe():
             return jsonify({"error": "Email already subscribed"}), 422
 
         elif response.status_code == 401:
-            logger.error("EmailOctopus: Unauthorized – check API key")
+            logger.error("EmailOctopus: Invalid API key (must be v2 key)")
             return jsonify({"error": "Subscription service misconfigured"}), 500
 
         elif response.status_code == 404:
-            logger.error("EmailOctopus: List ID not found")
+            logger.error(f"EmailOctopus: List ID not found: {list_id}")
             return jsonify({"error": "Invalid subscription list"}), 500
 
         else:
