@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== GLOBAL STYLES (MINOR TWEAKS) ===== */
+    /* ===== GLOBAL STYLES ===== */
     :root {
       --bg-color: #0D1117;
       --card-bg: #161B22;
@@ -40,7 +40,7 @@
       padding: 0 15px;
     }
 
-    /* ===== HEADER (CLEANER) ===== */
+    /* ===== HEADER ===== */
     header {
       background-color: var(--card-bg);
       box-shadow: var(--shadow);
@@ -85,6 +85,7 @@
       font-weight: 500;
       font-size: 0.92rem;
       position: relative;
+      padding: 0.5rem 0;
     }
     .nav-links a:hover, .nav-links a.active {
       color: var(--primary-color);
@@ -99,16 +100,26 @@
       background: var(--primary-color);
       border-radius: 2px;
     }
-    .btn {
-      background-color: var(--ethiopia-green);
-      color: white;
-      padding: 6px 12px;
+
+    /* Special Donate Button Style */
+    .nav-links .donate-btn {
+      background: var(--primary-color);
+      color: var(--bg-color) !important;
+      padding: 0.55rem 1.1rem;
       border-radius: 6px;
       font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.25s ease;
+      margin-top: -0.4rem;
     }
+    .nav-links .donate-btn:hover {
+      background: #3d8ae8;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(88, 166, 255, 0.3);
+    }
+
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -141,7 +152,6 @@
       position: relative;
     }
 
-    /* Ethiopian flag accent — subtle but proud */
     .chat-container::before {
       content: '';
       position: absolute;
@@ -511,6 +521,7 @@
         width: 100%;
         background-color: var(--card-bg);
         padding: 0.5rem 0;
+        border-top: 1px solid var(--border-color);
       }
       .nav-links.active {
         display: flex;
@@ -547,7 +558,7 @@
           <li><a href="news.html">News</a></li>
           <li><a href="weather.html">For Farmers</a></li>
           <li><a href="insights.html">Get Forecasts</a></li>
-          <li><a href="donate.html" class="btn">Donate</a></li>
+          <li><a href="donate.html" class="donate-btn">Donate</a></li>
         </ul>
         <button class="mobile-menu-btn">
           <i class="fas fa-bars"></i>
@@ -608,7 +619,7 @@
           <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
           <div class="message-time">Now</div>
         </div>
-        
+
         <div class="typing-indicator" id="typingIndicator">
           <div class="ai-avatar"><i class="fas fa-robot"></i></div>
           <div class="typing-content">
@@ -624,8 +635,8 @@
 
       <div class="chat-input-area">
         <div class="input-container">
-          <textarea 
-            id="userInput" 
+          <textarea
+            id="userInput"
             placeholder="Ask about Ethiopia..."
             rows="1"
           ></textarea>
@@ -689,6 +700,12 @@
       });
     }
 
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+
     userInput.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = Math.min(this.scrollHeight, 100) + 'px';
@@ -715,7 +732,7 @@
       const messageDiv = document.createElement('div');
       messageDiv.classList.add('message');
       messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
-      
+
       if (!isUser) {
         const lang = languageSelect.value;
         if (lang === 'am' || lang === 'ti' || lang === 'wal') {
@@ -728,7 +745,7 @@
 
       const safeText = escapeHtml(text);
       const time = isUser ? getCurrentTime() : "Now";
-      
+
       if (isUser) {
         messageDiv.innerHTML = `
           <div class="message-content">${safeText}</div>
@@ -741,7 +758,7 @@
           <div class="message-time">${time}</div>
         `;
       }
-      
+
       chatMessages.insertBefore(messageDiv, typingIndicator);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
@@ -793,9 +810,9 @@
         const response = await fetch(BACKEND_URL + '/ask-ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            question: text, 
-            language: languageSelect.value 
+          body: JSON.stringify({
+            question: text,
+            language: languageSelect.value
           })
         });
 
