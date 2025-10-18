@@ -71,7 +71,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
         }
         .logo {
             display: flex;
@@ -89,37 +88,16 @@
             color: var(--primary-color);
         }
         .nav-links {
-            display: flex; /* Default to flex for desktop */
+            display: flex;
             list-style: none;
             gap: 1.5rem;
             align-items: center;
-            /* Mobile menu specific styles */
-            position: absolute; /* Positioned absolutely when hidden */
-            top: 100%; /* Position below the nav bar */
-            left: 0;
-            width: 100%;
-            background-color: var(--card-bg);
-            flex-direction: column; /* Stack items vertically on mobile */
-            padding: 1.5rem;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(88, 166, 255, 0.3);
-            /* Initially hidden */
-            display: none;
-            /* Center items within the mobile menu */
-            text-align: center;
-        }
-        .nav-links.active {
-            display: flex; /* Show when active class is added */
         }
         .nav-links a {
             color: var(--text-light);
             font-weight: 500;
             position: relative;
             padding: 0.5rem 0;
-            text-decoration: none; /* Ensure no underline initially */
-            /* Make links full width for better touch targets on mobile */
-            display: block;
-            width: 100%;
         }
         .nav-links a:not(.btn):hover {
             color: var(--electric-blue);
@@ -152,10 +130,6 @@
             transition: var(--transition);
             border: none;
             cursor: pointer;
-            white-space: nowrap; /* Prevent button text wrapping */
-            /* Center button within mobile menu */
-            display: inline-block;
-            margin: 0.5rem auto; /* Add some vertical margin */
         }
         .btn:hover {
             background-color: var(--coral-red);
@@ -163,7 +137,7 @@
             box-shadow: 0 0 10px var(--coral-red), 0 0 20px rgba(255, 123, 114, 0.4);
         }
         .mobile-menu-btn {
-            display: none; /* Initially hidden */
+            display: none;
             background: none;
             border: none;
             color: var(--text-light);
@@ -281,16 +255,22 @@
         /* Responsive */
         @media (max-width: 900px) {
             .nav-links {
-                /* Styles already defined above for mobile */
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                border-top: 1px solid rgba(88, 166, 255, 0.3);
+            }
+            .nav-links.active {
+                display: flex;
             }
             .mobile-menu-btn {
-                display: block; /* Show the hamburger button on mobile */
-            }
-            .hero h2 {
-                font-size: 2rem;
-            }
-            .hero p {
-                font-size: 1rem;
+                display: block;
             }
         }
     </style>
@@ -310,7 +290,7 @@
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
-                    <li><a href="insights.html" class="active">Get Forecasts</a></li>
+                    <li><a href="insights.html" class = "active">Get Forecasts</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -751,27 +731,13 @@
 
     <script>
         // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        }
-
-        // Close mobile menu when clicking a link
+        document.querySelector('.mobile-menu-btn')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+                document.querySelector('.nav-links').classList.remove('active');
             });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
         });
     </script>
 </body>
