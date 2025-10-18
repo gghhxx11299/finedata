@@ -44,22 +44,22 @@ SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
-    data = request.get_json()
-    if not data or not isinstance(data, dict):
-        return jsonify({"error": "Invalid JSON"}), 400
-
-    email = data.get("email", "").strip()
-    if not email:
-        return jsonify({"error": "Email is required"}), 400
-
-    api_key = os.getenv("EMAILOCTOPUS_API_KEY", "").strip()
-    list_id = os.getenv("EMAILOCTOPUS_LIST_ID", "").strip()
-
-    if not api_key or not list_id:
-        logger.error("EmailOctopus API_KEY or LIST_ID missing")
-        return jsonify({"error": "Subscription service not configured"}), 500
-
     try:
+        data = request.get_json()
+        if not data or not isinstance(data, dict):
+            return jsonify({"error": "Invalid JSON"}), 400
+
+        email = data.get("email", "").strip()
+        if not email:
+            return jsonify({"error": "Email is required"}), 400
+
+        api_key = os.getenv("EMAILOCTOPUS_API_KEY", "").strip()
+        list_id = os.getenv("EMAILOCTOPUS_LIST_ID", "").strip()
+
+        if not api_key or not list_id:
+            logger.error("EmailOctopus API_KEY or LIST_ID missing")
+            return jsonify({"error": "Subscription service not configured"}), 500
+
         url = f"https://api.emailoctopus.com/v2/lists/{list_id}/contacts"
         response = requests.post(
             url,
@@ -67,10 +67,7 @@ def subscribe():
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json"
             },
-            json={
-                "email_address": email,
-                "status": "SUBSCRIBED"
-            },
+            json={"email_address": email, "status": "SUBSCRIBED"},
             timeout=10
         )
 
@@ -80,14 +77,12 @@ def subscribe():
             return jsonify({"message": "Subscribed successfully!"})
 
         elif response.status_code == 422:
-            # Handle validation errors per RFC 9457
             try:
                 resp = response.json()
                 errors = resp.get("errors", [])
                 for err in errors:
-                    ptr = err.get("pointer", "")
-                    detail = err.get("detail", "").lower()
-                    if ptr == "/email_address":
+                    if err.get("pointer") == "/email_address":
+                        detail = (err.get("detail") or "").lower()
                         if "blank" in detail:
                             return jsonify({"error": "Email cannot be empty"}), 400
                         if "invalid" in detail or "valid" in detail:
@@ -96,37 +91,26 @@ def subscribe():
             except Exception:
                 return jsonify({"error": "Invalid email format"}), 400
 
-        elif response.status_code == 409 or response.status_code == 400:
-            # Handle "already exists" (may appear as 409 Conflict or 400 with message)
-            try:
-                resp_text = response.text.lower()
-                if "already exists" in resp_text or "duplicate" in resp_text:
-                    return jsonify({"error": "Email already subscribed"}), 422
-            except Exception:
-                pass
-            return jsonify({"error": "Subscription request rejected"}), 400
+        elif response.status_code == 409 or (
+            response.status_code == 400 and "already exists" in response.text.lower()
+        ):
+            return jsonify({"error": "Email already subscribed"}), 422
 
         elif response.status_code == 401:
-            logger.error("EmailOctopus: Unauthorized – invalid or missing API key")
+            logger.error("EmailOctopus: Unauthorized – check API key")
             return jsonify({"error": "Subscription service misconfigured"}), 500
 
         elif response.status_code == 404:
-            logger.error("EmailOctopus: List ID not found – check EMAILOCTOPUS_LIST_ID")
+            logger.error("EmailOctopus: List ID not found")
             return jsonify({"error": "Invalid subscription list"}), 500
 
         else:
-            logger.error(f"EmailOctopus v2 unexpected error {response.status_code}: {response.text}")
+            logger.error(f"EmailOctopus v2 error {response.status_code}: {response.text}")
             return jsonify({"error": "Subscription failed"}), 500
 
-    except requests.exceptions.Timeout:
-        logger.exception("EmailOctopus request timed out")
-        return jsonify({"error": "Email service timed out"}), 500
-    except requests.exceptions.RequestException:
-        logger.exception("EmailOctopus network error")
-        return jsonify({"error": "Email service unavailable"}), 500
-    except Exception:
-        logger.exception("Unexpected error in subscription endpoint")
-        return jsonify({"error": "Internal server error"}), 500
+    except Exception as e:
+        logger.exception("Unexpected error in /subscribe")
+        return jsonify({"error": "Internal error. Please try again later."}), 500
 
 # ======================
 # NLLB TRANSLATION FUNCTIONS
@@ -227,30 +211,34 @@ def ask_groq_ai(question: str) -> str:
 
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
-    data = request.get_json()
-    if not data or not isinstance(data, dict):
-        return jsonify({"error": "Invalid JSON"}), 400
+    try:
+        data = request.get_json()
+        if not data or not isinstance(data, dict):
+            return jsonify({"error": "Invalid JSON"}), 400
 
-    user_question = data.get("question", "").strip()
-    target_lang = data.get("language", "en")
+        user_question = data.get("question", "").strip()
+        target_lang = data.get("language", "en")
 
-    if not user_question:
-        return jsonify({"error": "Please ask a question."}), 400
-    if target_lang not in SUPPORTED_LANGUAGES:
-        target_lang = "en"
+        if not user_question:
+            return jsonify({"error": "Please ask a question."}), 400
+        if target_lang not in SUPPORTED_LANGUAGES:
+            target_lang = "en"
 
-    english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_groq_ai(english_question)
-    answer_translated = translate_text(answer_en, target_lang)
+        english_question, detected_lang = detect_and_translate_to_english(user_question)
+        answer_en = ask_groq_ai(english_question)
+        answer_translated = translate_text(answer_en, target_lang)
 
-    return jsonify({
-        "question_original": user_question,
-        "question_english": english_question,
-        "detected_language": detected_lang,
-        "answer_english": answer_en,
-        "answer_translated": answer_translated,
-        "language": target_lang
-    })
+        return jsonify({
+            "question_original": user_question,
+            "question_english": english_question,
+            "detected_language": detected_lang,
+            "answer_english": answer_en,
+            "answer_translated": answer_translated,
+            "language": target_lang
+        })
+    except Exception as e:
+        logger.exception("Error in /ask-ai")
+        return jsonify({"error": "AI request failed"}), 500
 
 # ======================
 # STATIC FILES
@@ -282,5 +270,5 @@ if __name__ == '__main__':
     if not os.getenv("HF_API_KEY"):
         logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
 
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(debug=False, host='0.0.0.0', port=port)
