@@ -1,277 +1,826 @@
-# app.py
-import os
-import logging
-from flask import Flask, jsonify, request, send_from_directory
-from flask_cors import CORS
-import requests
-from dotenv import load_dotenv
-from huggingface_hub import InferenceClient
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chat - FineData Ethiopia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="  https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL STYLES (MINOR TWEAKS) ===== */
+    :root {
+      --bg-color: #0D1117;
+      --card-bg: #161B22;
+      --primary-color: #58A6FF;
+      --ethiopia-green: #078A43;
+      --text-color: #C9D1D9;
+      --border-color: #30363D;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+      --success-color: #3FB950;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
 
-load_dotenv()
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+    /* ===== HEADER (CLEANER) ===== */
+    header {
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo img {
+      height: 36px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .logo h1 {
+      color: var(--primary-color);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.4rem;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.92rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+    /* The .btn class is intentionally removed from the Donate link */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
 
-app = Flask(__name__)
-CORS(app)
+    /* ===== CHAT CONTAINER ===== */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
 
-# === NLLB SETUP ===
-HF_TOKEN = os.getenv("HF_API_KEY")
-if not HF_TOKEN:
-    logger.error("HF_API_KEY not set — NLLB translation will fail.")
+    .chat-container {
+      flex: 1;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
 
-# Initialize Hugging Face client (lazy init; will error on use if token missing)
-try:
-    client = InferenceClient("facebook/nllb-200-distilled-600M", token=HF_TOKEN)
-except Exception as e:
-    client = None
-    logger.error(f"Failed to initialize Hugging Face client: {e}")
+    /* Ethiopian flag accent — subtle but proud */
+    .chat-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, #078A43, #FCD116, #DA121A);
+      z-index: 10;
+    }
 
-# NLLB uses ISO 639-3 + script codes
-NLLB_LANG_MAP = {
-    "en": "eng_Latn",
-    "am": "amh_Ethi",   # Amharic
-    "om": "orm_Latn",   # Oromo (typically Latin script)
-    "ti": "tir_Ethi",   # Tigrinya
-    "so": "som_Latn",   # Somali
-    "aa": "aar_Latn",   # Afar
-    "sid": "sid_Latn",  # Sidamo
-    "wal": "wal_Ethi",  # Wolaytta
-}
+    /* ===== CHAT HEADER ===== */
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 72px;
+    }
 
-SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
+    .chat-header-content h2 {
+      font-size: 1.25rem;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-# ======================
-# EMAIL SUBSCRIPTION (EmailOctopus)
-# ======================
+    .chat-header-content p {
+      opacity: 0.92;
+      font-size: 0.85rem;
+    }
 
-@app.route('/subscribe', methods=['POST'])
-def subscribe():
-    data = request.get_json()
-    if not data or not isinstance(data, dict):
-        return jsonify({"error": "Invalid JSON"}), 400
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+    }
 
-    email = data.get("email", "").strip()
-    if not email:
-        return jsonify({"error": "Email is required"}), 400
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success-color);
+      animation: pulse 2s infinite;
+    }
 
-    api_key = os.getenv("EMAILOCTOPUS_API_KEY", "").strip()
-    list_id = os.getenv("EMAILOCTUS_LIST_ID", "").strip()
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
 
-    if not api_key or not list_id:
-        logger.error("EmailOctopus API_KEY or LIST_ID missing in environment variables")
-        return jsonify({"error": "Subscription service not configured"}), 500
+    /* ===== LANGUAGE SELECTOR ===== */
+    .language-selector {
+      padding: 12px 22px;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+    }
 
-    try:
-        # ✅ FIXED: Removed extra spaces in URL
-        url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
-        response = requests.post(
-            url,
-            data={
-                "email_address": email,
-                "status": "SUBSCRIBED"
-            },
-            timeout=10
-        )
+    .language-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        logger.info(f"EmailOctopus response {response.status_code}: {response.text}")
+    .language-selector select {
+      padding: 7px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      background: var(--card-bg);
+      color: var(--text-color);
+      min-width: 160px;
+    }
 
-        if response.status_code in (200, 201):
-            return jsonify({"message": "Subscribed successfully!"})
-        elif response.status_code == 400:
-            try:
-                resp_json = response.json()
-            except Exception:
-                resp_json = {}
-            error_code = resp_json.get("error", {}).get("code")
-            if error_code == "MEMBER_EXISTS":
-                return jsonify({"error": "Email already subscribed"}), 422
-            else:
-                logger.warning(f"EmailOctopus validation error: {resp_json}")
-                return jsonify({"error": "Invalid email address"}), 400
-        else:
-            logger.error(f"EmailOctopus error {response.status_code}: {response.text}")
-            return jsonify({"error": "Subscription failed"}), 500
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+    }
 
-    except requests.exceptions.RequestException:
-        logger.exception("EmailOctopus request failed due to network issue")
-        return jsonify({"error": "Email service unavailable"}), 500
-    except Exception:
-        logger.exception("Unexpected error in subscription endpoint")
-        return jsonify({"error": "Internal server error"}), 500
+    .quick-action {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-# ======================
-# NLLB TRANSLATION FUNCTIONS
-# ======================
+    .quick-action:hover {
+      background: var(--primary-color);
+      color: var(--bg-color);
+      border-color: var(--primary-color);
+    }
 
-def detect_and_translate_to_english(text: str) -> tuple[str, str]:
-    """Heuristic language detection + translate to English using NLLB."""
-    if not text.strip():
-        return "", "en"
-    
-    if client is None:
-        return text, "en"
+    /* ===== CHAT MESSAGES ===== */
+    .chat-messages {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 0;
+    }
 
-    candidate_langs = ["am", "om", "ti", "so", "aa", "sid", "wal", "en"]
-    
-    for lang_code in candidate_langs:
-        if lang_code == "en":
-            return text, "en"
-        
-        try:
-            src_nllb = NLLB_LANG_MAP[lang_code]
-            translated = client.translation(
-                text,
-                src_lang=src_nllb,
-                tgt_lang="eng_Latn"
-            )
-            if translated.strip() != text.strip():
-                return translated.strip(), lang_code
-        except Exception:
-            continue
-    
-    return text, "en"
+    .message {
+      max-width: 82%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      line-height: 1.55;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-def translate_text(text: str, target_lang: str) -> str:
-    """Translate English text to target language using NLLB."""
-    if target_lang == "en" or not text.strip() or client is None:
-        return text
+    .user-message {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 6px;
+      margin-left: auto;
+    }
 
-    if target_lang not in NLLB_LANG_MAP:
-        logger.warning(f"Unsupported target language: {target_lang}")
-        return text
+    .ai-message {
+      background: var(--card-bg);
+      color: var(--text-color);
+      align-self: flex-start;
+      border-bottom-left-radius: 6px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+    }
 
-    try:
-        result = client.translation(
-            text,
-            src_lang="eng_Latn",
-            tgt_lang=NLLB_LANG_MAP[target_lang]
-        )
-        return result.strip()
-    except Exception as e:
-        logger.warning(f"NLLB translation to {target_lang} failed: {e}")
-        return text
+    .ai-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #078A43, #FCD116, #DA121A);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
 
-# ======================
-# GROQ AI FUNCTION
-# ======================
+    .message-content {
+      flex: 1;
+    }
 
-def ask_groq_ai(question: str) -> str:
-    groq_api_key = os.getenv("GROQ_API_KEY")
-    model_name = "llama-3.3-70b-versatile"
-    
-    if not groq_api_key:
-        return "AI is not configured. Please set GROQ_API_KEY."
+    .message-time {
+      font-size: 0.68rem;
+      opacity: 0.75;
+      margin-top: 5px;
+      display: block;
+    }
 
-    try:
-        # ✅ FIXED: Removed trailing spaces in URL
-        url = "https://api.groq.com/openai/v1/chat/completions"
-        response = requests.post(
-            url,
-            headers={
-                "Authorization": f"Bearer {groq_api_key}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": model_name,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": (
-                            "You are Finedata AI, Ethiopia's expert assistant. "
-                            "Answer ONLY about Ethiopia: do not mention anything about your time cutoff just answer when you know and say i dont have that information when it is beyond what you have. "
-                            "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
-                            "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
-                        )
-                    },
-                    {
-                        "role": "user",
-                        "content": question
-                    }
-                ],
-                "temperature": 0.3,
-                "max_tokens": 300,
-            },
-            timeout=30
-        )
-        
-        logger.info(f"Groq API request sent. Status: {response.status_code}")
-        if response.status_code == 200:
-            data = response.json()
-            if "choices" in data and len(data["choices"]) > 0:
-                content = data["choices"][0]["message"]["content"]
-                return content.strip()
-            else:
-                logger.warning(f"Groq API response had no choices: {data}")
-                return "I received your question but had trouble formatting the response."
-        else:
-            logger.error(f"Groq AI error {response.status_code}: {response.text}")
-            return "I'm having trouble thinking right now. Try again?"
-            
-    except Exception as e:
-        logger.exception("Groq AI request failed")
-        return "AI service is temporarily unavailable."
+    .ai-message.amharic,
+    .ai-message.tigrinya,
+    .ai-message.wolaytta {
+      font-family: 'Noto Sans Ethiopic', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
 
-# ======================
-# MAIN ENDPOINT
-# ======================
+    .ai-message.oromo,
+    .ai-message.somali,
+    .ai-message.afar,
+    .ai-message.sidamo {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+    }
 
-@app.route('/ask-ai', methods=['POST'])
-def ask_ai():
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Invalid JSON"}), 400
+    /* ===== INPUT AREA ===== */
+    .chat-input-area {
+      padding: 16px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      min-height: 72px;
+    }
 
-    user_question = data.get("question", "").strip()
-    target_lang = data.get("language", "en")
+    .input-container {
+      flex: 1;
+      position: relative;
+    }
 
-    if not user_question:
-        return jsonify({"error": "Please ask a question."}), 400
-    if target_lang not in SUPPORTED_LANGUAGES:
-        target_lang = "en"
+    .chat-input-area textarea {
+      width: 100%;
+      padding: 12px 48px 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      resize: none;
+      font-size: 14px;
+      min-height: 48px;
+      max-height: 100px;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: border-color 0.3s ease, box-shadow 0.3s;
+    }
 
-    english_question, detected_lang = detect_and_translate_to_english(user_question)
-    answer_en = ask_groq_ai(english_question)
-    answer_translated = translate_text(answer_en, target_lang)
+    .chat-input-area textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+    }
 
-    return jsonify({
-        "question_original": user_question,
-        "question_english": english_question,
-        "detected_language": detected_lang,
-        "answer_english": answer_en,
-        "answer_translated": answer_translated,
-        "language": target_lang
-    })
+    .input-actions {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+    }
 
-# ======================
-# STATIC FILES
-# ======================
+    .mic-button, .attach-button {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      cursor: pointer;
+      opacity: 0.7;
+      padding: 3px;
+      font-size: 0.95rem;
+    }
 
-@app.route('/ai-chat.html')
-def ai_chat_page():
-    return send_from_directory('.', 'ai-chat.html')
+    .send-button {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
 
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory('.', filename)
+    .send-button:hover:not(:disabled) {
+      transform: scale(1.06);
+    }
 
-@app.route('/')
-def home():
-    return send_from_directory('.', 'index.html')
+    .send-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
-# ======================
-# STARTUP VALIDATION
-# ======================
+    /* ===== TYPING INDICATOR ===== */
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--card-bg);
+      padding: 14px 18px;
+      border-radius: 16px;
+      border-bottom-left-radius: 6px;
+      color: #8B949E;
+      border: 1px solid var(--border-color);
+      margin-bottom: 6px;
+      display: flex;
+      gap: 12px;
+    }
 
-if __name__ == '__main__':
-    if not os.getenv("EMAILOCTOPUS_API_KEY"):
-        logger.warning("EMAILOCTOPUS_API_KEY not set — email subscription will fail.")
-    if not os.getenv("EMAILOCTOPUS_LIST_ID"):
-        logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("GROQ_API_KEY"):
-        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
-    if not os.getenv("HF_API_KEY"):
-        logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
+    .typing-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    .typing-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .typing-dots span {
+      height: 6px;
+      width: 6px;
+      background-color: var(--primary-color);
+      display: block;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-of-type(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-of-type(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--card-bg);
+      color: #8B949E;
+      padding: 2rem 0 1rem;
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-section h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+    .footer-section p,
+    .footer-section a {
+      margin-bottom: 0.4rem;
+      font-size: 0.92rem;
+      color: var(--text-color);
+      text-decoration: none;
+      display: block;
+    }
+    .footer-section a:hover {
+      color: var(--ethiopia-green);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.92rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        padding: 0.5rem 0;
+        border-top: 1px solid var(--border-color);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0.3rem 1rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .chat-container {
+        margin: 0;
+        width: calc(100% - 20px);
+        border-radius: 12px;
+      }
+      .message {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <img src="  https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo">
+          <h1>FineData</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ai-chat.html" class="active">AI Chat</a></li>
+          <li><a href="exchange.html">Exchange Rates</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="weather.html">For Farmers</a></li>
+          <li><a href="insights.html">Get Forecasts</a></li>
+          <!-- Removed the .btn class to match other link styles -->
+          <li><a href="donate.html">Donate</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-header-content">
+          <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
+          <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
+        </div>
+        <div class="ai-status">
+          <div class="status-dot"></div>
+          <span>Online</span>
+        </div>
+      </div>
+
+      <div class="language-selector">
+        <div class="language-controls">
+          <label for="language" style="font-size: 0.88rem;">Language:</label>
+          <select id="language">
+            <option value="en">🌐 English</option>
+            <option value="am">🇪🇹 Amharic</option>
+            <option value="om">🇪🇹 Afaan Oromoo</option>
+            <option value="ti">🇪🇹 Tigrinya</option>
+            <option value="so">🇪🇹 Somali</option>
+            <option value="aa">🇪🇹 Afar</option>
+            <option value="sid">🇪🇹 Sidamo</option>
+            <option value="wal">🇪🇹 Wolaytta</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="ar">🇸🇦 Arabic</option>
+          </select>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-action" onclick="insertExample('Current weather in Addis Ababa')">
+            <i class="fas fa-sun"></i> Weather
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopian agriculture updates')">
+            <i class="fas fa-seedling"></i> Agriculture
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopia economy news')">
+            <i class="fas fa-chart-line"></i> Economy
+          </div>
+          <div class="quick-action" onclick="clearChat()">
+            <i class="fas fa-trash-alt"></i> Clear
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message ai-message">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            placeholder="Ask about Ethiopia..."
+            rows="1"
+          ></textarea>
+          <div class="input-actions">
+            <button class="mic-button" title="Voice input (coming soon)">
+              <i class="fas fa-microphone"></i>
+            </button>
+            <button class="attach-button" title="Attach file (coming soon)">
+              <i class="fas fa-paperclip"></i>
+            </button>
+          </div>
+        </div>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About</h3>
+          <a href="index.html">Home</a>
+          <a href="support.html">Support</a>
+          <a href="pdf.html">PDF Resources</a>
+        </div>
+        <div class="footer-section">
+          <h3>Data</h3>
+          <a href="economic.html">Economic</a>
+          <a href="demographic.html">Demographic</a>
+          <a href="agricultural.html">Agricultural</a>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>gabrielmulugeta1@gmail.com</p>
+          <p>+251 991168917</p>
+          <p>Addis Ababa, Ethiopia</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 FineData. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const BACKEND_URL = "  https://finedata.onrender.com  ";
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const languageSelect = document.getElementById('language');
+    const sendButton = document.getElementById('sendButton');
+
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+
+    userInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+    });
+
+    userInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function getCurrentTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+
+      if (!isUser) {
+        const lang = languageSelect.value;
+        if (lang === 'am' || lang === 'ti' || lang === 'wal') {
+          messageDiv.classList.add('amharic');
+        } else if (lang === 'om' || lang === 'so' || lang === 'aa' || lang === 'sid') {
+          messageDiv.classList.add('oromo');
+        }
+        messageDiv.style.whiteSpace = 'pre-wrap';
+      }
+
+      const safeText = escapeHtml(text);
+      const time = isUser ? getCurrentTime() : "Now";
+
+      if (isUser) {
+        messageDiv.innerHTML = `
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      }
+
+      chatMessages.insertBefore(messageDiv, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function insertExample(text) {
+      userInput.value = text;
+      userInput.focus();
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
+    }
+
+    function clearChat() {
+      chatMessages.innerHTML = `
+        <div class="message ai-message">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('typingIndicator').style.display = 'none';
+    }
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, true);
+      userInput.value = '';
+      userInput.style.height = 'auto';
+
+      typingIndicator.style.display = 'flex';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const response = await fetch(BACKEND_URL + '/ask-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: text,
+            language: languageSelect.value
+          })
+        });
+
+        typingIndicator.style.display = 'none';
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const reply = data.answer_translated ?? data.answer ?? "❌ No response received.";
+        addMessage(reply);
+      } catch (err) {
+        typingIndicator.style.display = 'none';
+        addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
+      } finally {
+        sendButton.disabled = false;
+        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+      }
+    }
+
+    window.addEventListener('load', () => {
+      userInput.focus();
+    });
+  </script>
+</body>
+</html>
