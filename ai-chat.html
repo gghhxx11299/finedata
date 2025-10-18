@@ -1,778 +1,988 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Forecasts - FineData Ethiopia</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css   ">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Reuse your global styles */
-        :root {
-            --primary-color: #2c5282;
-            --secondary-color: #3182ce;
-            --accent-color: #e53e3e;
-            --text-color: #2d3748;
-            --light-bg: #f7fafc;
-            --white: #ffffff;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Premium Variables */
-            --dark-bg: #0D1117;
-            --card-bg: #161B22;
-            --electric-blue: #58A6FF;
-            --coral-red: #FF7B72;
-            --text-light: #C9D1D9;
-            --neon-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
-            --transition: all 0.3s ease;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--white);
-        }
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        a {
-            color: var(--electric-blue);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        a:hover {
-            color: var(--coral-red);
-        }
-        /* Header */
-        header {
-            background-color: rgba(13, 17, 23, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            flex-wrap: wrap; /* Allow wrapping for smaller screens */
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo img {
-            height: 40px;
-            width: auto;
-            border-radius: 5px;
-        }
-        .logo h1 {
-            font-size: 1.5rem;
-            margin: 0;
-            color: var(--primary-color);
-        }
-        .nav-links {
-            display: flex; /* Default to flex for desktop */
-            list-style: none;
-            gap: 1.5rem;
-            align-items: center;
-            /* Mobile menu specific styles */
-            position: absolute; /* Positioned absolutely when hidden */
-            top: 100%; /* Position below the nav bar */
-            left: 0;
-            width: 100%;
-            background-color: var(--card-bg);
-            flex-direction: column; /* Stack items vertically on mobile */
-            padding: 1.5rem;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(88, 166, 255, 0.3);
-            /* Initially hidden */
-            display: none;
-            /* Center items within the mobile menu */
-            text-align: center;
-        }
-        .nav-links.active {
-            display: flex; /* Show when active class is added */
-        }
-        .nav-links a {
-            color: var(--text-light);
-            font-weight: 500;
-            position: relative;
-            padding: 0.5rem 0;
-            text-decoration: none; /* Ensure no underline initially */
-            /* Make links full width for better touch targets on mobile */
-            display: block;
-            width: 100%;
-        }
-        .nav-links a:not(.btn):hover {
-            color: var(--electric-blue);
-        }
-        .nav-links a:not(.btn)::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--electric-blue);
-            transition: var(--transition);
-        }
-        .nav-links a:not(.btn):hover::after {
-            width: 100%;
-        }
-        .nav-links a.active {
-            color: var(--electric-blue);
-        }
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .btn {
-            background-color: var(--electric-blue);
-            color: var(--dark-bg);
-            padding: 0.5rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            white-space: nowrap; /* Prevent button text wrapping */
-            /* Center button within mobile menu */
-            display: inline-block;
-            margin: 0.5rem auto; /* Add some vertical margin */
-        }
-        .btn:hover {
-            background-color: var(--coral-red);
-            color: var(--white);
-            box-shadow: 0 0 10px var(--coral-red), 0 0 20px rgba(255, 123, 114, 0.4);
-        }
-        .mobile-menu-btn {
-            display: none; /* Initially hidden */
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        /* Hero */
-        .hero {
-            padding: 4rem 0;
-            text-align: center;
-            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9));
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(88, 166, 255, 0.1), transparent 70%);
-        }
-        .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            color: var(--text-light);
-        }
-        /* Forecast Grid */
-        .forecast-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        .forecast-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid rgba(88, 166, 255, 0.3);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        .forecast-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), var(--neon-shadow);
-            border-color: var(--electric-blue);
-        }
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .card-title {
-            font-size: 1.2rem;
-            margin: 0;
-        }
-        .card-icon {
-            font-size: 1.5rem;
-            color: var(--electric-blue);
-        }
-        .forecast-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 1rem 0;
-            color: var(--white);
-        }
-        .forecast-detail {
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
-            color: #A0AEC0;
-        }
-        .trend-up { color: #4ade80; }
-        .trend-down { color: var(--coral-red); }
-        .trend-neutral { color: #D69E2E; }
-        /* Footer */
-        footer {
-            background-color: var(--dark-bg);
-            padding: 2rem 0;
-            text-align: center;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(88, 166, 255, 0.2);
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--electric-blue);
-        }
-        .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-            display: block;
-        }
-        .footer-section a:hover {
-            color: var(--coral-red);
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(88, 166, 255, 0.2);
-        }
-        /* Responsive */
-        @media (max-width: 900px) {
-            .nav-links {
-                /* Styles already defined above for mobile */
-            }
-            .mobile-menu-btn {
-                display: block; /* Show the hamburger button on mobile */
-            }
-            .hero h2 {
-                font-size: 2rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chat - FineData Ethiopia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    :root {
+      --bg-color: #0D1117;
+      --card-bg: #161B22;
+      --primary-color: #58A6FF;
+      --ethiopia-green: #078A43;
+      --ethiopia-yellow: #FCD116;
+      --ethiopia-red: #DA121A;
+      --text-color: #C9D1D9;
+      --border-color: #30363D;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      --success-color: #3FB950;
+      --ai-avatar-gradient: linear-gradient(135deg, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(7, 138, 67, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(218, 18, 26, 0.03) 0%, transparent 20%);
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* ===== COMPACT HEADER ===== */
+    header {
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.5rem 0;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-badge {
+      background: var(--ai-avatar-gradient);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .logo h1 {
+      color: var(--primary-color);
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+    .nav-links li {
+      margin-left: 1.2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--ethiopia-yellow);
+      border-radius: 2px;
+    }
+    .btn {
+      background: var(--ethiopia-green);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: #067a3a;
+      transform: translateY(-1px);
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--primary-color);
+    }
+
+    /* ===== CHAT CONTAINER — FULL HEIGHT ===== */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+
+    .chat-container {
+      flex: 1;
+      min-height: 0;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    /* Ethiopian flag accent bar */
+    .chat-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(to right, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
+      z-index: 10;
+    }
+
+    /* ===== CHAT HEADER ===== */
+    .chat-header {
+      background: linear-gradient(135deg, var(--ethiopia-green), #056b33);
+      color: white;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      min-height: 80px;
+    }
+
+    .chat-header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ai-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--ai-avatar-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .chat-header-content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .chat-header-content p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+      max-width: 500px;
+    }
+
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-color);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ===== LANGUAGE SELECTOR ===== */
+    .language-selector {
+      padding: 14px 24px;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      min-height: 60px;
+    }
+
+    .language-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .language-selector label {
+      font-weight: 600;
+      color: var(--text-color);
+      font-size: 0.95rem;
+    }
+
+    .language-selector select {
+      padding: 8px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: var(--card-bg);
+      color: var(--text-color);
+      min-width: 180px;
+      font-weight: 500;
+      transition: border-color 0.3s;
+    }
+
+    .language-selector select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .quick-action {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-action:hover {
+      background: var(--ethiopia-green);
+      color: white;
+      border-color: var(--ethiopia-green);
+    }
+
+    /* ===== CHAT MESSAGES AREA ===== */
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 16px 20px;
+      border-radius: 18px;
+      line-height: 1.6;
+      position: relative;
+      animation: fadeIn 0.35s ease;
+      word-wrap: break-word;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+    }
+
+    .message:hover {
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-message {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 6px;
+      margin-left: auto;
+    }
+
+    .ai-message {
+      background: var(--card-bg);
+      color: var(--text-color);
+      align-self: flex-start;
+      border-bottom-left-radius: 6px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 14px;
+    }
+
+    .ai-avatar-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--ai-avatar-gradient);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+    }
+
+    .message-content {
+      flex: 1;
+    }
+
+    .message-time {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 6px;
+      display: block;
+      text-align: right;
+    }
+
+    .ai-message.amharic,
+    .ai-message.tigrinya,
+    .ai-message.wolaytta {
+      font-family: 'Noto Sans Ethiopic', sans-serif;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .ai-message.oromo,
+    .ai-message.somali,
+    .ai-message.afar,
+    .ai-message.sidamo {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+    }
+
+    /* ===== INPUT AREA ===== */
+    .chat-input-area {
+      padding: 20px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      min-height: 80px;
+    }
+
+    .input-container {
+      flex: 1;
+      position: relative;
+    }
+
+    .chat-input-area textarea {
+      width: 100%;
+      padding: 14px 50px 14px 18px;
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      resize: none;
+      font-size: 15px;
+      min-height: 52px;
+      max-height: 120px;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .chat-input-area textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 2px 10px rgba(88, 166, 255, 0.2);
+    }
+
+    .input-actions {
+      position: absolute;
+      right: 16px;
+      bottom: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .mic-button, .attach-button {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      cursor: pointer;
+      opacity: 0.7;
+      padding: 5px;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    .mic-button:hover, .attach-button:hover {
+      opacity: 1;
+    }
+
+    .send-button {
+      background: linear-gradient(135deg, var(--ethiopia-green), #056b33);
+      color: white;
+      border: none;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(7, 138, 67, 0.3);
+    }
+
+    .send-button:hover:not(:disabled) {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 6px 16px rgba(7, 138, 67, 0.4);
+    }
+
+    .send-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===== TYPING INDICATOR ===== */
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--card-bg);
+      padding: 14px 20px;
+      border-radius: 18px;
+      border-bottom-left-radius: 6px;
+      color: #8B949E;
+      border: 1px solid var(--border-color);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 14px;
+    }
+
+    .typing-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .typing-dots span {
+      height: 8px;
+      width: 8px;
+      background-color: var(--ethiopia-green);
+      display: block;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-of-type(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-of-type(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      padding: 2rem 0 1rem;
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-section h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-section p,
+    .footer-section a {
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      text-decoration: none;
+      display: block;
+    }
+    .footer-section a:hover {
+      color: var(--ethiopia-green);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      color: #8B949E;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        padding: 0.5rem 0;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0.3rem 1rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .chat-container {
+        margin: 0;
+        border-radius: 12px;
+        width: calc(100% - 20px);
+      }
+
+      .chat-header {
+        padding: 14px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        min-height: 100px;
+      }
+
+      .chat-header-content {
+        gap: 12px;
+      }
+
+      .ai-avatar {
+        width: 42px;
+        height: 42px;
+      }
+
+      .language-selector {
+        padding: 12px;
+        flex-direction: column;
+        gap: 12px;
+        min-height: auto;
+      }
+
+      .quick-actions {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .message {
+        max-width: 92%;
+      }
+
+      .chat-input-area {
+        padding: 16px;
+        min-height: 70px;
+      }
+
+      .chat-input-area textarea {
+        min-height: 48px;
+        padding: 12px 48px 12px 16px;
+      }
+
+      .send-button {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .chat-header {
+        min-height: 70px;
+      }
+      .language-selector {
+        min-height: 50px;
+      }
+      .chat-input-area {
+        min-height: 70px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <img src="   https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo">
-                    <h1>FineData</h1>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
-                    <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="weather.html">For Farmers</a></li>
-                    <li><a href="insights.html" class="active">Get Forecasts</a></li>
-                    <li><a href="donate.html" class="btn">Donate</a></li>
-                </ul>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
+  <!-- Compact Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <div class="logo-badge">FD</div>
+          <h1>FineData</h1>
         </div>
-    </header>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ai-chat.html" class="active">AI Chat</a></li>
+          <li><a href="exchange.html">Exchange Rates</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="weather.html">For Farmers</a></li>
+          <li><a href="insights.html">Get Forecasts</a></li>
+          <li><a href="donate.html" class="btn">Donate</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <h2>Ethiopia 2025 Integrated Forecast Dashboard</h2>
-            <p>Forward-looking, cross-sectoral insights for policymakers, investors, farmers, and researchers — all grounded in Ethiopia’s unique data landscape.</p>
+  <!-- Full-height Chat Area -->
+  <main>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-header-content">
+          <div class="ai-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div>
+            <h2>Ethiopian AI Assistant</h2>
+            <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="container">
-        <section>
-            <h3>Comprehensive 2025 Forecasts by Sector</h3>
-            <div class="forecast-grid">
-                <!-- ECONOMIC -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">GDP Growth</h4>
-                        <i class="fas fa-chart-line card-icon"></i>
-                    </div>
-                    <div class="forecast-value">5.9%</div>
-                    <p class="forecast-detail">Real GDP growth driven by services (43% of GDP) and manufacturing recovery.</p>
-                    <p class="forecast-detail trend-up">↑ From 5.4% in 2024</p>
-                    <a href="economic.html">View Economic Data →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Inflation</h4>
-                        <i class="fas fa-fire card-icon"></i>
-                    </div>
-                    <div class="forecast-value">9.8%</div>
-                    <p class="forecast-detail">Moderating due to stable food supply and tighter monetary policy.</p>
-                    <p class="forecast-detail trend-down">↓ From 10.5% in 2024</p>
-                    <a href="economic.html">View Indicators →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Foreign Reserves</h4>
-                        <i class="fas fa-wallet card-icon"></i>
-                    </div>
-                    <div class="forecast-value">$8.1B</div>
-                    <p class="forecast-detail">~2.1 months of import cover — remains a critical vulnerability.</p>
-                    <p class="forecast-detail trend-neutral">→ Stable if exports grow</p>
-                    <a href="economic.html">View Public Finance →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">FDI Inflows</h4>
-                        <i class="fas fa-hand-holding-usd card-icon"></i>
-                    </div>
-                    <div class="forecast-value">$4.3B</div>
-                    <p class="forecast-detail">Industrial parks and energy sector attract Turkish, Chinese, and Gulf investment.</p>
-                    <p class="forecast-detail trend-up">↑ +8% YoY</p>
-                    <a href="economic.html">View Investment →</a>
-                </div>
-
-                <!-- AGRICULTURAL -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Total Crop Output</h4>
-                        <i class="fas fa-seedling card-icon"></i>
-                    </div>
-                    <div class="forecast-value">298M tons</div>
-                    <p class="forecast-detail">+4.9% growth from 2024, led by teff, maize, and pulses.</p>
-                    <p class="forecast-detail trend-up">↑ Driven by irrigation & inputs</p>
-                    <a href="agricultural.html">View Agri Data →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Coffee Exports</h4>
-                        <i class="fas fa-coffee card-icon"></i>
-                    </div>
-                    <div class="forecast-value">$1.35B</div>
-                    <p class="forecast-detail">Recovery from 2024 slump; global prices stabilize at $215/kg.</p>
-                    <p class="forecast-detail trend-up">↑ +12.5% YoY</p>
-                    <a href="agricultural.html">View Export Trends →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Irrigated Land</h4>
-                        <i class="fas fa-tint card-icon"></i>
-                    </div>
-                    <div class="forecast-value">1.38M ha</div>
-                    <p class="forecast-detail">+15% expansion from 2024; GERD enables new schemes in Awash & Rift Valley.</p>
-                    <p class="forecast-detail trend-up">↑ Critical for climate resilience</p>
-                    <a href="agricultural.html">View Inputs →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Livestock GDP Share</h4>
-                        <i class="fas fa-cow card-icon"></i>
-                    </div>
-                    <div class="forecast-value">12.3%</div>
-                    <p class="forecast-detail">Livestock contributes 68% of agri-GDP in Afar/Somali regions.</p>
-                    <p class="forecast-detail trend-up">↑ Export demand rising</p>
-                    <a href="agricultural.html">View Livestock →</a>
-                </div>
-
-                <!-- DEMOGRAPHIC -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Population</h4>
-                        <i class="fas fa-users card-icon"></i>
-                    </div>
-                    <div class="forecast-value">135.5M</div>
-                    <p class="forecast-detail">Mid-2025 estimate; urban share reaches 22.5%.</p>
-                    <p class="forecast-detail trend-up">↑ +2.55% annual growth</p>
-                    <a href="demographic.html">View Demographics →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Youth Unemployment</h4>
-                        <i class="fas fa-graduation-cap card-icon"></i>
-                    </div>
-                    <div class="forecast-value">25.8%</div>
-                    <p class="forecast-detail">Remains high despite job creation in industrial parks.</p>
-                    <p class="forecast-detail trend-up">↑ Slight increase from 25.4%</p>
-                    <a href="demographic.html">View Labor Force →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Life Expectancy</h4>
-                        <i class="fas fa-heartbeat card-icon"></i>
-                    </div>
-                    <div class="forecast-value">67.8 yrs</div>
-                    <p class="forecast-detail">Female: 70.3 yrs | Male: 65.4 yrs</p>
-                    <p class="forecast-detail trend-up">↑ +0.2 from 2024</p>
-                    <a href="demographic.html">View Health →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Internet Penetration</h4>
-                        <i class="fas fa-wifi card-icon"></i>
-                    </div>
-                    <div class="forecast-value">32%</div>
-                    <p class="forecast-detail">Driven by Safaricom & MTN rural expansion.</p>
-                    <p class="forecast-detail trend-up">↑ From 28% in 2024</p>
-                    <a href="demographic.html">View Tech Access →</a>
-                </div>
-
-                <!-- EXCHANGE & TRADE -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">ETB/USD (Official)</h4>
-                        <i class="fas fa-coins card-icon"></i>
-                    </div>
-                    <div class="forecast-value">59.8 ETB</div>
-                    <p class="forecast-detail">Parallel market may exceed 65 ETB; forex rationing continues.</p>
-                    <p class="forecast-detail trend-down">↓ Further depreciation</p>
-                    <a href="exchange.html">View Exchange Rates →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Trade Deficit</h4>
-                        <i class="fas fa-money-bill-trend-up card-icon"></i>
-                    </div>
-                    <div class="forecast-value">-$6.5B</div>
-                    <p class="forecast-detail">Exports: $18.2B | Imports: $24.7B</p>
-                    <p class="forecast-detail trend-neutral">→ Stable if oil prices hold</p>
-                    <a href="economic.html">View Trade →</a>
-                </div>
-
-                <!-- WEATHER & CLIMATE -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Kiremt Rainfall</h4>
-                        <i class="fas fa-cloud-sun-rain card-icon"></i>
-                    </div>
-                    <div class="forecast-value">Near-normal</div>
-                    <p class="forecast-detail">June–Sept rains at 95–105% of average — favorable for teff & maize.</p>
-                    <p class="forecast-detail trend-neutral">→ Low drought risk</p>
-                    <a href="weather.html">View Farmer Forecasts →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Temperature Anomaly</h4>
-                        <i class="fas fa-temperature-high card-icon"></i>
-                    </div>
-                    <div class="forecast-value">+0.8°C</div>
-                    <p class="forecast-detail">Above 1991–2020 baseline; heat stress in lowlands.</p>
-                    <p class="forecast-detail trend-up">↑ Warming trend continues</p>
-                    <a href="weather.html">View Climate Data →</a>
-                </div>
-
-                <!-- INFRASTRUCTURE & DIGITAL -->
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">GERD Generation</h4>
-                        <i class="fas fa-bolt card-icon"></i>
-                    </div>
-                    <div class="forecast-value">2,000 MW</div>
-                    <p class="forecast-detail">Phased commissioning begins; full 5,150 MW by 2028.</p>
-                    <p class="forecast-detail trend-up">↑ National grid stability improves</p>
-                    <a href="economic.html">View Energy →</a>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Mobile Money Users</h4>
-                        <i class="fas fa-mobile-alt card-icon"></i>
-                    </div>
-                    <div class="forecast-value">15M+</div>
-                    <p class="forecast-detail">200% annual growth since 2022; drives financial inclusion.</p>
-                    <p class="forecast-detail trend-up">↑ Key for rural economy</p>
-                    <a href="economic.html">View Digital Economy →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Deep Dive: Sectoral Outlooks -->
-        <section style="margin-top: 3rem;">
-            <h3>2025 Sectoral Outlooks</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <h4><i class="fas fa-industry" style="color:#58A6FF;"></i> Manufacturing</h4>
-                    <p class="forecast-detail">Industrial parks to employ 100,000+ by 2025. Textile exports target $2B by 2026. Key risk: forex shortages for raw material imports.</p>
-                </div>
-                <div class="forecast-card">
-                    <h4><i class="fas fa-umbrella-beach" style="color:#58A6FF;"></i> Tourism</h4>
-                    <p class="forecast-detail">1.2M arrivals (+41% from 2019). New visa-on-arrival for 30+ countries. Revenue: $3.8B. Focus on cultural (Lalibela) and eco-tourism (Simien).</p>
-                </div>
-                <div class="forecast-card">
-                    <h4><i class="fas fa-tractor" style="color:#58A6FF;"></i> Smallholder Resilience</h4>
-                    <p class="forecast-detail">32% of farmers use climate-smart practices. Drought-resistant seeds cover 1.5M ha. Early warning systems reach 80% of woredas.</p>
-                </div>
-                <div class="forecast-card">
-                    <h4><i class="fas fa-school" style="color:#58A6FF;"></i> Education</h4>
-                    <p class="forecast-detail">Primary completion: 79.2%. Youth literacy gap narrows (59% male vs 46% female). Digital learning pilots in 500 schools.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Risks & Opportunities -->
-        <section style="margin-top: 3rem;">
-            <h3>2025: Strategic Risks & Opportunities</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <h4><i class="fas fa-exclamation-triangle" style="color:#FF7B72;"></i> Key Risks</h4>
-                    <ul style="padding-left: 1.2rem; margin-top: 1rem; line-height: 1.7; font-size: 0.95rem;">
-                        <li>Foreign reserves below 3-month import cover</li>
-                        <li>Debt service = 25% of export earnings</li>
-                        <li>Climate volatility in Somali & Afar</li>
-                        <li>Urban youth unemployment >25%</li>
-                        <li>ETB parallel market premium >10%</li>
-                    </ul>
-                </div>
-                <div class="forecast-card">
-                    <h4><i class="fas fa-lightbulb" style="color:#58A6FF;"></i> Strategic Opportunities</h4>
-                    <ul style="padding-left: 1.2rem; margin-top: 1rem; line-height: 1.7; font-size: 0.95rem;">
-                        <li>GERD enables green industrialization</li>
-                        <li>Digital ID rollout boosts service access</li>
-                        <li>Agro-processing for export diversification</li>
-                        <li>Regional integration via AfCFTA</li>
-                        <li>Youth dividend: 70% under age 30</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEW: 2026 Outlook Section -->
-        <section style="margin-top: 3rem;">
-            <h2>Ethiopia 2026 Economic and Societal Outlook</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-light);">Key projections and trends for the coming year.</p>
-
-            <h3>2026 Economic Forecasts</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">GDP Growth</h4>
-                        <i class="fas fa-chart-line card-icon"></i>
-                    </div>
-                    <div class="forecast-value">7.1%</div>
-                    <p class="forecast-detail">IMF forecast for fiscal year 2025/26, driven by agriculture and services.</p>
-                    <p class="forecast-detail trend-up">↑ From ~6% in 2025</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Inflation</h4>
-                        <i class="fas fa-fire card-icon"></i>
-                    </div>
-                    <div class="forecast-value">~10%</div>
-                    <p class="forecast-detail">Targeted decline from 2025 levels due to tight monetary policy.</p>
-                    <p class="forecast-detail trend-down">↓ From ~13% in early 2025</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">FDI Inflows</h4>
-                        <i class="fas fa-hand-holding-usd card-icon"></i>
-                    </div>
-                    <div class="forecast-value">$4.0B</div>
-                    <p class="forecast-detail">FY2024/25 figure, expected to grow with new investment permits.</p>
-                    <p class="forecast-detail trend-up">↑ +5.6% YoY</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Wheat Production</h4>
-                        <i class="fas fa-wheat-alt card-icon"></i>
-                    </div>
-                    <div class="forecast-value">6.5M tons</div>
-                    <p class="forecast-detail">USDA forecast for marketing year 2025/26.</p>
-                    <p class="forecast-detail trend-up">↑ From previous year</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem;">2026 Demographics & Society</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Population</h4>
-                        <i class="fas fa-users card-icon"></i>
-                    </div>
-                    <div class="forecast-value">139M</div>
-                    <p class="forecast-detail">UN projection for mid-2026.</p>
-                    <p class="forecast-detail trend-up">↑ +2%+ annual growth</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Median Age</h4>
-                        <i class="fas fa-baby card-icon"></i>
-                    </div>
-                    <div class="forecast-value">19 years</div>
-                    <p class="forecast-detail">Very young population structure continues.</p>
-                    <p class="forecast-detail trend-neutral">→ Stable</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Total Fertility</h4>
-                        <i class="fas fa-baby card-icon"></i>
-                    </div>
-                    <div class="forecast-value">3.8 births/woman</div>
-                    <p class="forecast-detail">High but gradually declining rate.</p>
-                    <p class="forecast-detail trend-down">↓ From ~6 in early 2000s</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Urbanization</h4>
-                        <i class="fas fa-city card-icon"></i>
-                    </div>
-                    <div class="forecast-value">~23%</div>
-                    <p class="forecast-detail">Urban share expected to inch up slightly.</p>
-                    <p class="forecast-detail trend-up">↑ From ~22.5% in 2025</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem;">2026 Environment & Climate</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Temperature Trend</h4>
-                        <i class="fas fa-temperature-high card-icon"></i>
-                    </div>
-                    <div class="forecast-value">Warming</div>
-                    <p class="forecast-detail">Continued warming trend across all seasons.</p>
-                    <p class="forecast-detail trend-up">↑ Above historical norms</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Rainfall Variability</h4>
-                        <i class="fas fa-cloud-sun-rain card-icon"></i>
-                    </div>
-                    <div class="forecast-value">High</div>
-                    <p class="forecast-detail">Increased variability expected (wetter/drier years).</p>
-                    <p class="forecast-detail trend-up">↑ Risk of extremes</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem;">2026 Technology & Energy</h3>
-            <div class="forecast-grid">
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Internet Penetration</h4>
-                        <i class="fas fa-wifi card-icon"></i>
-                    </div>
-                    <div class="forecast-value">>50%</div>
-                    <p class="forecast-detail">Expected to exceed 50% by 2026.</p>
-                    <p class="forecast-detail trend-up">↑ From ~32% in 2025</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Renewable Energy Share</h4>
-                        <i class="fas fa-bolt card-icon"></i>
-                    </div>
-                    <div class="forecast-value">~96%</div>
-                    <p class="forecast-detail">Dominant hydro, with growing solar/wind.</p>
-                    <p class="forecast-detail trend-neutral">→ Remains high</p>
-                </div>
-                <div class="forecast-card">
-                    <div class="card-header">
-                        <h4 class="card-title">GERD Status</h4>
-                        <i class="fas fa-dam card-icon"></i>
-                    </div>
-                    <div class="forecast-value">Nearing Completion</div>
-                    <p class="forecast-detail">Expected to double hydro capacity.</p>
-                    <p class="forecast-detail trend-up">↑ Grid stability improving</p>
-                </div>
-            </div>
-
-        </section>
-        <!-- End NEW: 2026 Outlook Section -->
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About</h3>
-                    <a href="index.html">Home</a>
-                    <a href="support.html">Support</a>
-                    <a href="pdf.html">PDF Resources</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Data</h3>
-                    <a href="economic.html">Economic</a>
-                    <a href="demographic.html">Demographic</a>
-                    <a href="agricultural.html">Agricultural</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>gabrielmulugeta1@gmail.com</p>
-                    <p>+251 991168917</p>
-                    <p>Addis Ababa, Ethiopia</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 FineData. All rights reserved.</p>
-            </div>
+        <div class="ai-status">
+          <div class="status-dot"></div>
+          <span>Online & Ready</span>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
+      <div class="language-selector">
+        <div class="language-controls">
+          <label for="language">Language:</label>
+          <select id="language">
+            <option value="en">🌐 English</option>
+            <option value="am">🇪🇹 Amharic</option>
+            <option value="om">🇪🇹 Afaan Oromoo</option>
+            <option value="ti">🇪🇹 Tigrinya</option>
+            <option value="so">🇪🇹 Somali</option>
+            <option value="aa">🇪🇹 Afar</option>
+            <option value="sid">🇪🇹 Sidamo</option>
+            <option value="wal">🇪🇹 Wolaytta</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="ar">🇸🇦 Arabic</option>
+          </select>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-action" onclick="insertExample('Current weather in Addis Ababa')">
+            <i class="fas fa-sun"></i> Weather
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopian agriculture updates')">
+            <i class="fas fa-seedling"></i> Agriculture
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopia economy news')">
+            <i class="fas fa-chart-line"></i> Economy
+          </div>
+          <div class="quick-action" onclick="clearChat()">
+            <i class="fas fa-trash-alt"></i> Clear
+          </div>
+        </div>
+      </div>
 
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+      <div class="chat-messages" id="chatMessages">
+        <div class="message ai-message">
+          <div class="ai-avatar-small">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="message-content">
+            Hello! I’m your Ethiopian AI Assistant. How can I help you today?
+          </div>
+          <div class="message-time">Now</div>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar-small">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea 
+            id="userInput" 
+            placeholder="Ask about Ethiopia... (e.g., 'What's the teff forecast for Oromia?')"
+            rows="1"
+          ></textarea>
+          <div class="input-actions">
+            <button class="mic-button" title="Voice input (coming soon)">
+              <i class="fas fa-microphone"></i>
+            </button>
+            <button class="attach-button" title="Attach file (coming soon)">
+              <i class="fas fa-paperclip"></i>
+            </button>
+          </div>
+        </div>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><i class="fas fa-info-circle"></i> About</h3>
+          <a href="index.html">Home</a>
+          <a href="support.html">Support</a>
+          <a href="pdf.html">PDF Resources</a>
+        </div>
+        <div class="footer-section">
+          <h3><i class="fas fa-database"></i> Data</h3>
+          <a href="economic.html">Economic</a>
+          <a href="demographic.html">Demographic</a>
+          <a href="agricultural.html">Agricultural</a>
+        </div>
+        <div class="footer-section">
+          <h3><i class="fas fa-envelope"></i> Contact</h3>
+          <p>gabrielmulugeta1@gmail.com</p>
+          <p>+251 991168917</p>
+          <p>Addis Ababa, Ethiopia</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 FineData. Built for Ethiopia with ❤️</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const BACKEND_URL = "https://finedata.onrender.com";
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const languageSelect = document.getElementById('language');
+    const sendButton = document.getElementById('sendButton');
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    // Auto-resize textarea
+    userInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    // Send on Enter (without Shift)
+    userInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function getCurrentTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+      
+      if (!isUser) {
+        const lang = languageSelect.value;
+        if (lang === 'am' || lang === 'ti' || lang === 'wal') {
+          messageDiv.classList.add('amharic');
+        } else if (lang === 'om' || lang === 'so' || lang === 'aa' || lang === 'sid') {
+          messageDiv.classList.add('oromo');
+        }
+        messageDiv.style.whiteSpace = 'pre-wrap';
+      }
+
+      const safeText = escapeHtml(text);
+      const time = getCurrentTime();
+      
+      if (isUser) {
+        messageDiv.innerHTML = `
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <div class="ai-avatar-small">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      }
+      
+      chatMessages.insertBefore(messageDiv, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function insertExample(text) {
+      userInput.value = text;
+      userInput.focus();
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+    }
+
+    function clearChat() {
+      chatMessages.innerHTML = `
+        <div class="message ai-message">
+          <div class="ai-avatar-small">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar-small">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('typingIndicator').style.display = 'none';
+    }
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, true);
+      userInput.value = '';
+      userInput.style.height = 'auto';
+
+      typingIndicator.style.display = 'flex';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const response = await fetch(BACKEND_URL + '/ask-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            question: text, 
+            language: languageSelect.value 
+          })
+        });
+
+        typingIndicator.style.display = 'none';
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
+        const data = await response.json();
+        const reply = data.answer_translated ?? data.answer ?? "❌ No response received.";
+        addMessage(reply);
+      } catch (err) {
+        typingIndicator.style.display = 'none';
+        addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
+      } finally {
+        sendButton.disabled = false;
+        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+      }
+    }
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                navLinks.classList.remove('active');
-            }
-        });
-    </script>
+    window.addEventListener('load', () => {
+      userInput.focus();
+    });
+  </script>
 </body>
 </html>
