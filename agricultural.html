@@ -335,7 +335,6 @@
             .hero p {
                 font-size: 1rem;
             }
-
             /* ✅ MOBILE-ONLY STYLES (previously applied globally) */
             .nav-links li {
                 width: 100%;
@@ -472,6 +471,35 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
+        /* New styles for 2025 data */
+        .section-2025 {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: rgba(88, 166, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        .section-2025 h3 {
+            color: var(--electric-blue);
+            margin-bottom: 1.5rem;
+        }
+        .data-subsection {
+            margin-bottom: 1.5rem;
+        }
+        .data-subsection h4 {
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        .data-point {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--electric-blue);
+        }
+        .data-point strong {
+            color: var(--electric-blue);
+        }
     </style>
 </head>
 <body>
@@ -503,7 +531,6 @@
             </nav>
         </div>
     </header>
-
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -511,7 +538,6 @@
             <p>Comprehensive data and analytics on Ethiopia's agricultural sector, including crop production, livestock statistics, market trends, and climate impact analysis.</p>
         </div>
     </section>
-
     <!-- Main Content -->
     <main class="container">
         <!-- Key Metrics Section -->
@@ -586,6 +612,82 @@
                 </div>
             </div>
         </section>
+
+        <!-- NEW: 2025 Data Section -->
+        <section class="section-2025">
+            <h3><i class="fas fa-calendar-alt"></i> Ethiopia Agricultural Data (2025)</h3>
+
+            <div class="data-subsection">
+                <h4>Crop & Plant Data</h4>
+                <div class="data-point">
+                    <strong>Teff (Eragrostis tef):</strong> Ethiopia's flagship cereal. Improved varieties like Bishoftu and Dagem yield ≈27 qt/ha versus ~14–15 qt/ha for local landraces.
+                </div>
+                <div class="data-point">
+                    <strong>Maize (Zea mays):</strong> Dominant hybrids (e.g. BH-660) yield ~3.39 t/ha on small farms. Planted in Meher rains (June–July), harvested Oct–Dec.
+                </div>
+                <div class="data-point">
+                    <strong>Wheat (Triticum aestivum):</strong> Representative variety Dendea yields ~2.54 t/ha. Sown late Belg (Feb–Mar) or early Meher (Jun–Jul), harvested Aug–Dec.
+                </div>
+                <div class="data-point">
+                    <strong>Sorghum (Sorghum bicolor):</strong> Chare variety yields ~2.33 t/ha. Planted in Belg or early Meher.
+                </div>
+                <div class="data-point">
+                    <strong>Planting/Harvest:</strong> 2025 Meher cereals began harvest in Oct and finish by December.
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Soil & Land Data</h4>
+                <div class="data-point">
+                    <strong>Soil Types:</strong> Nitisols (23%), Cambisols (19%), Vertisols (18%) dominate. Often low organic matter and acidic.
+                </div>
+                <div class="data-point">
+                    <strong>Land Use:</strong> ~12.5 Mha cultivated (cereals/pulses). Approximately 15% of land is cropland.
+                </div>
+                <div class="data-point">
+                    <strong>Irrigation:</strong> Only ~0.64 Mha irrigated (≈2% of farmland). >98% of farming is rainfed.
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Weather & Climate Data</h4>
+                <div class="data-point">
+                    <strong>Rainfall Seasons:</strong> 2025 Meher rains (Jun–Sept) were delayed in June but above average in Jul–Sept. 2025 Belg rains (Feb–May) were poor in south/center.
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Market & Economic Data</h4>
+                <div class="data-point">
+                    <strong>Commodity Prices:</strong> Local maize prices jumped 20–44% (Jan–Jul 2025 vs. 2024) due to currency depreciation. By Aug 2025, prices stabilized but remained ~5–20% above year-earlier levels.
+                </div>
+                <div class="data-point">
+                    <strong>Supply/Demand:</strong> Good 2025 Meher harvest raised food availability in central/western Ethiopia. However, pastoral and southern areas face deficits.
+                </div>
+                <div class="data-point">
+                    <strong>Trade:</strong> Coffee exports (Jul'23–May'24) were ~252,000 t (≈$1.2B). Ethiopia remains a net importer of grains.
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Policies & Subsidies</h4>
+                <div class="data-point">
+                    <strong>Fertilizer:</strong> Ethiopia finalized a ~$3 billion agreement with Dangote Group to build a chemical fertilizer plant in Gode (Somali Region).
+                </div>
+            </div>
+
+            <div class="data-subsection">
+                <h4>Livestock & Aquaculture</h4>
+                <div class="data-point">
+                    <strong>Inventory:</strong> Africa's largest livestock population. Estimates (circa 2018): ~70 million cattle, 52.5 million goats, 42.9 million sheep, 8.1 million camels.
+                </div>
+                <div class="data-point">
+                    <strong>Production Targets:</strong> Government aims for 28.4 billion liters of milk, 1.7 million t of meat, 5.5 billion eggs and 260,000 t of fish by 2030.
+                </div>
+            </div>
+
+        </section>
+        <!-- End NEW: 2025 Data Section -->
 
         <!-- Regional Production Data -->
         <section class="simple-data-section">
@@ -686,7 +788,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Livestock Statistics -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-cow"></i> Livestock Statistics (2023)</h3>
@@ -782,7 +883,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Market Trends -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-chart-bar"></i> Agricultural Market Trends</h3>
@@ -829,7 +929,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Climate Impact -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Climate Impact on Agriculture</h3>
@@ -872,7 +971,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Detailed Crop Production Table -->
         <section class="table-section">
             <h3>Detailed Crop Production Data (2023)</h3>
@@ -974,7 +1072,6 @@
                 </tbody>
             </table>
         </section>
-
         <!-- Agricultural Inputs -->
         <section class="simple-data-section">
             <h3 class="section-title"><i class="fas fa-tools"></i> Agricultural Inputs (2023)</h3>
@@ -1027,7 +1124,6 @@
             </div>
         </section>
     </main>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1056,7 +1152,6 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
@@ -1068,7 +1163,6 @@
                 document.querySelector('.nav-links').classList.remove('active');
             });
         });
-
         // =============== EXPORT FUNCTIONALITY ===============
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
@@ -1081,7 +1175,6 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
         function exportTableToCSV() {
             const table = document.querySelector('.table-section .data-table');
             if (!table) return "Table not found";
@@ -1092,14 +1185,15 @@
                 const rowData = [];
                 cols.forEach(col => {
                     let txt = col.innerText.trim().replace(/"/g, '""');
-                    if (txt.includes(',') || txt.includes('\n') || txt.includes('"')) txt = `"${txt}"`;
+                    if (txt.includes(',') || txt.includes('
+') || txt.includes('"')) txt = `"${txt}"`;
                     rowData.push(txt);
                 });
                 csv.push(rowData.join(','));
             });
-            return csv.join('\n');
+            return csv.join('
+');
         }
-
         function exportKeyMetricsAsJSON() {
             const cards = document.querySelectorAll('.card');
             const metrics = [];
@@ -1111,36 +1205,56 @@
             });
             return JSON.stringify(metrics, null, 2);
         }
-
         function exportAgriculturalData() {
-            const format = prompt("Choose export format:\n- Type 'csv' for crop table\n- Type 'json' for key metrics\n- Type 'txt' for full summary\nLeave blank or cancel for CSV (default)");
+            const format = prompt("Choose export format:
+- Type 'csv' for crop table
+- Type 'json' for key metrics
+- Type 'txt' for full summary
+Leave blank or cancel for CSV (default)");
             if (format === null || format === "" || format.toLowerCase() === "csv") {
                 const csv = exportTableToCSV();
                 downloadFile('ethiopia_agricultural_data_2023.csv', csv, 'text/csv');
-            } 
+            }
             else if (format.toLowerCase() === "json") {
                 const json = exportKeyMetricsAsJSON();
                 downloadFile('agricultural_key_metrics.json', json, 'application/json');
             }
             else if (format.toLowerCase() === "txt") {
-                let report = `Ethiopian Agricultural Data Summary (2023)\nGenerated by Finedatas\n`;
-                report += "\n=== KEY METRICS ===\n";
+                let report = `Ethiopian Agricultural Data Summary (2023 & 2025)
+Generated by Finedatas
+`;
+                report += "
+=== KEY METRICS (2023) ===
+";
                 document.querySelectorAll('.card').forEach(card => {
                     const title = card.querySelector('.card-title')?.innerText;
                     const value = card.querySelector('.card-value')?.innerText;
                     const change = card.querySelector('.card-change span')?.innerText;
-                    if (title) report += `${title}: ${value} (${change})\n`;
+                    if (title) report += `${title}: ${value} (${change})
+`;
                 });
-                report += "\n=== REGIONAL DATA ===\n";
+                report += "
+=== REGIONAL DATA (2023) ===
+";
                 document.querySelectorAll('.data-highlight').forEach(region => {
                     const name = region.querySelector('h3')?.innerText;
                     if (!name) return;
-                    report += `\n${name}:\n`;
+                    report += `
+${name}:
+`;
                     region.querySelectorAll('.data-item').forEach(item => {
                         const label = item.querySelector('.data-label')?.innerText;
                         const val = item.querySelector('.data-value')?.innerText;
-                        if (label && val) report += `  ${label}: ${val}\n`;
+                        if (label && val) report += `  ${label}: ${val}
+`;
                     });
+                });
+                report += "
+=== 2025 DATA ===
+";
+                document.querySelectorAll('.section-2025 .data-point').forEach(point => {
+                    report += `  ${point.innerText}
+`;
                 });
                 downloadFile('agricultural_summary.txt', report);
             }
