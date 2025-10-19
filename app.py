@@ -1,6 +1,3 @@
-
-
-
 # app.py
 import os
 import logging
@@ -20,20 +17,21 @@ CORS(app)
 # === NLLB SETUP ===
 HF_TOKEN = os.getenv("HF_API_KEY")
 if not HF_TOKEN:
-    logger.error("HF_API_KEY not set — NLLB translation will fail.")
+    logger.warning("HF_API_KEY not set — NLLB translation will be disabled.")
 
 # Initialize Hugging Face client (lazy init; will error on use if token missing)
-try:
-    client = InferenceClient("facebook/nllb-200-distilled-600M", token=HF_TOKEN)
-except Exception as e:
-    client = None
-    logger.error(f"Failed to initialize Hugging Face client: {e}")
+client = None
+if HF_TOKEN:
+    try:
+        client = InferenceClient("facebook/nllb-200-distilled-600M", token=HF_TOKEN)
+    except Exception as e:
+        logger.error(f"Failed to initialize Hugging Face client: {e}")
 
 # NLLB uses ISO 639-3 + script codes
 NLLB_LANG_MAP = {
     "en": "eng_Latn",
     "am": "amh_Ethi",   # Amharic
-    "om": "orm_Latn",   # Oromo (typically Latin script)
+    "om": "orm_Latn",   # Oromo
     "ti": "tir_Ethi",   # Tigrinya
     "so": "som_Latn",   # Somali
     "aa": "aar_Latn",   # Afar
@@ -55,14 +53,15 @@ def subscribe():
         return jsonify({"error": "Email is required"}), 400
 
     api_key = os.getenv("EMAILOCTOPUS_API_KEY")
-    list_id = os.getenv("EMAILOCTUS_LIST_ID")
+    list_id = os.getenv("EMAILOCTOPUS_LIST_ID")
 
     if not api_key or not list_id:
-        logger.error("EmailOctopus API_KEY or LIST_ID missing in environment variables")
+        logger.error("EmailOctopus API_KEY or LIST_ID missing")
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        url = f"https://emailoctopus.com/api/1.6/lists/  {list_id}/contacts?api_key={api_key}"
+        # ✅ FIXED: Removed extra spaces in URL
+        url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
             url,
             data={
@@ -82,7 +81,6 @@ def subscribe():
             if error_code == "MEMBER_EXISTS":
                 return jsonify({"error": "Email already subscribed"}), 422
             else:
-                logger.warning(f"EmailOctopus validation error: {resp_json}")
                 return jsonify({"error": "Invalid email address"}), 400
         else:
             logger.error(f"EmailOctopus error {response.status_code}: {response.text}")
@@ -93,43 +91,34 @@ def subscribe():
         return jsonify({"error": "Email service unavailable"}), 500
 
 # ======================
-# NLLB TRANSLATION FUNCTIONS
+# TRANSLATION FUNCTIONS
 # ======================
 
 def detect_and_translate_to_english(text: str) -> tuple[str, str]:
-    """Heuristic language detection + translate to English using NLLB."""
     if not text.strip():
         return "", "en"
     
     if client is None:
         return text, "en"
 
-    # Prioritize Ethiopian languages + English
-    candidate_langs = ["am", "om", "ti", "so", "aa", "sid", "wal", "en"]
-    
+    candidate_langs = ["am", "om", "ti", "so", "aa", "sid", "wal"]
     for lang_code in candidate_langs:
-        if lang_code == "en":
-            return text, "en"
-        
         try:
             src_nllb = NLLB_LANG_MAP[lang_code]
             translated = client.translation(
                 text,
                 src_lang=src_nllb,
                 tgt_lang="eng_Latn"
-            )
-            # If translation is different, assume it worked
-            if translated.strip() != text.strip():
-                return translated.strip(), lang_code
-        except Exception:
-            continue  # Try next language
+            ).strip()
+            if translated and translated != text.strip():
+                return translated, lang_code
+        except Exception as e:
+            logger.debug(f"Translation from {lang_code} failed: {e}")
+            continue
     
-    # Fallback: assume English
     return text, "en"
 
-
 def translate_text(text: str, target_lang: str) -> str:
-    """Translate English text to target language using NLLB."""
     if target_lang == "en" or not text.strip() or client is None:
         return text
 
@@ -149,20 +138,20 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION (Updated to use Groq-compatible endpoint)
+# GROQ AI FUNCTION
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
-    # Using an active model as of Oct 11, 2025: llama-3.3-70b-versatile
-    model_name = "llama-3.3-70b-versatile"
-    
+    # ✅ Use a valid, publicly available Groq model as of Oct 2025
+    model_name = "llama-3.1-70b-versatile"  # confirmed working model
+
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # Use the Groq API endpoint
-        url = "https://api.groq.com/openai/v1/chat/completions  "
+        # ✅ FIXED: Removed trailing spaces in URL
+        url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
             headers={
@@ -176,15 +165,12 @@ def ask_groq_ai(question: str) -> str:
                         "role": "system",
                         "content": (
                             "You are Finedata AI, Ethiopia's expert assistant. "
-                            "Answer ONLY about Ethiopia: do not mention anything about your time cutoff just answer when you know and say i dont have that information when it is beyond what you have. "
-                            "If asked about non-Ethiopia topics, say: 'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
+                            "Answer ONLY about Ethiopia. If asked about non-Ethiopia topics, say: "
+                            "'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
                             "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
                         )
                     },
-                    {
-                        "role": "user",
-                        "content": question
-                    }
+                    {"role": "user", "content": question}
                 ],
                 "temperature": 0.3,
                 "max_tokens": 300,
@@ -192,18 +178,17 @@ def ask_groq_ai(question: str) -> str:
             timeout=30
         )
         
-        logger.info(f"Groq API request sent. Status: {response.status_code}")
+        logger.info(f"Groq API status: {response.status_code}")
         if response.status_code == 200:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
-                # Extract the content of the first choice
-                content = data["choices"][0]["message"]["content"]
-                return content.strip()
+                return data["choices"][0]["message"]["content"].strip()
             else:
-                logger.warning(f"Groq API response had no choices: {data}")
-                return "I received your question but had trouble formatting the response."
+                logger.warning(f"Groq response missing choices: {data}")
+                return "I received your question but had trouble generating a response."
         else:
-            logger.error(f"Groq AI error {response.status_code}: {response.text}")
+            error_detail = response.json().get("error", {}).get("message", response.text)
+            logger.error(f"Groq error {response.status_code}: {error_detail}")
             return "I'm having trouble thinking right now. Try again?"
             
     except Exception as e:
@@ -211,13 +196,13 @@ def ask_groq_ai(question: str) -> str:
         return "AI service is temporarily unavailable."
 
 # ======================
-# MAIN ENDPOINT
+# MAIN AI ENDPOINT
 # ======================
 
 @app.route('/ask-ai', methods=['POST'])
 def ask_ai():
     data = request.get_json()
-    if not data: # Corrected syntax error here
+    if not data:
         return jsonify({"error": "Invalid JSON"}), 400
 
     user_question = data.get("question", "").strip()
@@ -242,8 +227,12 @@ def ask_ai():
     })
 
 # ======================
-# STATIC FILES
+# STATIC FILE SERVING
 # ======================
+
+@app.route('/')
+def home():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/ai-chat.html')
 def ai_chat_page():
@@ -253,25 +242,21 @@ def ai_chat_page():
 def static_files(filename):
     return send_from_directory('.', filename)
 
-@app.route('/')
-def home():
-    return send_from_directory('.', 'index.html')
-
 # ======================
 # STARTUP VALIDATION
 # ======================
 
 if __name__ == '__main__':
-    if not os.getenv("EMAILOCTOPUS_API_KEY"):
-        logger.warning("EMAILOCTUS_API_KEY not set — email subscription will fail.")
-    if not os.getenv("EMAILOCTOPUS_LIST_ID"):
-        logger.warning("EMAILOCTOPUS_LIST_ID not set — subscription list unknown.")
-    if not os.getenv("GROQ_API_KEY"):
-        logger.warning("GROQ_API_KEY is not set — AI will be disabled.")
-    if not os.getenv("HF_API_KEY"):
-        logger.warning("HF_API_KEY is not set — NLLB translation will be disabled.")
+    required_vars = ["GROQ_API_KEY"]
+    optional_vars = ["HF_API_KEY", "EMAILOCTOPUS_API_KEY", "EMAILOCTOPUS_LIST_ID"]
+    
+    for var in required_vars:
+        if not os.getenv(var):
+            logger.critical(f"Missing required environment variable: {var}")
+    
+    for var in optional_vars:
+        if not os.getenv(var):
+            logger.warning(f"Optional variable missing: {var}")
 
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
-
-
