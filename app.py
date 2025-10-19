@@ -42,15 +42,6 @@ NLLB_LANG_MAP = {
 SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
-# HELPER: Clean AI response (remove <think> blocks)
-# ======================
-
-def clean_ai_response(text: str) -> str:
-    """Remove <think>...</think> reasoning blocks and clean whitespace."""
-    cleaned = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL | re.IGNORECASE)
-    return cleaned.strip()
-
-# ======================
 # EMAIL SUBSCRIPTION (EmailOctopus)
 # ======================
 
@@ -147,12 +138,12 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION — USING qwen/qwen3-32b (as per Groq deprecation notice)
+# GROQ AI FUNCTION — USING qwen/qwen3-32b
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
-    model_name = "qwen/qwen3-32b"  # ✅ Official replacement for mistral-saba-24b (deprecated July 30, 2025)
+    model_name = "qwen/qwen3-32b"
 
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
@@ -173,9 +164,11 @@ def ask_groq_ai(question: str) -> str:
                         "role": "system",
                         "content": (
                             "You are Finedata AI, Ethiopia's expert assistant. "
-                            "Answer ONLY about Ethiopia. If asked about non-Ethiopia topics, say: "
+                            "Answer ONLY about Ethiopia. NEVER show your reasoning, thoughts, or internal process. "
+                            "NEVER say 'Okay', 'I think', 'Let me check', or explain how you got the answer. "
+                            "If asked about non-Ethiopia topics, respond exactly: "
                             "'I specialize in Ethiopia. Please ask about Ethiopian data, agriculture, economy, or cities.' "
-                            "Keep answers concise (1-3 sentences), factual, and helpful. Never make up data."
+                            "Keep answers concise (1–3 sentences), factual, and helpful. Never make up data."
                         )
                     },
                     {"role": "user", "content": question}
@@ -191,7 +184,9 @@ def ask_groq_ai(question: str) -> str:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
                 raw_reply = data["choices"][0]["message"]["content"].strip()
-                return clean_ai_response(raw_reply)  # ✅ Strip <think> blocks
+                # Remove any <think> blocks just in case
+                cleaned = re.sub(r'(<think>.*?</think>)', '', raw_reply, flags=re.DOTALL | re.IGNORECASE)
+                return cleaned.strip()
             else:
                 logger.warning(f"Groq response missing choices: {data}")
                 return "I received your question but had trouble generating a response."
