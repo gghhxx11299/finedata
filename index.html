@@ -354,7 +354,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo" />
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo" />
                     <h1>FineData</h1>
                 </div>
                 <ul class="nav-links">
@@ -385,7 +385,7 @@
         </div>
     </section>
 
-    <!-- Why Finedatas -->
+    <!-- Why FineData Exists -->
     <section class="why-section">
         <div class="container">
             <h2 class="section-title">Why FineData Exists</h2>
@@ -397,7 +397,7 @@
                 <p>
                     So I created Ethiopia's only all-in-one hub: open, reliable, and built for real-world use — whether you're a farmer checking rain forecasts or a policymaker analyzing GDP.
                 </p>
-                <p class="founder">— Geabral Mulugeta, Founder</p>
+                <p class="founder">— Gabriel Mulugeta, Founder</p>
             </div>
         </div>
     </section>
@@ -633,10 +633,13 @@
             }
         });
 
-        // Email subscription — FIXED
+        // ✅ FIXED EMAIL SUBSCRIPTION
         const form = document.getElementById('subscribe-form');
         const emailInput = document.getElementById('email-input');
         const messageEl = document.getElementById('subscribe-message');
+
+        // Use the same backend URL as in ai-chat.html
+        const BACKEND_URL = "https://finedata.onrender.com";
 
         if (form) {
             form.addEventListener('submit', async (e) => {
@@ -660,7 +663,7 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
 
                 try {
-                    const response = await fetch('/subscribe', {
+                    const response = await fetch(BACKEND_URL + '/subscribe', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email })
