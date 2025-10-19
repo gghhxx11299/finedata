@@ -1,6 +1,7 @@
 # app.py
 import os
 import logging
+import re
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 import requests
@@ -41,6 +42,15 @@ NLLB_LANG_MAP = {
 SUPPORTED_LANGUAGES = set(NLLB_LANG_MAP.keys())
 
 # ======================
+# HELPER: Clean AI response (remove <think> blocks)
+# ======================
+
+def clean_ai_response(text: str) -> str:
+    """Remove <think>...</think> reasoning blocks and clean whitespace."""
+    cleaned = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    return cleaned.strip()
+
+# ======================
 # EMAIL SUBSCRIPTION (EmailOctopus)
 # ======================
 
@@ -59,7 +69,7 @@ def subscribe():
         return jsonify({"error": "Subscription service not configured"}), 500
 
     try:
-        # ✅ FIXED: Removed extra spaces in URL
+        # ✅ FIXED: No extra spaces in URL
         url = f"https://emailoctopus.com/api/1.6/lists/{list_id}/contacts?api_key={api_key}"
         response = requests.post(
             url,
@@ -137,18 +147,18 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION — USING qwen/qwen3-32b
+# GROQ AI FUNCTION — USING qwen/qwen3-32b (as per Groq deprecation notice)
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
-    model_name = "qwen/qwen3-32b"  # ✅ Confirmed replacement per Groq deprecation notice (July 30, 2025)
+    model_name = "qwen/qwen3-32b"  # ✅ Official replacement for mistral-saba-24b (deprecated July 30, 2025)
 
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # ✅ FIXED: No trailing whitespace in URL
+        # ✅ FIXED: No trailing whitespace
         url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
@@ -180,12 +190,12 @@ def ask_groq_ai(question: str) -> str:
         if response.status_code == 200:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
-                return data["choices"][0]["message"]["content"].strip()
+                raw_reply = data["choices"][0]["message"]["content"].strip()
+                return clean_ai_response(raw_reply)  # ✅ Strip <think> blocks
             else:
                 logger.warning(f"Groq response missing choices: {data}")
                 return "I received your question but had trouble generating a response."
         else:
-            # Safely extract error message
             try:
                 error_msg = response.json().get("error", {}).get("message", response.text)
             except:
