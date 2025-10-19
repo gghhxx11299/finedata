@@ -40,6 +40,26 @@
       padding: 0 15px;
     }
 
+    /* ===== BUTTON STYLE (ADDED) ===== */
+    .btn {
+      display: inline-block;
+      background: var(--primary-color);
+      color: var(--bg-color);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #FF7B72;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 123, 114, 0.4);
+    }
+
     /* ===== HEADER ===== */
     header {
       background-color: var(--card-bg);
@@ -665,7 +685,7 @@
   </footer>
 
   <script>
-    // ✅ FIXED: Removed extra whitespace
+    // ✅ FIXED: No extra whitespace
     const BACKEND_URL = "https://finedata.onrender.com";
     const chatMessages = document.getElementById('chatMessages');
     const userInput = document.getElementById('userInput');
