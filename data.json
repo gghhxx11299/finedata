@@ -1,2627 +1,2701 @@
 {
   "metadata": {
-    "generated_at": "2025-10-19T08:41:29.566494",
-    "locations_count": 22,
+    "source": "Open-Meteo (https://open-meteo.com)",
+    "generated_at": "2025-10-19T09:11:46.735916",
+    "total_locations": 22,
     "failed_locations": [],
-    "forecast_days": 14,
-    "source": "Open-Meteo (https://open-meteo.com/)"
+    "description": "14-day weather forecasts for Ethiopia — used by FineData",
+    "fields": {
+      "temp_max_c": "Max temperature (°C)",
+      "temp_min_c": "Min temperature (°C)",
+      "precipitation_mm": "Total daily rainfall (mm)",
+      "weather_code": "WMO weather code (0=clear, 51-67=rain, etc.)",
+      "wind_speed_kmh": "Max wind speed (km/h)",
+      "current_uv_index": "UV index (0–11+)"
+    }
   },
-  "weather_data": [
+  "data": [
     {
       "location": "Addis Ababa",
-      "timestamp": "2025-10-19T08:40:39.934027",
-      "current": {},
+      "coordinates": {
+        "lat": 9.0,
+        "lon": 38.875
+      },
+      "current_uv_index": 8.8,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 8.4,
-          "temp_max": 18.6,
-          "precipitation": 0.0,
-          "wind_speed": 12.0,
-          "weather_code": 3
+          "temp_max_c": 18.6,
+          "temp_min_c": 8.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.0
         },
         {
           "date": "2025-10-20",
-          "temp_min": 11.7,
-          "temp_max": 19.8,
-          "precipitation": 0.1,
-          "wind_speed": 14.4,
-          "weather_code": 3
+          "temp_max_c": 19.8,
+          "temp_min_c": 11.7,
+          "precipitation_mm": 0.1,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.4
         },
         {
           "date": "2025-10-21",
-          "temp_min": 11.5,
-          "temp_max": 18.1,
-          "precipitation": 0.7,
-          "wind_speed": 15.5,
-          "weather_code": 61
+          "temp_max_c": 18.1,
+          "temp_min_c": 11.5,
+          "precipitation_mm": 0.7,
+          "weather_code": 61,
+          "wind_speed_kmh": 15.5
         },
         {
           "date": "2025-10-22",
-          "temp_min": 10.7,
-          "temp_max": 19.0,
-          "precipitation": 0.0,
-          "wind_speed": 18.6,
-          "weather_code": 3
+          "temp_max_c": 19.0,
+          "temp_min_c": 10.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.6
         },
         {
           "date": "2025-10-23",
-          "temp_min": 8.8,
-          "temp_max": 20.7,
-          "precipitation": 0.0,
-          "wind_speed": 16.5,
-          "weather_code": 3
+          "temp_max_c": 20.7,
+          "temp_min_c": 8.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.5
         },
         {
           "date": "2025-10-24",
-          "temp_min": 8.7,
-          "temp_max": 20.4,
-          "precipitation": 0.0,
-          "wind_speed": 16.6,
-          "weather_code": 3
+          "temp_max_c": 20.4,
+          "temp_min_c": 8.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.6
         },
         {
           "date": "2025-10-25",
-          "temp_min": 9.1,
-          "temp_max": 19.4,
-          "precipitation": 0.0,
-          "wind_speed": 13.1,
-          "weather_code": 3
+          "temp_max_c": 19.4,
+          "temp_min_c": 9.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.1
         },
         {
           "date": "2025-10-26",
-          "temp_min": 10.7,
-          "temp_max": 20.5,
-          "precipitation": 0.0,
-          "wind_speed": 11.8,
-          "weather_code": 3
+          "temp_max_c": 20.5,
+          "temp_min_c": 10.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.8
         },
         {
           "date": "2025-10-27",
-          "temp_min": 12.0,
-          "temp_max": 22.1,
-          "precipitation": 0.0,
-          "wind_speed": 14.8,
-          "weather_code": 3
+          "temp_max_c": 22.1,
+          "temp_min_c": 12.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.8
         },
         {
           "date": "2025-10-28",
-          "temp_min": 12.2,
-          "temp_max": 23.0,
-          "precipitation": 0.0,
-          "wind_speed": 19.1,
-          "weather_code": 3
+          "temp_max_c": 23.0,
+          "temp_min_c": 12.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 19.1
         },
         {
           "date": "2025-10-29",
-          "temp_min": 11.8,
-          "temp_max": 23.2,
-          "precipitation": 0.0,
-          "wind_speed": 18.7,
-          "weather_code": 2
+          "temp_max_c": 23.2,
+          "temp_min_c": 11.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 18.7
         },
         {
           "date": "2025-10-30",
-          "temp_min": 10.9,
-          "temp_max": 22.7,
-          "precipitation": 0.0,
-          "wind_speed": 17.7,
-          "weather_code": 3
+          "temp_max_c": 22.7,
+          "temp_min_c": 10.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.7
         },
         {
           "date": "2025-10-31",
-          "temp_min": 10.2,
-          "temp_max": 21.7,
-          "precipitation": 0.0,
-          "wind_speed": 14.9,
-          "weather_code": 3
+          "temp_max_c": 21.7,
+          "temp_min_c": 10.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.9
         },
         {
           "date": "2025-11-01",
-          "temp_min": 9.9,
-          "temp_max": 22.1,
-          "precipitation": 0.0,
-          "wind_speed": 16.7,
-          "weather_code": 3
+          "temp_max_c": 22.1,
+          "temp_min_c": 9.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.7
         }
       ]
     },
     {
       "location": "Mekelle",
-      "timestamp": "2025-10-19T08:40:41.819179",
-      "current": {},
+      "coordinates": {
+        "lat": 13.625,
+        "lon": 39.5
+      },
+      "current_uv_index": 8.3,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 14.8,
-          "temp_max": 22.6,
-          "precipitation": 0.0,
-          "wind_speed": 22.3,
-          "weather_code": 3
+          "temp_max_c": 22.6,
+          "temp_min_c": 14.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 22.3
         },
         {
           "date": "2025-10-20",
-          "temp_min": 12.1,
-          "temp_max": 22.5,
-          "precipitation": 0.0,
-          "wind_speed": 23.0,
-          "weather_code": 3
+          "temp_max_c": 22.5,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 23.0
         },
         {
           "date": "2025-10-21",
-          "temp_min": 12.7,
-          "temp_max": 23.8,
-          "precipitation": 0.0,
-          "wind_speed": 25.5,
-          "weather_code": 3
+          "temp_max_c": 23.8,
+          "temp_min_c": 12.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 25.5
         },
         {
           "date": "2025-10-22",
-          "temp_min": 12.1,
-          "temp_max": 24.3,
-          "precipitation": 0.0,
-          "wind_speed": 23.8,
-          "weather_code": 2
+          "temp_max_c": 24.3,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 23.8
         },
         {
           "date": "2025-10-23",
-          "temp_min": 12.9,
-          "temp_max": 24.9,
-          "precipitation": 0.0,
-          "wind_speed": 21.1,
-          "weather_code": 2
+          "temp_max_c": 24.9,
+          "temp_min_c": 12.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 21.1
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.9,
-          "temp_max": 24.4,
-          "precipitation": 0.0,
-          "wind_speed": 21.4,
-          "weather_code": 3
+          "temp_max_c": 24.4,
+          "temp_min_c": 13.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 21.4
         },
         {
           "date": "2025-10-25",
-          "temp_min": 14.2,
-          "temp_max": 24.5,
-          "precipitation": 0.0,
-          "wind_speed": 20.6,
-          "weather_code": 3
+          "temp_max_c": 24.5,
+          "temp_min_c": 14.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 20.6
         },
         {
           "date": "2025-10-26",
-          "temp_min": 13.7,
-          "temp_max": 25.8,
-          "precipitation": 2.3,
-          "wind_speed": 26.6,
-          "weather_code": 51
+          "temp_max_c": 25.8,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 2.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 26.6
         },
         {
           "date": "2025-10-27",
-          "temp_min": 15.5,
-          "temp_max": 22.9,
-          "precipitation": 0.8,
-          "wind_speed": 23.0,
-          "weather_code": 51
+          "temp_max_c": 22.9,
+          "temp_min_c": 15.5,
+          "precipitation_mm": 0.8,
+          "weather_code": 51,
+          "wind_speed_kmh": 23.0
         },
         {
           "date": "2025-10-28",
-          "temp_min": 14.8,
-          "temp_max": 22.4,
-          "precipitation": 0.2,
-          "wind_speed": 23.7,
-          "weather_code": 51
+          "temp_max_c": 22.4,
+          "temp_min_c": 14.8,
+          "precipitation_mm": 0.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 23.7
         },
         {
           "date": "2025-10-29",
-          "temp_min": 14.9,
-          "temp_max": 22.8,
-          "precipitation": 0.0,
-          "wind_speed": 27.3,
-          "weather_code": 0
+          "temp_max_c": 22.8,
+          "temp_min_c": 14.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 0,
+          "wind_speed_kmh": 27.3
         },
         {
           "date": "2025-10-30",
-          "temp_min": 13.8,
-          "temp_max": 22.5,
-          "precipitation": 0.0,
-          "wind_speed": 25.0,
-          "weather_code": 3
+          "temp_max_c": 22.5,
+          "temp_min_c": 13.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 25.0
         },
         {
           "date": "2025-10-31",
-          "temp_min": 13.3,
-          "temp_max": 22.1,
-          "precipitation": 0.0,
-          "wind_speed": 23.0,
-          "weather_code": 3
+          "temp_max_c": 22.1,
+          "temp_min_c": 13.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 23.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 13.1,
-          "temp_max": 22.1,
-          "precipitation": 0.0,
-          "wind_speed": 25.5,
-          "weather_code": 3
+          "temp_max_c": 22.1,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 25.5
         }
       ]
     },
     {
       "location": "Bahir Dar",
-      "timestamp": "2025-10-19T08:40:43.908079",
-      "current": {},
+      "coordinates": {
+        "lat": 11.625,
+        "lon": 37.375
+      },
+      "current_uv_index": 8.3,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 15.5,
-          "temp_max": 25.4,
-          "precipitation": 0.2,
-          "wind_speed": 14.0,
-          "weather_code": 3
+          "temp_max_c": 25.4,
+          "temp_min_c": 15.5,
+          "precipitation_mm": 0.2,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.0
         },
         {
           "date": "2025-10-20",
-          "temp_min": 15.0,
-          "temp_max": 25.5,
-          "precipitation": 1.3,
-          "wind_speed": 15.2,
-          "weather_code": 80
+          "temp_max_c": 25.5,
+          "temp_min_c": 15.0,
+          "precipitation_mm": 1.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 15.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 16.1,
-          "temp_max": 23.0,
-          "precipitation": 6.3,
-          "wind_speed": 8.0,
-          "weather_code": 95
+          "temp_max_c": 23.0,
+          "temp_min_c": 16.1,
+          "precipitation_mm": 6.3,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-22",
-          "temp_min": 15.3,
-          "temp_max": 26.0,
-          "precipitation": 1.5,
-          "wind_speed": 14.4,
-          "weather_code": 80
+          "temp_max_c": 26.0,
+          "temp_min_c": 15.3,
+          "precipitation_mm": 1.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 14.4
         },
         {
           "date": "2025-10-23",
-          "temp_min": 15.6,
-          "temp_max": 25.7,
-          "precipitation": 2.7,
-          "wind_speed": 10.6,
-          "weather_code": 45
+          "temp_max_c": 25.7,
+          "temp_min_c": 15.6,
+          "precipitation_mm": 2.7,
+          "weather_code": 45,
+          "wind_speed_kmh": 10.6
         },
         {
           "date": "2025-10-24",
-          "temp_min": 14.6,
-          "temp_max": 25.9,
-          "precipitation": 0.0,
-          "wind_speed": 12.2,
-          "weather_code": 3
+          "temp_max_c": 25.9,
+          "temp_min_c": 14.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.2
         },
         {
           "date": "2025-10-25",
-          "temp_min": 15.4,
-          "temp_max": 25.9,
-          "precipitation": 0.0,
-          "wind_speed": 15.1,
-          "weather_code": 3
+          "temp_max_c": 25.9,
+          "temp_min_c": 15.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.1
         },
         {
           "date": "2025-10-26",
-          "temp_min": 14.9,
-          "temp_max": 25.3,
-          "precipitation": 4.1,
-          "wind_speed": 12.2,
-          "weather_code": 80
+          "temp_max_c": 25.3,
+          "temp_min_c": 14.9,
+          "precipitation_mm": 4.1,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.2
         },
         {
           "date": "2025-10-27",
-          "temp_min": 14.9,
-          "temp_max": 23.0,
-          "precipitation": 3.6,
-          "wind_speed": 8.7,
-          "weather_code": 51
+          "temp_max_c": 23.0,
+          "temp_min_c": 14.9,
+          "precipitation_mm": 3.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.7
         },
         {
           "date": "2025-10-28",
-          "temp_min": 15.6,
-          "temp_max": 24.2,
-          "precipitation": 3.8,
-          "wind_speed": 8.4,
-          "weather_code": 51
+          "temp_max_c": 24.2,
+          "temp_min_c": 15.6,
+          "precipitation_mm": 3.8,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.4
         },
         {
           "date": "2025-10-29",
-          "temp_min": 15.4,
-          "temp_max": 24.7,
-          "precipitation": 2.0,
-          "wind_speed": 13.6,
-          "weather_code": 51
+          "temp_max_c": 24.7,
+          "temp_min_c": 15.4,
+          "precipitation_mm": 2.0,
+          "weather_code": 51,
+          "wind_speed_kmh": 13.6
         },
         {
           "date": "2025-10-30",
-          "temp_min": 14.3,
-          "temp_max": 24.5,
-          "precipitation": 0.6,
-          "wind_speed": 8.7,
-          "weather_code": 51
+          "temp_max_c": 24.5,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 0.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.7
         },
         {
           "date": "2025-10-31",
-          "temp_min": 14.3,
-          "temp_max": 23.6,
-          "precipitation": 0.0,
-          "wind_speed": 8.8,
-          "weather_code": 3
+          "temp_max_c": 23.6,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.8
         },
         {
           "date": "2025-11-01",
-          "temp_min": 13.1,
-          "temp_max": 23.2,
-          "precipitation": 0.0,
-          "wind_speed": 8.6,
-          "weather_code": 3
+          "temp_max_c": 23.2,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.6
         }
       ]
     },
     {
       "location": "Hawassa",
-      "timestamp": "2025-10-19T08:40:48.316219",
-      "current": {},
+      "coordinates": {
+        "lat": 7.125,
+        "lon": 38.5
+      },
+      "current_uv_index": 9.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 17.3,
-          "temp_max": 24.1,
-          "precipitation": 0.7,
-          "wind_speed": 14.3,
-          "weather_code": 80
+          "temp_max_c": 24.1,
+          "temp_min_c": 17.3,
+          "precipitation_mm": 0.7,
+          "weather_code": 80,
+          "wind_speed_kmh": 14.3
         },
         {
           "date": "2025-10-20",
-          "temp_min": 17.4,
-          "temp_max": 24.2,
-          "precipitation": 4.8,
-          "wind_speed": 14.8,
-          "weather_code": 95
+          "temp_max_c": 24.2,
+          "temp_min_c": 17.4,
+          "precipitation_mm": 4.8,
+          "weather_code": 95,
+          "wind_speed_kmh": 14.8
         },
         {
           "date": "2025-10-21",
-          "temp_min": 17.8,
-          "temp_max": 22.3,
-          "precipitation": 10.6,
-          "wind_speed": 12.7,
-          "weather_code": 96
+          "temp_max_c": 22.3,
+          "temp_min_c": 17.8,
+          "precipitation_mm": 10.6,
+          "weather_code": 96,
+          "wind_speed_kmh": 12.7
         },
         {
           "date": "2025-10-22",
-          "temp_min": 17.3,
-          "temp_max": 25.1,
-          "precipitation": 3.0,
-          "wind_speed": 16.1,
-          "weather_code": 80
+          "temp_max_c": 25.1,
+          "temp_min_c": 17.3,
+          "precipitation_mm": 3.0,
+          "weather_code": 80,
+          "wind_speed_kmh": 16.1
         },
         {
           "date": "2025-10-23",
-          "temp_min": 17.2,
-          "temp_max": 25.5,
-          "precipitation": 3.7,
-          "wind_speed": 10.4,
-          "weather_code": 80
+          "temp_max_c": 25.5,
+          "temp_min_c": 17.2,
+          "precipitation_mm": 3.7,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.4
         },
         {
           "date": "2025-10-24",
-          "temp_min": 17.1,
-          "temp_max": 25.9,
-          "precipitation": 0.6,
-          "wind_speed": 9.0,
-          "weather_code": 3
+          "temp_max_c": 25.9,
+          "temp_min_c": 17.1,
+          "precipitation_mm": 0.6,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.0
         },
         {
           "date": "2025-10-25",
-          "temp_min": 16.6,
-          "temp_max": 26.6,
-          "precipitation": 0.0,
-          "wind_speed": 10.4,
-          "weather_code": 2
+          "temp_max_c": 26.6,
+          "temp_min_c": 16.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 10.4
         },
         {
           "date": "2025-10-26",
-          "temp_min": 15.7,
-          "temp_max": 26.5,
-          "precipitation": 0.0,
-          "wind_speed": 10.5,
-          "weather_code": 3
+          "temp_max_c": 26.5,
+          "temp_min_c": 15.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.5
         },
         {
           "date": "2025-10-27",
-          "temp_min": 13.1,
-          "temp_max": 26.2,
-          "precipitation": 0.3,
-          "wind_speed": 8.3,
-          "weather_code": 51
+          "temp_max_c": 26.2,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.3
         },
         {
           "date": "2025-10-28",
-          "temp_min": 13.2,
-          "temp_max": 26.7,
-          "precipitation": 0.9,
-          "wind_speed": 8.0,
-          "weather_code": 51
+          "temp_max_c": 26.7,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 0.9,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-29",
-          "temp_min": 13.3,
-          "temp_max": 26.1,
-          "precipitation": 0.0,
-          "wind_speed": 11.2,
-          "weather_code": 3
+          "temp_max_c": 26.1,
+          "temp_min_c": 13.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.2
         },
         {
           "date": "2025-10-30",
-          "temp_min": 13.0,
-          "temp_max": 26.1,
-          "precipitation": 0.0,
-          "wind_speed": 13.0,
-          "weather_code": 3
+          "temp_max_c": 26.1,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.0
         },
         {
           "date": "2025-10-31",
-          "temp_min": 11.2,
-          "temp_max": 25.5,
-          "precipitation": 0.0,
-          "wind_speed": 12.4,
-          "weather_code": 3
+          "temp_max_c": 25.5,
+          "temp_min_c": 11.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.4
         },
         {
           "date": "2025-11-01",
-          "temp_min": 11.0,
-          "temp_max": 26.1,
-          "precipitation": 0.0,
-          "wind_speed": 13.6,
-          "weather_code": 3
+          "temp_max_c": 26.1,
+          "temp_min_c": 11.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.6
         }
       ]
     },
     {
       "location": "Dire Dawa",
-      "timestamp": "2025-10-19T08:40:50.166322",
-      "current": {},
+      "coordinates": {
+        "lat": 9.625,
+        "lon": 41.75
+      },
+      "current_uv_index": 8.6,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 20.8,
-          "temp_max": 30.3,
-          "precipitation": 0.0,
-          "wind_speed": 17.9,
-          "weather_code": 3
+          "temp_max_c": 30.3,
+          "temp_min_c": 20.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.9
         },
         {
           "date": "2025-10-20",
-          "temp_min": 21.0,
-          "temp_max": 31.2,
-          "precipitation": 0.0,
-          "wind_speed": 19.4,
-          "weather_code": 3
+          "temp_max_c": 31.2,
+          "temp_min_c": 21.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 19.4
         },
         {
           "date": "2025-10-21",
-          "temp_min": 22.2,
-          "temp_max": 31.8,
-          "precipitation": 0.0,
-          "wind_speed": 18.9,
-          "weather_code": 2
+          "temp_max_c": 31.8,
+          "temp_min_c": 22.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 18.9
         },
         {
           "date": "2025-10-22",
-          "temp_min": 22.0,
-          "temp_max": 31.8,
-          "precipitation": 0.0,
-          "wind_speed": 22.6,
-          "weather_code": 3
+          "temp_max_c": 31.8,
+          "temp_min_c": 22.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 22.6
         },
         {
           "date": "2025-10-23",
-          "temp_min": 21.1,
-          "temp_max": 31.8,
-          "precipitation": 0.0,
-          "wind_speed": 18.9,
-          "weather_code": 3
+          "temp_max_c": 31.8,
+          "temp_min_c": 21.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.9
         },
         {
           "date": "2025-10-24",
-          "temp_min": 21.4,
-          "temp_max": 31.6,
-          "precipitation": 0.0,
-          "wind_speed": 20.7,
-          "weather_code": 3
+          "temp_max_c": 31.6,
+          "temp_min_c": 21.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 20.7
         },
         {
           "date": "2025-10-25",
-          "temp_min": 22.3,
-          "temp_max": 31.7,
-          "precipitation": 0.0,
-          "wind_speed": 23.3,
-          "weather_code": 2
+          "temp_max_c": 31.7,
+          "temp_min_c": 22.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 23.3
         },
         {
           "date": "2025-10-26",
-          "temp_min": 21.6,
-          "temp_max": 30.7,
-          "precipitation": 0.0,
-          "wind_speed": 16.4,
-          "weather_code": 3
+          "temp_max_c": 30.7,
+          "temp_min_c": 21.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.4
         },
         {
           "date": "2025-10-27",
-          "temp_min": 22.0,
-          "temp_max": 31.9,
-          "precipitation": 0.0,
-          "wind_speed": 27.9,
-          "weather_code": 3
+          "temp_max_c": 31.9,
+          "temp_min_c": 22.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 27.9
         },
         {
           "date": "2025-10-28",
-          "temp_min": 20.2,
-          "temp_max": 31.7,
-          "precipitation": 0.0,
-          "wind_speed": 27.4,
-          "weather_code": 2
+          "temp_max_c": 31.7,
+          "temp_min_c": 20.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 27.4
         },
         {
           "date": "2025-10-29",
-          "temp_min": 18.9,
-          "temp_max": 32.0,
-          "precipitation": 0.0,
-          "wind_speed": 26.2,
-          "weather_code": 2
+          "temp_max_c": 32.0,
+          "temp_min_c": 18.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 26.2
         },
         {
           "date": "2025-10-30",
-          "temp_min": 17.5,
-          "temp_max": 32.3,
-          "precipitation": 0.0,
-          "wind_speed": 27.8,
-          "weather_code": 1
+          "temp_max_c": 32.3,
+          "temp_min_c": 17.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 1,
+          "wind_speed_kmh": 27.8
         },
         {
           "date": "2025-10-31",
-          "temp_min": 16.7,
-          "temp_max": 31.7,
-          "precipitation": 0.0,
-          "wind_speed": 26.8,
-          "weather_code": 3
+          "temp_max_c": 31.7,
+          "temp_min_c": 16.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 26.8
         },
         {
           "date": "2025-11-01",
-          "temp_min": 17.4,
-          "temp_max": 32.0,
-          "precipitation": 0.0,
-          "wind_speed": 29.6,
-          "weather_code": 3
+          "temp_max_c": 32.0,
+          "temp_min_c": 17.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 29.6
         }
       ]
     },
     {
       "location": "Jijiga",
-      "timestamp": "2025-10-19T08:40:52.001895",
-      "current": {},
+      "coordinates": {
+        "lat": 9.25,
+        "lon": 42.75
+      },
+      "current_uv_index": 8.8,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 12.8,
-          "temp_max": 27.9,
-          "precipitation": 0.0,
-          "wind_speed": 12.3,
-          "weather_code": 45
+          "temp_max_c": 27.9,
+          "temp_min_c": 12.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 45,
+          "wind_speed_kmh": 12.3
         },
         {
           "date": "2025-10-20",
-          "temp_min": 13.9,
-          "temp_max": 28.2,
-          "precipitation": 0.0,
-          "wind_speed": 15.0,
-          "weather_code": 3
+          "temp_max_c": 28.2,
+          "temp_min_c": 13.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.0
         },
         {
           "date": "2025-10-21",
-          "temp_min": 13.2,
-          "temp_max": 28.3,
-          "precipitation": 0.0,
-          "wind_speed": 17.0,
-          "weather_code": 2
+          "temp_max_c": 28.3,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 17.0
         },
         {
           "date": "2025-10-22",
-          "temp_min": 12.4,
-          "temp_max": 28.7,
-          "precipitation": 0.0,
-          "wind_speed": 14.8,
-          "weather_code": 2
+          "temp_max_c": 28.7,
+          "temp_min_c": 12.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 14.8
         },
         {
           "date": "2025-10-23",
-          "temp_min": 10.4,
-          "temp_max": 28.7,
-          "precipitation": 0.0,
-          "wind_speed": 16.7,
-          "weather_code": 3
+          "temp_max_c": 28.7,
+          "temp_min_c": 10.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.7
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.4,
-          "temp_max": 27.8,
-          "precipitation": 0.0,
-          "wind_speed": 13.2,
-          "weather_code": 3
+          "temp_max_c": 27.8,
+          "temp_min_c": 13.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.2
         },
         {
           "date": "2025-10-25",
-          "temp_min": 14.3,
-          "temp_max": 26.5,
-          "precipitation": 0.0,
-          "wind_speed": 19.0,
-          "weather_code": 2
+          "temp_max_c": 26.5,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 19.0
         },
         {
           "date": "2025-10-26",
-          "temp_min": 14.8,
-          "temp_max": 28.0,
-          "precipitation": 0.0,
-          "wind_speed": 18.2,
-          "weather_code": 3
+          "temp_max_c": 28.0,
+          "temp_min_c": 14.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.2
         },
         {
           "date": "2025-10-27",
-          "temp_min": 17.5,
-          "temp_max": 28.6,
-          "precipitation": 0.0,
-          "wind_speed": 29.7,
-          "weather_code": 3
+          "temp_max_c": 28.6,
+          "temp_min_c": 17.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 29.7
         },
         {
           "date": "2025-10-28",
-          "temp_min": 16.4,
-          "temp_max": 28.9,
-          "precipitation": 0.0,
-          "wind_speed": 32.8,
-          "weather_code": 2
+          "temp_max_c": 28.9,
+          "temp_min_c": 16.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 32.8
         },
         {
           "date": "2025-10-29",
-          "temp_min": 15.9,
-          "temp_max": 28.0,
-          "precipitation": 0.0,
-          "wind_speed": 28.2,
-          "weather_code": 3
+          "temp_max_c": 28.0,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 28.2
         },
         {
           "date": "2025-10-30",
-          "temp_min": 14.1,
-          "temp_max": 27.9,
-          "precipitation": 0.0,
-          "wind_speed": 30.7,
-          "weather_code": 2
+          "temp_max_c": 27.9,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 30.7
         },
         {
           "date": "2025-10-31",
-          "temp_min": 13.0,
-          "temp_max": 27.5,
-          "precipitation": 0.0,
-          "wind_speed": 23.7,
-          "weather_code": 3
+          "temp_max_c": 27.5,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 23.7
         },
         {
           "date": "2025-11-01",
-          "temp_min": 13.1,
-          "temp_max": 27.6,
-          "precipitation": 0.0,
-          "wind_speed": 27.3,
-          "weather_code": 3
+          "temp_max_c": 27.6,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 27.3
         }
       ]
     },
     {
       "location": "Gambela",
-      "timestamp": "2025-10-19T08:40:53.848067",
-      "current": {},
+      "coordinates": {
+        "lat": 8.25,
+        "lon": 34.5
+      },
+      "current_uv_index": 8.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 23.7,
-          "temp_max": 34.3,
-          "precipitation": 0.5,
-          "wind_speed": 12.6,
-          "weather_code": 80
+          "temp_max_c": 34.3,
+          "temp_min_c": 23.7,
+          "precipitation_mm": 0.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.6
         },
         {
           "date": "2025-10-20",
-          "temp_min": 24.3,
-          "temp_max": 33.9,
-          "precipitation": 4.5,
-          "wind_speed": 12.9,
-          "weather_code": 96
+          "temp_max_c": 33.9,
+          "temp_min_c": 24.3,
+          "precipitation_mm": 4.5,
+          "weather_code": 96,
+          "wind_speed_kmh": 12.9
         },
         {
           "date": "2025-10-21",
-          "temp_min": 23.7,
-          "temp_max": 33.8,
-          "precipitation": 12.5,
-          "wind_speed": 12.7,
-          "weather_code": 96
+          "temp_max_c": 33.8,
+          "temp_min_c": 23.7,
+          "precipitation_mm": 12.5,
+          "weather_code": 96,
+          "wind_speed_kmh": 12.7
         },
         {
           "date": "2025-10-22",
-          "temp_min": 23.5,
-          "temp_max": 32.0,
-          "precipitation": 4.5,
-          "wind_speed": 9.9,
-          "weather_code": 80
+          "temp_max_c": 32.0,
+          "temp_min_c": 23.5,
+          "precipitation_mm": 4.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 9.9
         },
         {
           "date": "2025-10-23",
-          "temp_min": 23.5,
-          "temp_max": 32.5,
-          "precipitation": 0.0,
-          "wind_speed": 7.7,
-          "weather_code": 45
+          "temp_max_c": 32.5,
+          "temp_min_c": 23.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 45,
+          "wind_speed_kmh": 7.7
         },
         {
           "date": "2025-10-24",
-          "temp_min": 23.0,
-          "temp_max": 34.3,
-          "precipitation": 0.9,
-          "wind_speed": 6.1,
-          "weather_code": 80
+          "temp_max_c": 34.3,
+          "temp_min_c": 23.0,
+          "precipitation_mm": 0.9,
+          "weather_code": 80,
+          "wind_speed_kmh": 6.1
         },
         {
           "date": "2025-10-25",
-          "temp_min": 23.6,
-          "temp_max": 34.8,
-          "precipitation": 0.0,
-          "wind_speed": 8.0,
-          "weather_code": 3
+          "temp_max_c": 34.8,
+          "temp_min_c": 23.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-26",
-          "temp_min": 21.7,
-          "temp_max": 31.9,
-          "precipitation": 3.0,
-          "wind_speed": 8.3,
-          "weather_code": 51
+          "temp_max_c": 31.9,
+          "temp_min_c": 21.7,
+          "precipitation_mm": 3.0,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.3
         },
         {
           "date": "2025-10-27",
-          "temp_min": 21.3,
-          "temp_max": 33.4,
-          "precipitation": 0.3,
-          "wind_speed": 8.6,
-          "weather_code": 51
+          "temp_max_c": 33.4,
+          "temp_min_c": 21.3,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.6
         },
         {
           "date": "2025-10-28",
-          "temp_min": 21.2,
-          "temp_max": 33.4,
-          "precipitation": 2.4,
-          "wind_speed": 5.8,
-          "weather_code": 53
+          "temp_max_c": 33.4,
+          "temp_min_c": 21.2,
+          "precipitation_mm": 2.4,
+          "weather_code": 53,
+          "wind_speed_kmh": 5.8
         },
         {
           "date": "2025-10-29",
-          "temp_min": 20.5,
-          "temp_max": 32.7,
-          "precipitation": 3.4,
-          "wind_speed": 7.2,
-          "weather_code": 53
+          "temp_max_c": 32.7,
+          "temp_min_c": 20.5,
+          "precipitation_mm": 3.4,
+          "weather_code": 53,
+          "wind_speed_kmh": 7.2
         },
         {
           "date": "2025-10-30",
-          "temp_min": 21.1,
-          "temp_max": 32.9,
-          "precipitation": 1.6,
-          "wind_speed": 5.8,
-          "weather_code": 51
+          "temp_max_c": 32.9,
+          "temp_min_c": 21.1,
+          "precipitation_mm": 1.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 5.8
         },
         {
           "date": "2025-10-31",
-          "temp_min": 21.3,
-          "temp_max": 30.4,
-          "precipitation": 1.6,
-          "wind_speed": 5.4,
-          "weather_code": 51
+          "temp_max_c": 30.4,
+          "temp_min_c": 21.3,
+          "precipitation_mm": 1.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 5.4
         },
         {
           "date": "2025-11-01",
-          "temp_min": 20.7,
-          "temp_max": 32.5,
-          "precipitation": 0.0,
-          "wind_speed": 6.7,
-          "weather_code": 3
+          "temp_max_c": 32.5,
+          "temp_min_c": 20.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 6.7
         }
       ]
     },
     {
       "location": "Asosa",
-      "timestamp": "2025-10-19T08:40:55.892852",
-      "current": {},
+      "coordinates": {
+        "lat": 10.125,
+        "lon": 34.625
+      },
+      "current_uv_index": 8.3,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 18.7,
-          "temp_max": 27.0,
-          "precipitation": 9.2,
-          "wind_speed": 11.7,
-          "weather_code": 96
+          "temp_max_c": 27.0,
+          "temp_min_c": 18.7,
+          "precipitation_mm": 9.2,
+          "weather_code": 96,
+          "wind_speed_kmh": 11.7
         },
         {
           "date": "2025-10-20",
-          "temp_min": 18.8,
-          "temp_max": 26.1,
-          "precipitation": 19.4,
-          "wind_speed": 12.4,
-          "weather_code": 96
+          "temp_max_c": 26.1,
+          "temp_min_c": 18.8,
+          "precipitation_mm": 19.4,
+          "weather_code": 96,
+          "wind_speed_kmh": 12.4
         },
         {
           "date": "2025-10-21",
-          "temp_min": 19.0,
-          "temp_max": 26.3,
-          "precipitation": 17.7,
-          "wind_speed": 11.2,
-          "weather_code": 96
+          "temp_max_c": 26.3,
+          "temp_min_c": 19.0,
+          "precipitation_mm": 17.7,
+          "weather_code": 96,
+          "wind_speed_kmh": 11.2
         },
         {
           "date": "2025-10-22",
-          "temp_min": 19.0,
-          "temp_max": 24.8,
-          "precipitation": 10.5,
-          "wind_speed": 10.0,
-          "weather_code": 96
+          "temp_max_c": 24.8,
+          "temp_min_c": 19.0,
+          "precipitation_mm": 10.5,
+          "weather_code": 96,
+          "wind_speed_kmh": 10.0
         },
         {
           "date": "2025-10-23",
-          "temp_min": 19.2,
-          "temp_max": 26.2,
-          "precipitation": 0.3,
-          "wind_speed": 11.2,
-          "weather_code": 3
+          "temp_max_c": 26.2,
+          "temp_min_c": 19.2,
+          "precipitation_mm": 0.3,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.2
         },
         {
           "date": "2025-10-24",
-          "temp_min": 17.5,
-          "temp_max": 27.6,
-          "precipitation": 6.3,
-          "wind_speed": 8.0,
-          "weather_code": 95
+          "temp_max_c": 27.6,
+          "temp_min_c": 17.5,
+          "precipitation_mm": 6.3,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-25",
-          "temp_min": 18.3,
-          "temp_max": 27.4,
-          "precipitation": 0.3,
-          "wind_speed": 12.2,
-          "weather_code": 3
+          "temp_max_c": 27.4,
+          "temp_min_c": 18.3,
+          "precipitation_mm": 0.3,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.2
         },
         {
           "date": "2025-10-26",
-          "temp_min": 15.9,
-          "temp_max": 26.5,
-          "precipitation": 1.2,
-          "wind_speed": 12.6,
-          "weather_code": 51
+          "temp_max_c": 26.5,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 1.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 12.6
         },
         {
           "date": "2025-10-27",
-          "temp_min": 15.3,
-          "temp_max": 23.0,
-          "precipitation": 1.8,
-          "wind_speed": 9.7,
-          "weather_code": 51
+          "temp_max_c": 23.0,
+          "temp_min_c": 15.3,
+          "precipitation_mm": 1.8,
+          "weather_code": 51,
+          "wind_speed_kmh": 9.7
         },
         {
           "date": "2025-10-28",
-          "temp_min": 16.6,
-          "temp_max": 23.0,
-          "precipitation": 1.5,
-          "wind_speed": 9.4,
-          "weather_code": 51
+          "temp_max_c": 23.0,
+          "temp_min_c": 16.6,
+          "precipitation_mm": 1.5,
+          "weather_code": 51,
+          "wind_speed_kmh": 9.4
         },
         {
           "date": "2025-10-29",
-          "temp_min": 15.8,
-          "temp_max": 23.9,
-          "precipitation": 2.7,
-          "wind_speed": 7.8,
-          "weather_code": 51
+          "temp_max_c": 23.9,
+          "temp_min_c": 15.8,
+          "precipitation_mm": 2.7,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.8
         },
         {
           "date": "2025-10-30",
-          "temp_min": 15.9,
-          "temp_max": 24.5,
-          "precipitation": 1.8,
-          "wind_speed": 8.3,
-          "weather_code": 51
+          "temp_max_c": 24.5,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 1.8,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.3
         },
         {
           "date": "2025-10-31",
-          "temp_min": 15.9,
-          "temp_max": 21.9,
-          "precipitation": 2.7,
-          "wind_speed": 7.0,
-          "weather_code": 51
+          "temp_max_c": 21.9,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 2.7,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 15.5,
-          "temp_max": 24.4,
-          "precipitation": 1.2,
-          "wind_speed": 8.5,
-          "weather_code": 51
+          "temp_max_c": 24.4,
+          "temp_min_c": 15.5,
+          "precipitation_mm": 1.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.5
         }
       ]
     },
     {
       "location": "Semera",
-      "timestamp": "2025-10-19T08:40:57.843497",
-      "current": {},
+      "coordinates": {
+        "lat": 11.5,
+        "lon": 41.5
+      },
+      "current_uv_index": 8.0,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 26.4,
-          "temp_max": 36.8,
-          "precipitation": 0.0,
-          "wind_speed": 18.3,
-          "weather_code": 3
+          "temp_max_c": 36.8,
+          "temp_min_c": 26.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.3
         },
         {
           "date": "2025-10-20",
-          "temp_min": 25.6,
-          "temp_max": 37.1,
-          "precipitation": 0.0,
-          "wind_speed": 10.2,
-          "weather_code": 2
+          "temp_max_c": 37.1,
+          "temp_min_c": 25.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 10.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 24.8,
-          "temp_max": 37.1,
-          "precipitation": 0.0,
-          "wind_speed": 18.3,
-          "weather_code": 2
+          "temp_max_c": 37.1,
+          "temp_min_c": 24.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 18.3
         },
         {
           "date": "2025-10-22",
-          "temp_min": 24.0,
-          "temp_max": 37.3,
-          "precipitation": 0.0,
-          "wind_speed": 13.7,
-          "weather_code": 2
+          "temp_max_c": 37.3,
+          "temp_min_c": 24.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 13.7
         },
         {
           "date": "2025-10-23",
-          "temp_min": 22.6,
-          "temp_max": 37.8,
-          "precipitation": 0.0,
-          "wind_speed": 12.0,
-          "weather_code": 2
+          "temp_max_c": 37.8,
+          "temp_min_c": 22.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 12.0
         },
         {
           "date": "2025-10-24",
-          "temp_min": 24.2,
-          "temp_max": 37.0,
-          "precipitation": 0.0,
-          "wind_speed": 20.1,
-          "weather_code": 3
+          "temp_max_c": 37.0,
+          "temp_min_c": 24.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 20.1
         },
         {
           "date": "2025-10-25",
-          "temp_min": 26.4,
-          "temp_max": 37.0,
-          "precipitation": 0.0,
-          "wind_speed": 22.4,
-          "weather_code": 3
+          "temp_max_c": 37.0,
+          "temp_min_c": 26.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 22.4
         },
         {
           "date": "2025-10-26",
-          "temp_min": 25.7,
-          "temp_max": 36.6,
-          "precipitation": 0.0,
-          "wind_speed": 25.7,
-          "weather_code": 2
+          "temp_max_c": 36.6,
+          "temp_min_c": 25.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 25.7
         },
         {
           "date": "2025-10-27",
-          "temp_min": 26.4,
-          "temp_max": 37.4,
-          "precipitation": 0.0,
-          "wind_speed": 23.0,
-          "weather_code": 3
+          "temp_max_c": 37.4,
+          "temp_min_c": 26.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 23.0
         },
         {
           "date": "2025-10-28",
-          "temp_min": 25.2,
-          "temp_max": 36.7,
-          "precipitation": 0.0,
-          "wind_speed": 25.8,
-          "weather_code": 2
+          "temp_max_c": 36.7,
+          "temp_min_c": 25.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 25.8
         },
         {
           "date": "2025-10-29",
-          "temp_min": 24.4,
-          "temp_max": 36.5,
-          "precipitation": 0.0,
-          "wind_speed": 26.1,
-          "weather_code": 1
+          "temp_max_c": 36.5,
+          "temp_min_c": 24.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 1,
+          "wind_speed_kmh": 26.1
         },
         {
           "date": "2025-10-30",
-          "temp_min": 22.7,
-          "temp_max": 37.1,
-          "precipitation": 0.0,
-          "wind_speed": 31.6,
-          "weather_code": 1
+          "temp_max_c": 37.1,
+          "temp_min_c": 22.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 1,
+          "wind_speed_kmh": 31.6
         },
         {
           "date": "2025-10-31",
-          "temp_min": 22.7,
-          "temp_max": 37.2,
-          "precipitation": 0.0,
-          "wind_speed": 25.4,
-          "weather_code": 3
+          "temp_max_c": 37.2,
+          "temp_min_c": 22.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 25.4
         },
         {
           "date": "2025-11-01",
-          "temp_min": 22.6,
-          "temp_max": 37.3,
-          "precipitation": 0.0,
-          "wind_speed": 22.4,
-          "weather_code": 3
+          "temp_max_c": 37.3,
+          "temp_min_c": 22.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 22.4
         }
       ]
     },
     {
       "location": "Jimma",
-      "timestamp": "2025-10-19T08:40:59.800406",
-      "current": {},
+      "coordinates": {
+        "lat": 7.625,
+        "lon": 37.0
+      },
+      "current_uv_index": 8.9,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 13.5,
-          "temp_max": 23.2,
-          "precipitation": 0.3,
-          "wind_speed": 5.4,
-          "weather_code": 45
+          "temp_max_c": 23.2,
+          "temp_min_c": 13.5,
+          "precipitation_mm": 0.3,
+          "weather_code": 45,
+          "wind_speed_kmh": 5.4
         },
         {
           "date": "2025-10-20",
-          "temp_min": 13.9,
-          "temp_max": 22.7,
-          "precipitation": 1.2,
-          "wind_speed": 5.2,
-          "weather_code": 95
+          "temp_max_c": 22.7,
+          "temp_min_c": 13.9,
+          "precipitation_mm": 1.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 5.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 13.6,
-          "temp_max": 22.3,
-          "precipitation": 0.1,
-          "wind_speed": 6.6,
-          "weather_code": 45
+          "temp_max_c": 22.3,
+          "temp_min_c": 13.6,
+          "precipitation_mm": 0.1,
+          "weather_code": 45,
+          "wind_speed_kmh": 6.6
         },
         {
           "date": "2025-10-22",
-          "temp_min": 12.2,
-          "temp_max": 23.2,
-          "precipitation": 1.5,
-          "wind_speed": 8.2,
-          "weather_code": 80
+          "temp_max_c": 23.2,
+          "temp_min_c": 12.2,
+          "precipitation_mm": 1.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 8.2
         },
         {
           "date": "2025-10-23",
-          "temp_min": 14.3,
-          "temp_max": 23.6,
-          "precipitation": 1.2,
-          "wind_speed": 7.0,
-          "weather_code": 80
+          "temp_max_c": 23.6,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 1.2,
+          "weather_code": 80,
+          "wind_speed_kmh": 7.0
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.2,
-          "temp_max": 24.9,
-          "precipitation": 1.8,
-          "wind_speed": 10.2,
-          "weather_code": 80
+          "temp_max_c": 24.9,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 1.8,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.2
         },
         {
           "date": "2025-10-25",
-          "temp_min": 12.4,
-          "temp_max": 25.0,
-          "precipitation": 0.0,
-          "wind_speed": 5.9,
-          "weather_code": 45
+          "temp_max_c": 25.0,
+          "temp_min_c": 12.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 45,
+          "wind_speed_kmh": 5.9
         },
         {
           "date": "2025-10-26",
-          "temp_min": 14.1,
-          "temp_max": 24.3,
-          "precipitation": 0.3,
-          "wind_speed": 6.6,
-          "weather_code": 51
+          "temp_max_c": 24.3,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 6.6
         },
         {
           "date": "2025-10-27",
-          "temp_min": 12.4,
-          "temp_max": 25.8,
-          "precipitation": 0.0,
-          "wind_speed": 4.5,
-          "weather_code": 3
+          "temp_max_c": 25.8,
+          "temp_min_c": 12.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 4.5
         },
         {
           "date": "2025-10-28",
-          "temp_min": 12.5,
-          "temp_max": 25.7,
-          "precipitation": 0.0,
-          "wind_speed": 4.8,
-          "weather_code": 3
+          "temp_max_c": 25.7,
+          "temp_min_c": 12.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 4.8
         },
         {
           "date": "2025-10-29",
-          "temp_min": 12.9,
-          "temp_max": 26.1,
-          "precipitation": 0.0,
-          "wind_speed": 5.6,
-          "weather_code": 3
+          "temp_max_c": 26.1,
+          "temp_min_c": 12.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 5.6
         },
         {
           "date": "2025-10-30",
-          "temp_min": 12.6,
-          "temp_max": 25.7,
-          "precipitation": 0.0,
-          "wind_speed": 6.5,
-          "weather_code": 2
+          "temp_max_c": 25.7,
+          "temp_min_c": 12.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 6.5
         },
         {
           "date": "2025-10-31",
-          "temp_min": 11.0,
-          "temp_max": 24.7,
-          "precipitation": 0.0,
-          "wind_speed": 5.9,
-          "weather_code": 3
+          "temp_max_c": 24.7,
+          "temp_min_c": 11.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 5.9
         },
         {
           "date": "2025-11-01",
-          "temp_min": 9.3,
-          "temp_max": 24.9,
-          "precipitation": 0.0,
-          "wind_speed": 4.7,
-          "weather_code": 3
+          "temp_max_c": 24.9,
+          "temp_min_c": 9.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 4.7
         }
       ]
     },
     {
       "location": "Nekemte",
-      "timestamp": "2025-10-19T08:41:01.618363",
-      "current": {},
+      "coordinates": {
+        "lat": 9.0,
+        "lon": 36.5
+      },
+      "current_uv_index": 8.8,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 15.5,
-          "temp_max": 22.8,
-          "precipitation": 7.3,
-          "wind_speed": 7.6,
-          "weather_code": 95
+          "temp_max_c": 22.8,
+          "temp_min_c": 15.5,
+          "precipitation_mm": 7.3,
+          "weather_code": 95,
+          "wind_speed_kmh": 7.6
         },
         {
           "date": "2025-10-20",
-          "temp_min": 15.5,
-          "temp_max": 22.7,
-          "precipitation": 17.4,
-          "wind_speed": 9.8,
-          "weather_code": 96
+          "temp_max_c": 22.7,
+          "temp_min_c": 15.5,
+          "precipitation_mm": 17.4,
+          "weather_code": 96,
+          "wind_speed_kmh": 9.8
         },
         {
           "date": "2025-10-21",
-          "temp_min": 15.9,
-          "temp_max": 22.2,
-          "precipitation": 13.0,
-          "wind_speed": 6.8,
-          "weather_code": 96
+          "temp_max_c": 22.2,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 13.0,
+          "weather_code": 96,
+          "wind_speed_kmh": 6.8
         },
         {
           "date": "2025-10-22",
-          "temp_min": 16.1,
-          "temp_max": 23.3,
-          "precipitation": 13.9,
-          "wind_speed": 7.2,
-          "weather_code": 96
+          "temp_max_c": 23.3,
+          "temp_min_c": 16.1,
+          "precipitation_mm": 13.9,
+          "weather_code": 96,
+          "wind_speed_kmh": 7.2
         },
         {
           "date": "2025-10-23",
-          "temp_min": 15.8,
-          "temp_max": 22.3,
-          "precipitation": 18.2,
-          "wind_speed": 5.7,
-          "weather_code": 95
+          "temp_max_c": 22.3,
+          "temp_min_c": 15.8,
+          "precipitation_mm": 18.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 5.7
         },
         {
           "date": "2025-10-24",
-          "temp_min": 15.4,
-          "temp_max": 25.4,
-          "precipitation": 0.0,
-          "wind_speed": 7.2,
-          "weather_code": 3
+          "temp_max_c": 25.4,
+          "temp_min_c": 15.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 7.2
         },
         {
           "date": "2025-10-25",
-          "temp_min": 15.7,
-          "temp_max": 24.2,
-          "precipitation": 1.5,
-          "wind_speed": 7.6,
-          "weather_code": 95
+          "temp_max_c": 24.2,
+          "temp_min_c": 15.7,
+          "precipitation_mm": 1.5,
+          "weather_code": 95,
+          "wind_speed_kmh": 7.6
         },
         {
           "date": "2025-10-26",
-          "temp_min": 13.1,
-          "temp_max": 23.2,
-          "precipitation": 12.0,
-          "wind_speed": 8.0,
-          "weather_code": 95
+          "temp_max_c": 23.2,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 12.0,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-27",
-          "temp_min": 13.1,
-          "temp_max": 20.9,
-          "precipitation": 2.3,
-          "wind_speed": 7.7,
-          "weather_code": 51
+          "temp_max_c": 20.9,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 2.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.7
         },
         {
           "date": "2025-10-28",
-          "temp_min": 12.5,
-          "temp_max": 21.6,
-          "precipitation": 0.7,
-          "wind_speed": 10.5,
-          "weather_code": 51
+          "temp_max_c": 21.6,
+          "temp_min_c": 12.5,
+          "precipitation_mm": 0.7,
+          "weather_code": 51,
+          "wind_speed_kmh": 10.5
         },
         {
           "date": "2025-10-29",
-          "temp_min": 11.9,
-          "temp_max": 22.2,
-          "precipitation": 1.2,
-          "wind_speed": 5.9,
-          "weather_code": 51
+          "temp_max_c": 22.2,
+          "temp_min_c": 11.9,
+          "precipitation_mm": 1.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 5.9
         },
         {
           "date": "2025-10-30",
-          "temp_min": 12.0,
-          "temp_max": 22.0,
-          "precipitation": 1.2,
-          "wind_speed": 6.6,
-          "weather_code": 51
+          "temp_max_c": 22.0,
+          "temp_min_c": 12.0,
+          "precipitation_mm": 1.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 6.6
         },
         {
           "date": "2025-10-31",
-          "temp_min": 11.2,
-          "temp_max": 20.3,
-          "precipitation": 0.0,
-          "wind_speed": 7.7,
-          "weather_code": 3
+          "temp_max_c": 20.3,
+          "temp_min_c": 11.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 7.7
         },
         {
           "date": "2025-11-01",
-          "temp_min": 10.2,
-          "temp_max": 21.0,
-          "precipitation": 0.0,
-          "wind_speed": 7.9,
-          "weather_code": 3
+          "temp_max_c": 21.0,
+          "temp_min_c": 10.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 7.9
         }
       ]
     },
     {
       "location": "Bale Robe",
-      "timestamp": "2025-10-19T08:41:03.472332",
-      "current": {},
+      "coordinates": {
+        "lat": 7.125,
+        "lon": 40.0
+      },
+      "current_uv_index": 9.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 9.8,
-          "temp_max": 15.5,
-          "precipitation": 0.1,
-          "wind_speed": 15.0,
-          "weather_code": 61
+          "temp_max_c": 15.5,
+          "temp_min_c": 9.8,
+          "precipitation_mm": 0.1,
+          "weather_code": 61,
+          "wind_speed_kmh": 15.0
         },
         {
           "date": "2025-10-20",
-          "temp_min": 8.4,
-          "temp_max": 17.7,
-          "precipitation": 0.7,
-          "wind_speed": 19.1,
-          "weather_code": 80
+          "temp_max_c": 17.7,
+          "temp_min_c": 8.4,
+          "precipitation_mm": 0.7,
+          "weather_code": 80,
+          "wind_speed_kmh": 19.1
         },
         {
           "date": "2025-10-21",
-          "temp_min": 9.7,
-          "temp_max": 15.7,
-          "precipitation": 2.2,
-          "wind_speed": 15.8,
-          "weather_code": 80
+          "temp_max_c": 15.7,
+          "temp_min_c": 9.7,
+          "precipitation_mm": 2.2,
+          "weather_code": 80,
+          "wind_speed_kmh": 15.8
         },
         {
           "date": "2025-10-22",
-          "temp_min": 8.5,
-          "temp_max": 17.2,
-          "precipitation": 1.3,
-          "wind_speed": 15.6,
-          "weather_code": 80
+          "temp_max_c": 17.2,
+          "temp_min_c": 8.5,
+          "precipitation_mm": 1.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 15.6
         },
         {
           "date": "2025-10-23",
-          "temp_min": 7.7,
-          "temp_max": 16.9,
-          "precipitation": 0.1,
-          "wind_speed": 15.9,
-          "weather_code": 3
+          "temp_max_c": 16.9,
+          "temp_min_c": 7.7,
+          "precipitation_mm": 0.1,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.9
         },
         {
           "date": "2025-10-24",
-          "temp_min": 7.3,
-          "temp_max": 17.4,
-          "precipitation": 0.0,
-          "wind_speed": 17.1,
-          "weather_code": 3
+          "temp_max_c": 17.4,
+          "temp_min_c": 7.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.1
         },
         {
           "date": "2025-10-25",
-          "temp_min": 7.4,
-          "temp_max": 17.9,
-          "precipitation": 0.0,
-          "wind_speed": 15.7,
-          "weather_code": 3
+          "temp_max_c": 17.9,
+          "temp_min_c": 7.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.7
         },
         {
           "date": "2025-10-26",
-          "temp_min": 7.7,
-          "temp_max": 17.7,
-          "precipitation": 0.3,
-          "wind_speed": 15.8,
-          "weather_code": 51
+          "temp_max_c": 17.7,
+          "temp_min_c": 7.7,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 15.8
         },
         {
           "date": "2025-10-27",
-          "temp_min": 8.2,
-          "temp_max": 20.6,
-          "precipitation": 0.0,
-          "wind_speed": 8.2,
-          "weather_code": 3
+          "temp_max_c": 20.6,
+          "temp_min_c": 8.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.2
         },
         {
           "date": "2025-10-28",
-          "temp_min": 9.9,
-          "temp_max": 18.6,
-          "precipitation": 2.1,
-          "wind_speed": 8.0,
-          "weather_code": 51
+          "temp_max_c": 18.6,
+          "temp_min_c": 9.9,
+          "precipitation_mm": 2.1,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.0
         },
         {
           "date": "2025-10-29",
-          "temp_min": 11.3,
-          "temp_max": 18.2,
-          "precipitation": 1.2,
-          "wind_speed": 7.1,
-          "weather_code": 51
+          "temp_max_c": 18.2,
+          "temp_min_c": 11.3,
+          "precipitation_mm": 1.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.1
         },
         {
           "date": "2025-10-30",
-          "temp_min": 7.2,
-          "temp_max": 20.5,
-          "precipitation": 0.0,
-          "wind_speed": 9.4,
-          "weather_code": 3
+          "temp_max_c": 20.5,
+          "temp_min_c": 7.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.4
         },
         {
           "date": "2025-10-31",
-          "temp_min": 6.8,
-          "temp_max": 18.3,
-          "precipitation": 0.0,
-          "wind_speed": 8.8,
-          "weather_code": 3
+          "temp_max_c": 18.3,
+          "temp_min_c": 6.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.8
         },
         {
           "date": "2025-11-01",
-          "temp_min": 7.2,
-          "temp_max": 20.6,
-          "precipitation": 0.0,
-          "wind_speed": 9.8,
-          "weather_code": 3
+          "temp_max_c": 20.6,
+          "temp_min_c": 7.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.8
         }
       ]
     },
     {
       "location": "Shashemene",
-      "timestamp": "2025-10-19T08:41:05.317068",
-      "current": {},
+      "coordinates": {
+        "lat": 7.25,
+        "lon": 38.625
+      },
+      "current_uv_index": 9.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 15.0,
-          "temp_max": 24.0,
-          "precipitation": 2.2,
-          "wind_speed": 15.5,
-          "weather_code": 80
+          "temp_max_c": 24.0,
+          "temp_min_c": 15.0,
+          "precipitation_mm": 2.2,
+          "weather_code": 80,
+          "wind_speed_kmh": 15.5
         },
         {
           "date": "2025-10-20",
-          "temp_min": 15.0,
-          "temp_max": 23.3,
-          "precipitation": 15.8,
-          "wind_speed": 14.2,
-          "weather_code": 95
+          "temp_max_c": 23.3,
+          "temp_min_c": 15.0,
+          "precipitation_mm": 15.8,
+          "weather_code": 95,
+          "wind_speed_kmh": 14.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 15.9,
-          "temp_max": 22.0,
-          "precipitation": 11.1,
-          "wind_speed": 13.6,
-          "weather_code": 95
+          "temp_max_c": 22.0,
+          "temp_min_c": 15.9,
+          "precipitation_mm": 11.1,
+          "weather_code": 95,
+          "wind_speed_kmh": 13.6
         },
         {
           "date": "2025-10-22",
-          "temp_min": 14.5,
-          "temp_max": 24.4,
-          "precipitation": 3.2,
-          "wind_speed": 18.2,
-          "weather_code": 95
+          "temp_max_c": 24.4,
+          "temp_min_c": 14.5,
+          "precipitation_mm": 3.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 18.2
         },
         {
           "date": "2025-10-23",
-          "temp_min": 15.0,
-          "temp_max": 24.4,
-          "precipitation": 0.0,
-          "wind_speed": 12.6,
-          "weather_code": 45
+          "temp_max_c": 24.4,
+          "temp_min_c": 15.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 45,
+          "wind_speed_kmh": 12.6
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.9,
-          "temp_max": 24.8,
-          "precipitation": 0.0,
-          "wind_speed": 10.1,
-          "weather_code": 3
+          "temp_max_c": 24.8,
+          "temp_min_c": 13.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.1
         },
         {
           "date": "2025-10-25",
-          "temp_min": 12.8,
-          "temp_max": 25.3,
-          "precipitation": 0.0,
-          "wind_speed": 10.7,
-          "weather_code": 2
+          "temp_max_c": 25.3,
+          "temp_min_c": 12.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 10.7
         },
         {
           "date": "2025-10-26",
-          "temp_min": 12.7,
-          "temp_max": 25.3,
-          "precipitation": 0.0,
-          "wind_speed": 11.8,
-          "weather_code": 3
+          "temp_max_c": 25.3,
+          "temp_min_c": 12.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.8
         },
         {
           "date": "2025-10-27",
-          "temp_min": 12.6,
-          "temp_max": 23.6,
-          "precipitation": 0.0,
-          "wind_speed": 11.6,
-          "weather_code": 3
+          "temp_max_c": 23.6,
+          "temp_min_c": 12.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.6
         },
         {
           "date": "2025-10-28",
-          "temp_min": 12.6,
-          "temp_max": 24.9,
-          "precipitation": 0.3,
-          "wind_speed": 12.8,
-          "weather_code": 51
+          "temp_max_c": 24.9,
+          "temp_min_c": 12.6,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 12.8
         },
         {
           "date": "2025-10-29",
-          "temp_min": 13.1,
-          "temp_max": 24.6,
-          "precipitation": 0.3,
-          "wind_speed": 13.1,
-          "weather_code": 51
+          "temp_max_c": 24.6,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 13.1
         },
         {
           "date": "2025-10-30",
-          "temp_min": 11.7,
-          "temp_max": 24.4,
-          "precipitation": 0.0,
-          "wind_speed": 15.2,
-          "weather_code": 3
+          "temp_max_c": 24.4,
+          "temp_min_c": 11.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.2
         },
         {
           "date": "2025-10-31",
-          "temp_min": 10.5,
-          "temp_max": 23.6,
-          "precipitation": 0.0,
-          "wind_speed": 14.8,
-          "weather_code": 3
+          "temp_max_c": 23.6,
+          "temp_min_c": 10.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.8
         },
         {
           "date": "2025-11-01",
-          "temp_min": 10.5,
-          "temp_max": 24.3,
-          "precipitation": 0.0,
-          "wind_speed": 17.9,
-          "weather_code": 3
+          "temp_max_c": 24.3,
+          "temp_min_c": 10.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.9
         }
       ]
     },
     {
       "location": "Dilla",
-      "timestamp": "2025-10-19T08:41:12.294200",
-      "current": {},
+      "coordinates": {
+        "lat": 6.5,
+        "lon": 38.25
+      },
+      "current_uv_index": 9.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 20.2,
-          "temp_max": 27.0,
-          "precipitation": 1.3,
-          "wind_speed": 13.8,
-          "weather_code": 80
+          "temp_max_c": 27.0,
+          "temp_min_c": 20.2,
+          "precipitation_mm": 1.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 13.8
         },
         {
           "date": "2025-10-20",
-          "temp_min": 19.6,
-          "temp_max": 27.4,
-          "precipitation": 0.0,
-          "wind_speed": 8.6,
-          "weather_code": 3
+          "temp_max_c": 27.4,
+          "temp_min_c": 19.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.6
         },
         {
           "date": "2025-10-21",
-          "temp_min": 20.1,
-          "temp_max": 26.2,
-          "precipitation": 8.2,
-          "wind_speed": 9.2,
-          "weather_code": 95
+          "temp_max_c": 26.2,
+          "temp_min_c": 20.1,
+          "precipitation_mm": 8.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 9.2
         },
         {
           "date": "2025-10-22",
-          "temp_min": 20.3,
-          "temp_max": 27.2,
-          "precipitation": 4.9,
-          "wind_speed": 11.8,
-          "weather_code": 96
+          "temp_max_c": 27.2,
+          "temp_min_c": 20.3,
+          "precipitation_mm": 4.9,
+          "weather_code": 96,
+          "wind_speed_kmh": 11.8
         },
         {
           "date": "2025-10-23",
-          "temp_min": 20.6,
-          "temp_max": 27.2,
-          "precipitation": 2.4,
-          "wind_speed": 8.4,
-          "weather_code": 80
+          "temp_max_c": 27.2,
+          "temp_min_c": 20.6,
+          "precipitation_mm": 2.4,
+          "weather_code": 80,
+          "wind_speed_kmh": 8.4
         },
         {
           "date": "2025-10-24",
-          "temp_min": 19.6,
-          "temp_max": 28.9,
-          "precipitation": 0.0,
-          "wind_speed": 8.4,
-          "weather_code": 3
+          "temp_max_c": 28.9,
+          "temp_min_c": 19.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 8.4
         },
         {
           "date": "2025-10-25",
-          "temp_min": 19.4,
-          "temp_max": 29.5,
-          "precipitation": 0.0,
-          "wind_speed": 9.1,
-          "weather_code": 2
+          "temp_max_c": 29.5,
+          "temp_min_c": 19.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 9.1
         },
         {
           "date": "2025-10-26",
-          "temp_min": 15.7,
-          "temp_max": 28.3,
-          "precipitation": 5.1,
-          "wind_speed": 10.5,
-          "weather_code": 80
+          "temp_max_c": 28.3,
+          "temp_min_c": 15.7,
+          "precipitation_mm": 5.1,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.5
         },
         {
           "date": "2025-10-27",
-          "temp_min": 14.1,
-          "temp_max": 25.7,
-          "precipitation": 0.3,
-          "wind_speed": 10.0,
-          "weather_code": 51
+          "temp_max_c": 25.7,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 10.0
         },
         {
           "date": "2025-10-28",
-          "temp_min": 15.0,
-          "temp_max": 26.6,
-          "precipitation": 0.0,
-          "wind_speed": 10.6,
-          "weather_code": 3
+          "temp_max_c": 26.6,
+          "temp_min_c": 15.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.6
         },
         {
           "date": "2025-10-29",
-          "temp_min": 15.3,
-          "temp_max": 25.9,
-          "precipitation": 4.1,
-          "wind_speed": 13.8,
-          "weather_code": 53
+          "temp_max_c": 25.9,
+          "temp_min_c": 15.3,
+          "precipitation_mm": 4.1,
+          "weather_code": 53,
+          "wind_speed_kmh": 13.8
         },
         {
           "date": "2025-10-30",
-          "temp_min": 15.2,
-          "temp_max": 24.3,
-          "precipitation": 0.7,
-          "wind_speed": 12.1,
-          "weather_code": 51
+          "temp_max_c": 24.3,
+          "temp_min_c": 15.2,
+          "precipitation_mm": 0.7,
+          "weather_code": 51,
+          "wind_speed_kmh": 12.1
         },
         {
           "date": "2025-10-31",
-          "temp_min": 14.2,
-          "temp_max": 25.0,
-          "precipitation": 0.0,
-          "wind_speed": 14.3,
-          "weather_code": 3
+          "temp_max_c": 25.0,
+          "temp_min_c": 14.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.3
         },
         {
           "date": "2025-11-01",
-          "temp_min": 14.1,
-          "temp_max": 25.5,
-          "precipitation": 0.0,
-          "wind_speed": 12.0,
-          "weather_code": 3
+          "temp_max_c": 25.5,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.0
         }
       ]
     },
     {
       "location": "Bonga",
-      "timestamp": "2025-10-19T08:41:14.332285",
-      "current": {},
+      "coordinates": {
+        "lat": 7.375,
+        "lon": 36.375
+      },
+      "current_uv_index": 8.9,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 14.3,
-          "temp_max": 22.0,
-          "precipitation": 5.0,
-          "wind_speed": 10.2,
-          "weather_code": 95
+          "temp_max_c": 22.0,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 5.0,
+          "weather_code": 95,
+          "wind_speed_kmh": 10.2
         },
         {
           "date": "2025-10-20",
-          "temp_min": 14.2,
-          "temp_max": 22.4,
-          "precipitation": 4.6,
-          "wind_speed": 10.7,
-          "weather_code": 95
+          "temp_max_c": 22.4,
+          "temp_min_c": 14.2,
+          "precipitation_mm": 4.6,
+          "weather_code": 95,
+          "wind_speed_kmh": 10.7
         },
         {
           "date": "2025-10-21",
-          "temp_min": 14.3,
-          "temp_max": 22.7,
-          "precipitation": 7.7,
-          "wind_speed": 9.9,
-          "weather_code": 95
+          "temp_max_c": 22.7,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 7.7,
+          "weather_code": 95,
+          "wind_speed_kmh": 9.9
         },
         {
           "date": "2025-10-22",
-          "temp_min": 15.1,
-          "temp_max": 21.9,
-          "precipitation": 6.0,
-          "wind_speed": 12.5,
-          "weather_code": 96
+          "temp_max_c": 21.9,
+          "temp_min_c": 15.1,
+          "precipitation_mm": 6.0,
+          "weather_code": 96,
+          "wind_speed_kmh": 12.5
         },
         {
           "date": "2025-10-23",
-          "temp_min": 14.8,
-          "temp_max": 23.1,
-          "precipitation": 3.3,
-          "wind_speed": 10.1,
-          "weather_code": 80
+          "temp_max_c": 23.1,
+          "temp_min_c": 14.8,
+          "precipitation_mm": 3.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.1
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.6,
-          "temp_max": 23.9,
-          "precipitation": 1.2,
-          "wind_speed": 6.9,
-          "weather_code": 80
+          "temp_max_c": 23.9,
+          "temp_min_c": 13.6,
+          "precipitation_mm": 1.2,
+          "weather_code": 80,
+          "wind_speed_kmh": 6.9
         },
         {
           "date": "2025-10-25",
-          "temp_min": 14.4,
-          "temp_max": 24.3,
-          "precipitation": 0.0,
-          "wind_speed": 10.6,
-          "weather_code": 3
+          "temp_max_c": 24.3,
+          "temp_min_c": 14.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.6
         },
         {
           "date": "2025-10-26",
-          "temp_min": 13.7,
-          "temp_max": 23.2,
-          "precipitation": 7.8,
-          "wind_speed": 9.2,
-          "weather_code": 95
+          "temp_max_c": 23.2,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 7.8,
+          "weather_code": 95,
+          "wind_speed_kmh": 9.2
         },
         {
           "date": "2025-10-27",
-          "temp_min": 12.1,
-          "temp_max": 25.7,
-          "precipitation": 0.3,
-          "wind_speed": 11.8,
-          "weather_code": 51
+          "temp_max_c": 25.7,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 11.8
         },
         {
           "date": "2025-10-28",
-          "temp_min": 12.1,
-          "temp_max": 26.5,
-          "precipitation": 0.0,
-          "wind_speed": 13.5,
-          "weather_code": 3
+          "temp_max_c": 26.5,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.5
         },
         {
           "date": "2025-10-29",
-          "temp_min": 13.0,
-          "temp_max": 27.4,
-          "precipitation": 0.3,
-          "wind_speed": 8.6,
-          "weather_code": 51
+          "temp_max_c": 27.4,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.6
         },
         {
           "date": "2025-10-30",
-          "temp_min": 12.3,
-          "temp_max": 27.8,
-          "precipitation": 0.0,
-          "wind_speed": 5.0,
-          "weather_code": 3
+          "temp_max_c": 27.8,
+          "temp_min_c": 12.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 5.0
         },
         {
           "date": "2025-10-31",
-          "temp_min": 11.2,
-          "temp_max": 27.0,
-          "precipitation": 0.0,
-          "wind_speed": 5.2,
-          "weather_code": 3
+          "temp_max_c": 27.0,
+          "temp_min_c": 11.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 5.2
         },
         {
           "date": "2025-11-01",
-          "temp_min": 9.3,
-          "temp_max": 26.6,
-          "precipitation": 0.0,
-          "wind_speed": 3.9,
-          "weather_code": 3
+          "temp_max_c": 26.6,
+          "temp_min_c": 9.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 3.9
         }
       ]
     },
     {
       "location": "Arba Minch",
-      "timestamp": "2025-10-19T08:41:16.481478",
-      "current": {},
+      "coordinates": {
+        "lat": 5.875,
+        "lon": 37.5
+      },
+      "current_uv_index": 9.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 16.9,
-          "temp_max": 24.9,
-          "precipitation": 3.6,
-          "wind_speed": 11.5,
-          "weather_code": 95
+          "temp_max_c": 24.9,
+          "temp_min_c": 16.9,
+          "precipitation_mm": 3.6,
+          "weather_code": 95,
+          "wind_speed_kmh": 11.5
         },
         {
           "date": "2025-10-20",
-          "temp_min": 17.9,
-          "temp_max": 25.8,
-          "precipitation": 0.5,
-          "wind_speed": 10.2,
-          "weather_code": 80
+          "temp_max_c": 25.8,
+          "temp_min_c": 17.9,
+          "precipitation_mm": 0.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 17.8,
-          "temp_max": 24.0,
-          "precipitation": 7.8,
-          "wind_speed": 6.6,
-          "weather_code": 95
+          "temp_max_c": 24.0,
+          "temp_min_c": 17.8,
+          "precipitation_mm": 7.8,
+          "weather_code": 95,
+          "wind_speed_kmh": 6.6
         },
         {
           "date": "2025-10-22",
-          "temp_min": 17.7,
-          "temp_max": 25.1,
-          "precipitation": 11.0,
-          "wind_speed": 6.5,
-          "weather_code": 95
+          "temp_max_c": 25.1,
+          "temp_min_c": 17.7,
+          "precipitation_mm": 11.0,
+          "weather_code": 95,
+          "wind_speed_kmh": 6.5
         },
         {
           "date": "2025-10-23",
-          "temp_min": 16.6,
-          "temp_max": 23.7,
-          "precipitation": 2.1,
-          "wind_speed": 6.4,
-          "weather_code": 3
+          "temp_max_c": 23.7,
+          "temp_min_c": 16.6,
+          "precipitation_mm": 2.1,
+          "weather_code": 3,
+          "wind_speed_kmh": 6.4
         },
         {
           "date": "2025-10-24",
-          "temp_min": 15.4,
-          "temp_max": 26.8,
-          "precipitation": 0.0,
-          "wind_speed": 9.1,
-          "weather_code": 3
+          "temp_max_c": 26.8,
+          "temp_min_c": 15.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.1
         },
         {
           "date": "2025-10-25",
-          "temp_min": 15.6,
-          "temp_max": 25.9,
-          "precipitation": 0.0,
-          "wind_speed": 10.7,
-          "weather_code": 3
+          "temp_max_c": 25.9,
+          "temp_min_c": 15.6,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.7
         },
         {
           "date": "2025-10-26",
-          "temp_min": 17.4,
-          "temp_max": 26.7,
-          "precipitation": 0.2,
-          "wind_speed": 8.1,
-          "weather_code": 51
+          "temp_max_c": 26.7,
+          "temp_min_c": 17.4,
+          "precipitation_mm": 0.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.1
         },
         {
           "date": "2025-10-27",
-          "temp_min": 16.1,
-          "temp_max": 29.7,
-          "precipitation": 0.6,
-          "wind_speed": 9.0,
-          "weather_code": 51
+          "temp_max_c": 29.7,
+          "temp_min_c": 16.1,
+          "precipitation_mm": 0.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 9.0
         },
         {
           "date": "2025-10-28",
-          "temp_min": 17.8,
-          "temp_max": 30.4,
-          "precipitation": 0.1,
-          "wind_speed": 8.7,
-          "weather_code": 51
+          "temp_max_c": 30.4,
+          "temp_min_c": 17.8,
+          "precipitation_mm": 0.1,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.7
         },
         {
           "date": "2025-10-29",
-          "temp_min": 16.4,
-          "temp_max": 30.2,
-          "precipitation": 2.3,
-          "wind_speed": 7.6,
-          "weather_code": 51
+          "temp_max_c": 30.2,
+          "temp_min_c": 16.4,
+          "precipitation_mm": 2.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.6
         },
         {
           "date": "2025-10-30",
-          "temp_min": 17.6,
-          "temp_max": 28.5,
-          "precipitation": 0.7,
-          "wind_speed": 9.5,
-          "weather_code": 51
+          "temp_max_c": 28.5,
+          "temp_min_c": 17.6,
+          "precipitation_mm": 0.7,
+          "weather_code": 51,
+          "wind_speed_kmh": 9.5
         },
         {
           "date": "2025-10-31",
-          "temp_min": 16.3,
-          "temp_max": 27.9,
-          "precipitation": 0.0,
-          "wind_speed": 10.6,
-          "weather_code": 3
+          "temp_max_c": 27.9,
+          "temp_min_c": 16.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.6
         },
         {
           "date": "2025-11-01",
-          "temp_min": 17.2,
-          "temp_max": 28.5,
-          "precipitation": 0.3,
-          "wind_speed": 11.0,
-          "weather_code": 51
+          "temp_max_c": 28.5,
+          "temp_min_c": 17.2,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 11.0
         }
       ]
     },
     {
       "location": "Hosaena",
-      "timestamp": "2025-10-19T08:41:18.570417",
-      "current": {},
+      "coordinates": {
+        "lat": 7.375,
+        "lon": 37.75
+      },
+      "current_uv_index": 9.1,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 13.6,
-          "temp_max": 21.0,
-          "precipitation": 5.1,
-          "wind_speed": 12.7,
-          "weather_code": 95
+          "temp_max_c": 21.0,
+          "temp_min_c": 13.6,
+          "precipitation_mm": 5.1,
+          "weather_code": 95,
+          "wind_speed_kmh": 12.7
         },
         {
           "date": "2025-10-20",
-          "temp_min": 13.1,
-          "temp_max": 19.0,
-          "precipitation": 22.3,
-          "wind_speed": 8.2,
-          "weather_code": 95
+          "temp_max_c": 19.0,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 22.3,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.2
         },
         {
           "date": "2025-10-21",
-          "temp_min": 14.0,
-          "temp_max": 18.6,
-          "precipitation": 18.4,
-          "wind_speed": 8.4,
-          "weather_code": 95
+          "temp_max_c": 18.6,
+          "temp_min_c": 14.0,
+          "precipitation_mm": 18.4,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.4
         },
         {
           "date": "2025-10-22",
-          "temp_min": 13.5,
-          "temp_max": 20.0,
-          "precipitation": 0.3,
-          "wind_speed": 14.1,
-          "weather_code": 3
+          "temp_max_c": 20.0,
+          "temp_min_c": 13.5,
+          "precipitation_mm": 0.3,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.1
         },
         {
           "date": "2025-10-23",
-          "temp_min": 13.5,
-          "temp_max": 20.7,
-          "precipitation": 0.0,
-          "wind_speed": 15.5,
-          "weather_code": 3
+          "temp_max_c": 20.7,
+          "temp_min_c": 13.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.5
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.7,
-          "temp_max": 21.1,
-          "precipitation": 0.0,
-          "wind_speed": 9.0,
-          "weather_code": 3
+          "temp_max_c": 21.1,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.0
         },
         {
           "date": "2025-10-25",
-          "temp_min": 14.2,
-          "temp_max": 21.9,
-          "precipitation": 0.0,
-          "wind_speed": 14.7,
-          "weather_code": 3
+          "temp_max_c": 21.9,
+          "temp_min_c": 14.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.7
         },
         {
           "date": "2025-10-26",
-          "temp_min": 13.7,
-          "temp_max": 21.8,
-          "precipitation": 0.0,
-          "wind_speed": 10.8,
-          "weather_code": 3
+          "temp_max_c": 21.8,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.8
         },
         {
           "date": "2025-10-27",
-          "temp_min": 10.8,
-          "temp_max": 21.1,
-          "precipitation": 0.0,
-          "wind_speed": 22.6,
-          "weather_code": 2
+          "temp_max_c": 21.1,
+          "temp_min_c": 10.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 22.6
         },
         {
           "date": "2025-10-28",
-          "temp_min": 10.1,
-          "temp_max": 21.3,
-          "precipitation": 0.0,
-          "wind_speed": 27.9,
-          "weather_code": 3
+          "temp_max_c": 21.3,
+          "temp_min_c": 10.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 27.9
         },
         {
           "date": "2025-10-29",
-          "temp_min": 12.1,
-          "temp_max": 21.5,
-          "precipitation": 0.0,
-          "wind_speed": 28.4,
-          "weather_code": 3
+          "temp_max_c": 21.5,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 28.4
         },
         {
           "date": "2025-10-30",
-          "temp_min": 10.5,
-          "temp_max": 21.1,
-          "precipitation": 0.0,
-          "wind_speed": 29.4,
-          "weather_code": 2
+          "temp_max_c": 21.1,
+          "temp_min_c": 10.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 29.4
         },
         {
           "date": "2025-10-31",
-          "temp_min": 9.4,
-          "temp_max": 20.2,
-          "precipitation": 0.0,
-          "wind_speed": 28.0,
-          "weather_code": 3
+          "temp_max_c": 20.2,
+          "temp_min_c": 9.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 28.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 9.9,
-          "temp_max": 20.7,
-          "precipitation": 0.0,
-          "wind_speed": 28.5,
-          "weather_code": 3
+          "temp_max_c": 20.7,
+          "temp_min_c": 9.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 28.5
         }
       ]
     },
     {
       "location": "Debre Markos",
-      "timestamp": "2025-10-19T08:41:20.366736",
-      "current": {},
+      "coordinates": {
+        "lat": 10.375,
+        "lon": 37.75
+      },
+      "current_uv_index": 8.7,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 11.3,
-          "temp_max": 20.9,
-          "precipitation": 0.8,
-          "wind_speed": 12.1,
-          "weather_code": 80
+          "temp_max_c": 20.9,
+          "temp_min_c": 11.3,
+          "precipitation_mm": 0.8,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.1
         },
         {
           "date": "2025-10-20",
-          "temp_min": 12.7,
-          "temp_max": 20.6,
-          "precipitation": 4.6,
-          "wind_speed": 10.8,
-          "weather_code": 80
+          "temp_max_c": 20.6,
+          "temp_min_c": 12.7,
+          "precipitation_mm": 4.6,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.8
         },
         {
           "date": "2025-10-21",
-          "temp_min": 13.5,
-          "temp_max": 19.8,
-          "precipitation": 4.8,
-          "wind_speed": 8.8,
-          "weather_code": 95
+          "temp_max_c": 19.8,
+          "temp_min_c": 13.5,
+          "precipitation_mm": 4.8,
+          "weather_code": 95,
+          "wind_speed_kmh": 8.8
         },
         {
           "date": "2025-10-22",
-          "temp_min": 13.2,
-          "temp_max": 19.5,
-          "precipitation": 12.2,
-          "wind_speed": 10.7,
-          "weather_code": 95
+          "temp_max_c": 19.5,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 12.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 10.7
         },
         {
           "date": "2025-10-23",
-          "temp_min": 13.7,
-          "temp_max": 19.3,
-          "precipitation": 6.3,
-          "wind_speed": 9.6,
-          "weather_code": 95
+          "temp_max_c": 19.3,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 6.3,
+          "weather_code": 95,
+          "wind_speed_kmh": 9.6
         },
         {
           "date": "2025-10-24",
-          "temp_min": 11.5,
-          "temp_max": 21.0,
-          "precipitation": 0.3,
-          "wind_speed": 11.5,
-          "weather_code": 3
+          "temp_max_c": 21.0,
+          "temp_min_c": 11.5,
+          "precipitation_mm": 0.3,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.5
         },
         {
           "date": "2025-10-25",
-          "temp_min": 12.1,
-          "temp_max": 21.5,
-          "precipitation": 0.3,
-          "wind_speed": 10.1,
-          "weather_code": 3
+          "temp_max_c": 21.5,
+          "temp_min_c": 12.1,
+          "precipitation_mm": 0.3,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.1
         },
         {
           "date": "2025-10-26",
-          "temp_min": 11.8,
-          "temp_max": 21.4,
-          "precipitation": 2.4,
-          "wind_speed": 11.1,
-          "weather_code": 80
+          "temp_max_c": 21.4,
+          "temp_min_c": 11.8,
+          "precipitation_mm": 2.4,
+          "weather_code": 80,
+          "wind_speed_kmh": 11.1
         },
         {
           "date": "2025-10-27",
-          "temp_min": 10.0,
-          "temp_max": 19.8,
-          "precipitation": 1.5,
-          "wind_speed": 12.5,
-          "weather_code": 51
+          "temp_max_c": 19.8,
+          "temp_min_c": 10.0,
+          "precipitation_mm": 1.5,
+          "weather_code": 51,
+          "wind_speed_kmh": 12.5
         },
         {
           "date": "2025-10-28",
-          "temp_min": 10.9,
-          "temp_max": 20.2,
-          "precipitation": 0.3,
-          "wind_speed": 14.1,
-          "weather_code": 51
+          "temp_max_c": 20.2,
+          "temp_min_c": 10.9,
+          "precipitation_mm": 0.3,
+          "weather_code": 51,
+          "wind_speed_kmh": 14.1
         },
         {
           "date": "2025-10-29",
-          "temp_min": 10.1,
-          "temp_max": 20.8,
-          "precipitation": 0.0,
-          "wind_speed": 13.3,
-          "weather_code": 3
+          "temp_max_c": 20.8,
+          "temp_min_c": 10.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.3
         },
         {
           "date": "2025-10-30",
-          "temp_min": 9.7,
-          "temp_max": 20.2,
-          "precipitation": 0.0,
-          "wind_speed": 12.0,
-          "weather_code": 3
+          "temp_max_c": 20.2,
+          "temp_min_c": 9.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.0
         },
         {
           "date": "2025-10-31",
-          "temp_min": 8.8,
-          "temp_max": 20.0,
-          "precipitation": 0.0,
-          "wind_speed": 11.0,
-          "weather_code": 3
+          "temp_max_c": 20.0,
+          "temp_min_c": 8.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 8.3,
-          "temp_max": 19.4,
-          "precipitation": 0.0,
-          "wind_speed": 13.0,
-          "weather_code": 3
+          "temp_max_c": 19.4,
+          "temp_min_c": 8.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.0
         }
       ]
     },
     {
       "location": "Debre Birhan",
-      "timestamp": "2025-10-19T08:41:22.317771",
-      "current": {},
+      "coordinates": {
+        "lat": 9.625,
+        "lon": 39.5
+      },
+      "current_uv_index": 8.2,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 7.5,
-          "temp_max": 19.0,
-          "precipitation": 0.0,
-          "wind_speed": 17.5,
-          "weather_code": 3
+          "temp_max_c": 19.0,
+          "temp_min_c": 7.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.5
         },
         {
           "date": "2025-10-20",
-          "temp_min": 6.7,
-          "temp_max": 20.1,
-          "precipitation": 0.0,
-          "wind_speed": 19.7,
-          "weather_code": 3
+          "temp_max_c": 20.1,
+          "temp_min_c": 6.7,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 19.7
         },
         {
           "date": "2025-10-21",
-          "temp_min": 8.1,
-          "temp_max": 18.9,
-          "precipitation": 0.0,
-          "wind_speed": 17.7,
-          "weather_code": 3
+          "temp_max_c": 18.9,
+          "temp_min_c": 8.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.7
         },
         {
           "date": "2025-10-22",
-          "temp_min": 6.4,
-          "temp_max": 19.6,
-          "precipitation": 0.0,
-          "wind_speed": 16.5,
-          "weather_code": 2
+          "temp_max_c": 19.6,
+          "temp_min_c": 6.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 16.5
         },
         {
           "date": "2025-10-23",
-          "temp_min": 5.5,
-          "temp_max": 19.8,
-          "precipitation": 0.0,
-          "wind_speed": 15.3,
-          "weather_code": 3
+          "temp_max_c": 19.8,
+          "temp_min_c": 5.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.3
         },
         {
           "date": "2025-10-24",
-          "temp_min": 5.9,
-          "temp_max": 19.5,
-          "precipitation": 0.0,
-          "wind_speed": 14.5,
-          "weather_code": 3
+          "temp_max_c": 19.5,
+          "temp_min_c": 5.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.5
         },
         {
           "date": "2025-10-25",
-          "temp_min": 6.9,
-          "temp_max": 18.9,
-          "precipitation": 0.0,
-          "wind_speed": 12.0,
-          "weather_code": 3
+          "temp_max_c": 18.9,
+          "temp_min_c": 6.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.0
         },
         {
           "date": "2025-10-26",
-          "temp_min": 7.0,
-          "temp_max": 20.1,
-          "precipitation": 0.0,
-          "wind_speed": 13.4,
-          "weather_code": 3
+          "temp_max_c": 20.1,
+          "temp_min_c": 7.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.4
         },
         {
           "date": "2025-10-27",
-          "temp_min": 7.4,
-          "temp_max": 18.3,
-          "precipitation": 0.0,
-          "wind_speed": 16.8,
-          "weather_code": 3
+          "temp_max_c": 18.3,
+          "temp_min_c": 7.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.8
         },
         {
           "date": "2025-10-28",
-          "temp_min": 7.4,
-          "temp_max": 17.8,
-          "precipitation": 0.0,
-          "wind_speed": 15.0,
-          "weather_code": 3
+          "temp_max_c": 17.8,
+          "temp_min_c": 7.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.0
         },
         {
           "date": "2025-10-29",
-          "temp_min": 7.1,
-          "temp_max": 19.1,
-          "precipitation": 0.0,
-          "wind_speed": 18.5,
-          "weather_code": 3
+          "temp_max_c": 19.1,
+          "temp_min_c": 7.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.5
         },
         {
           "date": "2025-10-30",
-          "temp_min": 5.8,
-          "temp_max": 18.4,
-          "precipitation": 0.0,
-          "wind_speed": 17.1,
-          "weather_code": 2
+          "temp_max_c": 18.4,
+          "temp_min_c": 5.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 17.1
         },
         {
           "date": "2025-10-31",
-          "temp_min": 5.1,
-          "temp_max": 17.9,
-          "precipitation": 0.0,
-          "wind_speed": 14.8,
-          "weather_code": 3
+          "temp_max_c": 17.9,
+          "temp_min_c": 5.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.8
         },
         {
           "date": "2025-11-01",
-          "temp_min": 4.9,
-          "temp_max": 17.7,
-          "precipitation": 0.0,
-          "wind_speed": 15.9,
-          "weather_code": 3
+          "temp_max_c": 17.7,
+          "temp_min_c": 4.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.9
         }
       ]
     },
     {
       "location": "Metu",
-      "timestamp": "2025-10-19T08:41:24.368546",
-      "current": {},
+      "coordinates": {
+        "lat": 8.25,
+        "lon": 35.625
+      },
+      "current_uv_index": 8.7,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 15.3,
-          "temp_max": 23.2,
-          "precipitation": 3.6,
-          "wind_speed": 12.4,
-          "weather_code": 80
+          "temp_max_c": 23.2,
+          "temp_min_c": 15.3,
+          "precipitation_mm": 3.6,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.4
         },
         {
           "date": "2025-10-20",
-          "temp_min": 14.4,
-          "temp_max": 22.8,
-          "precipitation": 2.2,
-          "wind_speed": 15.4,
-          "weather_code": 95
+          "temp_max_c": 22.8,
+          "temp_min_c": 14.4,
+          "precipitation_mm": 2.2,
+          "weather_code": 95,
+          "wind_speed_kmh": 15.4
         },
         {
           "date": "2025-10-21",
-          "temp_min": 14.4,
-          "temp_max": 23.2,
-          "precipitation": 6.3,
-          "wind_speed": 14.0,
-          "weather_code": 96
+          "temp_max_c": 23.2,
+          "temp_min_c": 14.4,
+          "precipitation_mm": 6.3,
+          "weather_code": 96,
+          "wind_speed_kmh": 14.0
         },
         {
           "date": "2025-10-22",
-          "temp_min": 15.2,
-          "temp_max": 23.2,
-          "precipitation": 0.0,
-          "wind_speed": 9.0,
-          "weather_code": 45
+          "temp_max_c": 23.2,
+          "temp_min_c": 15.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 45,
+          "wind_speed_kmh": 9.0
         },
         {
           "date": "2025-10-23",
-          "temp_min": 14.3,
-          "temp_max": 22.0,
-          "precipitation": 2.4,
-          "wind_speed": 12.5,
-          "weather_code": 80
+          "temp_max_c": 22.0,
+          "temp_min_c": 14.3,
+          "precipitation_mm": 2.4,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.5
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.2,
-          "temp_max": 24.5,
-          "precipitation": 6.3,
-          "wind_speed": 9.0,
-          "weather_code": 80
+          "temp_max_c": 24.5,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 6.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 9.0
         },
         {
           "date": "2025-10-25",
-          "temp_min": 13.7,
-          "temp_max": 24.5,
-          "precipitation": 6.1,
-          "wind_speed": 10.7,
-          "weather_code": 95
+          "temp_max_c": 24.5,
+          "temp_min_c": 13.7,
+          "precipitation_mm": 6.1,
+          "weather_code": 95,
+          "wind_speed_kmh": 10.7
         },
         {
           "date": "2025-10-26",
-          "temp_min": 15.4,
-          "temp_max": 24.3,
-          "precipitation": 2.6,
-          "wind_speed": 12.0,
-          "weather_code": 80
+          "temp_max_c": 24.3,
+          "temp_min_c": 15.4,
+          "precipitation_mm": 2.6,
+          "weather_code": 80,
+          "wind_speed_kmh": 12.0
         },
         {
           "date": "2025-10-27",
-          "temp_min": 13.3,
-          "temp_max": 22.7,
-          "precipitation": 7.5,
-          "wind_speed": 8.1,
-          "weather_code": 80
+          "temp_max_c": 22.7,
+          "temp_min_c": 13.3,
+          "precipitation_mm": 7.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 8.1
         },
         {
           "date": "2025-10-28",
-          "temp_min": 13.1,
-          "temp_max": 22.9,
-          "precipitation": 2.4,
-          "wind_speed": 8.5,
-          "weather_code": 51
+          "temp_max_c": 22.9,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 2.4,
+          "weather_code": 51,
+          "wind_speed_kmh": 8.5
         },
         {
           "date": "2025-10-29",
-          "temp_min": 13.1,
-          "temp_max": 22.4,
-          "precipitation": 1.8,
-          "wind_speed": 7.2,
-          "weather_code": 51
+          "temp_max_c": 22.4,
+          "temp_min_c": 13.1,
+          "precipitation_mm": 1.8,
+          "weather_code": 51,
+          "wind_speed_kmh": 7.2
         },
         {
           "date": "2025-10-30",
-          "temp_min": 13.0,
-          "temp_max": 24.9,
-          "precipitation": 0.6,
-          "wind_speed": 9.4,
-          "weather_code": 51
+          "temp_max_c": 24.9,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 0.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 9.4
         },
         {
           "date": "2025-10-31",
-          "temp_min": 12.2,
-          "temp_max": 24.4,
-          "precipitation": 0.0,
-          "wind_speed": 11.0,
-          "weather_code": 3
+          "temp_max_c": 24.4,
+          "temp_min_c": 12.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 11.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 10.8,
-          "temp_max": 24.5,
-          "precipitation": 0.0,
-          "wind_speed": 10.2,
-          "weather_code": 3
+          "temp_max_c": 24.5,
+          "temp_min_c": 10.8,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 10.2
         }
       ]
     },
     {
       "location": "Adigrat",
-      "timestamp": "2025-10-19T08:41:26.356576",
-      "current": {},
+      "coordinates": {
+        "lat": 14.25,
+        "lon": 39.5
+      },
+      "current_uv_index": 8.3,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 14.2,
-          "temp_max": 19.8,
-          "precipitation": 0.3,
-          "wind_speed": 9.7,
-          "weather_code": 61
+          "temp_max_c": 19.8,
+          "temp_min_c": 14.2,
+          "precipitation_mm": 0.3,
+          "weather_code": 61,
+          "wind_speed_kmh": 9.7
         },
         {
           "date": "2025-10-20",
-          "temp_min": 12.5,
-          "temp_max": 23.1,
-          "precipitation": 0.0,
-          "wind_speed": 19.3,
-          "weather_code": 3
+          "temp_max_c": 23.1,
+          "temp_min_c": 12.5,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 19.3
         },
         {
           "date": "2025-10-21",
-          "temp_min": 11.4,
-          "temp_max": 23.7,
-          "precipitation": 0.0,
-          "wind_speed": 17.4,
-          "weather_code": 3
+          "temp_max_c": 23.7,
+          "temp_min_c": 11.4,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.4
         },
         {
           "date": "2025-10-22",
-          "temp_min": 10.9,
-          "temp_max": 24.1,
-          "precipitation": 0.0,
-          "wind_speed": 15.2,
-          "weather_code": 2
+          "temp_max_c": 24.1,
+          "temp_min_c": 10.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 15.2
         },
         {
           "date": "2025-10-23",
-          "temp_min": 12.2,
-          "temp_max": 23.7,
-          "precipitation": 0.2,
-          "wind_speed": 13.8,
-          "weather_code": 3
+          "temp_max_c": 23.7,
+          "temp_min_c": 12.2,
+          "precipitation_mm": 0.2,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.8
         },
         {
           "date": "2025-10-24",
-          "temp_min": 13.2,
-          "temp_max": 22.2,
-          "precipitation": 0.4,
-          "wind_speed": 9.8,
-          "weather_code": 3
+          "temp_max_c": 22.2,
+          "temp_min_c": 13.2,
+          "precipitation_mm": 0.4,
+          "weather_code": 3,
+          "wind_speed_kmh": 9.8
         },
         {
           "date": "2025-10-25",
-          "temp_min": 13.6,
-          "temp_max": 22.2,
-          "precipitation": 4.5,
-          "wind_speed": 9.3,
-          "weather_code": 80
+          "temp_max_c": 22.2,
+          "temp_min_c": 13.6,
+          "precipitation_mm": 4.5,
+          "weather_code": 80,
+          "wind_speed_kmh": 9.3
         },
         {
           "date": "2025-10-26",
-          "temp_min": 14.1,
-          "temp_max": 21.9,
-          "precipitation": 9.3,
-          "wind_speed": 10.9,
-          "weather_code": 80
+          "temp_max_c": 21.9,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 9.3,
+          "weather_code": 80,
+          "wind_speed_kmh": 10.9
         },
         {
           "date": "2025-10-27",
-          "temp_min": 14.1,
-          "temp_max": 18.6,
-          "precipitation": 4.1,
-          "wind_speed": 13.1,
-          "weather_code": 53
+          "temp_max_c": 18.6,
+          "temp_min_c": 14.1,
+          "precipitation_mm": 4.1,
+          "weather_code": 53,
+          "wind_speed_kmh": 13.1
         },
         {
           "date": "2025-10-28",
-          "temp_min": 13.0,
-          "temp_max": 18.5,
-          "precipitation": 2.6,
-          "wind_speed": 12.4,
-          "weather_code": 51
+          "temp_max_c": 18.5,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 2.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 12.4
         },
         {
           "date": "2025-10-29",
-          "temp_min": 13.0,
-          "temp_max": 18.7,
-          "precipitation": 0.2,
-          "wind_speed": 14.9,
-          "weather_code": 51
+          "temp_max_c": 18.7,
+          "temp_min_c": 13.0,
+          "precipitation_mm": 0.2,
+          "weather_code": 51,
+          "wind_speed_kmh": 14.9
         },
         {
           "date": "2025-10-30",
-          "temp_min": 11.9,
-          "temp_max": 18.4,
-          "precipitation": 0.0,
-          "wind_speed": 13.7,
-          "weather_code": 3
+          "temp_max_c": 18.4,
+          "temp_min_c": 11.9,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.7
         },
         {
           "date": "2025-10-31",
-          "temp_min": 11.2,
-          "temp_max": 18.1,
-          "precipitation": 0.0,
-          "wind_speed": 14.0,
-          "weather_code": 3
+          "temp_max_c": 18.1,
+          "temp_min_c": 11.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.0
         },
         {
           "date": "2025-11-01",
-          "temp_min": 11.0,
-          "temp_max": 18.2,
-          "precipitation": 0.0,
-          "wind_speed": 14.4,
-          "weather_code": 3
+          "temp_max_c": 18.2,
+          "temp_min_c": 11.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.4
         }
       ]
     },
     {
       "location": "Goba",
-      "timestamp": "2025-10-19T08:41:28.564295",
-      "current": {},
+      "coordinates": {
+        "lat": 7.0,
+        "lon": 40.125
+      },
+      "current_uv_index": 9.3,
       "forecast": [
         {
           "date": "2025-10-19",
-          "temp_min": 9.7,
-          "temp_max": 14.7,
-          "precipitation": 0.5,
-          "wind_speed": 13.0,
-          "weather_code": 61
+          "temp_max_c": 14.7,
+          "temp_min_c": 9.7,
+          "precipitation_mm": 0.5,
+          "weather_code": 61,
+          "wind_speed_kmh": 13.0
         },
         {
           "date": "2025-10-20",
-          "temp_min": 8.7,
-          "temp_max": 16.7,
-          "precipitation": 4.9,
-          "wind_speed": 14.1,
-          "weather_code": 95
+          "temp_max_c": 16.7,
+          "temp_min_c": 8.7,
+          "precipitation_mm": 4.9,
+          "weather_code": 95,
+          "wind_speed_kmh": 14.1
         },
         {
           "date": "2025-10-21",
-          "temp_min": 9.9,
-          "temp_max": 13.9,
-          "precipitation": 1.7,
-          "wind_speed": 16.1,
-          "weather_code": 80
+          "temp_max_c": 13.9,
+          "temp_min_c": 9.9,
+          "precipitation_mm": 1.7,
+          "weather_code": 80,
+          "wind_speed_kmh": 16.1
         },
         {
           "date": "2025-10-22",
-          "temp_min": 9.2,
-          "temp_max": 16.1,
-          "precipitation": 0.0,
-          "wind_speed": 17.5,
-          "weather_code": 3
+          "temp_max_c": 16.1,
+          "temp_min_c": 9.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 17.5
         },
         {
           "date": "2025-10-23",
-          "temp_min": 8.0,
-          "temp_max": 15.9,
-          "precipitation": 0.0,
-          "wind_speed": 18.0,
-          "weather_code": 3
+          "temp_max_c": 15.9,
+          "temp_min_c": 8.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 18.0
         },
         {
           "date": "2025-10-24",
-          "temp_min": 7.2,
-          "temp_max": 16.3,
-          "precipitation": 0.0,
-          "wind_speed": 15.9,
-          "weather_code": 3
+          "temp_max_c": 16.3,
+          "temp_min_c": 7.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 15.9
         },
         {
           "date": "2025-10-25",
-          "temp_min": 7.2,
-          "temp_max": 16.8,
-          "precipitation": 0.0,
-          "wind_speed": 14.0,
-          "weather_code": 2
+          "temp_max_c": 16.8,
+          "temp_min_c": 7.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 2,
+          "wind_speed_kmh": 14.0
         },
         {
           "date": "2025-10-26",
-          "temp_min": 8.1,
-          "temp_max": 16.1,
-          "precipitation": 0.0,
-          "wind_speed": 12.6,
-          "weather_code": 3
+          "temp_max_c": 16.1,
+          "temp_min_c": 8.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.6
         },
         {
           "date": "2025-10-27",
-          "temp_min": 8.3,
-          "temp_max": 18.1,
-          "precipitation": 0.0,
-          "wind_speed": 13.3,
-          "weather_code": 3
+          "temp_max_c": 18.1,
+          "temp_min_c": 8.3,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 13.3
         },
         {
           "date": "2025-10-28",
-          "temp_min": 9.2,
-          "temp_max": 17.5,
-          "precipitation": 0.0,
-          "wind_speed": 12.3,
-          "weather_code": 3
+          "temp_max_c": 17.5,
+          "temp_min_c": 9.2,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 12.3
         },
         {
           "date": "2025-10-29",
-          "temp_min": 11.6,
-          "temp_max": 17.0,
-          "precipitation": 0.6,
-          "wind_speed": 13.0,
-          "weather_code": 51
+          "temp_max_c": 17.0,
+          "temp_min_c": 11.6,
+          "precipitation_mm": 0.6,
+          "weather_code": 51,
+          "wind_speed_kmh": 13.0
         },
         {
           "date": "2025-10-30",
-          "temp_min": 7.1,
-          "temp_max": 18.6,
-          "precipitation": 0.0,
-          "wind_speed": 16.3,
-          "weather_code": 3
+          "temp_max_c": 18.6,
+          "temp_min_c": 7.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.3
         },
         {
           "date": "2025-10-31",
-          "temp_min": 7.1,
-          "temp_max": 17.1,
-          "precipitation": 0.0,
-          "wind_speed": 14.1,
-          "weather_code": 3
+          "temp_max_c": 17.1,
+          "temp_min_c": 7.1,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 14.1
         },
         {
           "date": "2025-11-01",
-          "temp_min": 7.0,
-          "temp_max": 18.1,
-          "precipitation": 0.0,
-          "wind_speed": 16.4,
-          "weather_code": 3
+          "temp_max_c": 18.1,
+          "temp_min_c": 7.0,
+          "precipitation_mm": 0.0,
+          "weather_code": 3,
+          "wind_speed_kmh": 16.4
         }
       ]
     }
