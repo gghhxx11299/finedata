@@ -19,7 +19,6 @@ HF_TOKEN = os.getenv("HF_API_KEY")
 if not HF_TOKEN:
     logger.warning("HF_API_KEY not set — NLLB translation will be disabled.")
 
-# Initialize Hugging Face client (lazy init; will error on use if token missing)
 client = None
 if HF_TOKEN:
     try:
@@ -138,19 +137,18 @@ def translate_text(text: str, target_lang: str) -> str:
         return text
 
 # ======================
-# GROQ AI FUNCTION
+# GROQ AI FUNCTION — USING qwen/qwen3-32b
 # ======================
 
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
-    # ✅ Use a valid, publicly available Groq model as of Oct 2025
-    model_name = "qwen/qwen3-32b"  # confirmed working model
+    model_name = "qwen/qwen3-32b"  # ✅ Confirmed replacement per Groq deprecation notice (July 30, 2025)
 
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
 
     try:
-        # ✅ FIXED: Removed trailing spaces in URL
+        # ✅ FIXED: No trailing whitespace in URL
         url = "https://api.groq.com/openai/v1/chat/completions"
         response = requests.post(
             url,
@@ -187,8 +185,12 @@ def ask_groq_ai(question: str) -> str:
                 logger.warning(f"Groq response missing choices: {data}")
                 return "I received your question but had trouble generating a response."
         else:
-            error_detail = response.json().get("error", {}).get("message", response.text)
-            logger.error(f"Groq error {response.status_code}: {error_detail}")
+            # Safely extract error message
+            try:
+                error_msg = response.json().get("error", {}).get("message", response.text)
+            except:
+                error_msg = response.text
+            logger.error(f"Groq error {response.status_code}: {error_msg}")
             return "I'm having trouble thinking right now. Try again?"
             
     except Exception as e:
