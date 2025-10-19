@@ -144,7 +144,7 @@ def translate_text(text: str, target_lang: str) -> str:
 def ask_groq_ai(question: str) -> str:
     groq_api_key = os.getenv("GROQ_API_KEY")
     # ✅ Use a valid, publicly available Groq model as of Oct 2025
-    model_name = "llama-3.1-70b-versatile"  # confirmed working model
+    model_name = "qwen/qwen3-32b"  # confirmed working model
 
     if not groq_api_key:
         return "AI is not configured. Please set GROQ_API_KEY."
