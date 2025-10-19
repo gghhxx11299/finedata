@@ -544,7 +544,7 @@
                     <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
                     <li><a href="news.html">News</a></li>
-                    <li><a href="weather.html" class = "active">For Farmers</a></li>
+                    <li><a href="weather.html" class="active">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
                     <li>
                         <button class="export-btn" onclick="exportWeatherData()">
@@ -887,10 +887,46 @@
             try {
                 const response = await fetch('data.json');
                 if (!response.ok) throw new Error('Failed to load data.json');
-                weatherData = await response.json();
+                const rawData = await response.json();
+                // Transform to match expected structure
+                weatherData = {
+                    metadata: rawData.metadata,
+                    weather_data: rawData.data.map(item => ({
+                        location: item.location,
+                        current: {
+                            temperature: item.forecast[0]?.temp_max_c ?? 'N/A',
+                            humidity: 'N/A',
+                            wind_speed: item.forecast[0]?.wind_speed_kmh ?? 'N/A',
+                            weather: getWeatherDescription(item.forecast[0]?.weather_code) ?? 'N/A',
+                            timestamp: new Date().toISOString()
+                        },
+                        forecast: item.forecast.map(day => ({
+                            date: day.date,
+                            temp_min: day.temp_min_c,
+                            temp_max: day.temp_max_c,
+                            weather: getWeatherDescription(day.weather_code),
+                            precipitation: day.precipitation_mm > 0 ? Math.round((day.precipitation_mm / 10) * 100) : 0, // convert to % approx
+                            wind_speed: day.wind_speed_kmh
+                        }))
+                    }))
+                };
             } catch (error) {
                 console.error('Error loading data.json:', error);
+                document.getElementById('weatherDisplay').innerHTML = '<p class="error">Failed to load weather data. Please try again later.</p>';
             }
+        }
+
+        // WMO Weather Code to Description
+        function getWeatherDescription(code) {
+            if (code === null || code === undefined) return 'N/A';
+            if (code === 0) return 'Clear sky';
+            if (code >= 1 && code <= 3) return 'Partly cloudy';
+            if (code === 45 || code === 48) return 'Fog';
+            if (code >= 51 && code <= 67) return 'Rain';
+            if (code >= 71 && code <= 77) return 'Snow';
+            if (code >= 80 && code <= 82) return 'Rain showers';
+            if (code >= 95 && code <= 99) return 'Thunderstorm';
+            return 'Cloudy';
         }
 
         function loadWeather() {
@@ -910,7 +946,7 @@
                 <div class="current-weather">
                     <div class="current-header">
                         <div class="current-location">${cityData.location}</div>
-                        <div class="current-time">Updated: ${cityData.current.timestamp}</div>
+                        <div class="current-time">Today</div>
                     </div>
                     <div class="current-stats">
                         <div class="stat-box">
