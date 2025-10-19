@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Chat - FineData Ethiopia</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-  <link href="  https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== GLOBAL STYLES (MINOR TWEAKS) ===== */
+    /* ===== GLOBAL STYLES ===== */
     :root {
       --bg-color: #0D1117;
       --card-bg: #161B22;
@@ -40,7 +40,7 @@
       padding: 0 15px;
     }
 
-    /* ===== HEADER (CLEANER) ===== */
+    /* ===== HEADER ===== */
     header {
       background-color: var(--card-bg);
       box-shadow: var(--shadow);
@@ -100,7 +100,6 @@
       background: var(--primary-color);
       border-radius: 2px;
     }
-    /* The .btn class is intentionally removed from the Donate link */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -133,7 +132,6 @@
       position: relative;
     }
 
-    /* Ethiopian flag accent — subtle but proud */
     .chat-container::before {
       content: '';
       position: absolute;
@@ -530,7 +528,7 @@
     <div class="container">
       <nav>
         <div class="logo">
-          <img src="  https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo">
+          <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo">
           <h1>FineData</h1>
         </div>
         <ul class="nav-links">
@@ -540,7 +538,6 @@
           <li><a href="news.html">News</a></li>
           <li><a href="weather.html">For Farmers</a></li>
           <li><a href="insights.html">Get Forecasts</a></li>
-          <!-- Removed the .btn class to match other link styles -->
           <li><a href="donate.html">Donate</a></li>
         </ul>
         <button class="mobile-menu-btn">
@@ -668,7 +665,8 @@
   </footer>
 
   <script>
-    const BACKEND_URL = "  https://finedata.onrender.com  ";
+    // ✅ FIXED: Removed extra whitespace
+    const BACKEND_URL = "https://finedata.onrender.com";
     const chatMessages = document.getElementById('chatMessages');
     const userInput = document.getElementById('userInput');
     const typingIndicator = document.getElementById('typingIndicator');
@@ -683,11 +681,10 @@
       });
     }
 
-    // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
     });
 
     userInput.addEventListener('input', function() {
@@ -812,6 +809,7 @@
       } catch (err) {
         typingIndicator.style.display = 'none';
         addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
+        console.error("Fetch error:", err);
       } finally {
         sendButton.disabled = false;
         sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
