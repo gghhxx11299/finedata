@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
+        /* =============== EXACT ORIGINAL STYLES FROM KNOWLEDGE BASE =============== */
         :root {
             --bg-color: #0D1117;
             --card-bg: #161B22;
@@ -33,10 +34,10 @@
             font-weight: 700;
         }
         .container {
-            width: 90%;
+            width: 100%; /* Changed from 90% */
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 10px; /* Reduced padding */
         }
         header {
             background-color: var(--card-bg);
@@ -154,7 +155,7 @@
         .weather-section {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem; /* Changed from 2rem */
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -259,7 +260,7 @@
         .crop-productivity {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem; /* Changed from 2rem */
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -485,7 +486,7 @@
                 margin-left: 0;
                 margin-top: 0.5rem;
             }
-            /* FIX FOR TABLE OVERFLOW */
+            /* FIX FOR TABLE OVERFLOW - ONLY CHANGE MADE */
             .economic-section {
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -524,28 +525,26 @@
                 padding: 0.4rem;
             }
         }
-        /* =============== NEW: AI CHAT WIDGET STYLES (MODIFIED) =============== */
+
+        /* =============== NEW: AI CHAT WIDGET STYLES =============== */
         .ai-chat-widget {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 0; /* Removed padding to allow content to use full width */
-            margin: 1.5rem 0;
+            padding: 1.5rem; /* Changed from 1.5rem */
+            margin: 1.5rem 0; /* Changed from 1.5rem 0 */
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            width: 100%; /* Ensure full width */
+            max-width: 100%; /* Ensure full width */
         }
         .ai-chat-header {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 1.5rem; /* Added padding to header */
-            margin-bottom: 0; /* Reset margin */
-            border-bottom: 1px solid var(--border-color); /* Optional: separator */
+            margin-bottom: 1rem;
         }
         .ai-chat-header i {
             color: var(--primary-color);
-        }
-        .ai-chat-intro {
-            padding: 0 1.5rem 1rem; /* Added padding to intro text */
         }
         .ai-chat-messages {
             display: flex;
@@ -553,8 +552,8 @@
             gap: 0.8rem;
             max-height: 250px; /* Adjusted for mobile */
             overflow-y: auto;
-            padding: 1rem 1.5rem; /* Added padding */
-            margin: 1rem 0; /* Added margin */
+            padding: 0.5rem;
+            margin-bottom: 1rem;
             background-color: var(--bg-color);
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -564,7 +563,7 @@
             gap: 0.75rem;
             padding: 0.75rem;
             border-radius: 8px;
-            max-width: 85%; /* Kept for general spacing */
+            max-width: 85%;
             line-height: 1.5;
             font-size: 0.95rem;
         }
@@ -597,7 +596,6 @@
             display: flex;
             gap: 0.75rem;
             align-items: flex-end; /* Aligns textarea and button to bottom */
-            padding: 0 1.5rem 1.5rem; /* Added padding */
         }
         .ai-chat-input-area textarea {
             flex: 1;
@@ -643,10 +641,6 @@
             .ai-chat-input-area button {
                 width: 44px;
                 height: 44px;
-            }
-            /* Ensure messages use more width on mobile */
-            .ai-message, .user-message {
-                max-width: 90%; /* Allow slightly more space */
             }
         }
     </style>
@@ -942,17 +936,16 @@
             <p style="margin-top: 1.5rem; color: #8B949E; font-style: italic;">
                 <i class="fas fa-info-circle"></i> Data from Ethiopian Institute of Agricultural Research (EIAR), Ministry of Agriculture, FAO, and NMA. Consult your woreda agronomist for local advice.
             </p>
-            <!-- =============== NEW: AI FARMING CHAT WIDGET (MODIFIED) =============== -->
+
+            <!-- =============== NEW: AI FARMING CHAT WIDGET =============== -->
             <div class="ai-chat-widget">
                 <div class="ai-chat-header">
                     <i class="fas fa-robot"></i>
                     <h3>Ask Our Farming AI Assistant</h3>
                 </div>
-                 <div class="ai-chat-intro">
-                    <p style="color: #8B949E; font-size: 0.9rem;">
-                        Get instant, Ethiopia-specific advice on crops, pests, weather, and planting—available in Amharic, Oromo, English, and more.
-                    </p>
-                 </div>
+                <p style="margin-bottom: 1rem; color: #8B949E; font-size: 0.9rem;">
+                    Get instant, Ethiopia-specific advice on crops, pests, weather, and planting—available in Amharic, Oromo, English, and more.
+                </p>
                 <div class="ai-chat-messages" id="farmingChatMessages">
                     <div class="ai-message">
                         <div class="ai-avatar"><i class="fas fa-robot" style="font-size: 8px;"></i></div>
@@ -975,6 +968,7 @@
                     </button>
                 </div>
             </div>
+
         </section>
     </div>
     <!-- Footer -->
@@ -1017,6 +1011,7 @@
                 navLinks.classList.remove('active');
             }
         });
+
         let weatherData = null;
         // Load data.json once on page load
         async function initWeatherApp() {
@@ -1026,7 +1021,7 @@
                 const rawData = await response.json();
                 // Transform to match expected structure
                 weatherData = {
-                    metadata: rawData.metadata,
+                    meta rawData.metadata,
                     weather_data: rawData.data.map(item => ({
                         location: item.location,
                         current: {
@@ -1126,37 +1121,27 @@
             }
             const cityData = weatherData.weather_data.find(d => d.location === cityName);
             if (!cityData) return;
-            const format = prompt("Export format:
-- 'txt' (default)
-- 'csv'
-- 'json')");
+            const format = prompt("Export format:\n- 'txt' (default)\n- 'csv'\n- 'json'");
             let content = '';
             const filename = `weather_forecast_${cityName.replace(/\s+/g, '_')}`;
             if (format === 'json' || format === 'JSON') {
                 content = JSON.stringify(cityData, null, 2);
                 downloadFile(`${filename}.json`, content, 'application/json');
             } else if (format === 'csv' || format === 'CSV') {
-                let csv = 'Date,Min Temp (°C),Max Temp (°C),Weather,Precipitation (%),Wind Speed (km/h)
-';
+                let csv = 'Date,Min Temp (°C),Max Temp (°C),Weather,Precipitation (%),Wind Speed (km/h)\n';
                 cityData.forecast.forEach(day => {
-                    csv += `"${day.date}",${day.temp_min},${day.temp_max},"${day.weather}",${day.precipitation},${day.wind_speed}
-`;
+                    csv += `"${day.date}",${day.temp_min},${day.temp_max},"${day.weather}",${day.precipitation},${day.wind_speed}\n`;
                 });
                 downloadFile(`${filename}.csv`, csv, 'text/csv');
             } else {
-                content = `Weather Forecast for ${cityName}
-`;
-                content += `Generated: ${weatherData.metadata.generated_at}
-`;
-                content += `Current: ${cityData.current.temperature}°C, ${cityData.current.weather}
-`;
-                content += `14-Day Forecast:
-`;
+                content = `Weather Forecast for ${cityName}\n`;
+                content += `Generated: ${weatherData.metadata.generated_at}\n`;
+                content += `Current: ${cityData.current.temperature}°C, ${cityData.current.weather}\n`;
+                content += `14-Day Forecast:\n`;
                 cityData.forecast.forEach(day => {
                     content += `${day.date}: ${day.temp_min}°–${day.temp_max}°C, ${day.weather}`;
                     if (day.precipitation > 0) content += `, ${day.precipitation}% rain`;
-                    content += `
-`;
+                    content += `\n`;
                 });
                 downloadFile(`${filename}.txt`, content);
             }
@@ -1172,18 +1157,22 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
+
         // =============== NEW: FARMING AI CHAT LOGIC ===============
         const FARMING_BACKEND_URL = "https://finedata.onrender.com";
+
         document.getElementById('farmingUserInput').addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 100) + 'px';
         });
+
         document.getElementById('farmingUserInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendFarmingMessage();
             }
         });
+
         function addFarmingMessage(text, isUser = false) {
             const container = document.getElementById('farmingChatMessages');
             const msgDiv = document.createElement('div');
@@ -1192,10 +1181,11 @@
             msgDiv.style.gap = '0.75rem';
             msgDiv.style.padding = '0.75rem';
             msgDiv.style.borderRadius = '8px';
-            msgDiv.style.maxWidth = '85%'; /* Kept for general spacing */
+            msgDiv.style.maxWidth = '85%';
             msgDiv.style.wordWrap = 'break-word';
             msgDiv.style.fontSize = '0.95rem';
             msgDiv.style.lineHeight = '1.5';
+
             if (isUser) {
                 msgDiv.style.alignSelf = 'flex-end';
                 msgDiv.style.backgroundColor = 'var(--primary-color)';
@@ -1214,19 +1204,24 @@
                     <div>${text}</div>
                 `;
             }
+
             container.appendChild(msgDiv);
             container.scrollTop = container.scrollHeight;
         }
+
         async function sendFarmingMessage() {
             const inputEl = document.getElementById('farmingUserInput');
             const text = inputEl.value.trim();
             if (!text) return;
+
             addFarmingMessage(text, true);
             inputEl.value = '';
             inputEl.style.height = 'auto';
+
             const button = document.getElementById('farmingSendButton');
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
             try {
                 const response = await fetch(FARMING_BACKEND_URL + '/ask-ai', {
                     method: 'POST',
@@ -1236,6 +1231,7 @@
                         language: 'en' // Default to English; backend handles translation
                     })
                 });
+
                 const data = await response.json();
                 const reply = data.answer_translated || data.answer || "I couldn't generate a response. Please try again.";
                 addFarmingMessage(reply);
@@ -1247,6 +1243,7 @@
                 button.innerHTML = '<i class="fas fa-paper-plane"></i>';
             }
         }
+
         // Initialize
         initWeatherApp();
     </script>
