@@ -191,8 +191,20 @@ def ask_groq_ai(question: str) -> str:
             data = response.json()
             if "choices" in data and len(data["choices"]) > 0:
                 raw_reply = data["choices"][0]["message"]["content"].strip()
-                cleaned = re.sub(r'(\<think\>.*?\<\/think\>)', '', raw_reply, flags=re.DOTALL | re.IGNORECASE)
-                return cleaned.strip()
+                
+                # FIXED: Better removal of thinking/reasoning content
+                cleaned = re.sub(r'<think>.*?</think>', '', raw_reply, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'<reasoning>.*?</reasoning>', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'<analysis>.*?</analysis>', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'Let me think.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'First,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'Okay,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'Hmm,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'Well,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+                cleaned = re.sub(r'\s+', ' ', cleaned)
+                cleaned = cleaned.strip()
+                
+                return cleaned
             else:
                 logger.warning(f"Groq response missing choices: {data}")
                 return "I received your question but had trouble generating a response."
@@ -228,17 +240,28 @@ def ask_claude_farmer(question: str) -> str:
             temperature=0.2,
             system=(
                 "You are the FineData Ethiopia Farming Advisor. Provide practical, safe, and locally relevant advice based ONLY on Ethiopian agricultural guidelines from EIAR, Ministry of Agriculture, FAO Ethiopia, and NMA.\n"
-                "- Reference Ethiopia’s three seasons: Kiremt (Jun–Sep), Belg (Feb–May), Bega (Oct–Jan)\n"
+                "- Reference Ethiopia's three seasons: Kiremt (Jun–Sep), Belg (Feb–May), Bega (Oct–Jan)\n"
                 "- Mention regional risks: e.g., 'Fall armyworm in Benishangul', 'Frost in Amhara highlands'\n"
                 "- Recommend ONLY inputs available in Ethiopia (e.g., DAP, urea, neem oil—not banned or imported chemicals)\n"
-                "- If the user mentions a region, tailor advice to that woreda’s typical conditions\n"
+                "- If the user mentions a region, tailor advice to that woreda's typical conditions\n"
                 "- NEVER hallucinate chemical names, yields, or policy details\n"
                 "- If unsure, say: 'Consult your woreda agronomist.'\n"
                 "- Keep answers concise (1–3 sentences)."
             ),
             messages=[{"role": "user", "content": question}]
         )
-        return message.content[0].text.strip()
+        raw_response = message.content[0].text.strip()
+        
+        # FIXED: Also clean Claude responses
+        cleaned = re.sub(r'<think>.*?</think>', '', raw_response, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r'<reasoning>.*?</reasoning>', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r'Let me think.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r'First,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r'Okay,.*?\.', '', cleaned, flags=re.DOTALL | re.IGNORECASE)
+        cleaned = re.sub(r'\s+', ' ', cleaned)
+        cleaned = cleaned.strip()
+        
+        return cleaned
     except Exception as e:
         logger.exception("Anthropic farming AI failed")
         return "Farming advisor is temporarily unavailable. Please try again."
