@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        /* =============== EXACT ORIGINAL STYLES FROM KNOWLEDGE BASE =============== */
+        /* =============== MOBILE-FIRST, FULL-WIDTH STYLES =============== */
         :root {
             --bg-color: #0D1117;
             --card-bg: #161B22;
@@ -34,10 +34,10 @@
             font-weight: 700;
         }
         .container {
-            width: 90%;
+            width: 100%; /* FULL WIDTH FOR MOBILE */
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 12px; /* Reduced side padding */
         }
         header {
             background-color: var(--card-bg);
@@ -155,7 +155,7 @@
         .weather-section {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.8rem 16px; /* FULL-WIDTH PADDING */
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -260,7 +260,7 @@
         .crop-productivity {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.8rem 16px; /* FULL-WIDTH PADDING */
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -339,8 +339,11 @@
             margin: 1.5rem 0;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .data-table {
+            min-width: 600px;
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
@@ -486,15 +489,6 @@
                 margin-left: 0;
                 margin-top: 0.5rem;
             }
-            /* FIX FOR TABLE OVERFLOW - ONLY CHANGE MADE */
-            .economic-section {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            .data-table {
-                min-width: 600px;
-                width: auto;
-            }
         }
         @media (max-width: 480px) {
             .current-stats {
@@ -512,11 +506,6 @@
             .nav-links li {
                 margin: 0.25rem 1rem;
             }
-            /* FIX FOR TABLE OVERFLOW ON SMALLER SCREENS */
-            .economic-section {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
             .data-table {
                 min-width: 550px;
                 font-size: 0.75rem;
@@ -526,14 +515,17 @@
             }
         }
 
-        /* =============== AI CHAT WIDGET STYLES =============== */
+        /* =============== AI CHAT WIDGET - FULL WIDTH =============== */
         .ai-chat-widget {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
+            padding: 1.8rem 16px;
+            margin: 2rem -16px; /* Negative margin to break out of container */
+            width: calc(100% + 32px);
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
         }
         .ai-chat-header {
             display: flex;
@@ -921,36 +913,38 @@
             <p style="margin-top: 1.5rem; color: #8B949E; font-style: italic;">
                 <i class="fas fa-info-circle"></i> Data from Ethiopian Institute of Agricultural Research (EIAR), Ministry of Agriculture, FAO, and NMA. Consult your woreda agronomist for local advice.
             </p>
-
-            <!-- =============== AI FARMING CHAT WIDGET =============== -->
-            <div class="ai-chat-widget">
-                <div class="ai-chat-header">
-                    <i class="fas fa-robot"></i>
-                    <h3>Ask Our Farming AI Assistant</h3>
-                </div>
-                <p style="margin-bottom: 1.5rem; color: #8B949E;">
-                    Get instant, Ethiopia-specific advice on crops, pests, weather, and planting—available in Amharic, Oromo, English, and more.
-                </p>
-                <div class="ai-chat-messages" id="farmingChatMessages">
-                    <div class="ai-message">
-                        <div class="ai-avatar"><i class="fas fa-robot"></i></div>
-                        <div>Hello! I’m your Ethiopian farming AI. Ask me anything about crops, weather, or pests.</div>
-                    </div>
-                </div>
-                <div class="ai-chat-input-area">
-                    <textarea
-                        id="farmingUserInput"
-                        placeholder="e.g., How to treat fall armyworm in maize?"
-                        rows="1"
-                    ></textarea>
-                    <button id="farmingSendButton" onclick="sendFarmingMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-
         </section>
     </div>
+
+    <!-- =============== AI CHAT WIDGET - FULL WIDTH =============== -->
+    <div class="ai-chat-widget">
+        <div class="container">
+            <div class="ai-chat-header">
+                <i class="fas fa-robot"></i>
+                <h3>Ask Our Farming AI Assistant</h3>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: #8B949E;">
+                Get instant, Ethiopia-specific advice on crops, pests, weather, and planting—available in Amharic, Oromo, English, and more.
+            </p>
+            <div class="ai-chat-messages" id="farmingChatMessages">
+                <div class="ai-message">
+                    <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                    <div>Hello! I’m your Ethiopian farming AI. Ask me anything about crops, weather, or pests.</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-area">
+                <textarea
+                    id="farmingUserInput"
+                    placeholder="e.g., How to treat fall armyworm in maize?"
+                    rows="1"
+                ></textarea>
+                <button id="farmingSendButton" onclick="sendFarmingMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -980,7 +974,8 @@
         </div>
     </footer>
     <script>
-        // === MOBILE MENU TOGGLE ===
+        // === ORIGINAL, WORKING JAVASCRIPT ===
+        // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         mobileMenuBtn.addEventListener('click', () => {
@@ -991,9 +986,8 @@
                 navLinks.classList.remove('active');
             }
         });
-
-        // === WEATHER LOGIC ===
         let weatherData = null;
+        // Load data.json once on page load
         async function initWeatherApp() {
             try {
                 const response = await fetch('data.json');
