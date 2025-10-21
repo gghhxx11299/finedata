@@ -4,6 +4,9 @@ Overview
 --------
 FineData is an open-source, full-stack platform designed to centralize and deliver critical information about Ethiopia. It combines AI-powered insights, community contributions, multilingual support, and practical tools to empower farmers, researchers, planners, and citizens with actionable knowledge.
 
+> **Problem**: Ethiopian farmers, students, and policymakers struggle with fragmented, paywalled, or inaccessible national data.  
+> **Solution**: FineData unifies weather, economics, agriculture, and demographics into one free, AI-powered, multilingual hub.  
+> **Live Demo**: [finedata.et](https://finedata.et) 
 Features
 --------
 - Data Aggregation:
