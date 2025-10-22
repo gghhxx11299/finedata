@@ -28,7 +28,7 @@ All publicly available data on FineData is provided for open access under
 the terms of the FineData Open License. See LICENSE file for full details.
 
 # Special Access:
-For API integrations or automated dataset collection, contact: gabrielmulugeta1@gamil.com
+For automated dataset collection, contact: gabrielmulugeta1@gamil.com
 
 # Credits:
 Developed and maintained by FineData Ethiopia (© 2025)
