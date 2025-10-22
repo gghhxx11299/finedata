@@ -6,7 +6,6 @@
 
 # Ownership:
 Site: https://finedata.et
-Organization: FineData Ethiopia
 Founder: Geabral Mulugeta
 Contact: gabrielmulugeta1@gmail.com
 Repository: https://github.com/gghhxx11299/finedata
