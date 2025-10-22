@@ -16,8 +16,9 @@ Features
     - Weather: 14-day forecasts for nearly all cities
 
 - AI Assistance:
-    - Deepseek AI integration for context-aware queries
+    - Groq AI integration for context-aware queries
     - Interactive data analysis and insight generation
+    - poe's personal bot for interaction and user query.
 
 - Community Contributions:
     - Personal insights submission for farmers, researchers, and citizens
