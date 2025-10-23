@@ -34,10 +34,10 @@
             font-weight: 700;
         }
         .container {
-            width: 100%; /* FULL WIDTH FOR MOBILE */
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 12px; /* Reduced side padding */
+            padding: 0 12px;
         }
         header {
             background-color: var(--card-bg);
@@ -155,7 +155,7 @@
         .weather-section {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 1.8rem 16px; /* FULL-WIDTH PADDING */
+            padding: 1.8rem 16px;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -260,7 +260,7 @@
         .crop-productivity {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 1.8rem 16px; /* FULL-WIDTH PADDING */
+            padding: 1.8rem 16px;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -514,12 +514,11 @@
                 padding: 0.4rem;
             }
         }
-
-        /* =============== AI CHAT WIDGET - FULL WIDTH =============== */
+        /* AI CHAT WIDGET */
         .ai-chat-widget {
             background-color: var(--card-bg);
             padding: 1.8rem 16px;
-            margin: 2rem -16px; /* Negative margin to break out of container */
+            margin: 2rem -16px;
             width: calc(100% + 32px);
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
@@ -651,6 +650,7 @@
             </nav>
         </div>
     </header>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -661,42 +661,22 @@
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Weather Forecast Section -->
         <section class="weather-section">
             <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Select Your City</h3>
             <div class="city-selector">
                 <select id="citySelect" onchange="loadWeather()">
-                    <option value="">Select a city</option>
-                    <option value="Addis Ababa">Addis Ababa</option>
-                    <option value="Mekelle">Mekelle</option>
-                    <option value="Bahir Dar">Bahir Dar</option>
-                    <option value="Hawassa">Hawassa</option>
-                    <option value="Dire Dawa">Dire Dawa</option>
-                    <option value="Jijiga">Jijiga</option>
-                    <option value="Gambela">Gambela</option>
-                    <option value="Asosa">Asosa</option>
-                    <option value="Semera">Semera</option>
-                    <option value="Jimma">Jimma</option>
-                    <option value="Nekemte">Nekemte</option>
-                    <option value="Bale Robe">Bale Robe</option>
-                    <option value="Shashemene">Shashemene</option>
-                    <option value="Dilla">Dilla</option>
-                    <option value="Bonga">Bonga</option>
-                    <option value="Arba Minch">Arba Minch</option>
-                    <option value="Hosaena">Hosaena</option>
-                    <option value="Debre Markos">Debre Markos</option>
-                    <option value="Debre Birhan">Debre Birhan</option>
-                    <option value="Metu">Metu</option>
-                    <option value="Adigrat">Adigrat</option>
-                    <option value="Goba">Goba</option>
+                    <option value="">Loading cities...</option>
                 </select>
             </div>
             <div id="weatherDisplay">
-                <p>Select a city to view the 14-day weather forecast.</p>
+                <p>Loading weather data...</p>
             </div>
         </section>
-        <!-- Enhanced Crop Productivity for Farmers -->
+
+        <!-- Crop Productivity Section (unchanged) -->
         <section class="crop-productivity">
             <h3 class="section-title"><i class="fas fa-seedling"></i> Ethiopian Crop Productivity, Seasons & Harvest Intelligence</h3>
             <div class="data-highlight">
@@ -853,6 +833,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Regional Harvest Calendar -->
             <div class="economic-section">
                 <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-map-marked-alt"></i> Regional Harvest Calendar (2025–2026)</h4>
@@ -899,6 +880,7 @@
                     </tbody>
                 </table>
             </div>
+
             <!-- Farmer Advisory -->
             <div class="data-highlight">
                 <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;"><i class="fas fa-bullhorn"></i> Farmer Advisory: Maximize Your 2025–2026 Yield</h4>
@@ -916,7 +898,7 @@
         </section>
     </div>
 
-    <!-- =============== AI CHAT WIDGET - FULL WIDTH =============== -->
+    <!-- AI Chat Widget -->
     <div class="ai-chat-widget">
         <div class="container">
             <div class="ai-chat-header">
@@ -973,36 +955,37 @@
             </div>
         </div>
     </footer>
+
+    <!-- =============== UPDATED JAVASCRIPT =============== -->
     <script>
-        // === ORIGINAL, WORKING JAVASCRIPT ===
-        // Mobile menu toggle
+        // Mobile menu
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        mobileMenuBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
                 navLinks.classList.remove('active');
             }
         });
+
         let weatherData = null;
-        // Load data.json once on page load
+
+        // Load weather_data.json and populate dropdown
         async function initWeatherApp() {
             try {
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error('Failed to load data.json');
+                const response = await fetch('weather_data.json');
+                if (!response.ok) throw new Error('Failed to load weather_data.json');
                 const rawData = await response.json();
-                weatherData = {
-                    metadata: rawData.metadata,
-                    weather_data: rawData.data.map(item => ({
+
+                // Transform data for UI
+                const transformed = rawData.data.map(item => {
+                    const today = item.forecast[0] || {};
+                    return {
                         location: item.location,
                         current: {
-                            temperature: item.forecast[0]?.temp_max_c ?? 'N/A',
-                            humidity: 'N/A',
-                            wind_speed: item.forecast[0]?.wind_speed_kmh ?? 'N/A',
-                            weather: getWeatherDescription(item.forecast[0]?.weather_code) ?? 'N/A',
-                            timestamp: new Date().toISOString()
+                            temperature: today.temp_max_c ?? 'N/A',
+                            wind_speed: today.wind_speed_kmh ?? 'N/A',
+                            weather: getWeatherDescription(today.weather_code) ?? 'N/A'
                         },
                         forecast: item.forecast.map(day => ({
                             date: day.date,
@@ -1012,13 +995,33 @@
                             precipitation: day.precipitation_mm > 0 ? Math.round((day.precipitation_mm / 10) * 100) : 0,
                             wind_speed: day.wind_speed_kmh
                         }))
-                    }))
-                };
+                    };
+                });
+
+                weatherData = transformed;
+
+                // Populate dropdown
+                const select = document.getElementById('citySelect');
+                select.innerHTML = '<option value="">Select a city</option>';
+                transformed
+                    .map(d => d.location)
+                    .sort()
+                    .forEach(city => {
+                        const opt = document.createElement('option');
+                        opt.value = city;
+                        opt.textContent = city;
+                        select.appendChild(opt);
+                    });
+
+                document.getElementById('weatherDisplay').innerHTML = '<p>Select a city to view the 14-day weather forecast.</p>';
+
             } catch (error) {
-                console.error('Error loading data.json:', error);
-                document.getElementById('weatherDisplay').innerHTML = '<p class="error">Failed to load weather data. Please try again later.</p>';
+                console.error('Error:', error);
+                document.getElementById('weatherDisplay').innerHTML = '<p class="error">⚠️ Failed to load weather data. Ensure <code>weather_data.json</code> is in the same folder.</p>';
+                document.getElementById('citySelect').innerHTML = '<option value="">Error loading cities</option>';
             }
         }
+
         function getWeatherDescription(code) {
             if (code === null || code === undefined) return 'N/A';
             if (code === 0) return 'Clear sky';
@@ -1030,17 +1033,17 @@
             if (code >= 95 && code <= 99) return 'Thunderstorm';
             return 'Cloudy';
         }
+
         function loadWeather() {
             const cityName = document.getElementById('citySelect').value;
-            if (!cityName || !weatherData) {
-                document.getElementById('weatherDisplay').innerHTML = '<p>Select a city to view forecast.</p>';
-                return;
-            }
-            const cityData = weatherData.weather_data.find(d => d.location === cityName);
+            if (!cityName || !weatherData) return;
+
+            const cityData = weatherData.find(d => d.location === cityName);
             if (!cityData) {
-                document.getElementById('weatherDisplay').innerHTML = `<p>No weather data available for ${cityName}.</p>`;
+                document.getElementById('weatherDisplay').innerHTML = `<p>No data for ${cityName}.</p>`;
                 return;
             }
+
             let html = `
                 <div class="current-weather">
                     <div class="current-header">
@@ -1053,7 +1056,7 @@
                             <div class="stat-label">Temperature</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-value">${cityData.current.humidity}%</div>
+                            <div class="stat-value">—</div>
                             <div class="stat-label">Humidity</div>
                         </div>
                         <div class="stat-box">
@@ -1069,6 +1072,7 @@
                 <h4 style="color: var(--primary-color); margin: 1.5rem 0 1rem;">14-Day Forecast</h4>
                 <div class="forecast-grid">
             `;
+
             cityData.forecast.forEach(day => {
                 const date = new Date(day.date);
                 const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
@@ -1085,21 +1089,24 @@
             html += `</div>`;
             document.getElementById('weatherDisplay').innerHTML = html;
         }
+
         function exportWeatherData() {
             const cityName = document.getElementById('citySelect').value;
             if (!cityName || !weatherData) {
                 alert('Please select a city first.');
                 return;
             }
-            const cityData = weatherData.weather_data.find(d => d.location === cityName);
+            const cityData = weatherData.find(d => d.location === cityName);
             if (!cityData) return;
+
             const format = prompt("Export format:\n- 'txt' (default)\n- 'csv'\n- 'json'");
             let content = '';
             const filename = `weather_forecast_${cityName.replace(/\s+/g, '_')}`;
-            if (format === 'json' || format === 'JSON') {
+
+            if (format?.toLowerCase() === 'json') {
                 content = JSON.stringify(cityData, null, 2);
                 downloadFile(`${filename}.json`, content, 'application/json');
-            } else if (format === 'csv' || format === 'CSV') {
+            } else if (format?.toLowerCase() === 'csv') {
                 let csv = 'Date,Min Temp (°C),Max Temp (°C),Weather,Precipitation (%),Wind Speed (km/h)\n';
                 cityData.forecast.forEach(day => {
                     csv += `"${day.date}",${day.temp_min},${day.temp_max},"${day.weather}",${day.precipitation},${day.wind_speed}\n`;
@@ -1107,7 +1114,7 @@
                 downloadFile(`${filename}.csv`, csv, 'text/csv');
             } else {
                 content = `Weather Forecast for ${cityName}\n`;
-                content += `Generated: ${weatherData.metadata.generated_at}\n`;
+                content += `Generated: ${new Date().toISOString()}\n`;
                 content += `Current: ${cityData.current.temperature}°C, ${cityData.current.weather}\n`;
                 content += `14-Day Forecast:\n`;
                 cityData.forecast.forEach(day => {
@@ -1118,6 +1125,7 @@
                 downloadFile(`${filename}.txt`, content);
             }
         }
+
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -1130,21 +1138,18 @@
             URL.revokeObjectURL(url);
         }
 
-        // === AI CHAT LOGIC ===
+        // AI Chat (unchanged)
         const FARMING_BACKEND_URL = "https://finedata.onrender.com";
-
         document.getElementById('farmingUserInput').addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
-
         document.getElementById('farmingUserInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendFarmingMessage();
             }
         });
-
         function addFarmingMessage(text, isUser = false) {
             const container = document.getElementById('farmingChatMessages');
             const msgDiv = document.createElement('div');
@@ -1160,35 +1165,27 @@
             container.appendChild(msgDiv);
             container.scrollTop = container.scrollHeight;
         }
-
         async function sendFarmingMessage() {
             const inputEl = document.getElementById('farmingUserInput');
             const text = inputEl.value.trim();
             if (!text) return;
-
             addFarmingMessage(text, true);
             inputEl.value = '';
             inputEl.style.height = 'auto';
-
             const button = document.getElementById('farmingSendButton');
             button.disabled = true;
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
             try {
                 const response = await fetch(FARMING_BACKEND_URL + '/ask-ai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        question: text,
-                        language: 'en'
-                    })
+                    body: JSON.stringify({ question: text, language: 'en' })
                 });
-
                 const data = await response.json();
-                const reply = data.answer_translated || data.answer || "I couldn't generate a response. Please try again.";
+                const reply = data.answer_translated || data.answer || "I couldn't generate a response.";
                 addFarmingMessage(reply);
             } catch (err) {
-                addFarmingMessage("Sorry, I'm having trouble connecting. Please check your internet and try again.");
+                addFarmingMessage("Sorry, I'm having trouble connecting.");
                 console.error("Farming AI error:", err);
             } finally {
                 button.disabled = false;
