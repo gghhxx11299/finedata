@@ -667,6 +667,7 @@
         <section class="weather-section">
             <h3 class="section-title"><i class="fas fa-cloud-sun"></i> Select Your City</h3>
             <div class="city-selector">
+                <!-- Dynamically populated by JS -->
                 <select id="citySelect" onchange="loadWeather()">
                     <option value="">Loading cities...</option>
                 </select>
@@ -833,7 +834,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Regional Harvest Calendar -->
             <div class="economic-section">
                 <h4 style="color: var(--primary-color); margin-bottom: 1rem;"><i class="fas fa-map-marked-alt"></i> Regional Harvest Calendar (2025–2026)</h4>
@@ -880,7 +880,6 @@
                     </tbody>
                 </table>
             </div>
-
             <!-- Farmer Advisory -->
             <div class="data-highlight">
                 <h4 style="color: var(--primary-color); margin-bottom: 0.75rem;"><i class="fas fa-bullhorn"></i> Farmer Advisory: Maximize Your 2025–2026 Yield</h4>
@@ -970,20 +969,21 @@
 
         let weatherData = null;
 
-        // Load weather_data.json and populate dropdown
+        // Load data.json and populate city dropdown dynamically
         async function initWeatherApp() {
             try {
-                const response = await fetch('weather_data.json');
-                if (!response.ok) throw new Error('Failed to load weather_data.json');
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('Failed to load data.json');
                 const rawData = await response.json();
 
-                // Transform data for UI
+                // Transform for UI
                 const transformed = rawData.data.map(item => {
                     const today = item.forecast[0] || {};
                     return {
                         location: item.location,
                         current: {
                             temperature: today.temp_max_c ?? 'N/A',
+                            humidity: 'N/A', // Open-Meteo doesn't provide humidity in daily
                             wind_speed: today.wind_speed_kmh ?? 'N/A',
                             weather: getWeatherDescription(today.weather_code) ?? 'N/A'
                         },
@@ -1016,8 +1016,8 @@
                 document.getElementById('weatherDisplay').innerHTML = '<p>Select a city to view the 14-day weather forecast.</p>';
 
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('weatherDisplay').innerHTML = '<p class="error">⚠️ Failed to load weather data. Ensure <code>weather_data.json</code> is in the same folder.</p>';
+                console.error('Error loading data.json:', error);
+                document.getElementById('weatherDisplay').innerHTML = '<p class="error">⚠️ Failed to load weather data. Ensure <code>data.json</code> exists in your repository.</p>';
                 document.getElementById('citySelect').innerHTML = '<option value="">Error loading cities</option>';
             }
         }
@@ -1193,7 +1193,7 @@
             }
         }
 
-        // Initialize
+        // Initialize app
         initWeatherApp();
     </script>
 </body>
