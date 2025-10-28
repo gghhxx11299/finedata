@@ -353,7 +353,7 @@ def static_files(filename):
 
 app.route('/llms.txt')
 def serve_llms():
-    return send_from_directory('.', 'llms.txt')
+    return send_from_directory('.', 'llm.txt')
 
 
 # ======================
