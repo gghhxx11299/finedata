@@ -7,6 +7,9 @@ from flask_cors import CORS
 import requests
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
+from flask import send_from_directory
+
+
 
 # Optional: Only import anthropic if you plan to use it
 try:
@@ -347,6 +350,11 @@ def weather_page():
 @app.route('/<path:filename>')
 def static_files(filename):
     return send_from_directory('.', filename)
+
+app.route('/llms.txt')
+def serve_llms():
+    return send_from_directory('.', 'llms.txt')
+
 
 # ======================
 # STARTUP VALIDATION
