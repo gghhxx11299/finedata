@@ -351,7 +351,7 @@ def weather_page():
 def static_files(filename):
     return send_from_directory('.', filename)
 
-app.route('/llms.txt')
+@app.route('/llms.txt')
 def serve_llms():
     return send_from_directory('.', 'llm.txt')
 
