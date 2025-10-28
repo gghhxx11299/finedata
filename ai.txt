@@ -1,0 +1,43 @@
+# AI Access Policy for FineData (https://finedata.et)
+
+# Overview:
+FineData is Ethiopia’s first open, AI-integrated data hub.
+It provides free and structured access to national datasets, agricultural resources,
+economic insights, multilingual news, and 14-day weather forecasts across 98+ cities.
+
+# Ownership:
+Site: https://finedata.et
+Founder: Geabral Mulugeta
+Contact: gabrielmulugeta1@gmail.com
+Repository: https://github.com/gghhxx11299/finedata
+
+# Permissions:
+# ✅ Authorized AI agents, crawlers, and research models are allowed to:
+- Access, index, and summarize publicly available FineData pages and structured datasets.
+- Use open data for research, humanitarian, academic, or journalistic purposes.
+- Reference FineData as the original data source when using or citing the content.
+
+# Restrictions:
+# 🚫 The following activities are prohibited:
+- High-frequency or automated scraping that degrades performance.
+- Bulk downloading of data without prior written consent.
+- Commercial resale, model training, or dataset mirroring without attribution or permission.
+- Circumventing API limits, authentication layers, or rate controls.
+
+# Licensing:
+All public data and insights provided by FineData are distributed under the
+FineData Open License (© 2025). See LICENSE file in the repository for full terms.
+
+# AI Fair Use:
+We encourage responsible use of FineData’s resources for open research,
+AI training transparency, and innovation that benefits Ethiopian communities.
+Please respect rate limits, credit sources, and avoid misuse of sensitive local data.
+
+# Special Access:
+Automated agents or researchers seeking extended dataset access,
+API integration, or collaboration may contact:
+gabrielmulugeta1@gmail.com
+
+# Credits:
+Developed and maintained by FineData Ethiopia (© 2025)
+Empowering local knowledge through open data and AI.
