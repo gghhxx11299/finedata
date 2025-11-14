@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - Finesdatas Ethiopia</title>
+    <title>Support - FineData Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
@@ -28,6 +28,7 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--background-color);
+            overflow-x: hidden; /* Prevent horizontal overflow */
         }
 
         .container {
@@ -62,6 +63,7 @@
         .logo img {
             height: 40px;
             margin-right: 10px;
+            border-radius: 4px;
         }
 
         .logo h1 {
@@ -112,6 +114,8 @@
             text-align: center;
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--primary-accent);
+            background-size: cover;
+            background-position: center;
         }
 
         .page-header h2 {
@@ -251,9 +255,16 @@
         .faq-answer {
             color: var(--text-color);
             line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
         }
 
-        /* Form Styles */
+        .faq-answer.active {
+            max-height: 500px;
+        }
+
+        /* Form Styles (kept for consistency, though not used) */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -399,6 +410,21 @@
             .page-header h2 {
                 font-size: 2rem;
             }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Added to prevent horizontal overflow */
+        html {
+            overflow-x: hidden;
+        }
+        
+        /* Fix for container padding */
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
         }
     </style>
 </head>
@@ -408,20 +434,16 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
-                    <h1>Finedatas</h1>
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo">
+                    <h1>FineData</h1>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="index.html" >Home</a></li>
-                    <li><a href="economic.html">Economic</a></li>
-                    <li><a href="demographic.html">Demographic</a></li>
-                    <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="news.html">News</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="support.html" class="active">Support</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -543,6 +565,14 @@
             
             <p>Our business hours are Monday to Friday, 9:00 AM to 5:00 PM Ethiopia Time (EAT).</p>
         </section>
+
+        <!-- ✅ NEW SECTION: Community Insights -->
+        <section class="support-section">
+            <h3 class="section-title"><i class="fas fa-lightbulb"></i> Add Your Unique Insights</h3>
+            <p>Help shape the future of data in Ethiopia! Share your perspective, local knowledge, or ideas with our growing community of researchers, farmers, economists, and changemakers.</p>
+            <p><strong>Be a part of the community</strong> — your voice matters.</p>
+            <a href="https://tally.so/r/mRp1gj" target="_blank" class="btn" style="margin-top: 1.5rem; display: inline-block;">Share Your Insights</a>
+        </section>
     </div>
 
     <!-- Footer -->
@@ -550,33 +580,29 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Finedatas</h3>
-                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <h3>About</h3>
+                    <a href="index.html">Home</a>
+                    <a href="support.html">Support</a>
+                    <a href="pdf.html">PDF Resources</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="economic.html">Economic Data</a>
-                    <a href="demographic.html">Demographic Data</a>
-                    <a href="agricultural.html">Agricultural Data</a>
-                    <a href="exchange.html">Exchange Rates</a>
-                    <a href="news.html">News</a>
-                    
+                    <h3>Data</h3>
+                    <a href="economic.html">Economic</a>
+                    <a href="demographic.html">Demographic</a>
+                    <a href="agricultural.html">Agricultural</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +251 991 168 917</p>
-                    <p><i class="fas fa-phone"></i> +251 701 327 86</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
-                    
+                    <h3>Contact</h3>
+                    <p>gabrielmulugeta1@gmail.com</p>
+                    <p>+251 991168917</p>
+                    <p>Addis Ababa, Ethiopia</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+                <p>&copy; 2025 FineData. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -607,15 +633,7 @@
             });
         });
 
-        // Form submission (prevent default for demo)
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your message! In a real application, this would send your message to our support team.');
-                form.reset();
-            });
-        }
+        // ✅ No form submission script needed anymore
     </script>
 </body>
 </html>

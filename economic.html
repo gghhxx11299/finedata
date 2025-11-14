@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economic Data - Finedatas Ethiopia</title>
+    <title>Economic Data - FineData Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <style>
@@ -28,6 +28,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4 {
             font-family: 'Montserrat', sans-serif;
@@ -78,9 +81,16 @@
             color: var(--text-color);
             font-weight: 500;
             transition: color 0.3s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary-color);
+        }
+        .btn, .export-btn {
+            min-height: 44px;
+            padding: 10px 16px;
         }
         .btn {
             background-color: var(--primary-color);
@@ -102,9 +112,13 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary-color);
+            min-height: 44px;
+            width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        /* Export Button - NEW */
+        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--primary-color);
@@ -122,18 +136,17 @@
             background-color: rgba(88, 166, 255, 0.1);
             color: var(--text-color);
         }
-
         /* Page Header */
         .page-header {
             background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1569511163066-4686d38ce9d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             color: var(--text-color);
-            padding: 3rem 0;
+            padding: 2rem 0;
             text-align: center;
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border-color);
         }
         .page-header h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--primary-color);
         }
@@ -141,6 +154,7 @@
             display: flex;
             justify-content: center;
             list-style: none;
+            flex-wrap: wrap;
         }
         .breadcrumb li {
             margin: 0 0.5rem;
@@ -161,8 +175,8 @@
         .economic-section {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
@@ -170,9 +184,10 @@
             color: var(--primary-color);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
+            font-size: 1.4rem;
         }
         .section-title i {
             margin-right: 0.5rem;
@@ -180,62 +195,64 @@
         }
         .data-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
         }
         .data-card {
             background-color: var(--bg-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             transition: transform 0.3s ease;
             border: 1px solid var(--border-color);
         }
         .data-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: var(--hover-shadow);
             border-color: var(--primary-color);
         }
         .data-card h4 {
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
+            font-size: 1.25rem;
         }
         .data-card h4 i {
             margin-right: 0.5rem;
             color: var(--secondary-color);
         }
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary-color);
-            margin: 0.5rem 0;
+            margin: 0.4rem 0;
         }
         .stat-detail {
-            margin: 0.5rem 0;
-            line-height: 1.6;
+            margin: 0.4rem 0;
+            line-height: 1.5;
             color: var(--text-color);
+            font-size: 0.95rem;
         }
         .source-note {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #8B949E;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
             font-style: italic;
         }
         /* Chart Container */
         .chart-container {
             background-color: var(--card-bg);
             border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            padding: 1.25rem;
+            margin: 1.25rem 0;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
         .chart-placeholder {
             background-color: var(--bg-color);
-            height: 300px;
+            height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -243,11 +260,11 @@
             color: #8B949E;
             border: 1px solid var(--border-color);
         }
-        /* New styles for enhanced content */
+        /* Enhanced Content */
         .stat-trend {
             display: inline-block;
             margin-left: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .trend-up {
             color: #3FB950;
@@ -265,16 +282,22 @@
             margin: 1rem 0;
             border-radius: 0 4px 4px 0;
             color: var(--text-color);
+            font-size: 0.95rem;
         }
         .data-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            display: block;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
         }
         .data-table th, .data-table td {
-            padding: 0.75rem;
+            padding: 0.6rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            min-width: 80px;
         }
         .data-table th {
             background-color: var(--bg-color);
@@ -292,9 +315,9 @@
         .year-box {
             flex: 1;
             text-align: center;
-            padding: 1rem;
+            padding: 0.8rem;
             background-color: var(--bg-color);
-            margin: 0 0.5rem;
+            margin: 0 0.3rem;
             border-radius: 4px;
             border: 1px solid var(--border-color);
         }
@@ -305,7 +328,7 @@
             margin-right: 0;
         }
         .year-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--primary-color);
         }
@@ -313,24 +336,25 @@
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
-            padding: 3rem 0 1.5rem;
-            margin-top: 3rem;
+            padding: 2rem 0 1.5rem;
+            margin-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
         .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
             color: var(--primary-color);
         }
         .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: #8B949E;
+            font-size: 0.9rem;
         }
         .footer-section a {
             display: block;
@@ -341,19 +365,20 @@
         }
         .social-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 1rem;
         }
         .social-links a {
             display: inline-block;
             color: var(--text-color);
             background-color: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             text-align: center;
-            line-height: 40px;
+            line-height: 36px;
             transition: background-color 0.3s;
+            font-size: 0.9rem;
         }
         .social-links a:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -361,8 +386,9 @@
         }
         .footer-bottom {
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -377,24 +403,53 @@
                 box-shadow: var(--shadow);
                 padding: 1rem 0;
                 border-top: 1px solid var(--border-color);
+                z-index: 99;
             }
             .nav-links.active {
                 display: flex;
             }
             .nav-links li {
-                margin: 0.5rem 1.5rem;
+                margin: 0.75rem 1.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-links a, .export-btn, .btn {
+                display: inline-block;
+                width: auto;
+                padding: 12px 20px;
+                min-height: 48px;
+                margin: 0.25rem 0;
             }
             .mobile-menu-btn {
-                display: block;
+                display: flex;
             }
             .page-header h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .data-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
             .year-comparison {
                 flex-direction: column;
             }
             .year-box {
                 margin: 0.5rem 0;
+            }
+            .economic-section {
+                padding: 1.25rem;
+            }
+            .data-card {
+                padding: 1rem;
+            }
+            .stat-value {
+                font-size: 1.4rem;
+            }
+            .container {
+                width: 95%;
             }
         }
     </style>
@@ -405,21 +460,16 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedata Logo">
-                    <h1>Finedatas</h1>
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Finedata Logo">
+                    <h1>FineData</h1>
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="economic.html" class="active">Economic</a></li>
-                    <li><a href="demographic.html">Demographic</a></li>
-                    <li><a href="agricultural.html">Agricultural</a></li>
-                    <li><a href="news.html">News</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="support.html">Support</a></li>
-                    <!-- Export Button Added Here -->
                     <li>
                         <button class="export-btn" onclick="exportEconomicData()">
                             <i class="fas fa-download"></i> Export Data
@@ -433,6 +483,7 @@
             </nav>
         </div>
     </header>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -443,6 +494,7 @@
             </ul>
         </div>
     </div>
+
     <div class="container">
         <!-- Economic Overview -->
         <section class="economic-section">
@@ -527,7 +579,7 @@
                 </div>
                 <div class="data-card">
                     <h4><i class="fas fa-coins"></i> Currency</h4>
-                    <div class="stat-value">ETB 57.2/$1</div>
+                    <div class="stat-value">ETB 145/$1</div>
                     <div class="stat-detail">Exchange Rate (ETB/USD)</div>
                     <div class="stat-value">$8.1B</div>
                     <div class="stat-detail">Foreign Reserves (2025)</div>
@@ -559,6 +611,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Manufacturing and Industry Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-industry"></i> Manufacturing and Industry</h3>
@@ -655,6 +708,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Tourism Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-umbrella-beach"></i> Tourism</h3>
@@ -729,6 +783,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Digital Economy Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-laptop-code"></i> Digital Economy</h3>
@@ -776,6 +831,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Public Finance Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-landmark"></i> Public Finance</h3>
@@ -812,6 +868,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Trade and Investment Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-handshake"></i> Trade and Investment</h3>
@@ -846,6 +903,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Infrastructure Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-road"></i> Infrastructure</h3>
@@ -899,6 +957,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Poverty and Living Standards Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Poverty and Living Standards</h3>
@@ -961,6 +1020,7 @@
                 </div>
             </div>
         </section>
+
         <!-- Business and Entrepreneurship Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-business-time"></i> Business and Entrepreneurship</h3>
@@ -1011,6 +1071,225 @@
                 </div>
             </div>
         </section>
+
+        <!-- NEW SECTIONS WITH ADDITIONAL DATA -->
+
+        <!-- Regional Economic Performance Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-map"></i> Regional Economic Performance</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-city"></i> Addis Ababa</h4>
+                    <div class="stat-value">$25.3B</div>
+                    <div class="stat-detail">Regional GDP (2025)</div>
+                    <div class="stat-value">8.2%</div>
+                    <div class="stat-detail">Growth Rate</div>
+                    <div class="stat-value">$5,800</div>
+                    <div class="stat-detail">GDP per Capita</div>
+                    <p class="stat-detail">Capital city accounts for 20% of national GDP with strong services and manufacturing sectors.</p>
+                    <p class="source-note">Source: Addis Ababa Bureau of Finance and Economic Development</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-tractor"></i> Oromia Region</h4>
+                    <div class="stat-value">$42.8B</div>
+                    <div class="stat-detail">Regional GDP (2025)</div>
+                    <div class="stat-value">7.5%</div>
+                    <div class="stat-detail">Growth Rate</div>
+                    <div class="stat-value">$1,200</div>
+                    <div class="stat-detail">GDP per Capita</div>
+                    <p class="stat-detail">Largest region by population and GDP, with strong agricultural base and growing industrial zones.</p>
+                    <p class="source-note">Source: Oromia Bureau of Finance and Economic Development</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-industry"></i> Amhara Region</h4>
+                    <div class="stat-value">$28.5B</div>
+                    <div class="stat-detail">Regional GDP (2025)</div>
+                    <div class="stat-value">6.8%</div>
+                    <div class="stat-detail">Growth Rate</div>
+                    <div class="stat-value">$980</div>
+                    <div class="stat-detail">GDP per Capita</div>
+                    <p class="stat-detail">Significant agricultural production and growing manufacturing sector, though impacted by recent conflicts.</p>
+                    <p class="source-note">Source: Amhara Bureau of Finance and Economic Development</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-water"></i> Southern Nations</h4>
+                    <div class="stat-value">$18.2B</div>
+                    <div class="stat-detail">Regional GDP (2025)</div>
+                    <div class="stat-value">7.2%</div>
+                    <div class="stat-detail">Growth Rate</div>
+                    <div class="stat-value">$850</div>
+                    <div class="stat-detail">GDP per Capita</div>
+                    <p class="stat-detail">Diverse agricultural production including coffee, tea, and spices, with growing tourism sector.</p>
+                    <p class="source-note">Source: SNNPR Bureau of Finance and Economic Development</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Labor Market Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-users"></i> Labor Market</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-user-tie"></i> Employment</h4>
+                    <div class="stat-value">52.3M</div>
+                    <div class="stat-detail">Labor Force (2025)</div>
+                    <div class="stat-value">17.8%</div>
+                    <div class="stat-detail">Unemployment Rate</div>
+                    <div class="stat-value">2.1M</div>
+                    <div class="stat-detail">New jobs created annually</div>
+                    <p class="stat-detail">Youth unemployment remains a significant challenge at 25.4%.</p>
+                    <p class="source-note">Source: Central Statistical Agency</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-user-graduate"></i> Education & Skills</h4>
+                    <div class="stat-value">68%</div>
+                    <div class="stat-detail">Adult Literacy Rate</div>
+                    <div class="stat-value">850,000</div>
+                    <div class="stat-detail">University graduates annually</div>
+                    <div class="stat-value">42%</div>
+                    <div class="stat-detail">STEM graduates</div>
+                    <p class="stat-detail">Skills mismatch remains a challenge with many graduates lacking job-relevant skills.</p>
+                    <p class="source-note">Source: Ministry of Education</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-money-bill"></i> Wages & Compensation</h4>
+                    <div class="stat-value">$120/month</div>
+                    <div class="stat-detail">Average monthly wage</div>
+                    <div class="stat-value">12.5%</div>
+                    <div class="stat-detail">Annual wage growth</div>
+                    <div class="stat-value">$65/month</div>
+                    <div class="stat-detail">Minimum wage</div>
+                    <p class="stat-detail">Wage growth has not kept pace with inflation, reducing real incomes.</p>
+                    <p class="source-note">Source: Ministry of Labor and Skills</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-industry"></i> Sectoral Employment</h4>
+                    <table class="data-table">
+                        <tr>
+                            <th>Sector</th>
+                            <th>Employment Share</th>
+                        </tr>
+                        <tr>
+                            <td>Agriculture</td>
+                            <td>68%</td>
+                        </tr>
+                        <tr>
+                            <td>Services</td>
+                            <td>22%</td>
+                        </tr>
+                        <tr>
+                            <td>Industry</td>
+                            <td>10%</td>
+                        </tr>
+                    </table>
+                    <p class="stat-detail">Agriculture remains the dominant employer despite its declining share of GDP.</p>
+                    <p class="source-note">Source: Central Statistical Agency</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Sector Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-university"></i> Financial Sector</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-piggy-bank"></i> Banking Sector</h4>
+                    <div class="stat-value">18</div>
+                    <div class="stat-detail">Commercial Banks</div>
+                    <div class="stat-value">$42.5B</div>
+                    <div class="stat-detail">Total Assets</div>
+                    <div class="stat-value">28.5%</div>
+                    <div class="stat-detail">Credit to GDP Ratio</div>
+                    <p class="stat-detail">Commercial Bank of Ethiopia dominates with 65% market share.</p>
+                    <p class="source-note">Source: National Bank of Ethiopia</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-chart-line"></i> Capital Markets</h4>
+                    <div class="stat-value">2026</div>
+                    <div class="stat-detail">Planned Stock Exchange Launch</div>
+                    <div class="stat-value">$850M</div>
+                    <div class="stat-detail">Corporate Bond Market</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-detail">Licensed Capital Market Intermediaries</div>
+                    <p class="stat-detail">Ethiopian Securities Exchange (ESX) will be Africa's newest stock market.</p>
+                    <p class="source-note">Source: Ethiopian Capital Market Authority</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-shield-alt"></i> Insurance Sector</h4>
+                    <div class="stat-value">17</div>
+                    <div class="stat-detail">Insurance Companies</div>
+                    <div class="stat-value">$850M</div>
+                    <div class="stat-detail">Total Premiums</div>
+                    <div class="stat-value">0.8%</div>
+                    <div class="stat-detail">Insurance Penetration</div>
+                    <p class="stat-detail">Life insurance accounts for 45% of the market, with strong growth potential.</p>
+                    <p class="source-note">Source: National Bank of Ethiopia</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-microphone"></i> Microfinance</h4>
+                    <div class="stat-value">34</div>
+                    <div class="stat-detail">Microfinance Institutions</div>
+                    <div class="stat-value">4.2M</div>
+                    <div class="stat-detail">Active Borrowers</div>
+                    <div class="stat-value">$2.8B</div>
+                    <div class="stat-detail">Outstanding Portfolio</div>
+                    <p class="stat-detail">MFIs play crucial role in financial inclusion, especially in rural areas.</p>
+                    <p class="source-note">Source: Association of Ethiopian Microfinance Institutions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real Estate and Construction Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fas fa-hard-hat"></i> Real Estate and Construction</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-home"></i> Housing Market</h4>
+                    <div class="stat-value">1.2M</div>
+                    <div class="stat-detail">Annual Housing Deficit</div>
+                    <div class="stat-value">15%</div>
+                    <div class="stat-detail">Annual Price Growth</div>
+                    <div class="stat-value">$850/m²</div>
+                    <div class="stat-detail">Average Addis Ababa Apartment Price</div>
+                    <p class="stat-detail">Rapid urbanization driving demand for housing, particularly in major cities.</p>
+                    <p class="source-note">Source: Ministry of Urban Development and Construction</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-tools"></i> Construction Sector</h4>
+                    <div class="stat-value">11.2%</div>
+                    <div class="stat-detail">Sector Growth Rate</div>
+                    <div class="stat-value">$8.5B</div>
+                    <div class="stat-detail">Sector Value</div>
+                    <div class="stat-value">450,000</div>
+                    <div class="stat-detail">Direct Employment</div>
+                    <p class="stat-detail">Infrastructure development and urbanization driving construction boom.</p>
+                    <p class="source-note">Source: Ethiopian Construction Works Corporation</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-building"></i> Commercial Real Estate</h4>
+                    <div class="stat-value">8.5%</div>
+                    <div class="stat-detail">Office Vacancy Rate</div>
+                    <div class="stat-value">$18/m²</div>
+                    <div class="stat-detail">Prime Office Rent</div>
+                    <div class="stat-value">250,000 m²</div>
+                    <div class="stat-detail">New Office Supply (2025)</div>
+                    <p class="stat-detail">Grade A office space remains limited, with strong demand from multinationals.</p>
+                    <p class="source-note">Source: Commercial Real Estate Association</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-hotel"></i> Hospitality Real Estate</h4>
+                    <div class="stat-value">68%</div>
+                    <div class="stat-detail">Hotel Occupancy Rate</div>
+                    <div class="stat-value">25</div>
+                    <div class="stat-detail">New Hotels Under Construction</div>
+                    <div class="stat-value">4,200</div>
+                    <div class="stat-detail">New Hotel Rooms (2025)</div>
+                    <p class="stat-detail">Tourism growth driving hotel development, particularly in Addis Ababa and regional capitals.</p>
+                    <p class="source-note">Source: Ethiopian Hotels Association</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Data Sources Section -->
         <section class="economic-section">
             <h3 class="section-title"><i class="fas fa-book"></i> Data Sources</h3>
@@ -1025,43 +1304,50 @@
                 <li>Ethiopian Investment Commission</li>
                 <li>Ethiopian Revenues and Customs Authority</li>
                 <li>Industry reports and market analysis</li>
+                <li>Regional Bureaus of Finance and Economic Development</li>
+                <li>Ministry of Labor and Skills</li>
+                <li>Ethiopian Capital Market Authority</li>
+                <li>Ministry of Urban Development and Construction</li>
             </ul>
             <p>We strive to provide the most accurate and up-to-date information available. Last updated: August 2025.</p>
         </section>
     </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Finedatas</h3>
-                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <h3>About</h3>
+                    <a href="index.html">Home</a>
+                    <a href="support.html">Support</a>
+                    <a href="pdf.html">PDF Resources</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="economic.html">Economic Data</a>
-                    <a href="demographic.html">Demographic Data</a>
-                    <a href="agricultural.html">Agricultural Data</a>
-                    <a href="news.html">News</a>
-                    <a href="exchange.html">Exchange rates</a>
+                    <h3>Data</h3>
+                    <a href="economic.html">Economic</a>
+                    <a href="demographic.html">Demographic</a>
+                    <a href="agricultural.html">Agricultural</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +251991168917</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <h3>Contact</h3>
+                    <p>gabrielmulugeta1@gmail.com</p>
+                    <p>+251 991168917</p>
+                    <p>Addis Ababa, Ethiopia</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+                <p>&copy; 2025 FineData. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
     <script>
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             navLinks.classList.toggle('active');
         });
         // Close mobile menu when clicking outside
@@ -1088,7 +1374,7 @@
             let allCSV = '';
             const tables = document.querySelectorAll('.data-table');
             tables.forEach((table, idx) => {
-                if (idx > 0) allCSV += '\n\n';
+                if (idx > 0) allCSV += '\n';
                 let csv = [];
                 const rows = table.querySelectorAll('tr');
                 for (let i = 0; i < rows.length; i++) {
@@ -1119,8 +1405,7 @@
         }
 
         function exportEconomicData() {
-            const format = prompt("Choose export format:\n- 'csv' for all tables\n- 'json' for key metrics\n- 'txt' for summary report\n\nLeave blank for CSV (default)");
-            
+            const format = prompt("Choose export format:\n- 'csv' for all tables\n- 'json' for key metrics\n- 'txt' for summary report\nLeave blank for CSV (default)");
             if (format === null || format === "" || format.toLowerCase() === "csv") {
                 const csv = exportAllTablesToCSV();
                 downloadFile('ethiopia_economic_data_tables.csv', csv, 'text/csv');
@@ -1130,10 +1415,12 @@
                 downloadFile('economic_key_metrics.json', json, 'application/json');
             }
             else if (format.toLowerCase() === "txt") {
-                let report = `Ethiopian Economic Data Summary (2025)\nGenerated by Finedatas\n\n`;
+                let report = `Ethiopian Economic Data Summary (2025)
+Generated by Finedatas
+`;
                 document.querySelectorAll('.economic-section').forEach(section => {
                     const title = section.querySelector('.section-title')?.innerText.trim();
-                    if (title) report += `\n=== ${title} ===\n\n`;
+                    if (title) report += `\n=== ${title} ===\n`;
                     section.querySelectorAll('.data-card').forEach(card => {
                         const cardTitle = card.querySelector('h4')?.innerText.trim();
                         if (cardTitle) {

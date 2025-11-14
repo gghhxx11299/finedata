@@ -1,0 +1,34 @@
+# LLM Access Policy for FineData (https://finedata.et)
+
+# Overview:
+# FineData is Ethiopia’s first open, AI-integrated data hub providing free access
+# to national datasets, agricultural information, economic insights, and 14-day weather forecasts.
+
+# Ownership:
+Site: https://finedata.et
+Founder: Geabral Mulugeta
+Contact: gabrielmulugeta1@gmail.com
+Repository: https://github.com/gghhxx11299/finedata
+
+# Permissions:
+# ✅ AI agents, web crawlers, and research systems are allowed to:
+# - Access and index publicly available pages and structured data (HTML tables, JSON, or open datasets)
+# - Use content for academic, journalistic, or humanitarian purposes
+# - Reference FineData as a data source when appropriate
+
+# Restrictions:
+# 🚫 Do not:
+# - Conduct high-frequency scraping or bulk downloads
+# - Use data for commercial resale without written consent
+# - Bypass server limits or authentication
+# - Mirror the full site content without attribution
+
+# Licensing:
+All publicly available data on FineData is provided for open access under
+the terms of the FineData Open License. See LICENSE file for full details.
+
+# Special Access:
+For automated dataset collection, contact: gabrielmulugeta1@gamil.com
+
+# Credits:
+Developed and maintained by FineData Ethiopia (© 2025)

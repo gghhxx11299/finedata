@@ -1,223 +1,836 @@
-<!-- ai-chat.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Weather Assistant - Ethiopia</title>
+  <title>AI Chat - FineData Ethiopia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ===== GLOBAL STYLES ===== */
+    :root {
+      --bg-color: #0D1117;
+      --card-bg: #161B22;
+      --primary-color: #58A6FF;
+      --ethiopia-green: #078A43;
+      --text-color: #C9D1D9;
+      --border-color: #30363D;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+      --success-color: #3FB950;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-      color: #2c3e50;
+      font-family: 'Inter', sans-serif;
       line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 25px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
     }
+
+    /* ===== BUTTON STYLE (ADDED) ===== */
+    .btn {
+      display: inline-block;
+      background: var(--primary-color);
+      color: var(--bg-color);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #FF7B72;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 123, 114, 0.4);
+    }
+
+    /* ===== HEADER ===== */
     header {
-      text-align: center;
-      margin-bottom: 30px;
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
     }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      color: #2980b9;
-    }
-    .subtitle {
-      color: #7f8c8d;
-      margin-bottom: 20px;
-    }
-    textarea {
-      width: 100%;
-      padding: 16px;
-      margin: 15px 0;
-      border: 2px solid #e0e6ed;
-      border-radius: 12px;
-      font-size: 16px;
-      resize: vertical;
-      min-height: 100px;
-    }
-    textarea:focus {
-      outline: none;
-      border-color: #3498db;
-    }
-    .controls {
+    nav {
       display: flex;
-      gap: 15px;
-      margin: 15px 0;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
       flex-wrap: wrap;
     }
-    select {
-      flex: 1;
-      min-width: 200px;
-      padding: 12px;
-      border: 2px solid #e0e6ed;
-      border-radius: 12px;
-      font-size: 16px;
-      background: white;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    button {
-      background: #2980b9;
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 18px;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s;
+    .logo img {
+      height: 36px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .logo h1 {
+      color: var(--primary-color);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.4rem;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.92rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary-color);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
       width: 100%;
+      height: 2px;
+      background: var(--primary-color);
+      border-radius: 2px;
     }
-    button:hover {
-      background: #1c6ea4;
-    }
-    button:active {
-      transform: translateY(2px);
-    }
-    #response {
-      margin-top: 25px;
-      padding: 20px;
-      background: #f8fbff;
-      border-radius: 12px;
-      border-left: 4px solid #3498db;
+    .mobile-menu-btn {
       display: none;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--primary-color);
     }
-    #response.show {
+
+    /* ===== CHAT CONTAINER ===== */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+
+    .chat-container {
+      flex: 1;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .chat-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, #078A43, #FCD116, #DA121A);
+      z-index: 10;
+    }
+
+    /* ===== CHAT HEADER ===== */
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 72px;
+    }
+
+    .chat-header-content h2 {
+      font-size: 1.25rem;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-header-content p {
+      opacity: 0.92;
+      font-size: 0.85rem;
+    }
+
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success-color);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ===== LANGUAGE SELECTOR ===== */
+    .language-selector {
+      padding: 12px 22px;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+    }
+
+    .language-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .language-selector select {
+      padding: 7px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.88rem;
+      background: var(--card-bg);
+      color: var(--text-color);
+      min-width: 160px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quick-action {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .quick-action:hover {
+      background: var(--primary-color);
+      color: var(--bg-color);
+      border-color: var(--primary-color);
+    }
+
+    /* ===== CHAT MESSAGES ===== */
+    .chat-messages {
+      flex: 1;
+      padding: 18px;
+      overflow-y: auto;
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .message {
+      max-width: 82%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      line-height: 1.55;
+      position: relative;
+      animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-message {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 6px;
+      margin-left: auto;
+    }
+
+    .ai-message {
+      background: var(--card-bg);
+      color: var(--text-color);
+      align-self: flex-start;
+      border-bottom-left-radius: 6px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+    }
+
+    .ai-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #078A43, #FCD116, #DA121A);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
+
+    .message-content {
+      flex: 1;
+    }
+
+    .message-time {
+      font-size: 0.68rem;
+      opacity: 0.75;
+      margin-top: 5px;
       display: block;
     }
-    .location {
-      font-weight: 600;
-      color: #2c3e50;
-      margin-bottom: 12px;
-      font-size: 18px;
-    }
-    .answer {
-      font-size: 17px;
+
+    .ai-message.amharic,
+    .ai-message.tigrinya,
+    .ai-message.wolaytta {
+      font-family: 'Noto Sans Ethiopic', sans-serif;
+      font-size: 16px;
       line-height: 1.7;
     }
-    .amharic {
-      font-family: 'Noto Sans Ethiopic', 'Abyssinica SIL', sans-serif;
-      font-size: 19px !important;
+
+    .ai-message.oromo,
+    .ai-message.somali,
+    .ai-message.afar,
+    .ai-message.sidamo {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
     }
-    .english-hint {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px dashed #d5dbdb;
-      color: #7f8c8d;
+
+    /* ===== INPUT AREA ===== */
+    .chat-input-area {
+      padding: 16px;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      min-height: 72px;
+    }
+
+    .input-container {
+      flex: 1;
+      position: relative;
+    }
+
+    .chat-input-area textarea {
+      width: 100%;
+      padding: 12px 48px 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      resize: none;
       font-size: 14px;
+      min-height: 48px;
+      max-height: 100px;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: border-color 0.3s ease, box-shadow 0.3s;
     }
+
+    .chat-input-area textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+    }
+
+    .input-actions {
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .mic-button, .attach-button {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      cursor: pointer;
+      opacity: 0.7;
+      padding: 3px;
+      font-size: 0.95rem;
+    }
+
+    .send-button {
+      background: linear-gradient(135deg, var(--primary-color), #1f6feb);
+      color: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .send-button:hover:not(:disabled) {
+      transform: scale(1.06);
+    }
+
+    .send-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ===== TYPING INDICATOR ===== */
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: var(--card-bg);
+      padding: 14px 18px;
+      border-radius: 16px;
+      border-bottom-left-radius: 6px;
+      color: #8B949E;
+      border: 1px solid var(--border-color);
+      margin-bottom: 6px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .typing-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .typing-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .typing-dots span {
+      height: 6px;
+      width: 6px;
+      background-color: var(--primary-color);
+      display: block;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-of-type(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-of-type(2) { animation-delay: -0.16s; }
+
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+      40% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* ===== FOOTER ===== */
     footer {
+      background-color: var(--card-bg);
+      color: #8B949E;
+      padding: 2rem 0 1rem;
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-section h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+    .footer-section p,
+    .footer-section a {
+      margin-bottom: 0.4rem;
+      font-size: 0.92rem;
+      color: var(--text-color);
+      text-decoration: none;
+      display: block;
+    }
+    .footer-section a:hover {
+      color: var(--ethiopia-green);
+    }
+    .footer-bottom {
       text-align: center;
-      margin-top: 30px;
-      color: #95a5a6;
-      font-size: 14px;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.92rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--card-bg);
+        padding: 0.5rem 0;
+        border-top: 1px solid var(--border-color);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        margin: 0.3rem 1rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .chat-container {
+        margin: 0;
+        width: calc(100% - 20px);
+        border-radius: 12px;
+      }
+      .message {
+        max-width: 90%;
+      }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🤖 Ethiopian Weather AI Assistant</h1>
-      <p class="subtitle">Ask about weather in any Ethiopian city — get live data in your language!</p>
-    </header>
-
-    <textarea id="question" placeholder="Examples: 
-• What's the weather in Jimma today?
-• Is it raining in Hawassa?
-• Show me forecast for Arba Minch"></textarea>
-
-    <div class="controls">
-      <select id="language">
-        <option value="en">English</option>
-        <option value="am">Amharic (አማርኛ)</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-        <option value="ar">العربية</option>
-        <option value="ru">Русский</option>
-      </select>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="FineData Logo">
+          <h1>FineData</h1>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="ai-chat.html" class="active">AI Chat</a></li>
+          <li><a href="exchange.html">Exchange Rates</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="weather.html">For Farmers</a></li>
+          <li><a href="insights.html">Get Forecasts</a></li>
+          <li><a href="donate.html" class="btn">Donate</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
     </div>
+  </header>
 
-    <button onclick="askAI()">Get Live Weather Info</button>
+  <main>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-header-content">
+          <h2><i class="fas fa-robot"></i> Ethiopian AI Assistant</h2>
+          <p>Ask me anything about Ethiopia — Economy, Agriculture, Weather, News</p>
+        </div>
+        <div class="ai-status">
+          <div class="status-dot"></div>
+          <span>Online</span>
+        </div>
+      </div>
 
-    <div id="response">
-      <div class="location" id="location"></div>
-      <div class="answer" id="answer"></div>
-      <div class="english-hint" id="englishHint"></div>
+      <div class="language-selector">
+        <div class="language-controls">
+          <label for="language" style="font-size: 0.88rem;">Language:</label>
+          <select id="language">
+            <option value="en">🌐 English</option>
+            <option value="am">🇪🇹 Amharic</option>
+            <option value="om">🇪🇹 Afaan Oromoo</option>
+            <option value="ti">🇪🇹 Tigrinya</option>
+            <option value="so">🇪🇹 Somali</option>
+            <option value="aa">🇪🇹 Afar</option>
+            <option value="sid">🇪🇹 Sidamo</option>
+            <option value="wal">🇪🇹 Wolaytta</option>
+            <option value="fr">🇫🇷 French</option>
+            <option value="es">🇪🇸 Spanish</option>
+            <option value="ar">🇸🇦 Arabic</option>
+          </select>
+        </div>
+        <div class="quick-actions">
+          <div class="quick-action" onclick="insertExample('Current weather in Addis Ababa')">
+            <i class="fas fa-sun"></i> Weather
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopian agriculture updates')">
+            <i class="fas fa-seedling"></i> Agriculture
+          </div>
+          <div class="quick-action" onclick="insertExample('Ethiopia economy news')">
+            <i class="fas fa-chart-line"></i> Economy
+          </div>
+          <div class="quick-action" onclick="clearChat()">
+            <i class="fas fa-trash-alt"></i> Clear
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message ai-message">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-container">
+          <textarea
+            id="userInput"
+            placeholder="Ask about Ethiopia..."
+            rows="1"
+          ></textarea>
+          
+        </div>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
     </div>
+  </main>
 
-    <footer>
-      Powered by WeatherAPI • Hugging Face • LibreTranslate
-    </footer>
-  </div>
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About</h3>
+          <a href="index.html">Home</a>
+          <a href="support.html">Support</a>
+          <a href="pdf.html">PDF Resources</a>
+        </div>
+        <div class="footer-section">
+          <h3>Data</h3>
+          <a href="economic.html">Economic</a>
+          <a href="demographic.html">Demographic</a>
+          <a href="agricultural.html">Agricultural</a>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>gabrielmulugeta1@gmail.com</p>
+          <p>+251 991168917</p>
+          <p>Addis Ababa, Ethiopia</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 FineData. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
   <script>
-    async function askAI() {
-      const questionInput = document.getElementById('question');
-      const languageSelect = document.getElementById('language');
-      const responseDiv = document.getElementById('response');
-      const locationEl = document.getElementById('location');
-      const answerEl = document.getElementById('answer');
-      const englishHintEl = document.getElementById('englishHint');
+    // ✅ FIXED: No extra whitespace
+    const BACKEND_URL = "https://finedata.onrender.com";
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const languageSelect = document.getElementById('language');
+    const sendButton = document.getElementById('sendButton');
 
-      const question = questionInput.value.trim();
-      const lang = languageSelect.value;
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
 
-      if (!question) {
-        alert("Please enter a question about Ethiopian weather!");
-        return;
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    userInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+    });
+
+    userInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function getCurrentTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+
+      if (!isUser) {
+        const lang = languageSelect.value;
+        if (lang === 'am' || lang === 'ti' || lang === 'wal') {
+          messageDiv.classList.add('amharic');
+        } else if (lang === 'om' || lang === 'so' || lang === 'aa' || lang === 'sid') {
+          messageDiv.classList.add('oromo');
+        }
+        messageDiv.style.whiteSpace = 'pre-wrap';
       }
 
-      // Show loading state
-      responseDiv.classList.remove('show');
-      answerEl.textContent = "📡 Fetching live weather data from online sources...";
-      responseDiv.classList.add('show');
+      const safeText = escapeHtml(text);
+      const time = isUser ? getCurrentTime() : "Now";
+
+      if (isUser) {
+        messageDiv.innerHTML = `
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">${safeText}</div>
+          <div class="message-time">${time}</div>
+        `;
+      }
+
+      chatMessages.insertBefore(messageDiv, typingIndicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function insertExample(text) {
+      userInput.value = text;
+      userInput.focus();
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 100) + 'px';
+    }
+
+    function clearChat() {
+      chatMessages.innerHTML = `
+        <div class="message ai-message">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="message-content">Hello! I’m your Ethiopian AI Assistant. How can I help you today?</div>
+          <div class="message-time">Now</div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+          <div class="typing-content">
+            <div class="typing-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>AI is thinking...</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('typingIndicator').style.display = 'none';
+    }
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, true);
+      userInput.value = '';
+      userInput.style.height = 'auto';
+
+      typingIndicator.style.display = 'flex';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
       try {
-        const response = await fetch('/ask-ai', {
+        const response = await fetch(BACKEND_URL + '/ask-ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question, language: lang })
+          body: JSON.stringify({
+            question: text,
+            language: languageSelect.value
+          })
         });
 
+        typingIndicator.style.display = 'none';
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        
-        if (data.error) {
-          throw new Error(data.error);
-        }
-
-        // Update UI
-        locationEl.textContent = `📍 ${data.location}`;
-        answerEl.textContent = data.answer_translated;
-        englishHintEl.innerHTML = `<strong>English:</strong> ${data.answer_english}`;
-        
-        // Apply Amharic font if needed
-        if (lang === 'am') {
-          answerEl.className = 'answer amharic';
-        } else {
-          answerEl.className = 'answer';
-        }
-
+        const reply = data.answer_translated ?? data.answer ?? "❌ No response received.";
+        addMessage(reply);
       } catch (err) {
-        answerEl.textContent = `❌ Error: ${err.message || 'Failed to get response'}`;
-        answerEl.style.color = '#e74c3c';
-        englishHintEl.textContent = '';
+        typingIndicator.style.display = 'none';
+        addMessage("❌ Sorry, I couldn't reach the server. Please try again.");
+        console.error("Fetch error:", err);
+      } finally {
+        sendButton.disabled = false;
+        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
       }
     }
 
-    // Allow Enter key to submit (with Shift+Enter for new line)
-    document.getElementById('question').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        askAI();
-      }
+    window.addEventListener('load', () => {
+      userInput.focus();
     });
   </script>
 </body>

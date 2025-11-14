@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agricultural Data - Finedatas Ethiopia</title>
+    <title>Agricultural Data - FineData Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -71,6 +71,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            /* Prevent overflow */
+            flex-wrap: wrap;
         }
         .logo {
             display: flex;
@@ -85,13 +87,17 @@
         .logo h1 {
             font-size: 1.5rem;
             margin: 0;
-            color: var(--primary-color); /* Kept blue as in original */
+            color: var(--primary-color);
         }
         .nav-links {
             display: flex;
             list-style: none;
             gap: 1.5rem;
             align-items: center;
+            margin: 0;
+            padding: 0;
+            /* Prevent drifting */
+            flex-wrap: wrap;
         }
         .nav-links a {
             color: var(--text-light);
@@ -128,6 +134,7 @@
             border-radius: 6px;
             font-weight: 600;
             transition: var(--transition);
+            white-space: nowrap;
         }
         .btn:hover {
             background-color: var(--coral-red);
@@ -142,8 +149,7 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-
-        /* Export Button - NEW */
+        /* Export Button */
         .export-btn {
             background: none;
             border: 1px solid var(--electric-blue);
@@ -156,12 +162,12 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             margin-left: 1rem;
+            white-space: nowrap;
         }
         .export-btn:hover {
             background-color: rgba(88, 166, 255, 0.1);
             color: var(--white);
         }
-
         /* Hero Section */
         .hero {
             padding: 4rem 0;
@@ -182,7 +188,7 @@
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-color); /* Kept blue as in original */
+            color: var(--primary-color);
         }
         .hero p {
             font-size: 1.2rem;
@@ -329,6 +335,17 @@
             .hero p {
                 font-size: 1rem;
             }
+            /* ✅ MOBILE-ONLY STYLES (previously applied globally) */
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+            .nav-links .btn {
+                display: block;
+                margin: 1rem auto 0;
+                max-width: 200px;
+            }
         }
         @media (max-width: 600px) {
             .data-grid {
@@ -454,16 +471,34 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-        /* Mobile menu improvements */
-        .nav-links li {
-            width: 100%;
-            text-align: center;
-            padding: 0.5rem 0;
+        /* New styles for 2025 data */
+        .section-2025 {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: rgba(88, 166, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
         }
-        .nav-links .btn {
-            display: block;
-            margin: 1rem auto 0;
-            max-width: 200px;
+        .section-2025 h3 {
+            color: var(--electric-blue);
+            margin-bottom: 1.5rem;
+        }
+        .data-subsection {
+            margin-bottom: 1.5rem;
+        }
+        .data-subsection h4 {
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+        }
+        .data-point {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--electric-blue);
+        }
+        .data-point strong {
+            color: var(--electric-blue);
         }
     </style>
 </head>
@@ -473,21 +508,16 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Fine data Logo">
-                    <h1>Finedatas</h1>
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s" alt="Fine data Logo">
+                    <h1>FineData</h1>
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="economic.html">Economic</a></li>
-                    <li><a href="demographic.html">Demographic</a></li>
-                    <li><a href="agricultural.html" class="active">Agricultural</a></li>
-                    <li><a href="news.html">News</a></li>
+                    <li><a href="ai-chat.html">AI Chat</a></li>
                     <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="pdf.html">PDF Resources</a></li>
+                    <li><a href="news.html">News</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="support.html">Support</a></li>
-                    <!-- Export Button Added Here -->
                     <li>
                         <button class="export-btn" onclick="exportAgriculturalData()">
                             <i class="fas fa-download"></i> Export Data
@@ -573,7 +603,6 @@
                         <span>3.7% from previous year</span>
                     </div>
                 </div>
-                <!-- New metrics -->
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Irrigated Land</h4>
@@ -609,6 +638,74 @@
                 </div>
             </div>
         </section>
+        <!-- NEW: 2025 Data Section -->
+        <section class="section-2025">
+            <h3><i class="fas fa-calendar-alt"></i> Ethiopia Agricultural Data (2025)</h3>
+            <div class="data-subsection">
+                <h4>Crop & Plant Data</h4>
+                <div class="data-point">
+                    <strong>Teff (Eragrostis tef):</strong> Ethiopia's flagship cereal. Improved varieties like Bishoftu and Dagem yield ≈27 qt/ha versus ~14–15 qt/ha for local landraces.
+                </div>
+                <div class="data-point">
+                    <strong>Maize (Zea mays):</strong> Dominant hybrids (e.g. BH-660) yield ~3.39 t/ha on small farms. Planted in Meher rains (June–July), harvested Oct–Dec.
+                </div>
+                <div class="data-point">
+                    <strong>Wheat (Triticum aestivum):</strong> Representative variety Dendea yields ~2.54 t/ha. Sown late Belg (Feb–Mar) or early Meher (Jun–Jul), harvested Aug–Dec.
+                </div>
+                <div class="data-point">
+                    <strong>Sorghum (Sorghum bicolor):</strong> Chare variety yields ~2.33 t/ha. Planted in Belg or early Meher.
+                </div>
+                <div class="data-point">
+                    <strong>Planting/Harvest:</strong> 2025 Meher cereals began harvest in Oct and finish by December.
+                </div>
+            </div>
+            <div class="data-subsection">
+                <h4>Soil & Land Data</h4>
+                <div class="data-point">
+                    <strong>Soil Types:</strong> Nitisols (23%), Cambisols (19%), Vertisols (18%) dominate. Often low organic matter and acidic.
+                </div>
+                <div class="data-point">
+                    <strong>Land Use:</strong> ~12.5 Mha cultivated (cereals/pulses). Approximately 15% of land is cropland.
+                </div>
+                <div class="data-point">
+                    <strong>Irrigation:</strong> Only ~0.64 Mha irrigated (≈2% of farmland). >98% of farming is rainfed.
+                </div>
+            </div>
+            <div class="data-subsection">
+                <h4>Weather & Climate Data</h4>
+                <div class="data-point">
+                    <strong>Rainfall Seasons:</strong> 2025 Meher rains (Jun–Sept) were delayed in June but above average in Jul–Sept. 2025 Belg rains (Feb–May) were poor in south/center.
+                </div>
+            </div>
+            <div class="data-subsection">
+                <h4>Market & Economic Data</h4>
+                <div class="data-point">
+                    <strong>Commodity Prices:</strong> Local maize prices jumped 20–44% (Jan–Jul 2025 vs. 2024) due to currency depreciation. By Aug 2025, prices stabilized but remained ~5–20% above year-earlier levels.
+                </div>
+                <div class="data-point">
+                    <strong>Supply/Demand:</strong> Good 2025 Meher harvest raised food availability in central/western Ethiopia. However, pastoral and southern areas face deficits.
+                </div>
+                <div class="data-point">
+                    <strong>Trade:</strong> Coffee exports (Jul'23–May'24) were ~252,000 t (≈$1.2B). Ethiopia remains a net importer of grains.
+                </div>
+            </div>
+            <div class="data-subsection">
+                <h4>Policies & Subsidies</h4>
+                <div class="data-point">
+                    <strong>Fertilizer:</strong> Ethiopia finalized a ~$3 billion agreement with Dangote Group to build a chemical fertilizer plant in Gode (Somali Region).
+                </div>
+            </div>
+            <div class="data-subsection">
+                <h4>Livestock & Aquaculture</h4>
+                <div class="data-point">
+                    <strong>Inventory:</strong> Africa's largest livestock population. Estimates (circa 2018): ~70 million cattle, 52.5 million goats, 42.9 million sheep, 8.1 million camels.
+                </div>
+                <div class="data-point">
+                    <strong>Production Targets:</strong> Government aims for 28.4 billion liters of milk, 1.7 million t of meat, 5.5 billion eggs and 260,000 t of fish by 2030.
+                </div>
+            </div>
+        </section>
+        <!-- End NEW: 2025 Data Section -->
         <!-- Regional Production Data -->
         <section class="simple-data-section">
             <h3>Regional Crop Production (2023)</h3>
@@ -669,7 +766,6 @@
                     <span class="data-value positive-change">+5.8%</span>
                 </div>
             </div>
-            <!-- New regions -->
             <div class="data-highlight">
                 <h3>Tigray Region</h3>
                 <div class="data-item">
@@ -961,7 +1057,6 @@
                         <td class="positive-change">+6.2%</td>
                         <td>48.30</td>
                     </tr>
-                    <!-- New rows -->
                     <tr>
                         <td>Tea</td>
                         <td>SNNPR</td>
@@ -1057,42 +1152,56 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Finedatas</h3>
-                    <p>Ethiopia's premier data hub providing comprehensive economic, demographic, and agricultural statistics.</p>
+                    <h3>About</h3>
+                    <a href="index.html">Home</a>
+                    <a href="support.html">Support</a>
+                    <a href="pdf.html">PDF Resources</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="economic.html">Economic Data</a>
-                    <a href="demographic.html">Demographic Data</a>
-                    <a href="agricultural.html">Agricultural Data</a>
-                    <a href="news.html">News</a>
+                    <h3>Data</h3>
+                    <a href="economic.html">Economic</a>
+                    <a href="demographic.html">Demographic</a>
+                    <a href="agricultural.html">Agricultural</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-envelope"></i> gabrielmulugeta1@gmail.com </p>
-                    <p><i class="fas fa-phone"></i> +251 991168917</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Addis Ababa, Ethiopia</p>
+                    <h3>Contact</h3>
+                    <p>gabrielmulugeta1@gmail.com</p>
+                    <p>+251 991168917</p>
+                    <p>Addis Ababa, Ethiopia</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+                <p>&copy; 2025 FineData. All rights reserved.</p>
             </div>
         </div>
     </footer>
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('.nav-links').classList.remove('active');
-            });
-        });
+        // Mobile menu toggle (CORRECTED)
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
 
-        // =============== EXPORT FUNCTIONALITY ===============
-        // Utility: Download text as file
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent event bubbling
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link inside it
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking anywhere else on the screen (optional)
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+
+        // =============== EXPORT FUNCTIONALITY (Keep existing) ===============
         function downloadFile(filename, text, mimeType = 'text/plain') {
             const blob = new Blob([text], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -1104,12 +1213,9 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
-        // Export the main crop production table as CSV
         function exportTableToCSV() {
             const table = document.querySelector('.table-section .data-table');
             if (!table) return "Table not found";
-
             let csv = [];
             const rows = table.querySelectorAll('tr');
             rows.forEach(row => {
@@ -1124,8 +1230,6 @@
             });
             return csv.join('\n');
         }
-
-        // Export key metrics from cards
         function exportKeyMetricsAsJSON() {
             const cards = document.querySelectorAll('.card');
             const metrics = [];
@@ -1137,37 +1241,39 @@
             });
             return JSON.stringify(metrics, null, 2);
         }
-
-        // Main export function
         function exportAgriculturalData() {
-            const format = prompt("Choose export format:\n- Type 'csv' for crop table\n- Type 'json' for key metrics\n- Type 'txt' for full summary\n\nLeave blank or cancel for CSV (default)");
-            
+            const format = prompt("Choose export format:\n- Type 'csv' for crop table\n- Type 'json' for key metrics\n- Type 'txt' for full summary\nLeave blank or cancel for CSV (default)");
             if (format === null || format === "" || format.toLowerCase() === "csv") {
                 const csv = exportTableToCSV();
                 downloadFile('ethiopia_agricultural_data_2023.csv', csv, 'text/csv');
-            } 
+            }
             else if (format.toLowerCase() === "json") {
                 const json = exportKeyMetricsAsJSON();
                 downloadFile('agricultural_key_metrics.json', json, 'application/json');
             }
             else if (format.toLowerCase() === "txt") {
-                let report = `Ethiopian Agricultural Data Summary (2023)\nGenerated by Finedatas\n\n`;
-                report += "=== KEY METRICS ===\n";
+                let report = `Ethiopian Agricultural Data Summary (2023 & 2025)\nGenerated by FineData\n`;
+                report += "\n=== KEY METRICS (2023) ===\n";
                 document.querySelectorAll('.card').forEach(card => {
                     const title = card.querySelector('.card-title')?.innerText;
                     const value = card.querySelector('.card-value')?.innerText;
                     const change = card.querySelector('.card-change span')?.innerText;
                     if (title) report += `${title}: ${value} (${change})\n`;
                 });
-                report += `\n=== REGIONAL DATA ===\n`;
+                report += "\n=== REGIONAL DATA (2023) ===\n";
                 document.querySelectorAll('.data-highlight').forEach(region => {
                     const name = region.querySelector('h3')?.innerText;
+                    if (!name) return;
                     report += `\n${name}:\n`;
                     region.querySelectorAll('.data-item').forEach(item => {
                         const label = item.querySelector('.data-label')?.innerText;
                         const val = item.querySelector('.data-value')?.innerText;
                         if (label && val) report += `  ${label}: ${val}\n`;
                     });
+                });
+                report += "\n=== 2025 DATA ===\n";
+                document.querySelectorAll('.section-2025 .data-point').forEach(point => {
+                    report += `  ${point.innerText}\n`;
                 });
                 downloadFile('agricultural_summary.txt', report);
             }
