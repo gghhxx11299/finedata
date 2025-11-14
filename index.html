@@ -62,13 +62,20 @@
             list-style: none;
             gap: 1.2rem;
         }
+        .nav-links li {
+            margin: 0;
+        }
         .nav-links a {
             color: var(--text);
             text-decoration: none;
             font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
         .nav-links a:hover, .nav-links a.active {
             color: var(--primary);
+            background-color: rgba(88, 166, 255, 0.1);
         }
         .mobile-menu-btn {
             display: none;
@@ -286,12 +293,76 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: var(--shadow);
+                border-top: 1px solid var(--border);
+                z-index: 1000;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                margin: 0.25rem 0;
+            }
+            .nav-links a {
+                display: block;
+                padding: 0.75rem;
+                width: 100%;
+            }
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 1001;
+            }
             .hero h1 { font-size: 2rem; }
-            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-buttons { flex-direction: column; align-items: center; gap: 0.75rem; }
             .hero-buttons .btn { width: 100%; max-width: 250px; }
             .insight-item { flex-direction: column; }
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            .hero {
+                padding: 3rem 0 2.5rem;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .why-section {
+                padding: 2rem 1.5rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .insights-section {
+                padding: 2rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -514,7 +585,26 @@
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
             const nav = document.querySelector('.nav-links');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            nav.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const nav = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (nav.classList.contains('active') && 
+                !nav.contains(event.target) && 
+                !menuBtn.contains(event.target)) {
+                nav.classList.remove('active');
+            }
         });
     </script>
 </body>
