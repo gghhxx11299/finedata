@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finedatas Ethiopia – All-in-One Data Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0D1117;
+            --card-bg: #161B22;
+            --primary: #58A6FF;
+            --accent: #FF7B72;
+            --text: #C9D1D9;
+            --text-muted: #8B949E;
+            --border: #30363D;
+            --shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        header {
+            background-color: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 40px;
+            border-radius: 4px;
+        }
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--bg);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 123, 114, 0.4);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 5rem 0 4rem;
+            background: linear-gradient(rgba(13,17,23,0.85), rgba(13,17,23,0.95)), url('https://images.unsplash.com/photo-1500382016159-13a6de07a353?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            margin-bottom: 3rem;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-muted);
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Why Section */
+        .why-section {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .why-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+        .founder {
+            font-style: italic;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Quick Access */
+        .quick-access {
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: rgba(88, 166, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid var(--border);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        .card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .card h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .card a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Insights / Recently Added */
+        .insights-section {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .insight-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .insight-item:last-child {
+            border-bottom: none;
+        }
+        .insight-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            min-width: 40px;
+        }
+        .insight-content h4 {
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .insight-content p {
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .insight-meta {
+            font-size: 0.85rem;
+            color: #3FB950;
+        }
+
+        /* Open Source */
+        .sources-section {
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+        .sources-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .source-link {
+            background: rgba(88, 166, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .source-link:hover {
+            background: rgba(88, 166, 255, 0.2);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 2.5rem 0 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .footer-section a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+        .footer-bottom {
+            text-align: center;
+            color: var(--text-muted);
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-buttons .btn { width: 100%; max-width: 250px; }
+            .insight-item { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZk6G01vHoAk-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="Finedatas Logo">
+                    <h1>Finedatas</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange.html">Exchange</a></li>
+                    <li><a href="weather.html">For Farmers</a></li>
+                    <li><a href="insights.html">Get Forecasts</a></li>
+                    <li><a href="donate.html" class="btn">Donate</a></li>
+                </ul>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Ethiopia’s Only All-in-One Data Hub</h1>
+            <p>One place for economic stats, crop forecasts, population trends, exchange rates, and more — all verified, updated, and free.</p>
+            <div class="hero-buttons">
+                <a href="insights.html" class="btn">✨ Get 2025 Forecasts</a>
+                <a href="#explore" class="btn" style="background:transparent; border:2px solid var(--primary); color:var(--primary);">Explore Data</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Finedatas -->
+    <section class="why-section">
+        <div class="container">
+            <h2 class="section-title">Why Finedatas Exists</h2>
+            <div class="why-content">
+                <p>
+                    I built Finedatas because no single source offered Ethiopia’s full data picture — from teff yields to urban growth to forex trends. 
+                    Government reports are scattered, global sites lack local context, and researchers waste time stitching fragments together.
+                </p>
+                <p>
+                    So I created Ethiopia’s only all-in-one hub: open, reliable, and built for real-world use — whether you’re a farmer checking rain forecasts or a policymaker analyzing GDP.
+                </p>
+                <p class="founder">— Geabral Mulugeta, Founder</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Access -->
+    <section id="explore" class="quick-access">
+        <div class="container">
+            <h2 class="section-title">Jump to What You Need</h2>
+            <div class="cards">
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Economic Data</h3>
+                    <a href="economic.html">GDP, inflation, trade</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>Demographics</h3>
+                    <a href="demographic.html">Population, health, education</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tractor"></i>
+                    <h3>Agriculture</h3>
+                    <a href="agricultural.html">Crops, livestock, climate</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Exchange Rates</h3>
+                    <a href="exchange.html">ETB/USD trends</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>For Farmers</h3>
+                    <a href="weather.html">Rainfall & forecasts</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>2025 Forecasts</h3>
+                    <a href="insights.html">Predictive insights</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Added -->
+    <section class="insights-section">
+        <div class="container">
+            <h2 class="section-title">Recently Added</h2>
+            <div class="insight-item">
+                <div class="insight-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="insight-content">
+                    <h4>2025 Agricultural Forecasts</h4>
+                    <p>New projections for teff, maize, and coffee production across all regions.</p>
+                    <div class="insight-meta">Added: August 2025</div>
+                    <a href="agricultural.html">View Data →</a>
+                </div>
+            </div>
+            <div class="insight-item">
+                <div class="insight-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="insight-content">
+                    <h4>Ethiopia’s 2025 Economic Outlook</h4>
+                    <p>Updated GDP, inflation, and trade forecasts with sectoral breakdowns.</p>
+                    <div class="insight-meta">Added: August 2025</div>
+                    <a href="economic.html">View Data →</a>
+                </div>
+            </div>
+            <div class="insight-item">
+                <div class="insight-icon">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                </div>
+                <div class="insight-content">
+                    <h4>Kiremt Rainfall Forecast</h4>
+                    <p>Seasonal outlook for June–September 2025, tailored for farmers.</p>
+                    <div class="insight-meta">Added: July 2025</div>
+                    <a href="weather.html">View Forecast →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source -->
+    <section class="sources-section">
+        <div class="container">
+            <h2 class="section-title">Open Source & Community-Driven</h2>
+            <div class="why-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p>
+                    Finedatas is built on open principles. Our code, data pipelines, and documentation are publicly available to promote transparency, collaboration, and trust.
+                </p>
+                <p>
+                    We believe Ethiopia’s data future should be shaped by its people — researchers, developers, students, and citizens alike.
+                </p>
+                <a href="https://github.com/gghhxx11299/finedata" target="_blank" class="btn" style="margin-top: 1.5rem;">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted Sources -->
+    <section class="sources-section">
+        <div class="container">
+            <h2 class="section-title">Trusted Sources</h2>
+            <div class="sources-grid">
+                <a href="https://ess.gov.et/" target="_blank" class="source-link">Ethiopian Statistical Service</a>
+                <a href="https://nbe.gov.et/" target="_blank" class="source-link">National Bank of Ethiopia</a>
+                <a href="https://www.worldbank.org/" target="_blank" class="source-link">World Bank</a>
+                <a href="https://www.imf.org/" target="_blank" class="source-link">IMF</a>
+                <a href="https://www.fao.org/" target="_blank" class="source-link">FAO</a>
+                <a href="https://www.undp.org/" target="_blank" class="source-link">UNDP</a>
+                <a href="https://www.unicef.org/" target="_blank" class="source-link">UNICEF</a>
+                <a href="https://tradingeconomics.com/" target="_blank" class="source-link">Trading Economics</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <a href="index.html">Home</a>
+                    <a href="support.html">Support</a>
+                    <a href="pdf.html">PDF Resources</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Data</h3>
+                    <a href="economic.html">Economic</a>
+                    <a href="demographic.html">Demographic</a>
+                    <a href="agricultural.html">Agricultural</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>gabrielmulugeta1@gmail.com</p>
+                    <p>+251 991168917</p>
+                    <p>Addis Ababa, Ethiopia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Finedatas. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
+            const nav = document.querySelector('.nav-links');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
