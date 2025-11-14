@@ -734,9 +734,147 @@
         document.querySelector('.mobile-menu-btn')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
         });
+                /* 3D Effects for interactive elements */
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add 3D hover effect to cards
+            const cards = document.querySelectorAll(".data-card, .stat-card, .forecast-card, .card, .insight-item");
+            cards.forEach(card => {
+                card.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) rotateX(5deg) rotateY(5deg)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3), 0 0 15px rgba(88, 166, 255, 0.5)";
+                });
+                
+                card.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+                    this.style.boxShadow = "";
+                });
+            });
+            
+            // Add 3D effect to buttons
+            const buttons = document.querySelectorAll(".btn, .export-btn");
+            buttons.forEach(button => {
+                button.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-3px) scale(1.05)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 8px 20px rgba(0,0,0,0.2)";
+                });
+                
+                button.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
+                    this.style.boxShadow = "";
+                });
+            });
+            
+            // Add 3D tilt effect
+            const tiltElements = document.querySelectorAll(".section-title, .hero, .why-section, .economic-section, .demographic-section, .hero-buttons");
+            tiltElements.forEach(el => {
+                el.addEventListener("mousemove", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    this.style.transition = "transform 0.1s ease";
+                });
+                
+                el.addEventListener("mouseleave", function() {
+                    this.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
+                });
+            });
+            
+            // Add floating animation to stats
+            const stats = document.querySelectorAll(".stat-value, .card-value, .forecast-value");
+            stats.forEach(stat => {
+                stat.style.transition = "transform 0.3s ease";
+                
+                stat.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) scale(1.1)";
+                });
+                
+                stat.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
+                });
+            });
+        });
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+                /* 3D Effects for interactive elements */
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add 3D hover effect to cards
+            const cards = document.querySelectorAll(".data-card, .stat-card, .forecast-card, .card, .insight-item");
+            cards.forEach(card => {
+                card.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) rotateX(5deg) rotateY(5deg)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3), 0 0 15px rgba(88, 166, 255, 0.5)";
+                });
+                
+                card.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+                    this.style.boxShadow = "";
+                });
+            });
+            
+            // Add 3D effect to buttons
+            const buttons = document.querySelectorAll(".btn, .export-btn");
+            buttons.forEach(button => {
+                button.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-3px) scale(1.05)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 8px 20px rgba(0,0,0,0.2)";
+                });
+                
+                button.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
+                    this.style.boxShadow = "";
+                });
+            });
+            
+            // Add 3D tilt effect
+            const tiltElements = document.querySelectorAll(".section-title, .hero, .why-section, .economic-section, .demographic-section, .hero-buttons");
+            tiltElements.forEach(el => {
+                el.addEventListener("mousemove", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    this.style.transition = "transform 0.1s ease";
+                });
+                
+                el.addEventListener("mouseleave", function() {
+                    this.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
+                });
+            });
+            
+            // Add floating animation to stats
+            const stats = document.querySelectorAll(".stat-value, .card-value, .forecast-value");
+            stats.forEach(stat => {
+                stat.style.transition = "transform 0.3s ease";
+                
+                stat.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) scale(1.1)";
+                });
+                
+                stat.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
+                });
             });
         });
     </script>
