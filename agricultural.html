@@ -517,30 +517,16 @@
                 </div>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
-                    <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="news.html">News</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li>
-                        <button class="export-btn" onclick="exportAgriculturalData()">
-                            <i class="fas fa-download"></i> Export Data
-                        </button>
-                    </li>
+                    <li><a href="integration.html">Integration</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 
-        <div id="auth-buttons" style="display: flex; align-items: center; gap: 1rem;">
-            <div id="auth-section" style="display: none;">
-                <button id="google-signin" class="export-btn" style="background: #DB4437; display: flex; align-items: center; gap: 8px; max-width: fit-content;">
-                    <i class="fab fa-google"></i> Sign in
-                </button>
-            </div>
-            <div id="user-menu" style="display: none; display: flex; align-items: center; gap: 1rem;">
-                <span id="user-name" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;"></span>
-                <button id="logout-btn" class="export-btn" style="background: var(--accent);">Logout</button>
-            </div>
-        </div>
 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -1462,35 +1448,6 @@
             }, 4000);
         }
         
-        // Initialize authentication when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Google Sign-In
-            initGoogleSignIn();
-            
-            // Add event listeners for download buttons
-            document.querySelectorAll('.dataset-download-btn, [data-dataset], button[onclick*="export"]').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    const isAuthenticated = await checkIfAuthenticated();
-                    if (!isAuthenticated) {
-                        e.preventDefault();
-                        showNotification('Please sign in to download datasets', 'info');
-                        return false;
-                    }
-                });
-            });
-        });
-        
-        async function checkIfAuthenticated() {
-            try {
-                const response = await fetch('/api/auth/check', {
-                    credentials: 'same-origin'
-                });
-                const result = await response.json();
-                return result.authenticated;
-            } catch (error) {
-                return false;
-            }
-        }
 
         // Add CSS for notifications
         const style = document.createElement('style');

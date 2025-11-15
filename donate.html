@@ -3,589 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate - FineData Ethiopia</title>
+    <title>Support FineData - Open Source Initiative</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/main.css">
     <style>
-        /* Global Styles */
-        :root {
-            --background-color: #0D1117;
-            --primary-accent: #58A6FF;
-            --secondary-accent: #FF7B72;
-            --text-color: #C9D1D9;
-            --card-bg: #161B22;
-            --border-color: #30363d;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-        }
-
-        h1, h2, h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: var(--card-bg);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--primary-accent);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-            object-fit: contain;
-        }
-
-        .logo h1 {
-            color: var(--primary-accent);
-            font-size: 1.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-accent);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary-accent);
-        }
-
-        /* Page Header */
-        .page-header {
-            background: linear-gradient(rgba(13, 17, 23, 0.9), rgba(13, 17, 23, 0.9)), url('https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--text-color);
-            padding: 3rem 0;
-            text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--primary-accent);
-        }
-
-        .page-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-accent);
-        }
-
-        .breadcrumb {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-
-        .breadcrumb li {
-            margin: 0 0.5rem;
-        }
-
-        .breadcrumb li:not(:last-child)::after {
-            content: ">";
-            margin-left: 1rem;
-            color: var(--secondary-accent);
-        }
-
-        .breadcrumb a {
-            color: var(--primary-accent);
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--secondary-accent);
-            text-decoration: underline;
-        }
-
-        /* Donate Sections */
         .donate-section {
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary-accent);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
-        }
-
-        .donate-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-        }
-
-        .section-title {
-            color: var(--primary-accent);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title i {
-            margin-right: 0.5rem;
-            color: var(--secondary-accent);
-        }
-
-        /* Impact Section */
-        .impact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .impact-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary-accent);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            text-align: center;
-            transition: transform 0.2s;
-        }
-
-        .impact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-        }
-
-        .impact-card i {
-            font-size: 2.5rem;
-            color: var(--primary-accent);
-            margin-bottom: 1rem;
-        }
-
-        .impact-card h4 {
-            color: var(--secondary-accent);
-            margin-bottom: 1rem;
-        }
-
-        /* Telebirr Section */
-        .telebirr-guide {
-            margin-top: 2rem;
-            padding: 2rem;
-            background-color: rgba(88, 166, 255, 0.1);
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-accent);
-        }
-
-        .telebirr-steps {
-            margin-left: 1.5rem;
-            margin-top: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .telebirr-steps li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-
-        .telebirr-image {
-            text-align: center;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 3rem 2rem;
             margin: 2rem 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .telebirr-image img {
-            max-width: 100%;
-            height: auto;
-            max-height: 300px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            border: 1px solid var(--primary-accent);
-            object-fit: cover;
-        }
-
-        .phone-number {
-            display: inline-block;
-            background-color: var(--primary-accent);
-            color: var(--background-color);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: bold;
-            margin: 0.5rem 0;
-        }
-
-        /* Button Styles */
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-accent);
-            color: var(--background-color);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary-accent);
-            color: #FFFFFF;
-            box-shadow: 0 0 10px var(--secondary-accent), 0 0 20px var(--secondary-accent);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            padding: 3rem 0 1.5rem;
-            margin-top: 3rem;
-            border-top: 1px solid var(--primary-accent);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--primary-accent);
-        }
-
-        .footer-section p, .footer-section a {
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-        }
-
-        .footer-section a {
-            display: block;
-            text-decoration: none;
-            color: var(--primary-accent);
-        }
-
-        .footer-section a:hover {
-            color: var(--secondary-accent);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: inline-block;
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: var(--primary-accent);
-            color: var(--background-color);
-            box-shadow: 0 0 10px var(--primary-accent);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--card-bg);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-                padding: 1rem 0;
-                border: 1px solid var(--primary-accent);
-                border-top: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 1.5rem;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .page-header h2 {
-                font-size: 2rem;
-            }
-            
-            .telebirr-image img {
-                max-width: 100%;
-                max-height: 200px;
-            }
-            
-            .impact-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .container {
-                width: 95%;
-                padding: 0 10px;
-            }
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
         
-        @media (max-width: 480px) {
-            .page-header {
-                padding: 2rem 0;
-            }
-            
-            .donate-section {
-                padding: 1.5rem;
-            }
-            
-            .telebirr-guide {
-                padding: 1.5rem;
-            }
-            
-            .telebirr-steps {
-                margin-left: 1rem;
-            }
+        .donation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .donation-card {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+        
+        .donation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .donation-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .donation-amounts {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        
+        .amount-btn {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .amount-btn:hover, .amount-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .open-source-message {
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
-            <nav>
+            <nav class="navbar">
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGU1zrS-hLPBQ/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1759059188849?e=1761782400&v=beta&t=sD-kDZUK4rWpkW5qypikdabBSrsEfmlBAF5PUwqV_0s"  alt="Finedata Logo">
-                    <h1>FineData</h1>
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQGXMc2SntbjBA/feedshare-shrink_800/B4EZmQGRR3HcAg-/0/1757616497506?e=1760572800&v=beta&t=8j9qaS3FBcRpEqrjVREfn2y6DriWCK_IxbIG0HmwhRg" alt="FineData Logo">
+                    <h1>FinеData</h1>
                 </div>
                 <ul class="nav-links">
-                   <li><a href="index.html">Home</a></li>
-                    <li><a href="ai-chat.html">AI Chat</a></li>
-                    <li><a href="exchange.html">Exchange Rates</a></li>
-                    <li><a href="news.html">News</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="economic.html">Economic</a></li>
+                    <li><a href="demographic.html">Demographic</a></li>
+                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="donate.html" class="btn"  class="active">Donate</a></li>
+                    <li><a href="integration.html">Integration</a></li>
+                    <li><a href="donate.html" class="btn active">Donate</a></li>
                 </ul>
-                
-        <div id="auth-buttons" style="display: flex; align-items: center; gap: 1rem;">
-            <div id="auth-section" style="display: none;">
-                <button id="google-signin" class="export-btn" style="background: #DB4437; display: flex; align-items: center; gap: 8px; max-width: fit-content;">
-                    <i class="fab fa-google"></i> Sign in
-                </button>
-            </div>
-            <div id="user-menu" style="display: none; display: flex; align-items: center; gap: 1rem;">
-                <span id="user-name" style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;"></span>
-                <button id="logout-btn" class="export-btn" style="background: var(--accent);">Logout</button>
-            </div>
-        </div>
-<button class="mobile-menu-btn">
+                <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
             </nav>
         </div>
     </header>
+
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
-            <h2>Support Our Mission</h2>
+            <h2>Support Open Data for Ethiopia</h2>
             <ul class="breadcrumb">
                 <li><a href="index.html">Home</a></li>
-                <li>Donate</li>
+                <li>Support Us</li>
             </ul>
         </div>
     </div>
 
     <div class="container">
-        <!-- Why Donate Section -->
-        <section class="donate-section">
-            <h3 class="section-title"><i class="fas fa-hand-holding-heart"></i> Why Support FineData Ethiopia?</h3>
-            
-            <p>Finedatas Ethiopia is committed to providing <strong>free access</strong> to comprehensive economic, demographic, and agricultural data for everyone. Unlike many data providers, we believe that information should be accessible to all - students, researchers, businesses, and policymakers alike.</p>
-            
-            <p>Your donation helps us maintain and expand our services, ensuring that:</p>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <i class="fas fa-database"></i>
-                    <h4>Data Remains Free</h4>
-                    <p>We keep all our current data and resources completely free of charge</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-sync-alt"></i>
-                    <h4>Regular Updates</h4>
-                    <p>We continuously update our databases with the latest information</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>New Data Sources</h4>
-                    <p>We expand our collection to include more valuable datasets</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-tools"></i>
-                    <h4>Improved Tools</h4>
-                    <p>We develop better visualization and analysis tools</p>
-                </div>
+        <!-- Main Message -->
+        <div class="open-source-message">
+            <h3><i class="fas fa-globe-africa"></i> Open Source Mission</h3>
+            <p>FineData is committed to making Ethiopia's data accessible to everyone without barriers. We believe that open data drives innovation, economic growth, and social progress.</p>
+            <p>All our code, data processing pipelines, and documentation are available under open-source licenses. Join us in building a data-driven future for Ethiopia.</p>
+            <p>Your contribution helps maintain infrastructure, improve data quality, and expand our open datasets.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Open Source Code</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-value">0%</div>
+                <div class="stat-label">Login Requirements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Free Access</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Availability</div>
+            </div>
+        </div>
+
+        <!-- Donation Options -->
+        <section class="donate-section">
+            <h3 class="section-title"><i class="fas fa-heart"></i> Support Our Open Data Initiative</h3>
+            <p>Help us maintain and expand Ethiopia's premier open data platform. All donations directly fund data collection, infrastructure, and development.</p>
             
-            <div style="text-align: center; margin-top: 2rem;">
-                <p><strong>We believe knowledge should be accessible to all, regardless of their ability to pay.</strong></p>
-                <p>Your support makes this possible. Donate any amount you're comfortable with - every contribution helps!</p>
+            <div class="donation-options">
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h4>Buy Us Coffee</h4>
+                    <p>Keep our developers energized while building new features</p>
+                    <div class="donation-amounts">
+                        <button class="amount-btn">$5</button>
+                        <button class="amount-btn">$10</button>
+                        <button class="amount-btn">$25</button>
+                        <button class="amount-btn">$50</button>
+                    </div>
+                    <button class="btn" style="margin-top: 1rem; width: 100%;">
+                        <i class="fas fa-coffee"></i> Support with Coffee
+                    </button>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h4>Infrastructure Support</h4>
+                    <p>Help us pay for servers to keep the platform running 24/7</p>
+                    <div class="donation-amounts">
+                        <button class="amount-btn">$25</button>
+                        <button class="amount-btn">$50</button>
+                        <button class="amount-btn">$100</button>
+                        <button class="amount-btn">$250</button>
+                    </div>
+                    <button class="btn" style="margin-top: 1rem; width: 100%;">
+                        <i class="fas fa-server"></i> Support Infrastructure
+                    </button>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Data Expansion</h4>
+                    <p>Fund collection of new datasets and improve data quality</p>
+                    <div class="donation-amounts">
+                        <button class="amount-btn">$50</button>
+                        <button class="amount-btn">$100</button>
+                        <button class="amount-btn">$250</button>
+                        <button class="amount-btn">$500</button>
+                    </div>
+                    <button class="btn" style="margin-top: 1rem; width: 100%;">
+                        <i class="fas fa-database"></i> Support Data Collection
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- Telebirr Donation Section -->
-        <section class="donate-section">
-            <h3 class="section-title"><i class="fas fa-mobile-alt"></i> Donate via Telebirr</h3>
-            
-            <p>To support our mission, please use the Telebirr app to send your donation directly to us. You can donate any amount you wish - every contribution helps us maintain and improve our free services.</p>
-            
-            <div class="telebirr-guide">
-                <h4>How to Donate Using Telebirr</h4>
-                
-                <ol class="telebirr-steps">
-                    <li>Open your Telebirr app on your phone</li>
-                    <li>Select "Send Money" from the main menu</li>
-                    <li>Enter our phone number: <span class="phone-number">+251 991 168 917</span></li>
-                    <li>Enter the amount you wish to donate (any amount is appreciated)</li>
-                    <li>Add a note: "Finedata Donation" so we can identify your contribution</li>
-                    <li>Confirm the transaction details</li>
-                    <li>Complete the transaction using your PIN</li>
-                </ol>
-                
-                <p><strong>Thank you for your support!</strong> Your donation helps us keep valuable data accessible to everyone in Ethiopia.</p>
-                
-                <div class="telebirr-image">
-                    <img src="https://capitalethiopia.com/wp-content/uploads/2021/06/Telebirr.jpg" alt="Telebirr">
+        <!-- Open Source Information -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fab fa-github"></i> Open Source Commitment</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4><i class="fas fa-code"></i> Free to Use</h4>
+                    <p>All data and tools are completely free to access and use for any purpose - research, business, education, or personal projects.</p>
+                    <p>No registration required, no limits on access, no premium tiers.</p>
                 </div>
-                <p style="text-align: center; margin-top: 0.5rem;">The Telebirr app makes donating quick and easy</p>
-            </div>
-            
-            <div style="text-align: center; margin-top: 2rem;">
-                <p>After making your donation, you can <a href="support.html">contact us</a> if you need a receipt for your records.</p>
+                <div class="data-card">
+                    <h4><i class="fas fa-lock-open"></i> Zero Barriers</h4>
+                    <p>We've removed all login requirements and authentication walls. All content is publicly available without any restrictions.</p>
+                    <p>Anyone in Ethiopia or worldwide can access our data freely.</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-users"></i> Community Driven</h4>
+                    <p>Our project is built by and for the Ethiopian community. We welcome contributions from developers, researchers, and citizens.</p>
+                    <p>Join our GitHub repository to contribute code or data improvements.</p>
+                </div>
+                <div class="data-card">
+                    <h4><i class="fas fa-balance-scale"></i> Transparent</h4>
+                    <p>All data sources, methodologies, and transformations are documented openly. No black boxes, no proprietary algorithms.</p>
+                    <p>Trust comes from transparency and reproducible methods.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Transparency Section -->
-        <section class="donate-section">
-            <h3 class="section-title"><i class="fas fa-eye"></i> Our Commitment to Transparency</h3>
-            
-            <p>We believe donors deserve to know how their contributions are being used. Here's how we allocate donations:</p>
-            
-            <div style="display: flex; align-items: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 250px;">
-                    <ul style="line-height: 1.8;">
-                        <li><strong>70%</strong> - Data acquisition and maintenance (securing new data sources, updating existing databases)</li>
-                        <li><strong>15%</strong> - Platform development and hosting (website improvements)</li>
-                        <li><strong>15%</strong> - Outreach and education (helping more people access and use our data)</li>
-                       
+        <!-- GitHub Section -->
+        <section class="economic-section">
+            <h3 class="section-title"><i class="fab fa-github"></i> Contribute to Our Code</h3>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h4>GitHub Repository</h4>
+                    <p>Our entire codebase is open source and available on GitHub. We welcome contributions, bug reports, and feature suggestions.</p>
+                    <a href="https://github.com/gghhxx11299/finedata" target="_blank" class="btn" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem;">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                </div>
+                <div class="data-card">
+                    <h4>Ways to Contribute</h4>
+                    <ul style="text-align: left; margin-top: 1rem;">
+                        <li>Submit pull requests for bug fixes</li>
+                        <li>Add new data sources or validation methods</li>
+                        <li>Improve documentation and user guides</li>
+                        <li>Suggest features or report issues</li>
                     </ul>
                 </div>
-            </div>
-            
-            <p>We're committed to keeping our overhead costs low to ensure your donation has the maximum possible impact on making data accessible to everyone in Ethiopia.</p>
-        </section>
-
-        <!-- Alternative Support Section -->
-        <section class="donate-section">
-            <h3 class="section-title"><i class="fas fa-hands-helping"></i> Other Ways to Support Us</h3>
-            
-            <p>If you're unable to make a financial contribution at this time, there are other valuable ways to support our mission:</p>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <i class="fas fa-share-alt"></i>
-                    <h4>Spread the Word</h4>
-                    <p>Tell others about FineData Ethiopia and our free resources</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-bug"></i>
-                    <h4>Report Issues</h4>
-                    <p>Help us improve by reporting errors or suggesting enhancements</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-lightbulb"></i>
-                    <h4>Provide Feedback</h4>
-                    <p>Tell us what data or features would be most valuable to you</p>
-                </div>
-                
-                <div class="impact-card">
-                    <i class="fas fa-handshake"></i>
-                    <h4>Partnership Opportunities</h4>
-                    <p>If you represent an organization, explore partnership possibilities</p>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 1.5rem;">
-                <a href="support.html" class="btn">Contact Us to Explore Partnerships</a>
             </div>
         </section>
     </div>
@@ -598,7 +287,7 @@
                     <h3>About</h3>
                     <a href="index.html">Home</a>
                     <a href="support.html">Support</a>
-                    <a href="pdf.html">PDF Resources</a>
+                    <a href="pdf.html">Resources</a>
                 </div>
                 <div class="footer-section">
                     <h3>Data</h3>
@@ -614,237 +303,103 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 FineData. All rights reserved.</p>
+                <p>&copy; 2025 FineData. All content is open source and freely available.</p>
             </div>
         </div>
     </footer>
 
     <script>
         // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+        document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
-                navLinks.classList.remove('active');
+                document.querySelector('.nav-links').classList.remove('active');
             }
         });
-    </script>
 
-    <!-- Google Sign-In -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script>
-        // Google Sign-In initialization
-        function initGoogleSignIn() {
-            if (typeof gapi !== 'undefined') {
-                gapi.load('auth2', function() {
-                    gapi.auth2.init({
-                        client_id: 'YOUR_GOOGLE_CLIENT_ID_HERE.apps.googleusercontent.com',
-                        cookiepolicy: 'single_host_origin',
-                        scope: 'profile email'
-                    }).then(function(auth) {
-                        // Check auth status on page load
-                        checkAuthStatus();
-                        
-                        // Attach sign-in handlers
-                        attachSigninHandlers();
-                    });
+        // Donation amount selection
+        document.querySelectorAll('.amount-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.amount-btn').forEach(btn => {
+                    btn.classList.remove('selected');
                 });
-            }
-        }
+                this.classList.add('selected');
+            });
+        });
 
-        function attachSigninHandlers() {
-            const googleAuthButton = document.getElementById('google-signin');
-            if (googleAuthButton) {
-                googleAuthButton.addEventListener('click', function() {
-                    const auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signIn().then(function(googleUser) {
-                        onGoogleSignInSuccess(googleUser);
-                    }).catch(function(error) {
-                        console.log('Google Sign-In error:', error);
-                    });
+        // Add 3D effects for interactive elements
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add 3D hover effect to cards
+            const cards = document.querySelectorAll(".data-card, .stat-card, .forecast-card, .card, .insight-item, .donation-card");
+            cards.forEach(card => {
+                card.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) rotateX(5deg) rotateY(5deg)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3), 0 0 15px rgba(88, 166, 255, 0.5)";
                 });
-            }
-            
-            // Logout handler
-            document.getElementById('logout-btn')?.addEventListener('click', function() {
-                const auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function() {
-                    // Clear user session on server
-                    fetch('/api/auth/logout', {
-                        method: 'POST',
-                        credentials: 'same-origin'
-                    }).then(() => {
-                        // Update UI
-                        updateAuthUI(false);
-                        showNotification('Successfully signed out!', 'success');
-                    });
+                
+                card.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+                    this.style.boxShadow = "";
                 });
             });
-        }
-
-        async function onGoogleSignInSuccess(googleUser) {
-            const profile = googleUser.getBasicProfile();
-            const id_token = googleUser.getAuthResponse().id_token; // ID token for verification
             
-            const userData = {
-                googleId: profile.getId(),
-                name: profile.getName(),
-                email: profile.getEmail(),
-                imageUrl: profile.getImageUrl(),
-                idToken: id_token
-            };
-            
-            try {
-                const response = await fetch('/api/auth/google', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData),
-                    credentials: 'same-origin'
+            // Add 3D effect to buttons
+            const buttons = document.querySelectorAll(".btn, .export-btn");
+            buttons.forEach(button => {
+                button.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-3px) scale(1.05)";
+                    this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+                    this.style.boxShadow = "0 8px 20px rgba(0,0,0,0.2)";
                 });
                 
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Update UI to show signed in state
-                    updateAuthUI(true, result.user);
-                    showNotification('Successfully signed in!', 'success');
-                } else {
-                    showNotification('Sign-in failed. Please try again.', 'error');
-                }
-            } catch (error) {
-                console.error('Error signing in:', error);
-                showNotification('Error during sign-in. Please try again.', 'error');
-            }
-        }
-
-        function updateAuthUI(isAuthenticated, user = null) {
-            const authSection = document.getElementById('auth-section');
-            const userMenu = document.getElementById('user-menu');
-            
-            if (isAuthenticated && user) {
-                if (authSection) authSection.style.display = 'none';
-                if (userMenu) {
-                    userMenu.style.display = 'flex';
-                    document.getElementById('user-name')?.textContent = user.name || 'User';
-                    document.getElementById('user-email')?.textContent = user.email || '';
-                }
-            } else {
-                if (authSection) authSection.style.display = 'flex';
-                if (userMenu) userMenu.style.display = 'none';
-            }
-            
-            // Update download/export buttons
-            const buttons = document.querySelectorAll('.dataset-download-btn, .export-btn, button[onclick*="export"], [data-dataset]');
-            buttons.forEach(btn => {
-                if (isAuthenticated) {
-                    btn.title = btn.title?.replace('Please sign in', 'Available') || 'Download/Export available';
-                } else {
-                    if (!btn.title?.includes('sign in')) {
-                        btn.title = 'Please sign in to download/export data';
-                    }
-                }
+                button.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
+                    this.style.boxShadow = "";
+                });
             });
-        }
-
-        async function checkAuthStatus() {
-            try {
-                const response = await fetch('/api/auth/check', {
-                    credentials: 'same-origin'
+            
+            // Add 3D tilt effect
+            const tiltElements = document.querySelectorAll(".section-title, .hero, .why-section, .economic-section, .demographic-section, .hero-buttons");
+            tiltElements.forEach(el => {
+                el.addEventListener("mousemove", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    this.style.transition = "transform 0.1s ease";
                 });
-                const result = await response.json();
                 
-                if (result.authenticated) {
-                    updateAuthUI(true, result.user);
-                } else {
-                    updateAuthUI(false);
-                }
-            } catch (error) {
-                console.error('Error checking auth status:', error);
-                updateAuthUI(false);
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                background: ${type === 'error' ? '#d32f2f' : type === 'success' ? '#388e3c' : type === 'warning' ? '#ffa000' : '#1976d2'};
-                color: white;
-                border-radius: 4px;
-                z-index: 10000;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-                font-family: 'Inter', sans-serif;
-                animation: fadeInOut 4s forwards;
-            `;
+                el.addEventListener("mouseleave", function() {
+                    this.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
+                });
+            });
             
-            document.body.appendChild(notification);
-            
-            // Remove after animation
-            setTimeout(() => {
-                notification.remove();
-            }, 4000);
-        }
-        
-        // Initialize authentication when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Google Sign-In
-            initGoogleSignIn();
-            
-            // Add event listeners for download buttons
-            document.querySelectorAll('.dataset-download-btn, [data-dataset], button[onclick*="export"]').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    const isAuthenticated = await checkIfAuthenticated();
-                    if (!isAuthenticated) {
-                        e.preventDefault();
-                        showNotification('Please sign in to download datasets', 'info');
-                        return false;
-                    }
+            // Add floating animation to stats
+            const stats = document.querySelectorAll(".stat-value, .card-value, .forecast-value");
+            stats.forEach(stat => {
+                stat.style.transition = "transform 0.3s ease";
+                
+                stat.addEventListener("mouseenter", function() {
+                    this.style.transform = "translateY(-5px) scale(1.1)";
+                });
+                
+                stat.addEventListener("mouseleave", function() {
+                    this.style.transform = "translateY(0) scale(1)";
                 });
             });
         });
-        
-        async function checkIfAuthenticated() {
-            try {
-                const response = await fetch('/api/auth/check', {
-                    credentials: 'same-origin'
-                });
-                const result = await response.json();
-                return result.authenticated;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        // Add CSS for notifications
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInOut {
-                0% { opacity: 0; transform: translateX(100%); }
-                10% { opacity: 1; transform: translateX(0); }
-                90% { opacity: 1; transform: translateX(0); }
-                100% { opacity: 0; transform: translateX(100%); }
-            }
-            
-            .dataset-download-btn:disabled, .export-btn[disabled] {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
