@@ -3,65 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integration Strategy - FineData Ethiopia</title>
+    <title>Agricultural Map Dashboard - FineData Ethiopia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* Page-specific styles */
-        .integration-section {
+        /* Map-specific styles */
+        #map {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            margin: 20px 0;
+            z-index: 1;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .map-control-btn {
+            background-color: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .map-control-btn:hover, .map-control-btn.active {
+            background-color: var(--primary);
+            color: var(--bg);
+            border-color: var(--primary);
+        }
+
+        .map-legend {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid var(--border);
+        }
+
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .legend-scale {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 5px 0;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .data-section {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 2rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
         }
-        
-        .map-implementation-steps {
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin: 1.5rem 0;
         }
-        
-        .step-card {
+
+        .stat-card {
             background-color: var(--bg);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.2rem;
+            text-align: center;
             border-left: 3px solid var(--primary);
         }
-        
-        .step-number {
-            display: inline-block;
-            background: var(--primary);
-            color: var(--bg);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            margin-bottom: 0.75rem;
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.5rem 0;
         }
-        
-        .code-block {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+        .stat-label {
             font-size: 0.9rem;
-            overflow-x: auto;
-            color: #C9D1D9;
+            color: var(--text-muted);
         }
-        
-        .highlight {
-            background-color: rgba(88, 166, 255, 0.1);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-weight: 500;
+
+        .map-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .map-overlay h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+        }
+
+        .map-overlay-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            #map {
+                height: 400px;
+            }
         }
     </style>
 </head>
@@ -82,7 +156,7 @@
                     <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
-                    <li><a href="integration.html" class="active">Integration</a></li>
+                    <li><a href="integration.html" class="active">Map Dashboard</a></li>
                     <li><a href="donate.html" class="btn">Donate</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
@@ -95,267 +169,106 @@
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
-            <h2>Integration Strategy</h2>
+            <h2>Interactive Agricultural Map Dashboard</h2>
             <ul class="breadcrumb">
                 <li><a href="index.html">Home</a></li>
-                <li>Integration Strategy</li>
+                <li>Interactive Map</li>
             </ul>
         </div>
     </div>
 
     <div class="container">
-        <!-- Introduction -->
-        <section class="integration-section">
-            <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Interactive Map Integration Guide</h3>
-            <p>To build this as a "map page" on your website (interactive, like Google Maps), here's a recommended technical strategy:</p>
-            
-            <div class="map-implementation-steps">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h4>Decide Your Map Stack / Framework</h4>
-                    <p>Use a web mapping library: Leaflet, Mapbox GL JS, OpenLayers, etc.</p>
-                    <p>Use a tile server or a vector-tile approach, or serve raster tiles (WMTS / XYZ) from your backend / cloud.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h4>Precompute / Tile Data</h4>
-                    <p>For precipitation (monthly or aggregated): preprocess the gridded data into map tiles (e.g., using gdal2tiles) and serve as raster tiles.</p>
-                    <p>For UV: if you're fetching via API (point-based), request dynamically and overlay as markers or heatmap; or precompute a UV index raster for typical times of day or average.</p>
-                    <p>For land cover: generate a raster tile layer from land cover datasets (e.g., Copernicus LC100 or GLC_FCS10) and serve that.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h4>Styling Layers</h4>
-                    <p>Precipitation: use a color ramp (e.g., blues → purple) to show mm or intensity.</p>
-                    <p>UV: use a "heatmap" style (e.g., yellows → red) to indicate UV index.</p>
-                    <p>Vegetation: use discrete classes or fractional cover; for example, more green where vegetation cover is higher, maybe semi-transparent basemap to show land cover beneath.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h4>Time / Animation</h4>
-                    <p>If you have time-series data (e.g., monthly precipitation), you can implement a time-slider on your map so users can explore how rainfall changes through months / years.</p>
-                    <p>For UV, you could simulate hourly changes (if you have a model) or show a typical "daily UV cycle" map.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">5</div>
-                    <h4>Performance Considerations</h4>
-                    <p>Raster tiles: keep them at reasonable zoom levels; limit high-resolution tiles to lower zoom for big data.</p>
-                    <p>Caching: use a CDN or tile cache for fast delivery.</p>
-                    <p>Data size: big global rasters can be huge — consider tiling only the region(s) you need (e.g., Ethiopia or your country) to reduce load.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">6</div>
-                    <h4>Licensing / Attribution</h4>
-                    <p>Make sure to show attribution on the map for the datasets you use (e.g., Copernicus, NASA GPM/IMERG, OpenWeather).</p>
-                    <p>Check license terms carefully, especially for redistribution or derivative works.</p>
+        <!-- Map Section -->
+        <section class="data-section">
+            <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Ethiopia Agricultural Dashboard</h3>
+            <p>Interactive map showing real-time agricultural data: rainfall, soil conditions, and crop forecasts across Ethiopia</p>
+
+            <div class="map-controls">
+                <button class="map-control-btn active" id="rainfall-btn">Rainfall Data</button>
+                <button class="map-control-btn" id="soil-btn">Soil Conditions</button>
+                <button class="map-control-btn" id="temperature-btn">Temperature</button>
+                <button class="map-control-btn" id="crop-btn">Crop Forecasts</button>
+                <button class="map-control-btn" id="toggle-legend">Toggle Legend</button>
+            </div>
+
+            <div id="map"></div>
+
+            <div class="map-legend" id="map-legend">
+                <div class="legend-title">Rainfall Intensity (mm/day)</div>
+                <div class="legend-scale">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ffffff;"></div>
+                        <span>0-5mm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #d1e3ff;"></div>
+                        <span>5-10mm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #a3cfff;"></div>
+                        <span>10-15mm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #58A6FF;"></div>
+                        <span>15-20mm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2c5282;"></div>
+                        <span>20-30mm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #002f5d;"></div>
+                        <span>30mm+</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Code Implementation Examples -->
-        <section class="integration-section">
-            <h3 class="section-title"><i class="fas fa-code"></i> Implementation Examples</h3>
-            <p>Here are code examples to help you get started with implementing an interactive map:</p>
-
-            <h4>Basic Leaflet Setup</h4>
-            <div class="code-block">
-                // Initialize the map
-                var map = L.map('map').setView([9.589, 40.439], 6); // Center on Ethiopia
-
-                // Add OpenStreetMap tiles
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-
-                // Add precipitation data layer
-                var precipitationLayer = L.tileLayer.wms('http://your-wms-endpoint/geoserver/wms', {
-                    layers: 'precipitation',
-                    format: 'image/png',
-                    transparent: true,
-                    attribution: 'Precipitation data'
-                }).addTo(map);
-
-                // Add UV index layer
-                var uvLayer = L.tileLayer.wms('http://your-wms-endpoint/geoserver/wms', {
-                    layers: 'uv_index',
-                    format: 'image/png',
-                    transparent: true,
-                    attribution: 'UV Index data'
-                });
-
-                // Layer control
-                var baseLayers = {
-                    "OpenStreetMap": osmLayer,
-                };
-
-                var overlays = {
-                    "Precipitation": precipitationLayer,
-                    "UV Index": uvLayer
-                };
-
-                L.control.layers(baseLayers, overlays).addTo(map);
-            </div>
-
-            <h4>Mapbox GL JS Alternative</h4>
-            <div class="code-block">
-                mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
-
-                var map = new mapboxgl.Map({
-                    container: 'map', // container id
-                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
-                    center: [40.439, 9.589], // starting position [lng, lat]
-                    zoom: 6 // starting zoom
-                });
-
-                // Add controls
-                map.addControl(new mapboxgl.NavigationControl());
-
-                // Add precipitation data as a raster layer
-                map.on('load', function() {
-                    map.addSource('precip-data', {
-                        type: 'raster',
-                        url: 'mapbox://your-raster-tileset-id',
-                        tileSize: 512
-                    });
-
-                    map.addLayer({
-                        id: 'precip-layer',
-                        type: 'raster',
-                        source: 'precip-data'
-                    });
-                });
-            </div>
-
-            <h4>Time-Series Data Slider</h4>
-            <div class="code-block">
-                // Add date range selector for time-series data
-                var dates = ['2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06'];
-
-                var slider = document.createElement('input');
-                slider.type = 'range';
-                slider.min = 0;
-                slider.max = dates.length - 1;
-                slider.value = 0;
-                slider.id = 'date-slider';
-
-                var dateLabel = document.createElement('div');
-                dateLabel.id = 'current-date';
-                dateLabel.textContent = dates[0];
-
-                // Add to page
-                document.getElementById('controls').appendChild(slider);
-                document.getElementById('controls').appendChild(dateLabel);
-
-                // Event listener for slider changes
-                slider.addEventListener('input', function() {
-                    var currentIndex = parseInt(this.value);
-                    dateLabel.textContent = dates[currentIndex];
-                    
-                    // Update layer with new date
-                    updateMapLayer(dates[currentIndex]);
-                });
-
-                function updateMapLayer(date) {
-                    // Update the data layer with the selected date
-                    // Implementation depends on your data source
-                }
+        <!-- Agricultural Stats -->
+        <section class="data-section">
+            <h3 class="section-title"><i class="fas fa-chart-bar"></i> Key Agricultural Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-cloud-rain" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <div class="stat-value">125mm</div>
+                    <div class="stat-label">Avg. Rainfall (last 30 days)</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-seedling" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <div class="stat-value">284M tons</div>
+                    <div class="stat-label">Total Crop Production</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-temperature-high" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <div class="stat-value">22°C</div>
+                    <div class="stat-label">Avg. Temperature</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-tint" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                    <div class="stat-value">75%</div>
+                    <div class="stat-label">Soil Moisture Level</div>
+                </div>
             </div>
         </section>
 
-        <!-- Data Considerations -->
-        <section class="integration-section">
-            <h3 class="section-title"><i class="fas fa-database"></i> Data Considerations</h3>
-            <p>When implementing the map, consider these important aspects for your environmental and agricultural data:</p>
-
+        <!-- Recent Updates -->
+        <section class="data-section">
+            <h3 class="section-title"><i class="fas fa-bolt"></i> Recent Agricultural Updates</h3>
             <div class="data-grid">
                 <div class="data-card">
-                    <h4><i class="fas fa-cloud-rain"></i> Precipitation Data</h4>
-                    <p><span class="highlight">Format:</span> NetCDF, GeoTIFF, or GRIB2 for gridded data</p>
-                    <p><span class="highlight">Sources:</span> CHIRPS, ERA5, NASA GPM/IMERG</p>
-                    <p><span class="highlight">Processing:</span> Convert to map tiles using gdal2tiles or similar tools</p>
-                    <p><span class="highlight">Update Frequency:</span> Daily, monthly, or seasonal aggregations</p>
+                    <h4><i class="fas fa-cloud-sun-rain"></i> Rainfall Forecast</h4>
+                    <p>Expected above-average rainfall in central regions during the next 10 days, beneficial for late-season crops.</p>
+                    <div class="insight-meta">Updated: 2 hours ago</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-sun"></i> UV Index Data</h4>
-                    <p><span class="highlight">Format:</span> Point-based API or gridded model output</p>
-                    <p><span class="highlight">Sources:</span> OpenWeatherMap API, ECMWF, NASA Giovanni</p>
-                    <p><span class="highlight">Processing:</span> Real-time fetch or precomputed grids</p>
-                    <p><span class="highlight">Update Frequency:</span> Hourly or daily updates</p>
+                    <h4><i class="fas fa-seedling"></i> Teff Production</h4>
+                    <p>Preliminary estimates show 8% increase in teff production compared to last season. Optimal weather conditions contributed to yield.</p>
+                    <div class="insight-meta">Updated: 1 day ago</div>
                 </div>
                 <div class="data-card">
-                    <h4><i class="fas fa-tree"></i> Land Cover Data</h4>
-                    <p><span class="highlight">Format:</span> GeoTIFF or Vector tiles</p>
-                    <p><span class="highlight">Sources:</span> Copernicus Land Monitoring Service, GLC-FCS10</p>
-                    <p><span class="highlight">Processing:</span> Classify land types and generate tiles</p>
-                    <p><span class="highlight">Update Frequency:</span> Annual or biannual updates</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Performance Optimization -->
-        <section class="integration-section">
-            <h3 class="section-title"><i class="fas fa-bolt"></i> Performance Optimization Tips</h3>
-            <div class="data-grid">
-                <div class="data-card">
-                    <h4>Tile Optimization</h4>
-                    <ul>
-                        <li>Use appropriate zoom levels (don't create unnecessary high-res tiles)</li>
-                        <li>Implement caching with CloudFlare or AWS CloudFront</li>
-                        <li>Consider using compressed formats (WebP, JPEG-XR)</li>
-                        <li>Aggregate data at lower zoom levels (reduce data volume)</li>
-                    </ul>
-                </div>
-                <div class="data-card">
-                    <h4>Data Loading Strategies</h4>
-                    <ul>
-                        <li>Lazy loading for large datasets</li>
-                        <li>Progressive loading of layers</li>
-                        <li>Client-side caching with service workers</li>
-                        <li>Serverless functions for dynamic data requests</li>
-                    </ul>
-                </div>
-                <div class="data-card">
-                    <h4>Memory Management</h4>
-                    <ul>
-                        <li>Remove unused layers when switching</li>
-                        <li>Implement proper cleanup callbacks</li>
-                        <li>Limit concurrent data requests</li>
-                        <li>Optimize polygon rendering for complex geometries</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Open Source Libraries -->
-        <section class="integration-section">
-            <h3 class="section-title"><i class="fab fa-github"></i> Recommended Open Source Libraries</h3>
-            <div class="data-grid">
-                <div class="data-card">
-                    <h4>Mapping Libraries</h4>
-                    <ul>
-                        <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a> - Lightweight with excellent plugin ecosystem</li>
-                        <li><a href="https://openlayers.org/" target="_blank">OpenLayers</a> - More features, steeper learning curve</li>
-                        <li><a href="https://deck.gl/" target="_blank">Deck.gl</a> - GPU-accelerated visualization</li>
-                        <li><a href="https://cesium.com/" target="_blank">Cesium</a> - 3D globe visualization</li>
-                    </ul>
-                </div>
-                <div class="data-card">
-                    <h4>Data Processing</h4>
-                    <ul>
-                        <li><a href="https://gdal.org/" target="_blank">GDAL</a> - Spatial data translator</li>
-                        <li><a href="https://proj.org/" target="_blank">PROJ</a> - Coordinate reference system transformations</li>
-                        <li><a href="https://geoserver.org/" target="_blank">GeoServer</a> - Web Feature Service (WFS) and Web Map Service (WMS)</li>
-                        <li><a href="https://postgis.net/" target="_blank">PostGIS</a> - Spatial database extender</li>
-                    </ul>
-                </div>
-                <div class="data-card">
-                    <h4>Additional Tools</h4>
-                    <ul>
-                        <li><a href="https://turfjs.org/" target="_blank">Turf.js</a> - Client-side geospatial processing</li>
-                        <li><a href="https://github.com/mapbox/tile-reduce" target="_blank">tile-reduce</a> - Distributed spatial processing</li>
-                        <li><a href="https://github.com/mapbox/rio" target="_blank">rasterio</a> - Python library for raster data</li>
-                        <li><a href="https://geopandas.org/" target="_blank">GeoPandas</a> - Python geospatial extension</li>
-                    </ul>
+                    <h4><i class="fas fa-wheat-alt"></i> Maize Outlook</h4>
+                    <p>Regional maize forecasts indicate potential 5% decrease in production due to irregular rainfall patterns in western zones.</p>
+                    <div class="insight-meta">Updated: 2 days ago</div>
                 </div>
             </div>
         </section>
@@ -390,6 +303,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
@@ -403,7 +317,160 @@
             }
         });
 
-        // Add 3D effects for interactive elements  
+        // Initialize the map
+        let map = L.map('map').setView([9.145, 40.4897], 6); // Center on Ethiopia
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Create sample data for different map layers
+        const rainfallData = [
+            {lat: 8.9806, lng: 38.7578, value: 25}, // Addis Ababa area
+            {lat: 9.0333, lng: 39.7333, value: 15}, // Harar area
+            {lat: 6.0327, lng: 37.3828, value: 35}, // Arba Minch area
+            {lat: 13.7972, lng: 38.9722, value: 10}, // Mekele area
+            {lat: 11.5950, lng: 37.3850, value: 20}, // Bahir Dar area
+            {lat: 6.9848, lng: 42.7421, value: 40}, // Jinka area
+        ];
+
+        const soilData = [
+            {lat: 8.9806, lng: 38.7578, type: "Nitisols", fertility: 85}, // Addis Ababa area
+            {lat: 9.0333, lng: 39.7333, type: "Vertisols", fertility: 70}, // Harar area
+            {lat: 6.0327, lng: 37.3828, type: "Acrisols", fertility: 60}, // Arba Minch area
+            {lat: 13.7972, lng: 38.9722, type: "Regosols", fertility: 55}, // Mekele area
+            {lat: 11.5950, lng: 37.3850, type: "Cambisols", fertility: 75}, // Bahir Dar area
+            {lat: 6.9848, lng: 42.7421, type: "Leptosols", fertility: 65}, // Jinka area
+        ];
+
+        // Create rainfall layer
+        function createRainfallLayer() {
+            const rainfallLayer = L.layerGroup();
+
+            rainfallData.forEach(point => {
+                let color = '#ffffff';
+                if (point.value > 30) color = '#002f5d';
+                else if (point.value > 20) color = '#2c5282';
+                else if (point.value > 15) color = '#58A6FF';
+                else if (point.value > 10) color = '#a3cfff';
+                else if (point.value > 5) color = '#d1e3ff';
+
+                const circle = L.circle([point.lat, point.lng], {
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.6,
+                    radius: point.value * 1000, // Scale the radius based on value
+                    weight: 1
+                }).bindPopup(`Rainfall: ${point.value}mm/day`);
+
+                circle.addTo(rainfallLayer);
+            });
+
+            return rainfallLayer;
+        }
+
+        // Create soil layer
+        function createSoilLayer() {
+            const soilLayer = L.layerGroup();
+
+            soilData.forEach(point => {
+                let color = '#a0522d'; // Brown for soil
+                if (point.fertility > 80) color = '#228B22'; // Forest green for high fertility
+                else if (point.fertility > 70) color = '#32CD32'; // Lime green
+                else if (point.fertility > 60) color = '#ADFF2F'; // Green yellow
+                else if (point.fertility > 50) color = '#F0E68C'; // Khaki
+
+                const marker = L.circleMarker([point.lat, point.lng], {
+                    color: '#000',
+                    fillColor: color,
+                    fillOpacity: 0.8,
+                    radius: 10
+                }).bindPopup(`Soil Type: ${point.type}<br>Fertility: ${point.fertility}%`);
+
+                marker.addTo(soilLayer);
+            });
+
+            return soilLayer;
+        }
+
+        // Add default rainfall layer to map
+        const rainfallLayer = createRainfallLayer();
+        rainfallLayer.addTo(map);
+
+        // Add base layer group for all map features
+        const baseLayers = {
+            "OpenStreetMap": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            })
+        };
+
+        // Add overlay layers
+        const overlays = {
+            "Rainfall Data": rainfallLayer,
+            "Soil Conditions": createSoilLayer()
+        };
+
+        // Add layer control
+        L.control.layers(baseLayers, overlays).addTo(map);
+
+        // Add map controls functionality
+        document.getElementById('rainfall-btn').addEventListener('click', function() {
+            document.querySelectorAll('.map-control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            map.eachLayer(function(layer) {
+                if (layer.isRainfallLayer) {
+                    map.addLayer(layer);
+                } else if (layer.isSoilLayer || layer.isTempLayer || layer.isCropLayer) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // Add rainfall layer if it doesn't exist
+            if (!map.hasLayer(rainfallLayer)) {
+                map.addLayer(rainfallLayer);
+            }
+        });
+
+        document.getElementById('soil-btn').addEventListener('click', function() {
+            document.querySelectorAll('.map-control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            const soilLayer = createSoilLayer();
+            soilLayer.isSoilLayer = true;
+
+            map.eachLayer(function(layer) {
+                if (layer.isSoilLayer) {
+                    map.addLayer(layer);
+                } else if (layer.isRainfallLayer || layer.isTempLayer || layer.isCropLayer) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // Add soil layer if it doesn't exist
+            if (!map.hasLayer(soilLayer)) {
+                map.addLayer(soilLayer);
+            }
+        });
+
+        // Toggle legend visibility
+        document.getElementById('toggle-legend').addEventListener('click', function() {
+            const legend = document.getElementById('map-legend');
+            if (legend.style.display === 'none' || legend.style.display === '') {
+                legend.style.display = 'block';
+                this.textContent = 'Hide Legend';
+            } else {
+                legend.style.display = 'none';
+                this.textContent = 'Show Legend';
+            }
+        });
+
+        // Add 3D effects for interactive elements
         document.addEventListener("DOMContentLoaded", function() {
             // Add 3D hover effect to cards
             const cards = document.querySelectorAll(".data-card, .stat-card, .forecast-card, .card, .insight-item");
@@ -413,62 +480,25 @@
                     this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
                     this.style.boxShadow = "0 10px 25px rgba(0,0,0,0.3), 0 0 15px rgba(88, 166, 255, 0.5)";
                 });
-                
+
                 card.addEventListener("mouseleave", function() {
                     this.style.transform = "translateY(0) rotateX(0) rotateY(0)";
                     this.style.boxShadow = "";
                 });
             });
-            
+
             // Add 3D effect to buttons
-            const buttons = document.querySelectorAll(".btn, .export-btn");
+            const buttons = document.querySelectorAll(".btn, .map-control-btn, .export-btn");
             buttons.forEach(button => {
                 button.addEventListener("mouseenter", function() {
                     this.style.transform = "translateY(-3px) scale(1.05)";
                     this.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
                     this.style.boxShadow = "0 8px 20px rgba(0,0,0,0.2)";
                 });
-                
+
                 button.addEventListener("mouseleave", function() {
                     this.style.transform = "translateY(0) scale(1)";
                     this.style.boxShadow = "";
-                });
-            });
-            
-            // Add 3D tilt effect
-            const tiltElements = document.querySelectorAll(".section-title, .hero, .why-section, .economic-section, .demographic-section, .hero-buttons");
-            tiltElements.forEach(el => {
-                el.addEventListener("mousemove", function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateY = (x - centerX) / 25;
-                    const rotateX = (centerY - y) / 25;
-                    
-                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                    this.style.transition = "transform 0.1s ease";
-                });
-                
-                el.addEventListener("mouseleave", function() {
-                    this.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
-                });
-            });
-            
-            // Add floating animation to stats
-            const stats = document.querySelectorAll(".stat-value, .card-value, .forecast-value");
-            stats.forEach(stat => {
-                stat.style.transition = "transform 0.3s ease";
-                
-                stat.addEventListener("mouseenter", function() {
-                    this.style.transform = "translateY(-5px) scale(1.1)";
-                });
-                
-                stat.addEventListener("mouseleave", function() {
-                    this.style.transform = "translateY(0) scale(1)";
                 });
             });
         });

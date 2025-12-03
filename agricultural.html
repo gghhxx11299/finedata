@@ -37,15 +37,31 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--white);
+            color: var(--text);
+        }
+        .text-light {
+            color: var(--text);
+        }
+        .electric-blue {
+            color: var(--primary);
+        }
+        .coral-red {
+            color: var(--accent);
+        }
+        .dark-bg {
+            background-color: var(--bg);
+        }
+        .white {
+            color: white;
         }
         .container {
             width: 100%;
@@ -519,7 +535,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="economic.html">Economic</a></li>
                     <li><a href="demographic.html">Demographic</a></li>
-                    <li><a href="agricultural.html">Agricultural</a></li>
+                    <li><a href="agricultural.html" class="active">Agricultural</a></li>
                     <li><a href="exchange.html">Exchange</a></li>
                     <li><a href="weather.html">For Farmers</a></li>
                     <li><a href="insights.html">Get Forecasts</a></li>
