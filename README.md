@@ -6,7 +6,7 @@ FineData is an open-source, full-stack platform designed to centralize and deliv
 
 > **Problem**: Ethiopian farmers, students, and policymakers struggle with fragmented, paywalled, or inaccessible national data.  
 > **Solution**: FineData unifies weather, economics, agriculture, and demographics into one free, AI-powered, multilingual hub.  
-> **Live Demo**: [finedata.et](https://finedata.et) 
+
 Features
 --------
 - Data Aggregation:
@@ -78,9 +78,7 @@ License
 -------
 This project is licensed under the Apache 2.0 License – see LICENSE file for details.
 
-Live Demo
----------
-Explore the platform online: https://finedata.et
+
 
 Contact
 -------
